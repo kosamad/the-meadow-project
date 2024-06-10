@@ -45,13 +45,39 @@ Short interviews were carried out with the stakeholders and potential customers 
 
 ### Stakeholders
 
-1. "What information/features need to be visible to users"
+1. "What information/features would you like to be visible to users"
 
-2. "What needs to be visible to admin users"
+    *   Display the bouquets and plants sold with descriptions and size options
+    *   Notifications letting the customer know if an item is low in stock
+    *   Prices
+    *   Abiilty to make purchaces from the site including delivery info
+    *   Events with availability + booking system.
+    *   Blog with an option for registered users to comment.
+    *   Customer profiles with saved info and previous order history.
+    *   Contact forms (1 x order-related and 1 x general).
+    *   Ability for registered users to receive and use discount codes.
+    *   Allow the user to easily find products they are looking for, e.g., either bouquets, plants, or events, etc.
+    *   Incentive for customers to spend £30 and get free delivery.
+    *   About page explaining the company and how it runs.
+    *   A live chat feature for customer support. 
+    *   
 
-3. "Are there any key features or ideas you'd like to incorporate into the site?"
+2. "What would you like to be visible to admin users"
 
+    *   Option to add/delete products and product catagories to the site
+    *   Ability to add a Blog Post
+    *   Option to delete any malicious blog comments
+    *   Ability to add events and amend info of previously posted events. 
+    *   Ability to retrieve email list of registered users to send out updates and discounts.
+    *   Ability to set up and manage discount codes and special offers
+    *   Abiity to manage stock
 
+3. "Are there any other key features or ideas you'd like to incorporate into the site?"
+
+    *   We'd like the site to be sleek and simple, using muted colors to convey a sense of calm and quality.    
+    *   We'd like a company logo and other visual features that encompass the site's ethos. 
+    * We want the site to integrate with a users social media platform
+    
 ### Users
 
 Users were shown relavent answers from the stakeholders and were then asked: 
