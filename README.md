@@ -177,7 +177,7 @@ As a **business owner** user, I would like to be able to:
 
 The developer of this site is a junior, currently undergoing training in Python and Django while still perfecting industry standards for web design. Certain features may be beyond the developer's current skill set. Additionally, as the developer is working on the site part-time whilst balancing other responsibitlies, prioritisation of features is necessary to complete the project on time. Features not achieved in the initial phase will be rolled out in future deployments.
 
-#### Opportunities Matrix
+#### Opportunity Matrix
 
 Opportunity|User|Importance|Viability|Score|Planned Development Phase|
 -----------|----|----------|---------|-----|-----------------|
@@ -214,6 +214,14 @@ Custom error pages | All | 5 | 5 | 10 | 1 |
 * event bookings veiw????
 * email list for blog view????
 
+### Project Sructure
 
+Based on the [User Stories](README.md#user-stories) and the opportunities outlined in the [Opportunity Matrix](README.md#opportunity-matrix) the following structure was planned for the site. 
 
+This site map outlines the design of the website and which pages are accesible to which user. 
 
+IMAGE
+
+This table outlines the design for the PostgreSQL database used to store the data. It is a relational database that will be integrated with Django.
+
+IMAGE
