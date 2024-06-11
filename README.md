@@ -171,6 +171,9 @@ As a **business owner** user, I would like to be able to:
 
 #### Constraints
 
-The developer of this site is a junior, currently undergoing training in Python and Django while still perfecting industry standards for web design. Certain features may be beyond the developer's current skill set. Additionally, as the developer is working on the site part-time, prioritisation of features is necessary to complete the project on time. Features not achieved in the initial phase will be rolled out in future deployments.
+The developer of this site is a junior, currently undergoing training in Python and Django while still perfecting industry standards for web design. Certain features may be beyond the developer's current skill set. Additionally, as the developer is working on the site part-time whilst balancing other responsibitlies, prioritisation of features is necessary to complete the project on time. Features not achieved in the initial phase will be rolled out in future deployments.
 
 #### Opportunities Matrix
+
+Feature|Description|Importance|Viability|Opportunity ID|Development Phase|
+-------|-----------|----------|---------|--------------|-----------------|
