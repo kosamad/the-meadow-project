@@ -126,23 +126,26 @@ The overall emphasis of the site will be on local community engagement, simplici
 * Find and understand key information about products including descriptions, costs, and delivery information so I can make an informed purchasing decision.
 * Understand what the company stands for and see it aligns with my values.
 * Pick a delivery date that suits me.
+* Add a message with my bouquet/plant delivery
+* Add a note to my order to say to avoid roses, or yellow flowers.
 * Learn about future events I might want to sign up for.
+* View where the company is based so I can see if event attendance is possible.
 * Read reviews from other customers to help me make an informed purchasing decision.
 * Sign up for the site's newsletter so I can be informed about new events, products, and rewards.
 * Contact the business to ask any questions before making a purchase.
 * Add products to my basket, so I can make a purchase when I'm ready to and have confidence they have been added succesfully.
+* View my basket and identify how much my order might cost me.
 * See adverts for part of the site I might not have thought of.
-* Add a message with my bouquet/plant delivery
-* Add a note to my order to say to avoid roses, or yellow flowers.
+* Follow the companies social media platforms. 
 
 As a **buying customer** , I would also like to be able to:
 
 * Easily input my delivery and card information.
 * Register on the site so I can make further purchases more easily.
 * Opt out of receiving the newsletter.
-* Remove unwanted items from my basket.
-* Increase the number of a product in my basket easily.
+* Remove unwanted items from my basket. 
 * Be able to add more than one person to an event's booking.
+* Recieve an email confirmation of my order once complete.
 
 As a **registerd user**, I would also like to be able to:
 
@@ -151,7 +154,7 @@ As a **registerd user**, I would also like to be able to:
 * Contact the business about a specific order.
 * Update my details.
 * Change my password.
-* Reset my password if i forget it.
+* Reset my password if I forget it.
 * Sign out of my account.
 * Add/Edit reviews to products to help others be informed about their purchasing decsions. 
 
@@ -168,6 +171,7 @@ As a **business owner** user, I would like to be able to:
 * Add a note to the site, e.g., information about Mother's Day bookings/delivery.
 * Add a blog post to the site.
 * Control stock.
+* Receive emails from users who contact the business via the contact form(s)
 
 #### Constraints
 
@@ -175,5 +179,41 @@ The developer of this site is a junior, currently undergoing training in Python 
 
 #### Opportunities Matrix
 
-Feature|Description|Importance|Viability|Opportunity ID|Development Phase|
--------|-----------|----------|---------|--------------|-----------------|
+Opportunity|User|Importance|Viability|Score|Planned Development Phase|
+-----------|----|----------|---------|-----|-----------------|
+All pages - Navbar containing page links, user features, search, and basket | All | 5 | 5 | 10 | 1 |
+All pages - Footer containing social links, contact info, copyright, and disclaimer | All | 5 | 5 | 10 | 1 |
+Registration Form - To enable new users to sign up | All | 5 | 5 | 10 | 1 |
+Landing Page - Brand and summarising features/text | All | 5 | 5 | 10 | 1 |
+About Page - Outlining company values and other general info | All | 5 | 5 | 10 | 1 |
+Contact Page - General enquiries | All | 5 | 5 | 10 | 1 |
+Subscription - Form to allow users to subscribe to the newsletter and receive discounts | All | 5 | 3 | 8 | 1 |
+Products Page (1) - Showcase of all products within a category (filterable), short description, price | All | 5 | 5 | 10 | 1 |
+Products Page (2) - One product only, more details with options required for purchasing/adding to basket (size, notes, date etc). | All | 5 | 5 | 10 | 1 |
+Events Page (1) - Showcase of all products within a category, short description, price, date, and places available | All | 5 | 5 | 10 | 1 |
+Events Page (2) - One event only, more details with options required for purchasing/adding to basket (date, places booking, names etc). | All | 5 | 5 | 10 | 1 |
+Basket - Visible when an item is added (summary) and on a separate page (order summary). Option to remove unwanted items from either place | All | 5 | 5 | 10 | 1 |
+Checkout - Form for user details (which can be saved if details need updating), secure checkout, discount code input and then email confirmation of order | All | 5 | 5 | 10 | 1 |
+Log In - Sign into user profile | Registered but signed out user | 5 | 5 | 10 | 1 |
+Password Reset | Registered but signed out user | 5 | 3 | 8 | 1 |
+Checkout - Form auto inputted with saved details | Signed In User | 5 | 5 | 10 | 1 |
+User Profile - Order summaries, access to quick order related contact form, and displayed user details (address, email etc) | Signed In User | 5 | 5 | 10 | 1 |
+User Profile - Amendments from to change user details/password | Signed In User | 5 | 5 | 10 | 1 |
+Review Product - Leave a comment and star rating for products on the site | Signed In User | 3 | 2 | 5 | 2 |
+Contact Page - Order-specific enquiries | Signed In User | 5 | 5 | 10 | 1 |
+Log Out - returned to landing page | Signed In User | 5 | 5 | 10 | 1 |
+Add, Edit and Delete Product from the site | Admin User | 5 | 5 | 10 | 1 |
+Add, Edit and Delete Discounts codes from the site | Admin User | 4 | 3 | 7 | 1 |
+Add, Edit and Delete category for products from the site | Admin User | 3 | 5 | 8 | 2 |
+Option to Add or delete a blog post | Admin User | 4 | 4 | 8 | 1 |
+Delete review | Admin User | 5 | 5 | 10 | 2 |
+Track sales data | Admin User | 3 | 2 | 5 | 2 |
+Add/Edit info to banner display for key calendar events | Admin User | 4 | 4 | 5 | 1 |
+Custom error pages | All | 5 | 5 | 10 | 1 |
+
+* event bookings veiw????
+* email list for blog view????
+
+
+
+
