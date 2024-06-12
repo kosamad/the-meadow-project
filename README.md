@@ -22,16 +22,16 @@ Nature is a gateway to relaxation and tranquility. Studies show that exposure to
 
 Our commitment to sustainability is second to none. The Meadow Project transforms disused farmland into vibrant greenbelts that enrich wildlife. We prioritise eco-friendly deliveries using bicycles and zero-emission vans. By growing locally and seasonally, we ensure a low carbon footprint and deliver the freshest blooms. Visitors are welcome to enjoy our fields, participate in our events, and join our online community of like-minded individuals with access to engaging blog posts from the owners.
 
-## Mission Statement 
+### Mission Statement 
 
 To deliver sustainable flowers and plants and host engaging events for Bristol residents.
 
-## Target Audience 
+### Target Audience 
 
 * Gardeners and hobbyists looking for tips and events on sustainable gardening practices.
 * Residents of Bristol looking for locally grown flowers and plants.
 
-## WebApp Business Objectives 
+### WebApp Business Objectives 
 
 * Have a minimalist, well-designed site that conveys the company ethos and quality.
 
@@ -39,11 +39,11 @@ To deliver sustainable flowers and plants and host engaging events for Bristol r
 
 * Incentivise customers to sign up for the site, engage with posted content, and make repeat purchases.
 
-## Interviews
+### Interviews
 
 Short interviews were carried out with the stakeholders and potential customers to determine the key features and objectives of the site. 
 
-### Stakeholders
+#### Stakeholders
 
 1. "What information/features would you like to be visible to users"
 
@@ -79,7 +79,7 @@ Short interviews were carried out with the stakeholders and potential customers 
     *   We'd like a company logo and other visual features that encompass the site's ethos. 
     *   We want the site to integrate with a users social media platform.
     
-### Users
+#### Users
 
 Users were shown relavent answers from the stakeholders and were then asked: 
 
@@ -220,8 +220,36 @@ Based on the [User Stories](README.md#user-stories) and the opportunities outlin
 
 This site map outlines the design of the website and which pages are accesible to which user. 
 
+![Site Map](documentation/design/site-flow-chart.drawio.png)
+
+This table outlines the design for the PostgreSQL database which will be used to store the data. It is a relational database that will be integrated with Django, enabling seamless database interactions. Django's ORM (Object-Relational Mapping) will allow me to define database models in Python, perform CRUD (Create, Read, Update, Delete) operations, and dynamically generate HTML content within my application.
+
+![Database Design](documentation/design/database-design.png)
 
 
-This table outlines the design for the PostgreSQL database used to store the data. It is a relational database that will be integrated with Django.
 
-IMAGE
+
+
+## Technologies
+
+### Languages
+
+HTML, CSS, JavaScript & Python
+
+### Database
+
+### Storage
+
+### Payment
+
+### Frameworks
+
+* [Django](https://www.djangoproject.com/) - web development framework.
+
+### Libraries, Programs and Tools Used
+
+* [Github](https://github.com/) - to save and store the files for the website.
+* [Git](https://git-scm.com/) - for version control, using the GitPod terminal to commit and Push to GitHub.
+* [Pip](https://pip.pypa.io/en/stable/) - for installing Python packages.
+* [dbdiagram](https://dbdiagram.io/home) - to design and visualise the database.
+* [drawio](https://www.drawio.com/) - to draw the site flow chart.
