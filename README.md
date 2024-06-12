@@ -226,8 +226,38 @@ This table outlines the design for the PostgreSQL database which will be used to
 
 ![Database Design](documentation/design/database-design.png)
 
+### Project Skeleton
 
+#### Wireframes
 
+[Balsamiq Wireframes](https://balsamiq.com/) was utilised to create detailed mockups of the project's pages.
+
+I am showing an expanded display of the mobile and tablet designs to ensure thorough planning of content placement.
+
+<details><summary>Home/Landing Page</summary>
+
+![Home/Landing Page]()
+
+</details>
+
+About
+Shop
+Shop - Individual Category
+Shop - Individual Item
+Events
+Event - individual Item
+Basket
+Checkout
+Blog
+Blog - Individual Post
+Login/out
+User Profile
+Write Reveiw
+Edit Account
+Admin Profile
+Add/Edit Product
+Add Blog Post
+Example delete modal
 
 
 ## Technologies
