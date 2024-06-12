@@ -199,14 +199,14 @@ Password Reset | Registered but signed out user | 5 | 3 | 8 | 1 |
 Checkout - Form auto inputted with saved details | Signed In User | 5 | 5 | 10 | 1 |
 User Profile - Order summaries, access to quick order related contact form, and displayed user details (address, email etc) | Signed In User | 5 | 5 | 10 | 1 |
 User Profile - Amendments from to change user details/password | Signed In User | 5 | 5 | 10 | 1 |
-Review Product - Leave a comment and star rating for products on the site | Signed In User | 3 | 2 | 5 | 2 |
+Review Product - Leave a comment and star rating for products on the site | Signed In User | 3 | 2 | 5 | 1 |
 Contact Page - Order-specific enquiries | Signed In User | 5 | 5 | 10 | 1 |
 Log Out - returned to landing page | Signed In User | 5 | 5 | 10 | 1 |
 Add, Edit and Delete Product from the site | Admin User | 5 | 5 | 10 | 1 |
 Add, Edit and Delete Discounts codes from the site | Admin User | 4 | 3 | 7 | 1 |
 Add, Edit and Delete category for products from the site | Admin User | 3 | 5 | 8 | 2 |
 Option to Add or delete a blog post | Admin User | 4 | 4 | 8 | 1 |
-Delete review | Admin User | 5 | 5 | 10 | 2 |
+Delete review | Admin User | 5 | 5 | 10 | 1 |
 Track sales data | Admin User | 3 | 2 | 5 | 2 |
 Add/Edit info to banner display for key calendar events | Admin User | 4 | 4 | 5 | 1 |
 Custom error pages | All | 5 | 5 | 10 | 1 |
@@ -220,7 +220,7 @@ Based on the [User Stories](README.md#user-stories) and the opportunities outlin
 
 This site map outlines the design of the website and which pages are accesible to which user. 
 
-IMAGE
+
 
 This table outlines the design for the PostgreSQL database used to store the data. It is a relational database that will be integrated with Django.
 
