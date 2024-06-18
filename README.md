@@ -216,7 +216,7 @@ Custom error pages | All | 5 | 5 | 10 | 1 |
 
 ### Project Sructure
 
-Based on the [User Stories](README.md#user-stories) and the opportunities outlined in the [Opportunity Matrix](README.md#opportunity-matrix) the following structure was planned for the site. 
+The structure of the site was designed by refering to the [User Stories](README.md#user-stories) and the opportunities outlined in the [Opportunity Matrix](README.md#opportunity-matrix).
 
 This site map outlines the design of the website and which pages are accesible to which user. 
 
@@ -236,29 +236,84 @@ I am showing an expanded display of the mobile and tablet designs to ensure thor
 
 <details><summary>Home/Landing Page</summary>
 
-![Home/Landing Page]()
-
+![Home/Landing Page](documentation/design/wireframes/home.png)
 </details>
 
-About
-Shop
-Shop - Individual Category
-Shop - Individual Item
-Events
-Event - individual Item
-Basket
-Checkout
-Blog
-Blog - Individual Post
-Login/out
-User Profile
-Write Reveiw
-Edit Account
-Admin Profile
-Add/Edit Product
-Add Blog Post
-Example delete modal
+<details><summary>About Page</summary>
 
+![About Page](documentation/design/wireframes/about.png)
+</details>
+
+<details><summary>Shop Pages</summary>
+
+All Products: 
+![Shop Page](documentation/design/wireframes/shop.png)
+One Category (not event):
+![Shop One Catagory Page](documentation/design/wireframes/shop-one-catagory.png)
+Individual Product (not event):
+![Shop One Product Page](documentation/design/wireframes/individual-product.png)
+All Events
+![Shop Events Page](documentation/design/wireframes/shop-events.png)
+One Event:
+![Shop One Event Page](documentation/design/wireframes/individual-event.png)
+Admin Only, Add Product/Event (both pages are shown on one design here but they will be two separate pages):
+![Admin Add Event/Product Page](documentation/design/wireframes/add-or-edit-product-or-event.png)
+</details>
+
+<details><summary>Basket Page</summary>
+
+![Basket Page](documentation/design/wireframes/basket.png)
+</details>
+
+<details><summary>Review Page</summary>
+
+![Reveiw Page](documentation/design/wireframes/review.png)
+</details>
+
+<details><summary>Checkout Pages</summary>
+
+Checkout 1
+![Checkout 1 Page](documentation/design/wireframes/checkout-1.png)
+Checkout 2
+![Checkout 2 Page](documentation/design/wireframes/checkout-2.png)
+Checkout 3
+![Checkout 3 Page](documentation/design/wireframes/checkout-3.png)
+Checkout 4
+![Checkout 4 Page](documentation/design/wireframes/checkout-4.png)
+Checkout Confirmation
+![Checkout Confirmation](documentation/design/wireframes/checkout-confirmation.png)
+</details>
+
+<details><summary>Contact Pages</summary>
+
+General Contact
+![Contact Page General](documentation/design/wireframes/contact-general.png)
+Order Specific Contact
+![Contact Page Order](documentation/design/wireframes/contact-order-specific.png)
+</details>
+
+<details><summary>Blog Pages</summary>
+
+All Posts
+![Blog Posts Page](documentation/design/wireframes/blog-posts-all.png)
+Individual Post
+![Individual Post Page](documentation/design/wireframes/blog-post-individual.png)
+Admin only ability to add a blog post
+![Individual Post Page](documentation/design/wireframes/add-blog-post.png)
+</details>
+
+
+<details><summary>Login/Register Pages</summary>
+
+![Login Page](documentation/design/wireframes/login.png)
+![Register Page](documentation/design/wireframes/register.png)
+</details>
+
+<details><summary>User Profile Pages</summary>
+
+![Profile Page](documentation/design/wireframes/profile.png)
+![Order info (user specific) Page](documentation/design/wireframes/past-order-information.png)
+</details>
 
 ## Technologies
 
