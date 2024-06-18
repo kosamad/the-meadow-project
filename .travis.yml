@@ -7,4 +7,5 @@ install:
 
 # command to run tests
 script:
-    - python manage.py test 
+  - export SECRET_KEY="$SECRET_KEY" 
+  - python manage.py test 
