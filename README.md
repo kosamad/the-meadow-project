@@ -211,9 +211,6 @@ Track sales data | Admin User | 3 | 2 | 5 | 2 |
 Add/Edit info to banner display for key calendar events | Admin User | 4 | 4 | 5 | 1 |
 Custom error pages | All | 5 | 5 | 10 | 1 |
 
-* event bookings veiw????
-* email list for blog view????
-
 ### Project Sructure
 
 The structure of the site was designed by refering to the [User Stories](README.md#user-stories) and the opportunities outlined in the [Opportunity Matrix](README.md#opportunity-matrix).
@@ -225,6 +222,20 @@ This site map outlines the design of the website and which pages are accesible t
 This table outlines the design for the PostgreSQL database which will be used to store the data. It is a relational database that will be integrated with Django, enabling seamless database interactions. Django's ORM (Object-Relational Mapping) will allow me to define database models in Python, perform CRUD (Create, Read, Update, Delete) operations, and dynamically generate HTML content within my application.
 
 ![Database Design](documentation/design/database-design.png)
+
+The database will be integrated into The Meadow Project's Django framework under the following apps:
+
+* Home: Manages the homepage content and main navigation.
+* Products: Handles product listings and details.
+* Events: Manages event listings and details.
+* Basket: Manages the shopping cart functionality.
+* Discounts: Manages the discount functionality.
+* Checkout: Handles the checkout process and order completion.
+* Blog: Manages blog posts and related content.
+* Users: Handles user profiles and account settings.
+* Reviews: Manages user reviews.
+
+These apps will all reside under a centralised project called The Meadow Project.
 
 ### Project Skeleton
 
@@ -314,6 +325,19 @@ Admin only ability to add a blog post
 ![Profile Page](documentation/design/wireframes/profile.png)
 ![Order info (user specific) Page](documentation/design/wireframes/past-order-information.png)
 </details>
+
+### Surface Design
+
+#### Logo and Typography
+
+I utilised [Canva](https://www.canva.com) to design my logo, aiming for a simple and clean image that evokes floral design, calmness, and beauty. I customised a template, focusing on colors that complement the site's imagery. The font was modified to use a freely available Google font, EB Garamond, which appears clean and stylish, conveying sophistication and professionalism to clients.
+
+![Logo](documentation/design/full-logo.png)
+
+![Font](documentation/design/ebgaramond-font.PNG)
+
+This font will be paried with Lexend. This was selected after reading the article by google fonts titled ["Introducing accessibility in typography"](https://fonts.google.com/knowledge/readability_and_accessibility/introducing_accessibility_in_typography). It states that Lexend was designed to be easier to read for all users, ensuring each character is distinctive from others.
+
 
 ## Technologies
 
