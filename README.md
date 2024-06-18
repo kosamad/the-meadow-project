@@ -344,7 +344,9 @@ The site's color scheme was inspired by my logo design, incorporating the primar
 
 ![Colour Scheme](documentation/design/coolers-tmp.PNG)
 
+## Finished Site Features
 
+### Imagery
 
 ## Technologies
 
@@ -369,3 +371,11 @@ HTML, CSS, JavaScript & Python
 * [Pip](https://pip.pypa.io/en/stable/) - for installing Python packages.
 * [dbdiagram](https://dbdiagram.io/home) - to design and visualise the database.
 * [drawio](https://www.drawio.com/) - to draw the site flow chart.
+* [Balsamiq](https://balsamiq.com/) - to create wireframes.
+* [Coolers](https://coolors.co/) - to view the colour scheme.
+* [Canva](https://www.canva.com/) - to create the logo.
+* [Google Fonts](https://fonts.google.com/) - for the fonts used on the website.
+
+## Testing
+
+Please see the separate [TESTING.md](TESTING.md) file for testing carried out on The Meadow Project.
