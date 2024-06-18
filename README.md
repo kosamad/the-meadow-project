@@ -226,6 +226,7 @@ This table outlines the design for the PostgreSQL database which will be used to
 The database will be integrated into The Meadow Project's Django framework under the following apps:
 
 * Home: Manages the homepage content and main navigation.
+* About: Manages the about page content.
 * Products: Handles product listings and details.
 * Events: Manages event listings and details.
 * Basket: Manages the shopping cart functionality.
