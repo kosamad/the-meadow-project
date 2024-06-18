@@ -363,19 +363,20 @@ HTML, CSS, JavaScript & Python
 
 ### Frameworks
 
-* [Django](https://www.djangoproject.com/) - web development framework.
+* [Django](https://www.djangoproject.com) - web development framework.
 
 ### Libraries, Programs and Tools Used
 
-* [Github](https://github.com/) - to save and store the files for the website.
-* [Git](https://git-scm.com/) - for version control, using the GitPod terminal to commit and Push to GitHub.
-* [Pip](https://pip.pypa.io/en/stable/) - for installing Python packages.
+* [Github](https://github.com) - to save and store the files for the website.
+* [Git](https://git-scm.com) - for version control, using the GitPod terminal to commit and Push to GitHub.
+* [Pip](https://pip.pypa.io/en/stable) - for installing Python packages.
 * [dbdiagram](https://dbdiagram.io/home) - to design and visualise the database.
-* [drawio](https://www.drawio.com/) - to draw the site flow chart.
-* [Balsamiq](https://balsamiq.com/) - to create wireframes.
-* [Coolers](https://coolors.co/) - to view the colour scheme.
-* [Canva](https://www.canva.com/) - to create the logo.
-* [Google Fonts](https://fonts.google.com/) - for the fonts used on the website.
+* [drawio](https://www.drawio.com) - to draw the site flow chart.
+* [Balsamiq](https://balsamiq.com) - to create wireframes.
+* [Coolers](https://coolors.com) - to view the colour scheme.
+* [Canva](https://www.canva.com) - to create the logo.
+* [Google Fonts](https://fonts.google.com) - for the fonts used on the website.
+* [Travis](https://www.travis-ci.com) - to automatically run my tests with each deployment.
 
 ## Testing
 

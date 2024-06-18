@@ -23,9 +23,9 @@ Throughout the development process, I relied on Chrome developer tools to assess
 
 # Automated Testing
 
-The automated testing implemented in this project complements the manual tests, ensuring that the Python code fulfilled its objectives from the outset. The testing strategy was not aimed at achieving 100% coverage but at supporting and enhancing the manual testing process.
+The automated testing implemented in this project complements the manual tests, ensuring that the Python code fulfilled its objectives from the outset. The testing strategy was not aimed at achieving 100% coverage but at supporting and enhancing the manual testing process. To run tests I have used the Django Testing Framework. 
 
-The tests for each app are organized into `test_models.py`, `test_views.py`, and `test_forms.py` within the respective applications. Note that tests were conducted using the local database, as Heroku does not support automatic testing of its databases. During testing, the Postgres database configuration in settings.py was commented out to facilitate running tests locally.
+The tests for each app are organized into a tests folder. Note that tests were conducted using the local database, as Heroku does not support automatic testing of its databases. During testing, the Postgres database configuration in settings.py was commented out to facilitate running tests locally.
 
 To run the tests:
 
@@ -34,6 +34,7 @@ To run the tests:
 * To understand how comprehensive the test are, generate a coverage report using the command "coverage report".
 * To view the coverage report in your web browser, type "coverage html" and open the "index.html" file newly created directory.
 
+During this build, I utilised [Travis](https://www.travis-ci.com/) CI to automatically run tests each time my project was deployed. This ensured I was promptly notified of any test failures caused by new code, allowing me to address issues before they were merged into my main branch. This also meant I did not need to alter my settings.py file to run tests. 
 
 # Manual Testing
 
