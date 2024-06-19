@@ -7,16 +7,17 @@ body {
 }
 
 
-h1, h2 {
-    font-family: 'EB Garamond', serif;    
+h1,
+h2 {
+    font-family: 'EB Garamond', serif;
 }
 
-.bg-lpink{
+.bg-lpink {
     background-color: #ffc4ca;
 }
 
 .heading-banner {
-    height: 150px;
+    min-height: 150px;
     padding: 1% 0;
     margin-bottom: 5rem;
 }
@@ -26,21 +27,21 @@ h1, h2 {
     color: white;
 }
 
-.btn-green:hover{
+.btn-green:hover {
     background-color: #ade5d3;
     color: black;
 }
 
-.img-page-break {    
-    max-height: 300px; 
-    width: 100%; 
+.img-page-break {
+    max-height: 300px;
+    width: 100%;
     object-fit: cover;
     object-position: center;
 }
 
 .img-side {
-    min-height: 300px; 
-    width: 100%; 
+    min-height: 300px;
+    width: 100%;
     object-fit: cover;
     object-position: center;
 }
@@ -48,17 +49,22 @@ h1, h2 {
 
 /* Home */
 
-.image {
-    display: block;
-    width: 100%;
+.img-hero {
+    min-width:300px;         
+    height: auto;
 }
 
 .image-container {
     position: relative;
-    overflow: hidden;    
+    overflow: hidden;
 }
 
-.image-overlay {
+.grid-img {
+    display: block;
+    width: 100%;
+}
+
+.grid-img-overlay {
     position: absolute;
     top: 75%;
     left: 50%;
@@ -71,14 +77,14 @@ h1, h2 {
     color: black;
 }
 
-.image-overlay:hover {
+.grid-img-overlay:hover {
     display: block;
     color: black;
 }
 
 .img-events {
-    max-height: 300px; 
-    width: 100%; 
+    max-height: 350px;
+    width: 100%;
     object-fit: cover;
     object-position: center;
 }
@@ -93,7 +99,7 @@ h1, h2 {
     padding: 10px 20px;
     border-radius: 5px;
     text-align: center;
-    color: black;       
+    color: black;
 }
 
 .caption {
@@ -102,4 +108,34 @@ h1, h2 {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+.carousel-control-next-icon,
+.carousel-control-prev-icon {
+    filter: invert(100%);
+}
+
+.review-text {
+    font-size: 1.5rem;
+    font-style: italic;
+}
+
+.review-author {
+    font-size: 1.2rem;
+    margin-top: 1rem;
+    font-weight: bold;
+}
+
+
+/* Media Queries */
+
+@media (max-width: 991px) {
+
+    .img-events {
+    min-height: 500px;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
 }

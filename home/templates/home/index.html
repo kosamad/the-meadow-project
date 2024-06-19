@@ -2,28 +2,39 @@
 {% load static %}
 
 {% block content %}
-<!-- statement banner -->
+
+<!-- Hero image and title -->
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6 offset-lg-3 col-md-12 mt-4 mb-4 text-center">
+            <img src="/media/full-logo.png" class="img-fluid img-hero" alt="Image 1">
+        </div>
+    </div>
+</div>
+
+<!-- Statement banner -->
 <div class="bg-lpink">
     <div class="container">
         <div class="row heading-banner justify-content-center align-items-center">
             <div class="col-9 text-center">
-                <h3>
+                <h4 class="mt-3 mb-3">
                     Enjoy the beauty of our locally grown, meadow-fresh flowers. Sustainably nurtured, bringing nature's
                     best to you.
-                </h3>
+                </h4>
             </div>
         </div>
     </div>
 </div>
 
+<!-- Grid (image) links -->
 <div class="container">
     <div class="row">
         <div class="col-lg-4 col-sm-6 mb-4">
             <a href="">
                 <div class="thumbnail">
                     <div class="image-container">
-                        <img src="/media/456326_10150608025813424_1197022405_o.jpg" class="image" alt="Image 1">
-                        <btn type="button" class="btn image-overlay">Page 1</btn>
+                        <img src="/media/456326_10150608025813424_1197022405_o.jpg" class="grid-img" alt="Image 1">
+                        <btn type="button" class="btn grid-img-overlay">Page 1</btn>
                     </div>
                 </div>
             </a>
@@ -32,8 +43,8 @@
             <a href="">
                 <div class="thumbnail">
                     <div class="image-container">
-                        <img src="/media/456326_10150608025813424_1197022405_o.jpg" class="image" alt="Image 1">
-                        <btn type="button" class="btn image-overlay">Page 1</btn>
+                        <img src="/media/456326_10150608025813424_1197022405_o.jpg" class="grid-img" alt="Image 1">
+                        <btn type="button" class="btn grid-img-overlay">Page 1</btn>
                     </div>
                 </div>
             </a>
@@ -42,8 +53,8 @@
             <a href="">
                 <div class="thumbnail">
                     <div class="image-container">
-                        <img src="/media/456326_10150608025813424_1197022405_o.jpg" class="image" alt="Image 1">
-                        <btn type="button" class="btn image-overlay">Page 1</btn>
+                        <img src="/media/456326_10150608025813424_1197022405_o.jpg" class="grid-img" alt="Image 1">
+                        <btn type="button" class="btn grid-img-overlay">Page 1</btn>
                     </div>
                 </div>
             </a>
@@ -52,8 +63,8 @@
             <a href="">
                 <div class="thumbnail">
                     <div class="image-container">
-                        <img src="/media/456326_10150608025813424_1197022405_o.jpg" class="image" alt="Image 1">
-                        <btn type="button" class="btn image-overlay">Page 1</btn>
+                        <img src="/media/456326_10150608025813424_1197022405_o.jpg" class="grid-img" alt="Image 1">
+                        <btn type="button" class="btn grid-img-overlay">Page 1</btn>
                     </div>
                 </div>
             </a>
@@ -62,8 +73,8 @@
             <a href="">
                 <div class="thumbnail">
                     <div class="image-container">
-                        <img src="/media/456326_10150608025813424_1197022405_o.jpg" class="image" alt="Image 1">
-                        <btn type="button" class="btn image-overlay">Page 1</btn>
+                        <img src="/media/456326_10150608025813424_1197022405_o.jpg" class="grid-img" alt="Image 1">
+                        <btn type="button" class="btn grid-img-overlay">Page 1</btn>
                     </div>
                 </div>
             </a>
@@ -72,51 +83,16 @@
             <a href="">
                 <div class="thumbnail">
                     <div class="image-container">
-                        <img src="/media/456326_10150608025813424_1197022405_o.jpg" class="image" alt="Image 1">
-                        <btn type="button" class="btn image-overlay">Page 1</btn>
+                        <img src="/media/456326_10150608025813424_1197022405_o.jpg" class="grid-img" alt="Image 1">
+                        <btn type="button" class="btn grid-img-overlay">Page 1</btn>
                     </div>
                 </div>
             </a>
         </div>
-
-        <!-- <div class="col-12 col-lg-4 col-md-6 mb-4">
-            <a href="" class="image-container d-flex justify-content-center">
-                <img src="https://via.placeholder.com/300" class="img-fluid" alt="Image 1">
-                <btn type="button" class="btn image-overlay">Page 1</btn>
-            </a>
-        </div>
-        <div class="col-12 col-lg-4 col-md-6 mb-4">
-            <a href="" class="image-container d-flex justify-content-center">
-                <img src="https://via.placeholder.com/300" class="img-fluid" alt="Image 2">
-                <btn type="button" class="btn image-overlay">Page 2</btn>
-            </a>
-        </div>
-        <div class="col-12 col-lg-4 col-md-6 mb-4">
-            <a href="" class="image-container d-flex justify-content-center">
-                <img src="https://via.placeholder.com/300" class="img-fluid" alt="Image 3">
-                <btn type="button" class="btn image-overlay">Page 3</btn>
-            </a>
-        </div>
-        <div class="col-12 col-lg-4 col-md-6 mb-4">
-            <a href="" class="image-container d-flex justify-content-center">
-                <img src="https://via.placeholder.com/300" class="img-fluid" alt="Image 1">
-                <btn type="button" class="btn image-overlay">Page 1</btn>
-            </a>
-        </div>
-        <div class="col-12 col-lg-4 col-md-6 mb-4">
-            <a href="" class="image-container d-flex justify-content-center">
-                <img src="https://via.placeholder.com/300" class="img-fluid" alt="Image 2">
-                <btn type="button" class="btn image-overlay">Page 2</btn>
-            </a>
-        </div>
-        <div class="col-12 col-lg-4 col-md-6 mb-4">
-            <a href="" class="image-container d-flex justify-content-center">
-                <img src="" class="img-fluid" alt="Image 3">
-                <btn type="button" class="btn image-overlay">Page 3</btn>
-            </a> -->
     </div>
 </div>
 
+<!-- Breif About -->
 <div class="container">
     <div class="row">
         <div class="col-12 text-center">
@@ -176,6 +152,7 @@
 
 </div>
 
+<!-- Page break image -->
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-12 mt-4 mb-4">
@@ -184,6 +161,7 @@
     </div>
 </div>
 
+<!-- Shop Advert -->
 <div class="container">
     <div class="row justify-content-center mt-4">
         <div class="col-lg-4 offset-lg-1 col-md-6 col-12 mt-4 d-flex align-items-center">
@@ -202,22 +180,57 @@
     </div>
 </div>
 
+<!-- Events advert-->
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-12 mt-4">
             <div class="image-container">
                 <img src="/media/456326_10150608025813424_1197022405_o.jpg" class="img-fluid img-events" alt="Image 1">
                 <div class="events-overlay d-flex justify-content-center align-items-center">
-                    <div class=" col-9 text-center mb-5">
+                    <div class="col-9 text-center">
                         <p class="">Step into nature at our meadow events. Experience serene surroundings and learn to
                             create your own bouquets with freshly picked flowers from the meadow.</p>
-                        <div class="mt-5">
+                        <div class="mt-4">
                             <btn type="button" class="btn btn-green">EVENTS</btn>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+</div>
+
+<!-- Review Carousel adapted from Bootstrap-->
+<div class="container mt-5">
+    <div id="carouselReveiw" class="carousel slide">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <div class="d-block w-100 p-5 text-center">
+                    <p class="review-text">"This is a fantastic service!"</p>
+                    <p class="review-author">- John Doe</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="d-block w-100 p-5 text-center">
+                    <p class="review-text">"The flowers are always fresh and beautiful."</p>
+                    <p class="review-author">- John Doe</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="d-block w-100 p-5 text-center">
+                    <p class="review-text">"What a fantastic site"</p>
+                    <p class="review-author">- John Doe</p>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselReveiw" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselReveiw" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
     </div>
 </div>
 
