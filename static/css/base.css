@@ -31,6 +31,20 @@ h1, h2 {
     color: black;
 }
 
+.img-page-break {    
+    max-height: 300px; 
+    width: 100%; 
+    object-fit: cover;
+    object-position: center;
+}
+
+.img-side {
+    min-height: 300px; 
+    width: 100%; 
+    object-fit: cover;
+    object-position: center;
+}
+
 
 /* Home */
 
@@ -60,4 +74,32 @@ h1, h2 {
 .image-overlay:hover {
     display: block;
     color: black;
+}
+
+.img-events {
+    max-height: 300px; 
+    width: 100%; 
+    object-fit: cover;
+    object-position: center;
+}
+
+.events-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 50%;
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-align: center;
+    color: black;       
+}
+
+.caption {
+    font-size: 2rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
