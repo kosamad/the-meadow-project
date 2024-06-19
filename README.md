@@ -337,11 +337,11 @@ I utilised [Canva](https://www.canva.com) to design my logo, aiming for a simple
 
 ![Font](documentation/design/ebgaramond-font.PNG)
 
-This font will be paried with Lexend. This was selected after reading the article by google fonts titled ["Introducing accessibility in typography"](https://fonts.google.com/knowledge/readability_and_accessibility/introducing_accessibility_in_typography). It states that Lexend was designed to be easier to read for all users, ensuring each character is distinctive from others.
+This font will be paried with Atkinson Hyperlegible. This was selected after reading the article by The Material Design Blog titled ["How to make your text more accessible"](https://material.io/blog/how-to-make-text-more-accessible). It states that Atkinson Hyperlegible was developed specifically to increase legibility for readers with low vision, and to improve comprehension. Furthermore, it fits nicely with the style and theme of the site. 
 
 ### Colour Scheme
 
-The site's color scheme was inspired by my logo design, incorporating the primary colors #FFBD59 (Hunyadi Yellow), #DC6874 (Bright Pink), #04724D (Dark Spring Green), and #E26016 (Spanish Orange). These colors will be used sparingly as accents to maintain a clean, sleek, and stylish design. The minimal use of color ensures that the product colors are prominently emphasised.
+The site's color scheme was inspired by my logo design, incorporating the primary colors #FFBD59 (Hunyadi Yellow), #DC6874 (Bright Pink), #04724D (Dark Spring Green), and #E26016 (Spanish Orange) and variations on them. These colors will be used sparingly as accents to maintain a clean, sleek, and stylish design. The minimal use of color ensures that the product colors are prominently emphasised.
 
 ![Colour Scheme](documentation/design/coolers-tmp.PNG)
 
