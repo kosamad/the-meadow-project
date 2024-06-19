@@ -1,0 +1,63 @@
+html {
+    height: 100%;
+}
+
+body {
+    font-family: 'Atkinson Hyperlegible', sans-serif;
+}
+
+
+h1, h2 {
+    font-family: 'EB Garamond', serif;    
+}
+
+.bg-lpink{
+    background-color: #ffc4ca;
+}
+
+.heading-banner {
+    height: 150px;
+    padding: 1% 0;
+    margin-bottom: 5rem;
+}
+
+.btn-green {
+    background-color: #04724d;
+    color: white;
+}
+
+.btn-green:hover{
+    background-color: #ade5d3;
+    color: black;
+}
+
+
+/* Home */
+
+.image {
+    display: block;
+    width: 100%;
+}
+
+.image-container {
+    position: relative;
+    overflow: hidden;    
+}
+
+.image-overlay {
+    position: absolute;
+    top: 75%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-align: center;
+    display: block;
+    color: black;
+}
+
+.image-overlay:hover {
+    display: block;
+    color: black;
+}
