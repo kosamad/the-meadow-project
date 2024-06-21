@@ -61,33 +61,50 @@ interfering with the core requirements.-->
     <header class="container-fluid fixed-top bg-white">
         <div class="container-fluid">
             <div class="row align-items-center">
+
                 <!-- Logo -->
-                <div class="col-md-2 my-2 my-lg-0 text-center text-lg-left">
+                <div class="col-md-2 col-2 my-2 my-lg-0 text-center text-lg-left d-none d-md-block">
                     <a href="{% url 'home' %}" class="nav-link">
                         <img src="/media/short-logo.png" class="nav-logo" alt="Image 1">
                     </a>
                 </div>
-                <div class="col-md-8 text-center">
-                    <ul class="list-inline list-unstyled d-flex justify-content-around mb-0">
-                        <li class="list-inline-item mr-lg-4"><a href="{% url 'home' %}" class="nav-link main-logo-link">
-                            </a>Home</li>
-                        <li class="list-inline-item nav-item"><a href="#" class="nav-link">Shop</a></li>
-                        <li class="list-inline-item nav-item"><a href="#" class="nav-link">Events</a></li>
-                        <li class="list-inline-item nav-item"><a href="#" class="nav-link">Blog</a></li>
-                        <li class="list-inline-item nav-item"><a href="#" class="nav-link">Blog</a></li>
-                        <li class="list-inline-item nav-item"><a href="#" class="nav-link">Blog</a></li>
-                    </ul>
+
+                <!-- Navbar toggle and Links -->
+                <div class="col-md-8 col-6 align-items-center text-center">
+                    <nav class="navbar navbar-expand-lg">
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+                            aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+                            <ul class="navbar-nav mx-auto d-flex justify-content-around w-100">
+                                <li class="nav-item">
+                                    <a href="{% url 'home' %}" class="nav-link main-logo-link">Home</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">Shop</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">Events</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">Blog</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
                 </div>
-                <div class="col-md-2 my-2 my-lg-0 d-flex justify-content-end align-items-center">
-                    <!-- Account and Shopping Bag -->
+                <!-- Account and Shopping Bag -->
+                <div class="col-6 col-md-2 my-2 my-lg-0 d-flex justify-content-end align-items-center">
                     <ul class="list-inline list-unstyled mb-0 ml-lg-2">
                         <!-- My Account + dropdown options -->
                         <li class="list-inline-item mr-lg-4 dropdown nav-item">
-                            <a class="nav-link" href="#" id="user-options" data-toggle="dropdown" aria-haspopup="true"
-                                aria-expanded="false">
+                            <a class="nav-link" href="#" id="user-options" data-bs-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
                                 <div><i class="fas fa-user nav-icon"></i></div>
                             </a>
-                            <div class="dropdown-menu border-0" aria-labelledby="user-options">
+                            <div class="dropdown-menu border-0 bg-green" aria-labelledby="user-options">
                                 {% if request.user.is_authenticated %}
                                 {% if request.user.is_superuser %}
                                 <a href="" class="dropdown-item">TMP Management</a>
@@ -115,28 +132,26 @@ interfering with the core requirements.-->
                             </a>
                         </li>
                     </ul>
-                </div>
-            </div>
-        </div>
-        </div>
-
-
-        </div>
-
-        <!-- Search Toggled bar -->
-        <div class="col-12 my-auto py-1 py-lg-0 d-flex justify-content-end align-items-center">
-            <div class="search-toggle">
-                <form method="GET" action="" class="form-inline mb-0 d-none">
-                    <div class="input-group">
-                        <input class="form-control form-control-sm border-green" type="search" name="q"
-                            placeholder="Search" aria-label="Search">
-                        <div class="input-group-append">
-                            <button class="btn btn-outline-success" type="submit">
-                                <i class="fas fa-search"></i>
-                            </button>
-                        </div>
+                    <!-- Toggled Search bar -->
+                    <div class="search-overlay bg-white">
+                        <form method="GET" action="" class="form-inline mb-0">
+                            <div class="input-group">
+                                <input class="form-control form-control-sm border-green margin-10 rounded-0"
+                                    type="search" name="q" aria-label="Search">
+                                <div class="input-group-append">
+                                    <button class="btn btn-green margin-10" type="submit">
+                                        Search
+                                    </button>
+                                </div>
+                                <div class="input-group-append">
+                                    <button class="close-search btn-green btn margin-15" type="button">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
-                </form>
+                </div>
             </div>
     </header>
 
@@ -154,12 +169,16 @@ interfering with the core requirements.-->
 
     <!--  JS Loaded at end of body -->
     {% block postloadjs %}
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function () {
-            $('.search-icon, .search-icon-toggle').click(function (e) {
+            $('.search-icon-toggle').click(function (e) {
                 e.preventDefault();
-                $('.form-inline').toggleClass('d-none'); // Toggle the visibility of the search form
+                $('.search-overlay').toggle(); // Toggle the visibility of the search form
+            });
+
+            $('.close-search').click(function (e) {
+                e.preventDefault();
+                $('.search-overlay').hide(); // Hide the search form
             });
         });
     </script>

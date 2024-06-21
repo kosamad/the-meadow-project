@@ -18,10 +18,16 @@ h2 {
 .text-pink{
     color:#DC6874;
 }
+
+/* backgrounds */
 .bg-lpink {
     background-color: #ffc4ca;
 }
 
+.bg-green{ background-color: #04724d;}
+
+.bg-green .dropdown-item {color:white;}
+ 
 .heading-banner {
     min-height: 150px;
     padding: 1% 0;
@@ -30,9 +36,8 @@ h2 {
 
 .btn-green {
     background-color: #04724d;
-    color: white;
+    color:white;   
 }
-
 
 .btn-green:hover {
     background-color: #ade5d3;
@@ -59,7 +64,7 @@ h2 {
 
 .nav-logo{
     display: block;    
-    height: 125px;     
+    height: 75px;     
     object-fit: cover;
     object-position: center;
 }
@@ -69,7 +74,18 @@ color: #04724d;}
 
 .border-green{border-color: #04724d;}
 
+.search-overlay {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    display: none;
+    z-index: 1000;
+}
 
+.margin-15{margin-right: 15px;}
+
+.margin-10{margin-right: 10px;}
 
 /* Home */
 
@@ -172,3 +188,7 @@ color: #04724d;}
 }
 
 }
+
+.nav-logo{     
+    height: 75px;     
+    }
