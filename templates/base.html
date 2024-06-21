@@ -24,8 +24,10 @@ interfering with the core requirements.-->
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <!-- Google fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap"
+        rel="stylesheet">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
     {% endblock %}
@@ -55,7 +57,88 @@ interfering with the core requirements.-->
 </head>
 
 <body>
-    <header class="container-fluid fixed-top"></header>
+
+    <header class="container-fluid fixed-top bg-white">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <!-- Logo -->
+                <div class="col-lg-2 my-2 my-lg-0 text-center text-lg-left">
+                    <a href="{% url 'home' %}" class="nav-link">
+                        <img src="/media/short-logo.png" class="nav-logo" alt="Image 1">
+                    </a>
+                </div>
+                <div class="col-lg-10 my-2 my-lg-0 d-flex justify-content-end align-items-center">           
+                <!-- Account and Shopping Bag -->
+                <ul class="list-inline list-unstyled mb-0 ml-lg-2">
+                    <!-- My Account + dropdown options -->
+                    <li class="list-inline-item mr-lg-4 dropdown nav-item">
+                        <a class="nav-link" href="#" id="user-options" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">
+                            <div><i class="fas fa-user nav-icon"></i></div>
+                        </a>
+                        <div class="dropdown-menu border-0" aria-labelledby="user-options">
+                            {% if request.user.is_authenticated %}
+                            {% if request.user.is_superuser %}
+                            <a href="" class="dropdown-item">TMP Management</a>
+                            {% endif %}
+                            <a href="" class="dropdown-item">My Profile</a>
+                            <a href="{% url 'account_logout' %}" class="dropdown-item">Logout</a>
+                            {% else %}
+                            <a href="{% url 'account_signup' %}" class="dropdown-item">Sign Up</a>
+                            <a href="{% url 'account_login' %}" class="dropdown-item">Login</a>
+                            {% endif %}
+                        </div>
+                    </li>
+
+                    <!-- Link to Shopping Bag -->
+                    <li class="list-inline-item nav-item">
+                        <a class="nav-link" href="">
+                            <i class="fas fa-shopping-bag nav-icon {% if grand_total %}text-pink{% endif %}"></i>
+                        </a>
+                    </li>
+
+                      <!-- Search Toggle -->
+                    <li class="list-inline-item nav-item">
+                        <a class="nav-link search-icon-toggle" href="#">
+                            <i class="fas fa-search nav-icon"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>  
+            </div>
+        </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-lg-8 my-auto d-flex justify-content-between align-items-center">
+                    <ul class="list-inline list-unstyled d-flex mb-0">
+                        <li class="list-inline-item mr-lg-4"><a href="{% url 'home' %}" class="nav-link main-logo-link">
+                            </a>Home</li>
+                        <li class="list-inline-item nav-item"><a href="#" class="nav-link">Shop</a></li>
+                        <li class="list-inline-item nav-item"><a href="#" class="nav-link">Events</a></li>
+                        <li class="list-inline-item nav-item"><a href="#" class="nav-link">Blog</a></li>
+                        <li class="list-inline-item nav-item"><a href="#" class="nav-link">Blog</a></li>
+                        <li class="list-inline-item nav-item"><a href="#" class="nav-link">Blog</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        </div>
+        <div class="col-12 my-auto py-1 py-lg-0 d-flex justify-content-end align-items-center">
+            <div class="search-toggle">
+                <form method="GET" action="" class="form-inline mb-0 d-none">
+                    <div class="input-group">
+                        <input class="form-control form-control-sm border-green" type="search" name="q"
+                            placeholder="Search" aria-label="Search">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-success" type="submit">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+    </header>
 
     {% if messages %}
     <div class="message-container"></div>
@@ -71,6 +154,15 @@ interfering with the core requirements.-->
 
     <!--  JS Loaded at end of body -->
     {% block postloadjs %}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.search-icon, .search-icon-toggle').click(function (e) {
+                e.preventDefault();
+                $('.form-inline').toggleClass('d-none'); // Toggle the visibility of the search form
+            });
+        });
+    </script>
     {% endblock %}
 
 </body>

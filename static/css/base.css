@@ -3,15 +3,21 @@ html {
 }
 
 body {
-    font-family: 'Atkinson Hyperlegible', sans-serif;
+    font-family: 'Atkinson Hyperlegible', sans-serif;   
 }
 
+.page-space{
+    margin-top:200px;
+}
 
 h1,
 h2 {
     font-family: 'EB Garamond', serif;
 }
 
+.text-pink{
+    color:#DC6874;
+}
 .bg-lpink {
     background-color: #ffc4ca;
 }
@@ -26,6 +32,7 @@ h2 {
     background-color: #04724d;
     color: white;
 }
+
 
 .btn-green:hover {
     background-color: #ade5d3;
@@ -45,6 +52,23 @@ h2 {
     object-fit: cover;
     object-position: center;
 }
+
+.text-highlight {color:#04724d}
+
+/* Nav Bar */
+
+.nav-logo{
+    display: block;    
+    height: 125px;     
+    object-fit: cover;
+    object-position: center;
+}
+
+.nav-icon{font-size: 20px;
+color: #04724d;}
+
+.border-green{border-color: #04724d;}
+
 
 
 /* Home */
@@ -132,8 +156,14 @@ h2 {
 
 /* Media Queries */
 
-@media (max-width: 991px) {
+/* Slightly larger container on xl screens */
+@media (min-width: 1200px) {
+    .container {
+      max-width: 80%;
+    }
+  }
 
+@media (max-width: 992px) {
     .img-events {
     min-height: 500px;
     width: 100%;
