@@ -49,7 +49,6 @@ INSTALLED_APPS = [
     'products',
     'events',
     'shop',
-
 ]
 
 MIDDLEWARE = [

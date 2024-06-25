@@ -2,4 +2,14 @@ from django.contrib import admin
 from .models import Event
 
 # Registered models
-admin.site.register(Event)
+
+class EventAdmin(admin.ModelAdmin):
+    list_display = (
+        'name',              
+        'price',
+        'image',
+    ) 
+
+    ordering = ('name',)     
+
+admin.site.register(Event, EventAdmin)

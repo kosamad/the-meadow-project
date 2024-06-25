@@ -16,12 +16,44 @@
             <h2>Shop</h2>
         </div>
     </div>
-    <div class="row"> 
-        <ul>
-            <li><a href="{% url 'flowers' %}">View Flowers</a></li>
-            <li><a href="{% url 'plants' %}">View Plants</a></li>
-            <li><a href="{% url 'events' %}">View Events</a></li>
-        </ul>         
+    <div class="row">
+        <div class="col-12 col-md-5 col-lg-4">
+            <p>
+                Welcome to The Meadow Project's shop! What are you looking to shop for today?
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-4 col-md-6 col-12 mb-4 order-md-1">
+            <a href="">
+                <div class="thumbnail">
+                    <div class="image-container">
+                        <img src="/media/peter-bucks-70zWkGkeMrk-unsplash.jpg" class="grid-img" alt="Image 1">
+                        <button type="button" class="btn grid-img-overlay fw-bold">Flowers</button>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-lg-4 col-md-6 col-12 mb-4 order-md-4 order-lg-3">
+            <a href="">
+                <div class="thumbnail">
+                    <div class="image-container">
+                        <img src="/media/feey-ZQbpzgoWYrA-unsplash.jpg" class="grid-img" alt="Image 1">
+                        <button type="button" class="btn grid-img-overlay fw-bold">Plants</button>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-lg-4 col-md-6 col-12 mb-4 order-md-5">
+            <a href="">
+                <div class="thumbnail">
+                    <div class="image-container">
+                        <img src="/media/pexels-gabby-k-5063459.jpg" class="grid-img" alt="Image 1">
+                        <button type="button" class="btn grid-img-overlay fw-bold">Events</button>
+                    </div>
+                </div>
+            </a>
+        </div>
     </div>
 </div>
 
