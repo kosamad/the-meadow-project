@@ -1,13 +1,19 @@
 from django.shortcuts import render
 from .models import Product
 
-def all_products(request):
-    """ A view to return the products page, including sorting and search queries """
 
-    products = Product.objects.all()
-    
+def flowers(request):
+    flowers = Product.objects.filter(category__name='Flowers')
     context = {
-        'products': products,
+        'products': flowers,
     }
+    return render(request, 'products/flowers.html', context)
 
-    return render(request, 'products/products.html', context)
+
+
+def plants(request):
+    plants = Product.objects.filter(category__name='Plants')
+    context = {
+        'products': plants,
+    }
+    return render(request, 'products/plants.html', context)

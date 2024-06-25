@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_header %}
+<div class="container header-container">
+    <div class="row">
+        <div class="col"></div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-12 text-center">
+            <h2>Shop</h2>
+        </div>
+    </div>
+    <div class="row"> 
+        <ul>
+            <li><a href="{% url 'flowers' %}">View Flowers</a></li>
+            <li><a href="{% url 'plants' %}">View Plants</a></li>
+            <li><a href="{% url 'events' %}">View Events</a></li>
+        </ul>         
+    </div>
+</div>
+
+{% endblock %}
