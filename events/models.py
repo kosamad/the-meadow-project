@@ -17,6 +17,7 @@ class Event(models.Model):
     description = models.TextField()
     capacity = models.IntegerField()   
     tickets_sold = models.IntegerField(default=0)
+    image = models.ImageField(null=True, blank=True, upload_to='event_images/')   
 
     def __str__(self):
         return self.name 
