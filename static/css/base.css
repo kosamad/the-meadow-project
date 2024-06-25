@@ -6,6 +6,8 @@ body {
     font-family: 'Atkinson Hyperlegible', sans-serif;   
 }
 
+.header-container{margin-top:75px;}
+
 .page-space{
     margin-top:75px;
 }
