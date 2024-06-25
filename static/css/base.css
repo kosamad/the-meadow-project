@@ -112,7 +112,7 @@ color: #04724d;}
     top: 75%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: rgba(255, 255, 255, 0.7);
+    background-color: rgba(255, 255, 255, 0.9);
     padding: 10px 20px;
     border-radius: 5px;
     text-align: center;
@@ -122,7 +122,7 @@ color: #04724d;}
 
 .grid-img-overlay:hover {
         color: black;
-        background-color: rgba(255, 255, 255, 0.938);
+        background-color: #DC6874;
 }
 
 .img-events {
