@@ -32,7 +32,9 @@ class Product(models.Model):
     description = models.TextField()
     has_sizes = models.BooleanField(default=False, null=True, blank=True)
     image = models.ImageField(null=True, blank=True, upload_to='product_images/') 
-    rating = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)        
+    rating = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
+    is_gift_card = models.BooleanField(default=False)    
+    is_active = models.BooleanField(default=True)       
 
     SIZE_CHOICES = (
         ('S', 'Small'),
@@ -41,7 +43,6 @@ class Product(models.Model):
     )
 
     size = models.CharField(max_length=1, choices=SIZE_CHOICES, null=True, blank=True)
-
 
 
     def __str__(self):
