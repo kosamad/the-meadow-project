@@ -39,13 +39,10 @@ interfering with the core requirements.-->
     <!-- Bootstrap 5 used in this project. -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
-    </script>    
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+        integrity="sha384-oBqDVmMz4fnFO9gybIV7Nu/7cY7pZBIY6sU6h6s19gRK8z34lF6Osmqq5VVZmo7e" crossorigin="anonymous"></script>    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
-    </script>
-    </script>
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>    
     <!-- Font awesome kit -->
     <script src="https://kit.fontawesome.com/309feeb7ba.js" crossorigin="anonymous"></script>
     {% endblock %}
@@ -98,7 +95,7 @@ interfering with the core requirements.-->
                         </div>
                     </nav>
                 </div>
-                <!-- Account and Shopping Bag -->
+                <!-- Account, Shopping Bag and Search-->
                 <div class="col-6 col-md-2 my-2 my-lg-0 d-flex justify-content-end align-items-center">
                     <ul class="list-inline list-unstyled mb-0 ml-lg-2">
                         <!-- My Account + dropdown options -->
@@ -137,7 +134,7 @@ interfering with the core requirements.-->
                     </ul>
                     <!-- Toggled Search bar -->
                     <div class="search-overlay bg-white">
-                        <form method="GET" action="" class="form-inline mb-0">
+                        <form method="GET" action="{% url 'shop' %}" class="form-inline mb-0">
                             <div class="input-group">
                                 <input class="form-control form-control-sm border-green margin-10 rounded-0"
                                     type="search" name="q" aria-label="Search">

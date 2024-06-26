@@ -21,6 +21,12 @@ h2, .title-font {
     color:#DC6874;
 }
 
+.no-link-style {
+    text-decoration: none;
+    color: black;
+}
+
+
 /* backgrounds */
 .bg-lpink {
     background-color: #ffc4ca;
@@ -173,10 +179,6 @@ color: #04724d;}
 
 /* Shop pages */
 
-.no-link-style {
-    text-decoration: none;
-    color: black;
-}
 
 .shop-img {
     display: block;
