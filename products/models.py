@@ -47,9 +47,9 @@ class Product(models.Model):
 
     # Default order on the site is by firendly_name
     class Meta:
-        ordering = ['friendly_name']  # Add this line to set the default ordering
-
+        ordering = ['friendly_name'] 
 
     def __str__(self):
         return self.name
 
+    
