@@ -1,13 +1,11 @@
 from django.shortcuts import render
 from .models import Event
 
-def all_events(request):
-    """ A view to return all events """
-
-    events = Event.objects.all()
-
+def event_detail(request, event_id):
+    """ A view to show the event details for an individual item """
+    
+    event = get_object_or_404(Event, pk=event_id)
     context = {
-        'events': events,
+        'event': event,
     }
-
-    return render(request, 'events/events.html', context)
+    return render(request, 'events/event_detail.html', context)
