@@ -36,7 +36,7 @@
     </div>
 
     <div class="row text-center align-items-center justify-content-center mt-4 mb-4">
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-9 col-lg-6">
             <p>
                 Welcome to The Meadow Project's shop! Discover our exquisite collection of flowers and plants, available
                 both online and at our shop nestled in our scenic field. If
@@ -48,7 +48,7 @@
 
     <div class="row">
         {% for product in products %}
-        <div class="col-lg-3 col-md-6 col-12 mb-4 order-md-1">
+        <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
             <a href="" class="no-link-style">
                 <div class="thumbnail">
                     <div class="image-container">
@@ -59,7 +59,7 @@
                         {% endif %}
                     </div>
                 </div>           
-            <div class="row text-center product-text mt-4">
+            <div class="row text-center product-text mt-4 mb-4">
                 <h4 class="title-font">{{ product.friendly_name }}</h4>
                 <h4 class="title-font">£{{ product.price }}</h4>
             </div>
