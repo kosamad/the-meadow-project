@@ -1,19 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from .models import Product
 
 
-def flowers(request):
-    flowers = Product.objects.filter(category__name='Flowers')
+def product_detail(request, product_id):
+    """ A view to show the product details for an individual item """
+
+    product = get_object_or_404(Product, pk=product_id)
     context = {
-        'products': flowers,
+        'product': product,
     }
-    return render(request, 'products/flowers.html', context)
-
-
-
-def plants(request):
-    plants = Product.objects.filter(category__name='Plants')
-    context = {
-        'products': plants,
-    }
-    return render(request, 'products/plants.html', context)
+    return render(request, 'products/product_detail.html', context)
