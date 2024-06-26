@@ -383,3 +383,7 @@ HTML, CSS, JavaScript & Python
 ## Testing
 
 Please see the separate [TESTING.md](TESTING.md) file for testing carried out on The Meadow Project.
+
+## Credits
+
+* No image png from the Code Institue tutorial Boutique Ado. 

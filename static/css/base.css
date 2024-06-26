@@ -13,7 +13,7 @@ body {
 }
 
 h1,
-h2 {
+h2, .title-font {
     font-family: 'EB Garamond', serif;
 }
 
@@ -171,6 +171,31 @@ color: #04724d;}
     font-weight: bold;
 }
 
+/* Shop pages */
+
+.no-link-style {
+    text-decoration: none;
+    color: black;
+}
+
+.shop-img {
+    display: block;
+    width: 100%;
+    height: 400px; 
+    object-fit: cover;
+    object-position: center;
+}
+
+.gift-img-container { height: 500px;}
+
+.gift-img {
+    display: block;
+    width: 100%;
+    height: 250px;
+    margin: 0 auto;
+    object-fit: cover;
+    object-position: center;
+}
 
 /* Media Queries */
 
