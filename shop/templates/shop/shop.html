@@ -47,23 +47,23 @@
     </div>
 
     <div class="row">
-        {% for product in products %}
+        {% for item_data in combined_list %}
         <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
-            <a href="" class="no-link-style">
+            <a href="{% if item_data.item_type == 'Product' %}{% url 'product_detail' item_data.item.id %}{% elif item_data.item_type == 'Event' %}{% url 'event_detail' item_data.item.id %}{% endif %}
+            " class="no-link-style">
                 <div class="thumbnail">
                     <div class="image-container">
-                        {% if product.image %}                                                
-                            <img src="{{ product.image.url }}" class="shop-img" alt="{{ product.alt_text }}">                            
+                        {% if item_data.item.image %}
+                        <img src="{{ item_data.item.image.url }}" class="shop-img" alt="{{ item_data.item.alt_text }}">
                         {% else %}
-                        <img src="{{ MEDIA_URL }}noimage.png" class="shop-img" alt="{{ product.alt_text }}">
+                        <img src="{{ MEDIA_URL }}noimage.png" class="shop-img" alt="{{ item_data.item.alt_text }}">
                         {% endif %}
                     </div>
-                </div>           
-            <div class="row text-center product-text mt-4 mb-4">
-                <h4 class="title-font">{{ product.friendly_name }}</h4>
-                <h4 class="title-font">£{{ product.price }}</h4>
-            </div>
-            
+                </div>
+                <div class="row text-center product-text mt-4 mb-4">
+                    <h4 class="title-font">{{ item_data.item.friendly_name }}</h4>
+                    <h4 class="title-font">£{{ item_data.item.price }}</h4>
+                </div>
             </a>
         </div>
         {% endfor %}
