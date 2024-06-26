@@ -7,7 +7,8 @@ class EventAdmin(admin.ModelAdmin):
     list_display = (
         'name',              
         'price',
-        'image',
+        'image',    
+        'event_datetime',
     ) 
 
     ordering = ('name',)     
