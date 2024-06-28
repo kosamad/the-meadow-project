@@ -14,8 +14,19 @@ def shop(request):
     products = Product.objects.all()
     events = Event.objects.all()
     query = None
+    selected_category = None
 
     if request.GET:
+
+        if 'category' in request.GET:
+            selected_category = request.GET['category']
+            if selected_category == 'events':
+                products = Product.objects.none() # no products are displayed
+                events = events
+            else:
+                products = products.filter(category__name__icontains=selected_category)
+                events = Event.objects.none() # no events are displayed
+
         if 'q' in request.GET:
             query = request.GET['q']
             if not query:
@@ -32,6 +43,7 @@ def shop(request):
             products = products.filter(product_queries)
             events = events.filter(event_queries)
 
+    # List to hold filtered data
     combined_list = []
     for product in products:
         combined_list.append({
@@ -51,6 +63,7 @@ def shop(request):
         'categories': categories,
         'combined_list': combined_list_sorted,
         'search_term': query,
+        'selected_category': selected_category,
     }
 
     return render(request, 'shop/shop.html', context)
