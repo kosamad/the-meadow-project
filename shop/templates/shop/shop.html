@@ -10,39 +10,15 @@
 {% endblock %}
 
 {% block content %}
-<div class="container">
-    <row class="mt-4 mb-4">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-              <li class="breadcrumb-item active" aria-current="page">Shop</li>              
-            </ol>
-          </nav>
-    </row>
+<div class="container">   
 
+    <!-- Page Title - Shop -->
     <div class="row mt-4 mb-4">
         <div class="col-12 text-center">
             <h2>Shop</h2>
         </div>
     </div>
-
-    <div class="row">
-        <div class="col-8">
-            <!-- use filter function/ for loop on categories of products to render the options and display here -->
-            <ul>
-                <li class="nav-item">
-                    <a href="{% url 'home' %}" class="nav-link main-logo-link">Flowers</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">Plants</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">Gift Cards</a>
-                </li>
-            </ul>
-        </div>
-
-    </div>
-
+    <!-- Introduction -->
     <div class="row text-center align-items-center justify-content-center mt-4 mb-4">
         <div class="col-12 col-md-9 col-lg-6">
             <p>
@@ -51,6 +27,22 @@
                 you have a specific vision in mind or need something customised, reach out to us via the link below. We
                 specialise in creating bespoke bouquets and catering to corporate events and weddings.
             </p>
+        </div>
+    </div>
+    <!-- Sub Nav menu for user product filtering -->
+    <div class="row justify-content-center bg-sub-menu mb-4 mt-4 align-items-center">
+        <div class="col-9">
+            <ul class="list-inline list-unstyled d-flex justify-content-around align-items-center mt-2 mb-2">
+                {% for category in categories %}
+                <li class="list-inline-item nav-item">
+                    <a href="{% url 'shop' %}?category={{ category.name|urlencode }}"
+                        class="nav-link">{{ category.friendly_name }}</a>
+                </li>
+                {% endfor %}
+                <li class="nav-item list-inline-item">
+                    <a href="{% url 'shop' %}?category=event" class="nav-link">Events</a>
+                </li>
+            </ul>
         </div>
     </div>
 
