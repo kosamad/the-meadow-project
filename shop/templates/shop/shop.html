@@ -10,7 +10,7 @@
 {% endblock %}
 
 {% block content %}
-<div class="container">   
+<div class="container">
 
     <!-- Page Title - Shop -->
     <div class="row mt-4 mb-4">
@@ -29,23 +29,46 @@
             </p>
         </div>
     </div>
+
+
+
     <!-- Sub Nav menu for user product filtering -->
-    <div class="row justify-content-center bg-sub-menu mb-4 mt-4 align-items-center">
-        <div class="col-9">
-            <ul class="list-inline list-unstyled d-flex justify-content-around align-items-center mt-2 mb-2">
-                {% for category in categories %}
-                <li class="list-inline-item nav-item">
-                    <a href="{% url 'shop' %}?category={{ category.name|urlencode }}"
-                        class="nav-link">{{ category.friendly_name }}</a>
-                </li>
-                {% endfor %}
-                <li class="nav-item list-inline-item">
-                    <a href="{% url 'shop' %}?category=events" class="nav-link">Events</a>
-                </li>
-                <li class="nav-item list-inline-item">
-                    <a href="{% url 'shop' %}" class="nav-link">All</a>
-                </li>
-            </ul>
+    <div class="row justify-content-center mb-4 mt-4 align-items-center">
+        <div class="col-md-12 bg-sub-menu">
+            <nav class="navbar-expand-md col-8 offset-2">
+                <ul
+                    class="list-inline list-unstyled justify-content-around align-items-center mt-2 mb-2 d-none d-md-flex">
+                    {% for category in categories %}
+                    <li class="list-inline-item nav-item">
+                        <a href="{% url 'shop' %}?category={{ category.name|urlencode }}"
+                            class="nav-link">{{ category.friendly_name }}</a>
+                    </li>
+                    {% endfor %}
+                    <li class="nav-item list-inline-item">
+                        <a href="{% url 'shop' %}?category=events" class="nav-link">Events</a>
+                    </li>
+                    <li class="nav-item list-inline-item">
+                        <a href="{% url 'shop' %}" class="nav-link">All</a>
+                    </li>
+                </ul>
+
+                <!-- Dropdown navigation for small screens -->
+                <div class="dropdown d-md-none text-center">
+                    <button class="btn btn-green dropdown-toggle col-4" type="button" id="categoryDropdownMenu"
+                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Filter
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="categoryDropdownMenu">
+                        {% for category in categories %}
+                        <a class="dropdown-item"
+                            href="{% url 'shop' %}?category={{ category.name|urlencode }}">{{ category.friendly_name }}</a>
+                        {% endfor %}
+                        <a class="dropdown-item" href="{% url 'shop' %}?category=events">Events</a>
+                        <a class="dropdown-item" href="{% url 'shop' %}">All</a>
+                    </div>
+                </div>
+
+            </nav>
         </div>
     </div>
 

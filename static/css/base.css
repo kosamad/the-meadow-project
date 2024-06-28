@@ -47,10 +47,12 @@ h2, .title-font {
     color:white;   
 }
 
-.btn-green:hover {
+.btn-green:hover, .btn-green:active {
     background-color: #ade5d3;
     color: black;
+    border: none;
 }
+
 
 .img-page-break {
     max-height: 300px;
@@ -189,7 +191,7 @@ color: #04724d;}
 }
 
 .bg-sub-menu{ background-color: #ffc4ca;
-padding: 0.5%;}
+padding: 1%;}
 
 
 /* Media Queries */
