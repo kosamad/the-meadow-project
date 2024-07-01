@@ -51,9 +51,9 @@
                         <a href="{% url 'shop' %}?category=events" class="nav-link">Events</a>
                     </li>
                 </ul>
-                <!-- Dropdown navigations for small screens -->
+                <!-- Dropdown category selection for small screens -->
                 <div class="d-md-none">
-                    <div class="row justify-content-center mt-3">
+                    <div class="row justify-content-center">
                         <!-- Category dropdown -->
                         <div class="col-6 text-center">
                             <div class="dropdown">
@@ -91,8 +91,8 @@
                 {% endif %}
             </p>
         </div>
-        <div class="col-6 d-flex justify-content-end align-items-center">
-            <!-- Sort selector -->            
+        <!-- Sort selector to order products --> 
+        <div class="col-6 d-flex justify-content-end align-items-center">                       
                 <select class="btn custom-select" id="sortSelector">
                     <option value="reset" {% if sort == 'None' %}selected{% endif %}>Sort by...</option>
                     <option value="price_asc" {% if sort == 'price' and direction == 'asc' %}selected{% endif %}>Price
