@@ -94,27 +94,28 @@
         <div class="col-6 d-flex text-right">
             <!-- Sort selector -->
             <div class="sort-select-wrapper w-50">
-                <select class="btn btn-green custom-select" id="sortSelector">
-                    <option value="reset" {% if current_sorting == 'None_None' %}selected{% endif %}>Sort by...</option>
-                    <option value="price_asc" {% if current_sorting == 'price_asc' %}selected{% endif %}>Price (low to
-                        high)</option>
-                    <option value="price_desc" {% if current_sorting == 'price_desc' %}selected{% endif %}>Price (high
-                        to low)</option>
-                    <option value="name_asc" {% if current_sorting == 'name_asc' %}selected{% endif %}>Name (A-Z)
-                    </option>
-                    <option value="name_desc" {% if current_sorting == 'name_desc' %}selected{% endif %}>Name (Z-A)
-                    </option>
+                <select class="btn custom-select" id="sortSelector">
+                    <option value="reset" {% if sort == 'None' %}selected{% endif %}>Sort by...</option>
+                    <option value="price_asc" {% if sort == 'price' and direction == 'asc' %}selected{% endif %}>Price
+                        (low to high)</option>
+                    <option value="price_desc" {% if sort == 'price' and direction == 'desc' %}selected{% endif %}>Price
+                        (high to low)</option>
+                    <option value="name_asc" {% if sort == 'name' and direction == 'asc' %}selected{% endif %}>Name
+                        (A-Z)</option>
+                    <option value="name_desc" {% if sort == 'name' and direction == 'desc' %}selected{% endif %}>Name
+                        (Z-A)</option>
                 </select>
             </div>
         </div>
     </div>
 
-    <!-- Resturned Products -->
-    <div class="row">
+    <!-- Returned Products -->
+    <div class="row" id="productContainer">
         {% for item_data in combined_list %}
-        <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
-            <a href="{% if item_data.item_type == 'Product' %}{% url 'product_detail' item_data.item.id %}{% elif item_data.item_type == 'Event' %}{% url 'event_detail' item_data.item.id %}{% endif %}
-            " class="no-link-style">
+        <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4 product-item" data-price="{{ item_data.item.price }}"
+            data-name="{{ item_data.item.friendly_name }}">
+            <a href="{% if item_data.item_type == 'Product' %}{% url 'product_detail' item_data.item.id %}{% elif item_data.item_type == 'Event' %}{% url 'event_detail' item_data.item.id %}{% endif %}"
+                class="no-link-style">
                 <div class="thumbnail">
                     <div class="image-container">
                         {% if item_data.item.image %}
@@ -132,31 +133,49 @@
         </div>
         {% endfor %}
     </div>
-
-
 </div>
 
 {% endblock %}
 
+{% block postloadjs %}
+{{ block.super }}
+
 <script type="text/javascript">
-    $('#sortSelector').change(function () {
-        var selector = $(this);
-        var currentUrl = new URL(window.location);
+    $(document).ready(function () {
+        // Function to sort produts/events loaded onto the page. Triggered by the sort selector box and iterates through all pairs of elements. 
+        $('#sortSelector').change(function () {
+            var selectedVal = $(this).val();
+            var $productItems = $('.product-item'); // All product items stored as a jQuery object
 
-        var selectedVal = selector.val();
-        if (selectedVal != "reset") {
-            var sort = selectedVal.split("_")[0];
-            var direction = selectedVal.split("_")[1];
-
-            currentUrl.searchParams.set("sort", sort);
-            currentUrl.searchParams.set("direction", direction);
-
-            window.location.replace(currentUrl);
-        } else {
-            currentUrl.searchParams.delete("sort");
-            currentUrl.searchParams.delete("direction");
-
-            window.location.replace(currentUrl);
-        }
+            if (selectedVal !== "reset") {
+                var [sort, direction] = selectedVal.split(
+                '_'); // value split at _ and stored in array                
+                $productItems.sort(function (a, b) {
+                    // Sort by price
+                    if (sort === 'price') {
+                        var priceA = parseFloat($(a).data('price'));
+                        var priceB = parseFloat($(b).data('price'));
+                        return direction === 'asc' ? priceA - priceB : priceB - priceA;
+                        // Sort by name
+                    } else if (sort === 'name') {
+                        var nameA = $(a).data('name')
+                            .toLowerCase(); // first item to compare (in jQuery Object)
+                        var nameB = $(b).data('name').toLowerCase();
+                        if (nameA < nameB) return direction === 'asc' ? -1 :
+                            1; // check if name a should be before name b in asc order, if true it returns -1 (yes, nameA should be first). 1 = false
+                        if (nameA > nameB) return direction === 'asc' ? 1 : -1;
+                        return 0; // incase items are considered equal
+                    }
+                });
+                // Clear the container and append sorted items
+                $('#productContainer').html($productItems);
+            } else {
+                var url = new URL(window.location.href);
+                url.searchParams.delete('sort');
+                url.searchParams.delete('direction');
+                window.location.href = url.toString();            
+            }
+        });
     });
 </script>
+{% endblock %}

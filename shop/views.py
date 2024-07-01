@@ -14,10 +14,7 @@ def shop(request):
     products = Product.objects.all()
     events = Event.objects.all()
     query = None
-    selected_category = None
-    sort = None
-    direction = None
-    combined_list_sorted = None
+    selected_category = None        
     # List to hold filtered data
     combined_list = []
 
@@ -60,39 +57,54 @@ def shop(request):
             'item_type': 'Event',
         })
 
-    # Default sorting
+    # Default sorting of filtered shop
     combined_list_filtered= sorted(combined_list, key=lambda x: x['item'].friendly_name.lower())
 
-    # Other sorting logic  
-    if request.GET:
-        if 'sort' in request.GET:
-            sortkey = request.GET['sort']
-            sort = sortkey
-            if sortkey == 'name':
-                sortkey = 'lower_name'
-                combined_list = combined_list.annotate(lower_name=Lower('name'))            
-            if 'direction' in request.GET:
-                if direction == 'desc':
-                    sortkey = f'-{sortkey}'
-            combined_list = combined_list.order_by(sortkey)
+    # sort_by = request.GET.get('sort', 'name')
+    # direction = request.GET.get('direction', 'asc')
 
-    current_sorting = f'{sort}_{direction}' 
+    # if sort_by == 'price':
+    #     combined_list_filtered = sorted(combined_list_filtered, key=lambda x: x['item'].price, reverse=(direction == 'desc'))
+    # elif sort_by == 'name':
+    #     combined_list_filtered = sorted(combined_list_filtered, key=lambda x: x['item'].friendly_name.lower(), reverse=(direction == 'desc'))
+
+
+
+
+    # # Other sorting logic  
+    # if request.GET:
+    #     if 'sort' in request.GET:
+    #         sortkey = request.GET['sort']
+    #         sort = sortkey
+    #         if sortkey == 'name':
+    #             sortkey = 'lower_name'
+    #             combined_list = combined_list.annotate(lower_name=Lower('name'))            
+    #         if 'direction' in request.GET:
+    #             if direction == 'desc':
+    #                 sortkey = f'-{sortkey}'
+    #         combined_list = combined_list.order_by(sortkey)
+
+    # current_sorting = f'{sort}_{direction}' 
             
       
-    # sort_by = request.GET.get('sort', None)
-    # if sort_by == 'price':
-    #     combined_list_sorted = sorted(combined_list, key=lambda x: x['item'].price)
-    # else:
-    #     combined_list_sorted = sorted(combined_list, key=lambda x: x['item'].friendly_name.lower())
+    
+
         
    
 
     context = {
-        'combined_list': combined_list_filtered,       
+        # 'combined_list': combined_list_filtered,       
+        # 'categories': categories,
+        # 'selected_category': selected_category,
+        # 'query': query,
+        # 'current_sorting': current_sorting,
+
         'categories': categories,
+        'combined_list': combined_list_filtered,
         'selected_category': selected_category,
         'query': query,
-        'current_sorting': current_sorting,
+        # 'sort': sort_by,
+        # 'direction': direction,
     }
 
     return render(request, 'shop/shop.html', context)
