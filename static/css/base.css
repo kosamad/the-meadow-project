@@ -51,6 +51,7 @@ h2, .title-font {
     background-color: #ade5d3;
     color: black;
     border: none;
+    border-radius: 1px;
 }
 
 
@@ -192,6 +193,22 @@ color: #04724d;}
 
 .bg-sub-menu{ background-color: #ffc4ca;
 padding: 1%;}
+
+.green-link-style {   
+    color: #04724d;
+}
+
+.custom-select {
+    background-color: #f8f9fa;
+    color: #495057;
+    border-color: #ced4da;
+}
+
+.custom-select:focus {
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
 
 
 /* Media Queries */

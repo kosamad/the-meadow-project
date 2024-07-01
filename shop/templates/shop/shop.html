@@ -38,6 +38,9 @@
             <nav class="navbar-expand-md col-8 offset-2">
                 <ul
                     class="list-inline list-unstyled justify-content-around align-items-center mt-2 mb-2 d-none d-md-flex">
+                    <li class="nav-item list-inline-item">
+                        <a href="{% url 'shop' %}" class="nav-link">All</a>
+                    </li>
                     {% for category in categories %}
                     <li class="list-inline-item nav-item">
                         <a href="{% url 'shop' %}?category={{ category.name|urlencode }}"
@@ -48,28 +51,78 @@
                         <a href="{% url 'shop' %}?category=events" class="nav-link">Events</a>
                     </li>
                     <li class="nav-item list-inline-item">
-                        <a href="{% url 'shop' %}" class="nav-link">All</a>
+                        <div class="dropdown">
+                            <button class="btn btn-green dropdown-toggle" type="button" id="sortDropdownButton"
+                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Sort by...
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="sortDropdownButton">
+                                <a class="dropdown-item" href="{% url 'shop' %}?sort=price_asc">Price (low to
+                                    high)</a>
+                                <a class="dropdown-item" href="{% url 'shop' %}?sort=price_desc">Price (high to
+                                    low)</a>
+                                <a class="dropdown-item" href="{% url 'shop' %}?sort=name_asc">Name (A-Z)</a>
+                                <a class="dropdown-item" href="{% url 'shop' %}?sort=name_desc">Name (Z-A)</a>
+                            </div>
+                        </div>                        
                     </li>
                 </ul>
 
-                <!-- Dropdown navigation for small screens -->
-                <div class="dropdown d-md-none text-center">
-                    <button class="btn btn-green dropdown-toggle col-4" type="button" id="categoryDropdownMenu"
-                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Filter
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="categoryDropdownMenu">
-                        {% for category in categories %}
-                        <a class="dropdown-item"
-                            href="{% url 'shop' %}?category={{ category.name|urlencode }}">{{ category.friendly_name }}</a>
-                        {% endfor %}
-                        <a class="dropdown-item" href="{% url 'shop' %}?category=events">Events</a>
-                        <a class="dropdown-item" href="{% url 'shop' %}">All</a>
+                <!-- Dropdown navigations for small screens -->
+                <div class="d-md-none">
+                    <div class="row justify-content-center mt-3">
+                        <div class="col-6 text-center">
+                            <!-- Sort selector -->
+                            <div class="dropdown">
+                                <button class="btn btn-green dropdown-toggle" type="button" id="sortDropdownButton"
+                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Sort by...
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="sortDropdownButton">
+                                    <a class="dropdown-item" href="{% url 'shop' %}?sort=price_asc">Price (low to
+                                        high)</a>
+                                    <a class="dropdown-item" href="{% url 'shop' %}?sort=price_desc">Price (high to
+                                        low)</a>
+                                    <a class="dropdown-item" href="{% url 'shop' %}?sort=name_asc">Name (A-Z)</a>
+                                    <a class="dropdown-item" href="{% url 'shop' %}?sort=name_desc">Name (Z-A)</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Category dropdown -->
+                        <div class="col-6 text-center">
+                            <div class="dropdown">
+                                <button class="btn btn-green dropdown-toggle" type="button" id="categoryDropdownMenu"
+                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Category
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="categoryDropdownMenu">
+                                    {% for category in categories %}
+                                    <a class="dropdown-item"
+                                        href="{% url 'shop' %}?category={{ category.name|urlencode }}">{{ category.friendly_name }}</a>
+                                    {% endfor %}
+                                    <a class="dropdown-item" href="{% url 'shop' %}?category=events">Events</a>
+                                    <a class="dropdown-item" href="{% url 'shop' %}">All</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-
             </nav>
         </div>
+    </div>
+
+    <!-- Search Info if a user searched for an item -->
+    <div class="col-12">
+        <p class="text-muted mt-4 text-left">
+            {% if search_term %}
+            {{ combined_list|length }} Products found for <strong>"{{ search_term }}"</strong>
+            {% else %}
+            {{ combined_list|length }} Products
+            {% endif %}
+            {% if search_term %}
+            <span class="small"><a href="{% url 'shop' %}" class="green-link-style">Clear Search</a></span>
+            {% endif %}
+        </p>
     </div>
 
     <div class="row">
