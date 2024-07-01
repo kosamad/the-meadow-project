@@ -43,51 +43,17 @@
                     </li>
                     {% for category in categories %}
                     <li class="list-inline-item nav-item">
-                        <a href="{% url 'shop' %}?category={{ category.name|urlencode }}"
+                        <a href="{% url 'shop' %}?category={{ category.name }}"
                             class="nav-link">{{ category.friendly_name }}</a>
                     </li>
                     {% endfor %}
                     <li class="nav-item list-inline-item">
                         <a href="{% url 'shop' %}?category=events" class="nav-link">Events</a>
                     </li>
-                    <li class="nav-item list-inline-item">
-                        <div class="dropdown">
-                            <button class="btn btn-green dropdown-toggle" type="button" id="sortDropdownButton"
-                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Sort by...
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="sortDropdownButton">
-                                <a class="dropdown-item" href="{% url 'shop' %}?sort=price_asc">Price (low to
-                                    high)</a>
-                                <a class="dropdown-item" href="{% url 'shop' %}?sort=price_desc">Price (high to
-                                    low)</a>
-                                <a class="dropdown-item" href="{% url 'shop' %}?sort=name_asc">Name (A-Z)</a>
-                                <a class="dropdown-item" href="{% url 'shop' %}?sort=name_desc">Name (Z-A)</a>
-                            </div>
-                        </div>                        
-                    </li>
                 </ul>
-
                 <!-- Dropdown navigations for small screens -->
                 <div class="d-md-none">
                     <div class="row justify-content-center mt-3">
-                        <div class="col-6 text-center">
-                            <!-- Sort selector -->
-                            <div class="dropdown">
-                                <button class="btn btn-green dropdown-toggle" type="button" id="sortDropdownButton"
-                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Sort by...
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="sortDropdownButton">
-                                    <a class="dropdown-item" href="{% url 'shop' %}?sort=price_asc">Price (low to
-                                        high)</a>
-                                    <a class="dropdown-item" href="{% url 'shop' %}?sort=price_desc">Price (high to
-                                        low)</a>
-                                    <a class="dropdown-item" href="{% url 'shop' %}?sort=name_asc">Name (A-Z)</a>
-                                    <a class="dropdown-item" href="{% url 'shop' %}?sort=name_desc">Name (Z-A)</a>
-                                </div>
-                            </div>
-                        </div>
                         <!-- Category dropdown -->
                         <div class="col-6 text-center">
                             <div class="dropdown">
@@ -112,19 +78,38 @@
     </div>
 
     <!-- Search Info if a user searched for an item -->
-    <div class="col-12">
-        <p class="text-muted mt-4 text-left">
-            {% if search_term %}
-            {{ combined_list|length }} Products found for <strong>"{{ search_term }}"</strong>
-            {% else %}
-            {{ combined_list|length }} Products
-            {% endif %}
-            {% if search_term %}
-            <span class="small"><a href="{% url 'shop' %}" class="green-link-style">Clear Search</a></span>
-            {% endif %}
-        </p>
+    <div class="row align-items-center mb-4">
+        <div class="col-6">
+            <p class="text-muted mt-4 text-left">
+                {% if search_term %}
+                {{ combined_list|length }} Products found for <strong>"{{ search_term }}"</strong>
+                {% else %}
+                {{ combined_list|length }} Products
+                {% endif %}
+                {% if search_term %}
+                <span class="small"><a href="{% url 'shop' %}" class="green-link-style">Clear Search</a></span>
+                {% endif %}
+            </p>
+        </div>
+        <div class="col-6 d-flex text-right">
+            <!-- Sort selector -->
+            <div class="sort-select-wrapper w-50">
+                <select class="btn btn-green custom-select" id="sortSelector">
+                    <option value="reset" {% if current_sorting == 'None_None' %}selected{% endif %}>Sort by...</option>
+                    <option value="price_asc" {% if current_sorting == 'price_asc' %}selected{% endif %}>Price (low to
+                        high)</option>
+                    <option value="price_desc" {% if current_sorting == 'price_desc' %}selected{% endif %}>Price (high
+                        to low)</option>
+                    <option value="name_asc" {% if current_sorting == 'name_asc' %}selected{% endif %}>Name (A-Z)
+                    </option>
+                    <option value="name_desc" {% if current_sorting == 'name_desc' %}selected{% endif %}>Name (Z-A)
+                    </option>
+                </select>
+            </div>
+        </div>
     </div>
 
+    <!-- Resturned Products -->
     <div class="row">
         {% for item_data in combined_list %}
         <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
@@ -152,3 +137,26 @@
 </div>
 
 {% endblock %}
+
+<script type="text/javascript">
+    $('#sortSelector').change(function () {
+        var selector = $(this);
+        var currentUrl = new URL(window.location);
+
+        var selectedVal = selector.val();
+        if (selectedVal != "reset") {
+            var sort = selectedVal.split("_")[0];
+            var direction = selectedVal.split("_")[1];
+
+            currentUrl.searchParams.set("sort", sort);
+            currentUrl.searchParams.set("direction", direction);
+
+            window.location.replace(currentUrl);
+        } else {
+            currentUrl.searchParams.delete("sort");
+            currentUrl.searchParams.delete("direction");
+
+            window.location.replace(currentUrl);
+        }
+    });
+</script>
