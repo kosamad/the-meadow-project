@@ -50,10 +50,8 @@ h2, .title-font {
 .btn-green:hover, .btn-green:active {
     background-color: #ade5d3;
     color: black;
-    border: none;
-    border-radius: 1px;
+    border: none;    
 }
-
 
 .img-page-break {
     max-height: 300px;
@@ -201,14 +199,15 @@ padding: 1%;}
 .custom-select {
     background-color: #f8f9fa;
     color: #495057;
-    border-color: #ced4da;
+    border-color: #ced4da;    
 }
 
 .custom-select:focus {
-    border-color: #80bdff;
+    border-color: #ced4da;
     outline: 0;
-    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 }
+
+
 
 
 /* Media Queries */
