@@ -77,16 +77,16 @@
         </div>
     </div>
 
-    <!-- Search Info if a user searched for an item -->
+    <!-- Product and Search Info (if a user searched for an item) -->
     <div class="row align-items-center mb-4">
         <div class="col-6">
             <p class="text-muted mt-4 text-left">
-                {% if search_term %}
-                {{ combined_list|length }} Products found for <strong>"{{ search_term }}"</strong>
+                {% if query %}
+                {{ combined_list|length }} Products found for <strong>"{{ query }}"</strong>
                 {% else %}
                 {{ combined_list|length }} Products
                 {% endif %}
-                {% if search_term %}
+                {% if query %}
                 <span class="small"><a href="{% url 'shop' %}" class="green-link-style">Clear Search</a></span>
                 {% endif %}
             </p>
