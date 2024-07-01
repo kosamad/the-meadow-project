@@ -27,3 +27,5 @@ class Event(models.Model):
         return self.name 
 
     
+
+    
