@@ -91,9 +91,8 @@
                 {% endif %}
             </p>
         </div>
-        <div class="col-6 d-flex text-right">
-            <!-- Sort selector -->
-            <div class="sort-select-wrapper w-50">
+        <div class="col-6 d-flex justify-content-end align-items-center">
+            <!-- Sort selector -->            
                 <select class="btn custom-select" id="sortSelector">
                     <option value="reset" {% if sort == 'None' %}selected{% endif %}>Sort by...</option>
                     <option value="price_asc" {% if sort == 'price' and direction == 'asc' %}selected{% endif %}>Price
@@ -104,8 +103,7 @@
                         (A-Z)</option>
                     <option value="name_desc" {% if sort == 'name' and direction == 'desc' %}selected{% endif %}>Name
                         (Z-A)</option>
-                </select>
-            </div>
+                </select>            
         </div>
     </div>
 
