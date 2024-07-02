@@ -17,10 +17,10 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{% url 'shop' %}" class="no-link-style">Shop</a></li>
-                {% if item_data.item_type == 'Product' %}
+                {% if product and product.category %}
                 <li class="breadcrumb-item active" aria-current="page">{{ product.category.name }}</li>
                 {% else %}
-                <li class="breadcrumb-item active" aria-current="page">Event</li>
+                <li class="breadcrumb-item active" aria-current="page">events</li>
                 {% endif %}
             </ol>
         </nav>
@@ -134,7 +134,14 @@
                         <label for="id_qty" class="form-label"></label>
                         {{ form.quantity|as_crispy_field }}
                     </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <!-- Hidden fields for use in checkout -->
+                    <input type="hidden" id="id_selected_size_price" name="selected_size_price"
+                        value="{{ selected_size_price }}">
+                    <input type="hidden" id="id_product_id" name="product_id" value="{{ product.id }}">
+                    <!-- Submit button -->
+                    <input type="submit" class="btn-green btn mt-4" value="Add to Basket">
+                    <!-- url so can return user to page after iten added to bag -->
+                    <input type="hidden" name="redirect_url" value="{{ request.path }}">
                 </form>
             </div>
         </div>
