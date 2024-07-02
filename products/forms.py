@@ -27,4 +27,7 @@ class ProductOrderForm(forms.Form):
         required=False
     )
     quantity=forms.IntegerField(initial=1, min_value=1)
+
+    # Hidden fields that we can access in checkout
     selected_size_price = forms.DecimalField(widget=forms.HiddenInput())    
+    product_id = forms.IntegerField(widget=forms.HiddenInput())

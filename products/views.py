@@ -18,6 +18,8 @@ def product_detail(request, product_id):
             optional_card_message = form.cleaned_data.get('optional_card_message', '')
             note_to_seller = form.cleaned_data.get('not_to_seller', '')
             quantity = form.cleaned_data['quantity']
+            selected_size_price = form.cleaned_data['selected_size_price']
+            product_id = form.cleaned_data['product_id']
             return redirect('success')
         else:
             form = ProductOrderForm()
