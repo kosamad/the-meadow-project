@@ -22,73 +22,107 @@
 </div>
 
 <div class="container">
-<div class="row">
-    <div class="col">
-        {% if bag_items %}
-        <div class="table-responsive rounded">
-            {{ bag_items }}
+    <div class="row">
+        <div class="col">
+            {% if bag_items %}
+            <div class="table-responsive rounded">
+                <table class="table table-sm table-borderless">
+                    <thead class="text-black">
+                        <tr>
+                            <th scope="col">Products</th>
+                            <th scope="col"></th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Qty</th>
+                            <th scope="col">Message</th>
+                            <th scope="col">Note</th>
+                            <th scope="col">Subtotal</th>
+                        </tr>
+                    </thead>
+                    {% for item in bag_items %}
+                    <tr>
+                        <td class="p-3 w-25">
+                            <img class="img-fluid rounded" src="{{ item.product.image.url }}">
+                        </td>
+                        <td class="py-3">
+                            <p class="my-0"><strong>{{ item.product.friendly_name }}</strong></p>
+                        </td>
+                        <td class="py-3">
+                            <p class="my-0">${{ item.product.price }}</p>
+                        </td>
+                        <td class="py-3">
+                            <p class="my-0">{{ item.quantity }}</p>
+                        </td>
+                        <td class="py-3">
+                            <p class="my-0"><a href="#" data-toggle="modal" data-target="#messageModal">Y/N</a></p>
+                        </td>
+                        <td class="py-3">
+                            <p class="my-0"><a href="#" data-toggle="modal" data-target="#noteModal">Y/N</a></p>
+                        </td>
+                        <td class="py-3">
+                            <p class="my-0">${{ item.product.price }}</p>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    <!-- Bag Cost information -->
+                    <tr>
+                        <td colspan="5" class="pt-5 text-right">
+                            <h6><strong>Bag Total: £{{ total|floatformat:2 }}</strong></h6>
+                            <h6>Delivery Method:</h6>
+                            <h6>Delivery: £{{ delivery|floatformat:2 }}</h6>
+                            <h4 class="mt-4"><strong>Grand Total: £{{ grand_total|floatformat:2 }}</strong></h4>
+                            {% if free_delivery_delta > 0 %}
+                            <p class="mb-1 text-danger">
+                                You could get free delivery by spending just <strong>${{ free_delivery_delta }}</strong>
+                                more!
+                            </p>
+                            {% endif %}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            {% else %}
+            <p> Your basket is empty</p>
+            <div class="mt-4">
+                <a href="{% url 'shop' %}">
+                    <button class="btn btn-green fw-bold">Go Shopping</button>
+                </a>
+            </div>
+            {% endif %}
         </div>
-        {% else %}
-        <p> Your basket is empty</p>
-        <div class="mt-4">
-            <a href="{% url 'shop' %}">
-            <button class="btn btn-green fw-bold">Go Shopping</button>
-            </a>
-        </div>
-        {% endif %}
     </div>
 </div>
-</div>
 
+Remember to write the Modal and adjust table based on events that are added.
 
 <!-- <p> Spend £{{ free_delivery_threshold }} to get free delivery </p> -->
 
 <div class="container">
-    <div class="row">
-        <!-- Product Image and Description -->
-        <div class="col-12 col-md-6 col-lg-4 my-4">
-            <row>
-                <a href="{{ product.image.url }}" target="_blank">
-                    <img src="{{  product.image.url }}" class="shop-img" alt="{{ product.alt_text }}">
-                </a>
-            </row>
-            <row class="mt-4">
-                <p class="mt-4">{{ product.description }}</p>
-                <p class="mt-4">The image shown is the size of one of our medium bouquets.
-                    If you have any specific requirements, please add to note when checking out and we will do our best
-                    to fulfill your request.
-                </p>
-            </row>
-            <!-- Collapsible delivery info button -->
-            <button class="btn btn-light" type="button" data-bs-toggle="collapse" data-bs-target="#deliveryInfo"
-                aria-expanded="false" aria-controls="deliveryInfo">
-                Delivery Information <i class="fa-solid fa-chevron-down"></i>
-            </button>
-
-
-            <!-- Collapsible delivery info content -->
-            <div class="collapse mt-3" id="deliveryInfo">
-                <div class="card card-body">
-                    <p class="fw-bold">Delivery Information</p>
-                    <p>
-                        We deliver bouquets, plants, and gifts to postcodes beginning with BS1 to BS6. Remember to place
-                        your orders before 9:30 PM for next-day delivery (delivery is not available on Sundays). For
-                        same-day deliveries, please call us at 0117 123 4567 or contact us online with any inquiries. We
-                        prioritize eco-friendly delivery methods, using bicycles whenever possible and our green,
-                        zero-emission van as a backup.
-                    </p>
-                    <p class="fw-bold">Collection Information</p>
-                    <p>You can collect your order instore for free (The Meadow Project, Bristol, BS4 3QP) on your
-                        specified collection date. Note we are open (Tuesday to Friday 10:00-17:00 and Saturday:
-                        9:00-17:00). Your order will be ready from 10:00 unless otherwsie prearranged. If you miss your
-                        collection, and haven’t given us notice, we will be unable to make another bouquet for you.</p>
-                </div>
-            </div>
-
+    <!-- Collapsible delivery info button -->
+    <button class="btn btn-light" type="button" data-bs-toggle="collapse" data-bs-target="#deliveryInfo"
+        aria-expanded="false" aria-controls="deliveryInfo">
+        Delivery Information <i class="fa-solid fa-chevron-down"></i>
+    </button>
+    <!-- Collapsible delivery info content -->
+    <div class="collapse mt-3" id="deliveryInfo">
+        <div class="card card-body">
+            <p class="fw-bold">Delivery Information</p>
+            <p>
+                We deliver bouquets, plants, and gifts to postcodes beginning with BS1 to BS6. Remember to place
+                your orders before 9:30 PM for next-day delivery (delivery is not available on Sundays). For
+                same-day deliveries, please call us at 0117 123 4567 or contact us online with any inquiries. We
+                prioritize eco-friendly delivery methods, using bicycles whenever possible and our green,
+                zero-emission van as a backup.
+            </p>
+            <p class="fw-bold">Collection Information</p>
+            <p>You can collect your order instore for free (The Meadow Project, Bristol, BS4 3QP) on your
+                specified collection date. Note we are open (Tuesday to Friday 10:00-17:00 and Saturday:
+                9:00-17:00). Your order will be ready from 10:00 unless otherwsie prearranged. If you miss your
+                collection, and haven’t given us notice, we will be unable to make another bouquet for you.</p>
         </div>
-       
     </div>
 </div>
+
+
 
 
 
