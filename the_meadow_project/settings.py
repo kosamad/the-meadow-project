@@ -50,6 +50,8 @@ INSTALLED_APPS = [
     'events',
     'shop',
     'bag',
+    'crispy_forms',
+    'crispy_bootstrap5',
 ]
 
 MIDDLEWARE = [
@@ -63,6 +65,10 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'the_meadow_project.urls'
+
+# Crispy forms details
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 TEMPLATES = [
     {

@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
+{% load crispy_forms_tags %}
+{% load crispy_forms_filters %}
 
 {% block page_header %}
 <div class="container header-container">
@@ -41,61 +43,132 @@
                     to fulfill your request.
                 </p>
             </row>
-            <!-- Collapsible delivery info button -->
-            <button class="btn btn-light" type="button" data-bs-toggle="collapse" data-bs-target="#deliveryInfo"
-                aria-expanded="false" aria-controls="deliveryInfo">
-                Delivery Information <i class="fa-solid fa-chevron-down"></i>
-            </button>
-
-
-            <!-- Collapsible delivery info content -->
-            <div class="collapse mt-3" id="deliveryInfo">
-                <div class="card card-body">
-                    <p class="fw-bold">Delivery Information</p>
-                    <p>
-                        We deliver bouquets, plants, and gifts to postcodes beginning with BS1 to BS6. Remember to place
-                        your orders before 9:30 PM for next-day delivery (delivery is not available on Sundays). For
-                        same-day deliveries, please call us at 0117 123 4567 or contact us online with any inquiries. We
-                        prioritize eco-friendly delivery methods, using bicycles whenever possible and our green,
-                        zero-emission van as a backup.
-                        <p> Spend £{{ free_delivery_threshold }} to get free delivery else delivery is calulated at {{ standard_delivery_percentage }}%.</p>
-                    </p>
-                    <p class="fw-bold">Collection Information</p>
-                    <p>You can collect your order instore for free (The Meadow Project, Bristol, BS4 3QP) on your
-                        specified collection date. Note we are open (Tuesday to Friday 10:00-17:00 and Saturday:
-                        9:00-17:00). Your order will be ready from 10:00 unless otherwsie prearranged. If you miss your
-                        collection, and haven’t given us notice, we will be unable to make another bouquet for you.</p>
-                </div>
-            </div>
-
         </div>
+
+        <!-- Product Order Form-->
         <div class="col-12 col-md-6 col-lg-8 align-items-start my-4">
             <div class="row">
                 <h2>{{ product.friendly_name }}</h2>
             </div>
-            <div class="row">
-                <h4>£{{ product.price }}</h4>
+            <div class="row mt-3">
+                <h4>£<span id="product-price"></span></h4>
             </div>
             <div class="row">
-                <p>Size</p>
-            </div>
-            <div class="row">
-                <p>Delivery/Collection date</p>
-            </div>
-            <div class="row">
-                <p>Local Delivery</p>
-            </div>
-            <div class="row">
-                <p>{{ product.price }}</p>
+                <form method="post">
+                    {% csrf_token %}
+                    <!-- Size -->
+                    <div class="col-lg-8 col-12">
+                        <label for="id_size" class="form-label"></label>
+                        {{ form.size|as_crispy_field }}
+                    </div>
+                    <!-- Date -->
+                    <div class="col-lg-8 col-12">
+                        <label for="id_date" class="form-label"></label>
+                        {{ form.date|as_crispy_field }}
+                    </div>
+                    <!-- Delivery -->
+                    <div class="col-lg-8 col-12 delivery-margin">
+                        <label for="id_delivery_option col-9" class="form-label">Delivery Option</label>
+                        <!-- Collapsible delivery info button -->
+                        <i class="fa-solid fa-circle-info fa-lg" data-bs-toggle="collapse"
+                            data-bs-target="#deliveryInfo" aria-expanded="false" aria-controls="deliveryInfo"></i>
+                        <div class="delivery-option-list">
+                            {% for choice in form.delivery_option %}
+                            <div class="form-check">
+                                {{ choice.tag }}
+                                <label class="form-check-label" for="{{ choice.id_for_label }}">
+                                    {{ choice.choice_label }}
+                                </label>
+                            </div>
+                            {% endfor %}
+                            <!-- Collapsible delivery info content -->
+                            <div class="collapse mt-3" id="deliveryInfo">
+                                <div class="card card-body">
+                                    <p class="fw-bold d-inline-block"><span>
+                                            <i class="fa fa-solid fa-bicycle"></i>
+                                        </span> Delivery Information</p>
+                                    <p>
+                                        We deliver bouquets, plants, and gifts to postcodes beginning with BS1 to BS6.
+                                        Remember to place
+                                        your orders before 9:30 PM for next-day delivery (delivery is not available on
+                                        Sundays). For
+                                        same-day deliveries, please call us at 0117 123 4567 or contact us online with
+                                        any
+                                        inquiries. We
+                                        prioritize eco-friendly delivery methods, using bicycles whenever possible and
+                                        our
+                                        green,
+                                        zero-emission van as a backup.
+                                        <p> Spend £{{ free_delivery_threshold }} to get free delivery else delivery is
+                                            calulated at {{ standard_delivery_percentage }}%.</p>
+                                    </p>
+                                    <p class="fw-bold"><span><i class="fa-solid fa-shop"></i></span> Collection
+                                        Information</p>
+                                    <p>You can collect your order instore for free (The Meadow Project, Bristol, BS4
+                                        3QP) on
+                                        your
+                                        specified collection date. Note we are open (Tuesday to Friday 10:00-17:00 and
+                                        Saturday:
+                                        9:00-17:00). Your order will be ready from 10:00 unless otherwsie prearranged.
+                                        If
+                                        you miss your
+                                        collection, and haven’t given us notice, we will be unable to make another
+                                        bouquet
+                                        for you.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card message -->
+                    <div class="col-lg-8 col-12">
+                        <label for="id_optional_card_message" class="form-label"></label>
+                        {{ form.optional_card_message|as_crispy_field }}
+                    </div>
+                    <!-- Note to seller -->
+                    <div class="col-lg-8 col-12">
+                        <label for="id_note_to_seller" class="form-label"></label>
+                        {{ form.note_to_seller|as_crispy_field }}
+                    </div>
+                    <!-- Quantity -->
+                    <div class="col-lg-2 col-4">
+                        <label for="id_qty" class="form-label"></label>
+                        {{ form.quantity|as_crispy_field }}
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
             </div>
         </div>
     </div>
 </div>
 
+{% endblock %}
 
+{% block postloadjs %}
+{{ block.super }}
 
+<script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function () {
+        var sizeSelect = document.getElementById('id_size');
+        var productPriceElement = document.getElementById('product-price');
+        var selectedSizePriceInput = document.getElementById('id_selected_size_price');
+        var originalPrice = parseFloat('{{ product.price }}'); // Assuming product.price is a decimal number
 
+        sizeSelect.addEventListener('change', function () {
+            var selectedSize = sizeSelect.value;
+            var adjustedPrice = originalPrice; // Default to original price for 'M'
 
+            if (selectedSize === 'S') {
+                adjustedPrice *= 0.7; // 70% of original price for small
+            } else if (selectedSize === 'L') {
+                adjustedPrice *= 1.3; // 130% of original price for large
+            }
 
+            productPriceElement.textContent = adjustedPrice.toFixed(2);
+            selectedSizePriceInput.value = adjustedPrice.toFixed(2); // Set hidden input value
+        });
 
+        // Trigger initial price update on page load
+        sizeSelect.dispatchEvent(new Event('change'));
+    });
+</script>
 {% endblock %}
