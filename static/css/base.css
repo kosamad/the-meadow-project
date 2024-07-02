@@ -184,7 +184,7 @@ color: #04724d;}
 .shop-img {
     display: block;
     width: 100%;
-    height: 400px; 
+    height: 600px; 
     object-fit: cover;
     object-position: center;
 }
@@ -218,7 +218,7 @@ padding: 1%;}
 
 @media (max-width: 1298px){
     .shop-img{        
-        height: 15rem; 
+        height: 400px; 
     }
 }
 
@@ -234,18 +234,11 @@ padding: 1%;}
 
 @media (max-width: 764px){
     .shop-img{        
-        height: 17rem; 
+        height: 500px; 
     } 
 }
 
 @media (max-width: 574px){
-    .shop-img{        
-        height: 25rem; 
-        width: 90%;        
-           } 
-
-
-
     .image-container {
         display: flex;
         align-items: center;

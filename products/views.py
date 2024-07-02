@@ -23,24 +23,29 @@ def add_to_bag(request, product_id):
     if request.method == 'POST':        
         form = ProductOrderForm(request.POST)
         if form.is_valid():
-            size = form.cleaned_data['size']
-            date = form.cleaned_data['date']
-            delivery_option = form.cleaned_data['delivery_option']
+            size = form.cleaned_data['size']            
             optional_card_message = form.cleaned_data.get('optional_card_message', '')
             note_to_seller = form.cleaned_data.get('note_to_seller', '')
             quantity = form.cleaned_data['quantity']
-            selected_size_price = form.cleaned_data['selected_size_price']
+            selected_size_price = str(form.cleaned_data['selected_size_price']) # stored as a string
             product_id = form.cleaned_data['product_id']           
 
-            item_id = str(product_id)
+            # Unique identifyer for each product.
+            item_id = f"{product_id}_{size}_{optional_card_message}_{note_to_seller}"
 
             # getting bag variable in the session or create one.
             bag = request.session.get('bag',{})
 
             if item_id in bag:
-                bag[item_id] += quantity
+                bag[item_id]['quantity'] += quantity
             else:
-                bag[item_id] = quantity
+                bag[item_id] = {
+                    'quantity': quantity,
+                    'size': size,                    
+                    'optional_card_message': optional_card_message,
+                    'note_to_seller': note_to_seller,
+                    'selected_size_price': selected_size_price
+                }
 
             # Store the updated bag back into the session
             request.session['bag'] = bag

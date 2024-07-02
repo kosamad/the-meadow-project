@@ -13,11 +13,7 @@ class ProductOrderForm(forms.Form):
     size = forms.ChoiceField(
         choices=Product.SIZE_CHOICES,
         initial='M',
-        widget=forms.Select(attrs={'class': 'form-control'}))
-    date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date', 'min': datetime.now().date()}))
-    delivery_option = forms.ChoiceField(
-        choices=DELIVERY_CHOICES,
-        widget=forms.RadioSelect(attrs={'class': 'delivery-option'}))
+        widget=forms.Select(attrs={'class': 'form-control'}))    
     optional_card_message = forms.CharField(
         widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
         required=False
