@@ -18,8 +18,9 @@ def product_detail(request, product_id):
 def add_to_bag(request, product_id):
     """ A view to handle adding a product to the shopping bag """
     product = get_object_or_404(Product, pk=product_id)
+    redirect_url = request.POST.get('redirect_url')
 
-    if request.method == 'POST':
+    if request.method == 'POST':        
         form = ProductOrderForm(request.POST)
         if form.is_valid():
             size = form.cleaned_data['size']
@@ -29,8 +30,7 @@ def add_to_bag(request, product_id):
             note_to_seller = form.cleaned_data.get('note_to_seller', '')
             quantity = form.cleaned_data['quantity']
             selected_size_price = form.cleaned_data['selected_size_price']
-            product_id = form.cleaned_data['product_id']
-            redirect_url = form.cleaned_data['redirect_url']
+            product_id = form.cleaned_data['product_id']           
 
             item_id = str(product_id)
 
