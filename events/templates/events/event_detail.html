@@ -16,86 +16,99 @@
     <row class="mt-4 mb-4">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{% url 'shop' %}" class="no-link-style">Shop</a></li>                
-                <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'shop' %}?category=events" class="no-link-style">Events</a></li>            
+                <li class="breadcrumb-item"><a href="{% url 'shop' %}" class="no-link-style">Shop</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'shop' %}?category=events"
+                        class="no-link-style">Events</a></li>
                 <li class="breadcrumb-item active" aria-current="page">{{ event.friendly_name|title }}</li>
             </ol>
         </nav>
 </div>
 </div>
 
+<!-- event title, date/time and price -->
 <div class="container">
     <div class="row">
-        <!-- event Image and Description -->
-        <div class="col-12 bd-2 mt-4 text-center">            
-            <h2>{{ event.friendly_name }}</h2>            
+        <div class="col-12 bd-2 mt-4 text-center">
+            <h1>{{ event.friendly_name }}</h1>
         </div>
-        <div class="col-12 my-2 text-center">            
-            <h3 class="title-font">{{ event.event_datetime|date:"F j, Y" }} at {{ event.event_datetime|time:"g:i A" }}</h3>            
-        </div>        
+        <div class="col-12 my-2 text-center">
+            <h3 class="title-font">{{ event.event_datetime|date:"F j, Y" }} at {{ event.event_datetime|time:"g:i A" }}
+            </h3>
+        </div>
+        <div class="col-12 my-2 text-center">
+            <h3 class="title-font">£{{ event.price }}pp
+            </h3>
+        </div>
     </div>
 </div>
 
-
-
-
-
-            <row>
-                <a href="{{ event.image.url }}" target="_blank">
-                    <img src="{{  event.image.url }}" class="shop-img" alt="{{ event.alt_text }}">
-                </a>
-            </row>
-            <row class="mt-4">
-                <p class="mt-4">{{ event.description }}</p>
-                <p class="mt-4">The image shown is the size of one of our medium bouquets.
-                    If you have any specific requirements, please add to note when checking out and we will do our best
-                    to fulfill your request.
-                </p>
-            </row>
+<!-- event Image and Description -->
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-12 my-4">
+            <img src="{{  event.image.url }}" class="img-fluid rounded event-detail-image" alt="{{ event.alt_text }}">
         </div>
-
-        <!-- event Order Form-->
-        <div class="col-12 col-md-6 col-lg-8 align-items-start my-4">
-            <div class="row">
-                <h2>{{ event.friendly_name }}</h2>
+    </div>
+    <div class="row align-items-center justify-content-center">
+        <div class="col-md-9 col-12 my-4 text-justify">
+            <p>{{ event.description }}</p>
+            <div class="row justify-content-center">
+                <div class="col-12 text-center">
+                    <p class="my-4">For more information on Location and facilities at the meadow, <a href=""
+                            class="no-link-style">click here</a></p>
+                </div>
             </div>
-            <div class="row mt-3">
-                <h4>£<span id="event-price">{{ event.price }}</span></h4>
-            </div>
-            <div class="row">
-                <form method="POST" clas="form" action="">
-                    {% csrf_token %}
-                    <!-- Date/Time -->
-                    <div class="col-lg-8 col-12">
-                    </div>
-                    <!-- Optional message if this is a gift -->
-                    <div class="col-lg-8 col-12">
-                    </div>
-                    <!-- Note to , inc placeholder of state name of attendee -->
-                    <div class="col-lg-8 col-12">
-                    </div>
-                    <!-- Quantity -->
-                    <div class="col-lg-2 col-4">
-                        <div class="input-group">
-                            <input class="form-control qty_input" type="number" name="quantity" value="1" min="1"
-                                max="99" data-item_id="{{ event.id }}" id="id_qty_{{ event.id }}">
-                        </div>
-                    </div>
+        </div>
+    </div>
+</div>
 
-                    <!-- Submit button -->
+<!-- event Order Form -->
+<div class="container my-4">
+    <div class="row">
+        <form method="POST" clas="form" action="">
+            {% csrf_token %}
+            <!-- Date/Time -->
+            <div class="row">
+                <div class="col-lg-8 col-12">
+                </div>
+            </div>
+            <!-- Optional message if this is a gift -->
+            <div class="row">
+                <div class="col-lg-8 col-12">
+                </div>
+            </div>
+            <!-- Note to , inc placeholder of state name of attendee -->
+            <div class="row">
+                <div class="col-lg-8 col-12">
+                </div>
+            </div>
+            <!-- Quantity -->
+            <div class="row">
+                <div class="col-lg-6 col-6">
+                    <div class="input-group">
+                        <input class="form-control qty_input" type="number" name="quantity" value="1" min="1" max="99"
+                            data-item_id="{{ event.id }}" id="id_qty_{{ event.id }}">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Submit button -->
+            <div class="row">
+                <div class="col-4 mb-4">                    
                     <input type="submit" class="btn-green btn mt-4" value="Add to Basket">
+                </div>
 
-                    <!-- Hidden fields for use in checkout -->
-                    <!-- <input type="hidden" id="id_selected_size_price" name="selected_size_price"
-                        value="{{ selected_size_price }}"> -->
-                    <!-- url so can return user to page after iten added to bag -->
-                    <input type="hidden" name="redirect_url" value="{{ request.path }}">
-                </form>
+                <!-- Hidden fields for use in checkout -->
+                <!-- <input type="hidden" id="id_selected_size_price" name="selected_size_price"
+                                value="{{ selected_size_price }}"> -->
+                <!-- url so can return user to page after iten added to bag -->
+                <input type="hidden" name="redirect_url" value="{{ request.path }}">
             </div>
-        </div>
+        </form>
     </div>
 </div>
-</div>
+
+
 
 {% endblock %}
 

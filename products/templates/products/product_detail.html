@@ -16,8 +16,10 @@
     <row class="mt-4 mb-4">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{% url 'shop' %}" class="no-link-style">Shop</a></li>                
-                <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'shop' %}?category={{ product.category.name }}" class="no-link-style">{{ product.category.name|title }}</a></li>               
+                <li class="breadcrumb-item"><a href="{% url 'shop' %}" class="no-link-style">Shop</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><a
+                        href="{% url 'shop' %}?category={{ product.category.name }}"
+                        class="no-link-style">{{ product.category.name|title }}</a></li>
                 <li class="breadcrumb-item active" aria-current="page">{{ product.friendly_name|title }}</li>
             </ol>
         </nav>
@@ -28,18 +30,63 @@
     <div class="row">
         <!-- Product Image and Description -->
         <div class="col-12 col-md-6 col-lg-4 my-4">
-            <row>
+            <div class="row">
                 <a href="{{ product.image.url }}" target="_blank">
-                    <img src="{{  product.image.url }}" class="shop-img" alt="{{ product.alt_text }}">
+                    <img src="{{  product.image.url }}" class="product-detail-img" alt="{{ product.alt_text }}">
                 </a>
-            </row>
-            <row class="mt-4">
-                <p class="mt-4">{{ product.description }}</p>
-                <p class="mt-4">The image shown is the size of one of our medium bouquets.
+            </div>
+            <div class="row mt-2">
+                <p class="mt-4 text-justify">{{ product.description }}</p>
+                <p class="mt-4 text-justify">The image shown is the size of one of our medium bouquets.
                     If you have any specific requirements, please add to note when checking out and we will do our best
                     to fulfill your request.
                 </p>
-            </row>
+            </div>
+            <div class="row mt-2 text-center">
+                <div class="col">
+                    <!-- Collapsible delivery info button -->
+                    <button class="btn btn-green" data-bs-toggle="collapse" data-bs-target="#deliveryInfo"
+                        aria-expanded="false" aria-controls="deliveryInfo">Delivery Info
+                    </button>
+                    <!-- Collapsible delivery info content -->
+                    <div class="collapse mt-3" id="deliveryInfo">
+                        <div class="card card-body">
+                            <p class="fw-bold d-inline-block"><span>
+                                    <i class="fa fa-solid fa-bicycle"></i>
+                                </span> Delivery Information</p>
+                            <p class="text-justify">
+                                We deliver bouquets, plants, and gifts to postcodes beginning with BS1 to BS6.
+                                Remember to place
+                                your orders before 9:30 PM for next-day delivery (delivery is not available on
+                                Sundays). For
+                                same-day deliveries, please call us at 0117 123 4567 or contact us online with
+                                any
+                                inquiries. We
+                                prioritize eco-friendly delivery methods, using bicycles whenever possible and
+                                our
+                                green,
+                                zero-emission van as a backup.
+                                <p> Spend £{{ free_delivery_threshold }} to get free delivery else delivery is
+                                    calulated at {{ standard_delivery_percentage }}%.</p>
+                            </p>
+                            <p class="fw-bold"><span><i class="fa-solid fa-shop"></i></span> Collection
+                                Information</p>
+                            <p class="text-justify">You can collect your order instore for free (The Meadow Project, Bristol, BS4
+                                3QP) on
+                                your
+                                specified collection date. Note we are open (Tuesday to Friday 10:00-17:00 and
+                                Saturday:
+                                9:00-17:00). Your order will be ready from 10:00 unless otherwsie prearranged.
+                                If
+                                you miss your
+                                collection, and haven’t given us notice, we will be unable to make another
+                                bouquet
+                                for you.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         </div>
 
         <!-- Product Order Form-->
