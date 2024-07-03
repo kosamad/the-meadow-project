@@ -94,7 +94,7 @@
         <!-- Sort selector to order products -->
         <div class="col-6 d-flex justify-content-end align-items-center">
             <select class="btn custom-select" id="sortSelector">
-                <option value="reset" {% if sort == 'None' %}selected{% endif %}>Sort by...</option>
+                <option value="reset" {% if sort == 'None' %}selected{% endif %}>Sort</option>
                 <option value="price_asc" {% if sort == 'price' and direction == 'asc' %}selected{% endif %}>Price
                     (low to high)</option>
                 <option value="price_desc" {% if sort == 'price' and direction == 'desc' %}selected{% endif %}>Price
