@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Product
+from .models import Product, Event
 
 
 def product_detail(request, product_id):
@@ -12,8 +12,19 @@ def product_detail(request, product_id):
     return render(request, 'products/product_detail.html', context)
 
 
+
+def event_detail(request, event_id):
+    """ A view to show the event details for an individual item """    
+    event = get_object_or_404(Event, pk=event_id)
+    context = {
+        'event': event,
+    }
+    return render(request, 'events/event_detail.html', context)
+
+
+
 def add_to_bag(request, item_id):
-    """ A view to handle adding a product to the shopping bag """
+    """ A view to handle adding a product/event to the shopping bag """
 
     quantity = int(request.POST.get('quantity'))
     redirect_url = request.POST.get('redirect_url')
