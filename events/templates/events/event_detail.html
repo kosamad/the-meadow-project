@@ -92,16 +92,13 @@
                 </div>
             </div>
 
-            <!-- Submit button -->
+            <!-- Submit and keep shopping buttons (plus hidden URL) -->
             <div class="row">
-                <div class="col-4 mb-4">                    
-                    <input type="submit" class="btn-green btn mt-4" value="Add to Basket">
+                <div class="col-md-6 col-12 mb-4">
+                    <input type="submit" class="btn-green btn mt-4 me-4" value="Add to Basket">
+                    <a href="{% url 'shop' %}" class="btn btn-green mt-4">Keep Shopping</a>
                 </div>
-
-                <!-- Hidden fields for use in checkout -->
-                <!-- <input type="hidden" id="id_selected_size_price" name="selected_size_price"
-                                value="{{ selected_size_price }}"> -->
-                <!-- url so can return user to page after iten added to bag -->
+                <!-- Hidden url input  so can return user to page after iten added to bag -->
                 <input type="hidden" name="redirect_url" value="{{ request.path }}">
             </div>
         </form>
