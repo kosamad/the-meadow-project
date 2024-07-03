@@ -71,7 +71,8 @@
                             </p>
                             <p class="fw-bold"><span><i class="fa-solid fa-shop"></i></span> Collection
                                 Information</p>
-                            <p class="text-justify">You can collect your order instore for free (The Meadow Project, Bristol, BS4
+                            <p class="text-justify">You can collect your order instore for free (The Meadow Project,
+                                Bristol, BS4
                                 3QP) on
                                 your
                                 specified collection date. Note we are open (Tuesday to Friday 10:00-17:00 and
@@ -118,7 +119,10 @@
                     </div>
 
                     <!-- Submit button -->
-                    <input type="submit" class="btn-green btn mt-4" value="Add to Basket">
+                    <div class="col-md-6 col-12 mb-4">
+                        <input type="submit" class="btn-green btn mt-4 me-4" value="Add to Basket">
+                        <a href="{% url 'shop' %}" class="btn btn-green mt-4">Keep Shopping</a>
+                    </div>
 
                     <!-- Hidden fields for use in checkout -->
                     <!-- <input type="hidden" id="id_selected_size_price" name="selected_size_price"
