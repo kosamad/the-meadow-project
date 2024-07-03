@@ -36,6 +36,10 @@
             </h3>
         </div>
         <div class="col-12 my-2 text-center">
+            <h3 class="title-font">Length: {{ event.duration_hours}} hours
+            </h3>
+        </div>
+        <div class="col-12 my-2 text-center">
             <h3 class="title-font">£{{ event.price }}pp
             </h3>
         </div>
@@ -65,7 +69,7 @@
 <!-- event Order Form -->
 <div class="container my-4">
     <div class="row">
-        <form method="POST" clas="form" action="">
+        <form method="POST" clas="form" action="{% url 'add_to_bag' event.id %}">
             {% csrf_token %}
             <!-- Date/Time -->
             <div class="row">
