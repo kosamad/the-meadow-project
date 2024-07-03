@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, reverse, HttpResponse, get_object_or_404
-
+from products.models import Product, Event
 
 
 def view_bag(request):
@@ -27,7 +27,7 @@ def add_to_bag(request, item_id):
 
     # Store the updated bag back into the session
     request.session['bag'] = bag
-    print(request.session['bag'])  
+    print(request.session['bag'])    
     return redirect(redirect_url)
 
 
