@@ -84,26 +84,26 @@
                 {% if query %}
                 {{ combined_list|length }} Products found for <strong>"{{ query }}"</strong>
                 {% else %}
-                {{ combined_list|length }} Products
-                {% endif %}
+                {{ combined_list|length }} Products in {{ selected_category|title }}
+                {% endif %}               
                 {% if query %}
                 <span class="small"><a href="{% url 'shop' %}" class="green-link-style">Clear Search</a></span>
                 {% endif %}
             </p>
         </div>
-        <!-- Sort selector to order products --> 
-        <div class="col-6 d-flex justify-content-end align-items-center">                       
-                <select class="btn custom-select" id="sortSelector">
-                    <option value="reset" {% if sort == 'None' %}selected{% endif %}>Sort by...</option>
-                    <option value="price_asc" {% if sort == 'price' and direction == 'asc' %}selected{% endif %}>Price
-                        (low to high)</option>
-                    <option value="price_desc" {% if sort == 'price' and direction == 'desc' %}selected{% endif %}>Price
-                        (high to low)</option>
-                    <option value="name_asc" {% if sort == 'name' and direction == 'asc' %}selected{% endif %}>Name
-                        (A-Z)</option>
-                    <option value="name_desc" {% if sort == 'name' and direction == 'desc' %}selected{% endif %}>Name
-                        (Z-A)</option>
-                </select>            
+        <!-- Sort selector to order products -->
+        <div class="col-6 d-flex justify-content-end align-items-center">
+            <select class="btn custom-select" id="sortSelector">
+                <option value="reset" {% if sort == 'None' %}selected{% endif %}>Sort by...</option>
+                <option value="price_asc" {% if sort == 'price' and direction == 'asc' %}selected{% endif %}>Price
+                    (low to high)</option>
+                <option value="price_desc" {% if sort == 'price' and direction == 'desc' %}selected{% endif %}>Price
+                    (high to low)</option>
+                <option value="name_asc" {% if sort == 'name' and direction == 'asc' %}selected{% endif %}>Name
+                    (A-Z)</option>
+                <option value="name_desc" {% if sort == 'name' and direction == 'desc' %}selected{% endif %}>Name
+                    (Z-A)</option>
+            </select>
         </div>
     </div>
 
@@ -147,7 +147,7 @@
 
             if (selectedVal !== "reset") {
                 var [sort, direction] = selectedVal.split(
-                '_'); // value split at _ and stored in array                
+                    '_'); // value split at _ and stored in array                
                 $productItems.sort(function (a, b) {
                     // Sort by price
                     if (sort === 'price') {
@@ -171,7 +171,7 @@
                 var url = new URL(window.location.href);
                 url.searchParams.delete('sort');
                 url.searchParams.delete('direction');
-                window.location.href = url.toString();            
+                window.location.href = url.toString();
             }
         });
     });

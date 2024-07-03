@@ -60,10 +60,16 @@ def shop(request):
     # Default sorting of filtered shop
     combined_list_filtered= sorted(combined_list, key=lambda x: x['item'].friendly_name.lower())
 
+    # Remove _ in selected_category name for display
+    if selected_category:
+        display_category = selected_category.replace('_', ' ')
+    else:
+        display_category = None
+
     context = {
         'categories': categories,
         'combined_list': combined_list_filtered,
-        'selected_category': selected_category,
+        'selected_category': display_category,
         'query': query,
     }
 
