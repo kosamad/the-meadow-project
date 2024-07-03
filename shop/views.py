@@ -64,7 +64,7 @@ def shop(request):
     if selected_category:
         display_category = selected_category.replace('_', ' ')
     else:
-        display_category = None
+        display_category = 'All'
 
     context = {
         'categories': categories,

@@ -17,7 +17,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{% url 'shop' %}" class="no-link-style">Shop</a></li>                
-                <li class="breadcrumb-item active" aria-current="page">{{ product.category.name|title }}</li>               
+                <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'shop' %}?category={{ product.category.name }}" class="no-link-style">{{ product.category.name|title }}</a></li>               
                 <li class="breadcrumb-item active" aria-current="page">{{ product.friendly_name|title }}</li>
             </ol>
         </nav>
