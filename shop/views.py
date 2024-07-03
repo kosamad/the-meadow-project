@@ -19,8 +19,12 @@ def shop(request):
     if request.GET:
         if 'category' in request.GET:
             selected_category = request.GET['category']            
-            products = products.filter(category__name__icontains=selected_category)
-            events = events.filter(category__name__icontains=selected_category)            
+            if selected_category == 'events':
+                products = Product.objects.none()
+                events = Event.objects.all()
+            else:
+                products = products.filter(category__name__icontains=selected_category)
+                events = Event.objects.none()           
 
         if 'q' in request.GET:
             query = request.GET['q']

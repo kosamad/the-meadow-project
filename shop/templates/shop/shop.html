@@ -122,6 +122,9 @@
                 <div class="row text-center product-text mt-4 mb-4">
                     <h4 class="title-font">{{ item_data.item.friendly_name }}</h4>
                     <h4 class="title-font">£{{ item_data.item.price }}</h4>
+                    <p>URL: {% url 'product_detail' item_data.item.id %}</p>
+                    <p>URL: {% url 'event_detail' item_data.item.id %}</p>
+                    
                 </div>
             </a>
         </div>
