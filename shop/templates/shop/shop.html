@@ -46,10 +46,7 @@
                         <a href="{% url 'shop' %}?category={{ category.name }}"
                             class="nav-link">{{ category.friendly_name }}</a>
                     </li>
-                    {% endfor %}
-                    <li class="nav-item list-inline-item">
-                        <a href="{% url 'shop' %}?category=events" class="nav-link">Events</a>
-                    </li>
+                    {% endfor %}                    
                 </ul>
                 <!-- Dropdown category selection for small screens -->
                 <div class="d-md-none">
@@ -65,8 +62,7 @@
                                     {% for category in categories %}
                                     <a class="dropdown-item"
                                         href="{% url 'shop' %}?category={{ category.name|urlencode }}">{{ category.friendly_name }}</a>
-                                    {% endfor %}
-                                    <a class="dropdown-item" href="{% url 'shop' %}?category=events">Events</a>
+                                    {% endfor %}                              
                                     <a class="dropdown-item" href="{% url 'shop' %}">All</a>
                                 </div>
                             </div>

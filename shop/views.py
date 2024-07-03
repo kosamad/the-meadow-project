@@ -10,7 +10,7 @@ def shop(request):
 
     categories = Category.objects.all()
     products = Product.objects.all()
-    events = Event.objects.all()
+    events = Event.objects.all()    
     query = None
     selected_category = None        
     # List to hold filtered data
@@ -18,13 +18,9 @@ def shop(request):
 
     if request.GET:
         if 'category' in request.GET:
-            selected_category = request.GET['category']
-            if selected_category == 'events':
-                products = Product.objects.none() # no products are displayed
-                events = Event.objects.all()
-            else:
-                products = products.filter(category__name__icontains=selected_category)
-                events = Event.objects.none() # no events are displayed
+            selected_category = request.GET['category']            
+            products = products.filter(category__name__icontains=selected_category)
+            events = events.filter(category__name__icontains=selected_category)            
 
         if 'q' in request.GET:
             query = request.GET['q']
@@ -32,15 +28,19 @@ def shop(request):
                 messages.error(request, "You didn't enter a search")
                 return redirect(reverse('shop'))
 
-            # product queries for name, descritpion and category
+            # product and event queries for name, descritpion and category
             product_queries = (
             Q(name__icontains=query) | 
             Q(description__icontains=query) | 
             Q(category__name__icontains=query)
             )
             products = products.filter(product_queries)
-            # event query for name and description (as no category)
-            event_queries = Q(name__icontains=query) | Q(description__icontains=query)            
+
+            event_queries = (
+                Q(name__icontains=query) | 
+                Q(description__icontains=query) | 
+                Q(category__name__icontains=query)
+            )                   
             events = events.filter(event_queries)              
     
     # Append products/events to combined_list
