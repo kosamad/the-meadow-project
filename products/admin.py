@@ -20,6 +20,20 @@ class CategoryAdmin(admin.ModelAdmin):
         'name',
     )
 
+
+class EventAdmin(admin.ModelAdmin):
+    list_display = (
+        'name',              
+        'price',
+        'image',    
+        'event_datetime',
+    ) 
+
+    ordering = ('name',)     
+
+
+
 # Registered models.
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Category, CategoryAdmin)
+admin.site.register(Event, EventAdmin)
