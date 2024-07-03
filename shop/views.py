@@ -1,9 +1,7 @@
 from django.shortcuts import render, get_object_or_404, reverse, redirect
 from django.contrib import messages
 from django.db.models import Q
-from products.models import Category, Product
-from events.models import Event 
-
+from products.models import Category, Product, Event 
 
 
 def shop(request):
