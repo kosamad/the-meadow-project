@@ -4,6 +4,7 @@ from .models import Product, Event
 
 def product_detail(request, product_id):
     """ A view to show the product details for an individual item """
+
     product = get_object_or_404(Product, pk=product_id)    
 
     context = {
@@ -15,11 +16,14 @@ def product_detail(request, product_id):
 
 def event_detail(request, event_id):
     """ A view to show the event details for an individual item """    
+
     event = get_object_or_404(Event, pk=event_id)
+
     context = {
         'event': event,
     }
-    return render(request, 'products/event_detail.html', context)
+
+    return render(request, 'events/event_detail.html', context)
 
 
 

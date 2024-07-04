@@ -74,7 +74,7 @@
     </div>
 
     <!-- Product and Search Info (if a user searched for an item) -->
-    <div class="row align-items-center mb-4">
+    <!-- <div class="row align-items-center mb-4">
         <div class="col-6">
             <p class="text-muted mt-4 text-left">
                 {% if query %}
@@ -86,9 +86,9 @@
                 <span class="small"><a href="{% url 'shop' %}" class="green-link-style">Clear Search</a></span>
                 {% endif %}
             </p>
-        </div>
+        </div> -->
         <!-- Sort selector to order products -->
-        <div class="col-6 d-flex justify-content-end align-items-center">
+        <!-- <div class="col-6 d-flex justify-content-end align-items-center">
             <select class="btn custom-select" id="sortSelector">
                 <option value="reset" {% if sort == 'None' %}selected{% endif %}>Sort</option>
                 <option value="price_asc" {% if sort == 'price' and direction == 'asc' %}selected{% endif %}>Price
@@ -101,32 +101,58 @@
                     (Z-A)</option>
             </select>
         </div>
-    </div>
+    </div> -->
 
     <!-- Returned Products -->
     <div class="row" id="productContainer">
-        {% for item_data in combined_list %}
-        <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4 product-item" data-price="{{ item_data.item.price }}"
-            data-name="{{ item_data.item.friendly_name }}">
-            <a href="{% if item_data.item_type == 'Product' %}{% url 'product_detail' item_data.item.id %}{% elif item_data.item_type == 'Event' %}{% url 'event_detail' item_data.item.id %}{% endif %}"
+        {% for product in products %}
+        <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4 product-item" data-price="{{ product.price }}"
+            data-name="{{ product.friendly_name }}">
+            <a href="{% url 'product_detail' product.id %}"
                 class="no-link-style">
                 <div class="thumbnail">
                     <div class="image-container">
-                        {% if item_data.item.image %}
-                        <img src="{{ item_data.item.image.url }}" class="shop-img" alt="{{ item_data.item.alt_text }}">
+                        {% if product.image %}
+                        <img src="{{ product.image.url }}" class="shop-img" alt="{{ product.alt_text }}">
                         {% else %}
-                        <img src="{{ MEDIA_URL }}noimage.png" class="shop-img" alt="{{ item_data.item.alt_text }}">
+                        <img src="{{ MEDIA_URL }}noimage.png" class="shop-img" alt="No image to display">
                         {% endif %}
                     </div>
                 </div>
                 <div class="row text-center product-text mt-4 mb-4">
-                    <h4 class="title-font">{{ item_data.item.friendly_name }}</h4>
-                    <h4 class="title-font">£{{ item_data.item.price }}</h4>                   
+                    <h4 class="title-font">{{ product.friendly_name }}</h4>
+                    <h4 class="title-font">£{{ product.price }}</h4>                   
                 </div>
             </a>
         </div>
         {% endfor %}
     </div>
+    <!-- Returned Events -->
+    <div class="row" id="productContainer">
+        {% for event in events %}
+        <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4 product-item" data-price="{{ event.price }}"
+            data-name="{{ event.friendly_name }}">
+            <a href="{% url 'event_detail' event.id %}"
+                class="no-link-style">
+                <div class="thumbnail">
+                    <div class="image-container">
+                        {% if event.image %}
+                        <img src="{{ event.image.url }}" class="shop-img" alt="{{ event.alt_text }}">
+                        {% else %}
+                        <img src="{{ MEDIA_URL }}noimage.png" class="shop-img" alt="No image to display">
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="row text-center product-text mt-4 mb-4">
+                    <h4 class="title-font">{{ event.friendly_name }}</h4>                    
+                    <h5 class="title-font">£{{ event.price|floatformat:0 }}pp, {{ event.event_datetime|date:"F j, Y" }}</h5>                   
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+
+
 </div>
 
 {% endblock %}
