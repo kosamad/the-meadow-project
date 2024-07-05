@@ -41,12 +41,25 @@
                     <li class="nav-item list-inline-item">
                         <a href="{% url 'shop' %}" class="nav-link">All</a>
                     </li>
-                    {% for category in categories %}
+                    <li class="nav-item list-inline-item">
+                        <a href="{% url 'shop' %}?category=flowers" class="nav-link">Flowers</a>
+                    </li>
+                    <li class="nav-item list-inline-item">
+                        <a href="{% url 'shop' %}?category=plants" class="nav-link">Plants</a>
+                    </li>
+                    <li class="nav-item list-inline-item">
+                        <a href="{% url 'shop' %}?category=gift_cards" class="nav-link">Gift Cards</a>
+                    </li>
+                    <li class="nav-item list-inline-item">
+                        <a href="{% url 'shop' %}?category=event" class="nav-link">Events</a>
+                    </li>
+
+                    <!-- {% for category in categories %}
                     <li class="list-inline-item nav-item">
                         <a href="{% url 'shop' %}?category={{ category.name }}"
                             class="nav-link">{{ category.friendly_name }}</a>
                     </li>
-                    {% endfor %}                    
+                    {% endfor %}                     -->
                 </ul>
                 <!-- Dropdown category selection for small screens -->
                 <div class="d-md-none">
