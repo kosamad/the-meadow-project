@@ -12,11 +12,34 @@ def shop(request):
 
     categories = Category.objects.all()
     products = Product.objects.all()
-    events = Event.objects.all()   
+    events = Event.objects.all()
+    query = None
+
+    if request.GET:
+        if 'q' in request.GET:
+            query = request.GET['q']
+            if not query:
+                messages.error(request, "You didn't enter a search")
+                return redirect(reverse('shop'))
+
+            product_queries = (
+            Q(name__icontains=query) | 
+            Q(description__icontains=query) | 
+            Q(category__friendly_name__icontains=query)
+            )
+            products = products.filter(product_queries)
+
+            event_queries = (
+                Q(name__icontains=query) | 
+                Q(description__icontains=query) | 
+                Q(category__friendly_name__icontains=query)
+            )                   
+            events = events.filter(event_queries)
 
     context = {
         'products': products,
-        'events': events,        
+        'events': events,
+        'search_term': query,      
     }
 
     return render(request, 'shop/shop.html', context)
