@@ -13,19 +13,36 @@ def shop(request):
     categories = Category.objects.all()
     products = Product.objects.all()
     events = Event.objects.all()
-    # so no errors when page is loaded
+    # parameters so no errors when page is loaded if they don't exist/ arne't being used
     query = None
-    category = None
+    categories = None
+    sort = None
+    direction = None
 
     if request.GET:
+        # Ordering the shop item
+        # if 'sort' in request.GET:
+        #     sortkey = request.GET['sort']
+        #     sort = sortkey
+        #     # Temp field added to model
+        #     if sortkey == 'name':
+        #         sortkey = 'lower_name'
+        #         products = products.annotate(lower_name=Lower('name'))
+        #     if 'direction' in request.GET:
+        #         direction = request.GET['direction']
+        #         if direction == 'desc':
+        #             sortkey = f'-{sortkey}'
+        #     products = products.order_by(sortkey)
+
         # show the specific categories of products or event (note the event category does not have an s in Category)
         if 'category' in request.GET:
             categories = request.GET['category'].split(',')
             # __in syntax searches for the name field in Category model
             products = products.filter(category__name__in=categories)
             events = events.filter(category__name__in=categories)     
-            categories = Category.objects.filter(name__in=categories)         
+            categories = Category.objects.filter(name__in=categories)  
 
+        # checking for queries sent from the search box
         if 'q' in request.GET:
             query = request.GET['q']
             # if the query is blank = an error message
@@ -47,12 +64,15 @@ def shop(request):
                 Q(category__friendly_name__icontains=query)
             )                   
             events = events.filter(event_queries)
+    
+    current_sorting = f'{sort}_{direction}'
 
     context = {
         'products': products,
         'events': events,
         'search_term': query,
-        'current_categories': categories,      
+        'current_categories': categories,
+        'current_sorting': current_sorting
     }
 
     return render(request, 'shop/shop.html', context)
