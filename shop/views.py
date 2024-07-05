@@ -9,26 +9,31 @@ def shop(request):
 
     """ View function to render the shop page showing all categories of products
 #     plus all individual individual products/events """
-
+    # Gather data
     categories = Category.objects.all()
     products = Product.objects.all()
     events = Event.objects.all()
+    # so no errors when page is loaded
     query = None
     category = None
 
     if request.GET:
+        # show the specific categories of products or event (note the event category does not have an s in Category)
         if 'category' in request.GET:
             categories = request.GET['category'].split(',')
+            # __in syntax searches for the name field in Category model
             products = products.filter(category__name__in=categories)
             events = events.filter(category__name__in=categories)     
             categories = Category.objects.filter(name__in=categories)         
 
         if 'q' in request.GET:
             query = request.GET['q']
+            # if the query is blank = an error message
             if not query:
                 messages.error(request, "You didn't enter a search")
                 return redirect(reverse('shop'))
 
+            # product and event queries for name, descritpion and category
             product_queries = (
             Q(name__icontains=query) | 
             Q(description__icontains=query) | 
