@@ -83,15 +83,7 @@
     <!-- Product and Search Item Info (if a user searched for an item) -->
     <div class="row align-items-center mb-4">
         <div class="col-6">
-            <p class="text-muted mt-4 text-left">
-                <!-- {% if query %}
-                {{ products|length }} Products found for <strong>"{{ search_term }}"</strong>
-                {% else %}
-                {{ current_categories|length }} Products in {{ current_categories|title }}
-                {% endif %}
-                {% if query %}
-                
-                {% endif %} -->
+            <p class="text-muted mt-4 text-left">               
                 {% if search_term %}
                 <p><span id="combined_items"></span> Products in {{search_term}} <span class="small"><a href="{% url 'shop' %}" class="green-link-style"> Clear Search</a></span></p>
                 {% elif current_categories %}
@@ -134,21 +126,7 @@
                 <option value="name_desc" {% if sort == 'name' and direction == 'desc' %}selected{% endif %}>Name
                     (Z-A)</option>
             </select>
-        </div>
-
-        <!-- <div class="col-6 d-flex justify-content-end align-items-center">
-            <select class="btn custom-select" id="sortSelector">
-                <option value="reset" {% if sort == 'None' %}selected{% endif %}>Sort</option>
-                <option value="price_asc" {% if sort == 'price' and direction == 'asc' %}selected{% endif %}>Price
-                    (low to high)</option>
-                <option value="price_desc" {% if sort == 'price' and direction == 'desc' %}selected{% endif %}>Price
-                    (high to low)</option>
-                <option value="name_asc" {% if sort == 'name' and direction == 'asc' %}selected{% endif %}>Name
-                    (A-Z)</option>
-                <option value="name_desc" {% if sort == 'name' and direction == 'desc' %}selected{% endif %}>Name
-                    (Z-A)</option>
-            </select>
-        </div> -->
+        </div>        
     </div>
 
     <!-- Returned Products -->
