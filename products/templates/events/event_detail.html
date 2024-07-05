@@ -71,6 +71,7 @@
     <div class="row">
         <form method="POST" clas="form" action="{% url 'add_to_bag' event.id %}">
             {% csrf_token %}
+            <input type="hidden" name="item_type" value="event">
             <!-- Date/Time -->
             <div class="row">
                 <div class="col-lg-8 col-12">
