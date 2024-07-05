@@ -1,7 +1,7 @@
 """
 Products application model
 """
-
+import uuid
 from django.db import models
 
 
@@ -25,7 +25,7 @@ class Category(models.Model):
 
 
 class Product(models.Model):
-    category = models.ForeignKey('Category', null=True, blank=True, on_delete=models.SET_NULL)    
+    category = models.ForeignKey('Category', null=True, blank=True, on_delete=models.SET_NULL)        
     name = models.CharField(max_length=254)
     friendly_name = models.CharField(max_length=254, null=False, blank=False)
     price = models.DecimalField(max_digits=6, decimal_places=2)
@@ -58,7 +58,7 @@ class Event(models.Model):
     """
     A model for events.
     """       
-    category = models.ForeignKey('Category', null=True, blank=True, on_delete=models.SET_NULL)
+    category = models.ForeignKey('Category', null=True, blank=True, on_delete=models.SET_NULL)    
     name = models.CharField(max_length=254)
     friendly_name = models.CharField(max_length=254, null=False, blank=False)
     price = models.DecimalField(max_digits=6, decimal_places=2)

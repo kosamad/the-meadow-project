@@ -72,6 +72,7 @@
         <form method="POST" clas="form" action="{% url 'add_to_bag' event.id %}">
             {% csrf_token %}
             <input type="hidden" name="item_type" value="event">
+            <input type="hidden" name="item_id" value="E_{{ event.id}}">
             <!-- Date/Time -->
             <div class="row">
                 <div class="col-lg-8 col-12">
@@ -91,8 +92,7 @@
             <div class="row">
                 <div class="col-lg-6 col-6">
                     <div class="input-group">
-                        <input class="form-control qty_input" type="number" name="quantity" value="1" min="1" max="99"
-                            data-item_id="{{ event.id }}" id="id_qty_{{ event.id }}">
+                        <input class="form-control qty_input" type="number" name="quantity" value="1" min="1" max="99">
                     </div>
                 </div>
             </div>
