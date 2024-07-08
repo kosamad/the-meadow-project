@@ -130,7 +130,7 @@
     <div class="row" id="productContainer">
         {% for product in products %}
         <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4 product-item" data-price="" data-name="">
-            <a href="" class="no-link-style">
+            <a href="{% url 'product_detail' product.id %}" class="no-link-style">
                 <div class="thumbnail">
                     <div class="image-container">
                         {% if product.image %}
