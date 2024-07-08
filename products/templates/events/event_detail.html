@@ -19,7 +19,7 @@
                 <li class="breadcrumb-item"><a href="{% url 'shop' %}" class="no-link-style">Shop</a></li>
                 <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'shop' %}?category=events"
                         class="no-link-style">Events</a></li>
-                <li class="breadcrumb-item active" aria-current="page"></li>
+                <li class="breadcrumb-item active" aria-current="page">{{ event.friendly_name|title }}</li>
             </ol>
         </nav>
 </div>
@@ -29,18 +29,18 @@
 <div class="container">
     <div class="row">
         <div class="col-12 bd-2 mt-4 text-center">
-            <h1></h1>
+            <h1>{{ event.friendly_name }}</h1>
         </div>
         <div class="col-12 my-2 text-center">
-            <h3 class="title-font"> at 
+            <h3 class="title-font">{{ event.event_datetime|date:"F j, Y" }} at {{ event.event_datetime|time:"g:i A" }}
             </h3>
         </div>
         <div class="col-12 my-2 text-center">
-            <h3 class="title-font">Length: hours
+            <h3 class="title-font">Length: {{ event.duration_hours}} hours
             </h3>
         </div>
         <div class="col-12 my-2 text-center">
-            <h3 class="title-font">£pp
+            <h3 class="title-font">£{{ event.price }}pp
             </h3>
         </div>
     </div>
@@ -50,12 +50,12 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-lg-8 col-12 my-4">
-            <img src="" class="img-fluid rounded event-detail-image" alt="">
+            <img src="{{  event.image.url }}" class="img-fluid rounded event-detail-image" alt="{{ event.alt_text }}">
         </div>
     </div>
     <div class="row align-items-center justify-content-center">
         <div class="col-md-9 col-12 my-4 text-justify">
-            <p></p>
+            <p>{{ event.description }}</p>
             <div class="row justify-content-center">
                 <div class="col-12 text-center">
                     <p class="my-4">For more information on Location and facilities at the meadow, <a href=""
@@ -70,9 +70,7 @@
 <div class="container my-4">
     <div class="row">
         <form method="POST" clas="form" action="">
-            {% csrf_token %}
-            <input type="hidden" name="item_type" value="event">
-            <input type="hidden" name="item_id" value="">
+            {% csrf_token %}           
             <!-- Date/Time -->
             <div class="row">
                 <div class="col-lg-8 col-12">
@@ -92,7 +90,8 @@
             <div class="row">
                 <div class="col-lg-6 col-6">
                     <div class="input-group">
-                        <input class="form-control qty_input" type="number" name="quantity" value="1" min="1" max="99">
+                        <input class="form-control qty_input" type="number" name="quantity" value="1" min="1" max="99"
+                            data-item_id="{{ event.id }}" id="id_qty_{{ event.id }}">
                     </div>
                 </div>
             </div>
