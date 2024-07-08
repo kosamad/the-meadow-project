@@ -1,12 +1,12 @@
 from decimal import Decimal
 from django.conf import settings
 from django.shortcuts import get_object_or_404
-from products.models import Product
+from products.models import Product, Event
 
 def bag_contents(request):
     bag_items = []
     total = 0
-    product_count = 0
+    product_count = 0 # might also need a event_count
     bag = request.session.get('bag', {})    
 
     if total < settings.FREE_DELIVERY_THRESHOLD:
@@ -18,9 +18,11 @@ def bag_contents(request):
     
     grand_total = delivery + total
     
+    # context is a dictionary, availiable to all templates across the application
     context = {
         'bag_items': bag_items,
-        'total': total,     
+        'total': total,
+        'product_count': product_count,
         'delivery': delivery,
         'free_delivery_delta': free_delivery_delta,
         'free_delivery_threshold': settings.FREE_DELIVERY_THRESHOLD,
