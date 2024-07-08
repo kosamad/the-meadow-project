@@ -7,15 +7,24 @@ def view_bag(request):
     return render(request, 'bag/bag.html')
 
 def add_to_bag(request, item_id):
-    """ A view to handle adding a product/event to the shopping bag """
-    # Quantity from form (converted to int from string)
-    quantity = int(request.POST.get('quantity'))
-    # Where to go after the form is submitted
-    redirect_url = request.POST.get('redirect_url')
+    """ A view to handle adding a product/event to the shopping bag """ 
     item_type = request.POST.get('item_type')
-    item_id = request.POST.get('item_id')   
+
+    # Quantity from form (converted to int from string)
+    quantity = int(request.POST.get('quantity'))   
+
+   
+    # Where to go after the form is submitted
+    redirect_url = request.POST.get('redirect_url')    
 
     bag = request.session.get('bag', {})
+
+    # if item_type == 'product':
+    #     product = product
+    #     item_id = item_id        
+    # elif item_type == 'event':
+    #     event = event
+    #     item_id = item_id     
 
     # Note itmes are stored as either P- or E- for products/events and then id
     # Determine if the item being added already exists

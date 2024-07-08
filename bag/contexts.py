@@ -26,17 +26,17 @@ def bag_contents(request):
                 'product': product,
                 'type': 'product',
         })
-        elif item_id.startswith('E'):
-            event_id = item_id[2:]
-            event = get_object_or_404(Event, pk=event_id)
-            total += quantity * event.price
-            event_count += quantity
-            bag_items.append({
-                'item_id': item_id,
-                'quantity': quantity,
-                'event': event,
-                'type': 'event',
-            })
+        # elif item_id.startswith('E'):
+        #     event_id = item_id[2:]
+        #     event = get_object_or_404(Event, pk=event_id)
+        #     total += quantity * event.price
+        #     event_count += quantity
+        #     bag_items.append({
+        #         'item_id': item_id,
+        #         'quantity': quantity,
+        #         'event': event,
+        #         'type': 'event',
+        #     })
 
     if total < settings.FREE_DELIVERY_THRESHOLD:
         delivery = total * Decimal(settings.STANDARD_DELIVERY_PERCENTAGE / 100)
