@@ -25,7 +25,11 @@ class Category(models.Model):
 
 
 class Product(models.Model):
-    category = models.ForeignKey('Category', null=True, blank=True, on_delete=models.SET_NULL)        
+    """
+    A model for products.
+    """    
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    category = models.ForeignKey('Category', null=True, blank=True, on_delete=models.SET_NULL)       
     name = models.CharField(max_length=254)
     friendly_name = models.CharField(max_length=254, null=False, blank=False)
     price = models.DecimalField(max_digits=6, decimal_places=2)
@@ -35,7 +39,7 @@ class Product(models.Model):
     alt_text = models.TextField(default="")
     rating = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
     is_gift_card = models.BooleanField(default=False)    
-    is_active = models.BooleanField(default=True)       
+    is_active = models.BooleanField(default=True)         
 
     SIZE_CHOICES = (
         ('S', 'Small'),
@@ -58,6 +62,7 @@ class Event(models.Model):
     """
     A model for events.
     """       
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     category = models.ForeignKey('Category', null=True, blank=True, on_delete=models.SET_NULL)    
     name = models.CharField(max_length=254)
     friendly_name = models.CharField(max_length=254, null=False, blank=False)
@@ -70,6 +75,7 @@ class Event(models.Model):
     image = models.ImageField(null=True, blank=True, upload_to='event_images/')
     alt_text = models.TextField(default="")
     is_active = models.BooleanField(default=True)
+    is_event = models.BooleanField(default=True, editable=False)   
 
     class Meta:
         ordering = ['event_datetime']  

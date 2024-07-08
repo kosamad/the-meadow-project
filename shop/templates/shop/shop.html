@@ -95,8 +95,8 @@
                 <p><span id="combined_items"></span> Products in All
                 {% endif %}
                 <!-- Hidden div's to hold product and event data -->
-                <div id="productcount" class="d-none">{{ products|length }}</div>
-                <div id="eventcount" class="d-none">{{ events|length }}</div>
+                <div id="productcount" class="d-none"></div>
+                <div id="eventcount" class="d-none"></div>
             </p>
         </div>
 
@@ -132,13 +132,13 @@
     <!-- Returned Products -->
     <div class="row" id="productContainer">
         {% for product in products %}
-        <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4 product-item" data-price="{{ product.price }}"
-            data-name="{{ product.friendly_name }}">
-            <a href="{% url 'product_detail' product.id %}" class="no-link-style">
+        <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4 product-item" data-price=""
+            data-name="">
+            <a href="" class="no-link-style">
                 <div class="thumbnail">
                     <div class="image-container">
                         {% if product.image %}
-                        <img src="{{ product.image.url }}" class="shop-img" alt="{{ product.alt_text }}">
+                        <img src="" class="shop-img" alt="{{ product.alt_text }}">
                         {% else %}
                         <img src="{{ MEDIA_URL }}noimage.png" class="shop-img" alt="No image to display">
                         {% endif %}
@@ -155,13 +155,13 @@
     <!-- Returned Events -->
     <div class="row" id="productContainer">
         {% for event in events %}
-        <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4 product-item" data-price="{{ event.price }}"
+        <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4 product-item" data-price=""
             data-name="{{ event.friendly_name }}">
             <a href="{% url 'event_detail' event.id %}" class="no-link-style">
                 <div class="thumbnail">
                     <div class="image-container">
                         {% if event.image %}
-                        <img src="{{ event.image.url }}" class="shop-img" alt="{{ event.alt_text }}">
+                        <img src="" class="shop-img" alt="">
                         {% else %}
                         <img src="{{ MEDIA_URL }}noimage.png" class="shop-img" alt="No image to display">
                         {% endif %}
@@ -186,52 +186,52 @@
 {{ block.super }}
 
 <script type="text/javascript">
-    $(document).ready(function () {
-        // Function to sort produts/events loaded onto the page. Triggered by the sort selector box and iterates through all pairs of elements. 
-        $('#sortSelector').change(function () {
-            var selectedVal = $(this).val();
-            var $productItems = $('.product-item'); // All product items stored as a jQuery object
+    // $(document).ready(function () {
+    //     // Function to sort produts/events loaded onto the page. Triggered by the sort selector box and iterates through all pairs of elements. 
+    //     $('#sortSelector').change(function () {
+    //         var selectedVal = $(this).val();
+    //         var $productItems = $('.product-item'); // All product items stored as a jQuery object
 
-            if (selectedVal !== "reset") {
-                var [sort, direction] = selectedVal.split(
-                    '_'); // value split at _ and stored in array                
-                $productItems.sort(function (a, b) {
-                    // Sort by price
-                    if (sort === 'price') {
-                        var priceA = parseFloat($(a).data('price'));
-                        var priceB = parseFloat($(b).data('price'));
-                        return direction === 'asc' ? priceA - priceB : priceB - priceA;
-                        // Sort by name
-                    } else if (sort === 'name') {
-                        var nameA = $(a).data('name')
-                            .toLowerCase(); // first item to compare (in jQuery Object)
-                        var nameB = $(b).data('name').toLowerCase();
-                        if (nameA < nameB) return direction === 'asc' ? -1 :
-                            1; // check if name a should be before name b in asc order, if true it returns -1 (yes, nameA should be first). 1 = false
-                        if (nameA > nameB) return direction === 'asc' ? 1 : -1;
-                        return 0; // incase items are considered equal
-                    }
-                });
-                // Clear the container and append sorted items
-                $('#productContainer').html($productItems);
-            } else {
-                var url = new URL(window.location.href);
-                url.searchParams.delete('sort');
-                url.searchParams.delete('direction');
-                window.location.href = url.toString();
-            }
-        });
-    });
+    //         if (selectedVal !== "reset") {
+    //             var [sort, direction] = selectedVal.split(
+    //                 '_'); // value split at _ and stored in array                
+    //             $productItems.sort(function (a, b) {
+    //                 // Sort by price
+    //                 if (sort === 'price') {
+    //                     var priceA = parseFloat($(a).data('price'));
+    //                     var priceB = parseFloat($(b).data('price'));
+    //                     return direction === 'asc' ? priceA - priceB : priceB - priceA;
+    //                     // Sort by name
+    //                 } else if (sort === 'name') {
+    //                     var nameA = $(a).data('name')
+    //                         .toLowerCase(); // first item to compare (in jQuery Object)
+    //                     var nameB = $(b).data('name').toLowerCase();
+    //                     if (nameA < nameB) return direction === 'asc' ? -1 :
+    //                         1; // check if name a should be before name b in asc order, if true it returns -1 (yes, nameA should be first). 1 = false
+    //                     if (nameA > nameB) return direction === 'asc' ? 1 : -1;
+    //                     return 0; // incase items are considered equal
+    //                 }
+    //             });
+    //             // Clear the container and append sorted items
+    //             $('#productContainer').html($productItems);
+    //         } else {
+    //             var url = new URL(window.location.href);
+    //             url.searchParams.delete('sort');
+    //             url.searchParams.delete('direction');
+    //             window.location.href = url.toString();
+    //         }
+    //     });
+    // });
 
-    document.addEventListener('DOMContentLoaded', function() {
-        // Function to Add Products + Events
-        var productsCount = parseInt(document.getElementById('productcount').innerText)
-        var eventsCount = parseInt(document.getElementById('eventcount').innerText)
+    // document.addEventListener('DOMContentLoaded', function() {
+    //     // Function to Add Products + Events
+    //     var productsCount = parseInt(document.getElementById('productcount').innerText)
+    //     var eventsCount = parseInt(document.getElementById('eventcount').innerText)
 
-        var combined_items = productsCount + eventsCount
+    //     var combined_items = productsCount + eventsCount
     
-        document.getElementById('combined_items').innerText = combined_items;       
-    });
+    //     document.getElementById('combined_items').innerText = combined_items;       
+    // });
 
  
 </script>

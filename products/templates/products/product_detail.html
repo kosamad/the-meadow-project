@@ -18,9 +18,9 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{% url 'shop' %}" class="no-link-style">Shop</a></li>
                 <li class="breadcrumb-item active" aria-current="page"><a
-                        href="{% url 'shop' %}?category={{ product.category.name }}"
-                        class="no-link-style">{{ product.category.name|title }}</a></li>
-                <li class="breadcrumb-item active" aria-current="page">{{ product.friendly_name|title }}</li>
+                        href=""
+                        class="no-link-style"></a></li>
+                <li class="breadcrumb-item active" aria-current="page"></li>
             </ol>
         </nav>
 </div>
@@ -30,13 +30,13 @@
     <div class="row">
         <!-- Product Image and Description -->
         <div class="col-12 col-md-6 col-lg-4 my-4">
-            <div class="row">
-                <a href="{{ product.image.url }}" target="_blank">
-                    <img src="{{  product.image.url }}" class="product-detail-img" alt="{{ product.alt_text }}">
+            <!-- <div class="row">
+                <a href="" target="_blank">
+                    <img src="" class="product-detail-img" alt="{{ product.alt_text }}">
                 </a>
-            </div>
+            </div> -->
             <div class="row mt-2">
-                <p class="mt-4 text-justify">{{ product.description }}</p>
+                <p class="mt-4 text-justify"></p>
                 <p class="mt-4 text-justify">The image shown is the size of one of our medium bouquets.
                     If you have any specific requirements, please add to note when checking out and we will do our best
                     to fulfill your request.
@@ -91,18 +91,18 @@
         </div>
 
         <!-- Product Order Form and details-->
-        <div class="col-12 col-md-6 col-lg-8 align-items-start my-4">
+        <!-- <div class="col-12 col-md-6 col-lg-8 align-items-start my-4">
             <div class="row">
-                <h2>{{ product.friendly_name }}</h2>
+                <h2></h2>
             </div>
             <div class="row mt-3">
-                <h4>£<span id="product-price">{{ product.price }}</span></h4>
-            </div>
+                <h4>£<span id="product-price"></span></h4>
+            </div> -->
             <div class="row">
-                <form method="POST" clas="form" action="{% url 'add_to_bag' product.id %}">
+                <form method="POST" clas="form" action="">
                     {% csrf_token %}
-                    <input type="hidden" name="item_type" value="product">
-                    <input type="hidden" name="item_id" value="P_{{ product.id}}">
+                    <input type="hidden" name="" value="product">
+                    <input type="hidden" name="" value="">
                     <!-- Size -->
                     <div class="col-lg-8 col-12">
                     </div>
