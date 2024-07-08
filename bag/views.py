@@ -1,7 +1,10 @@
 from django.shortcuts import render, redirect, reverse, HttpResponse, get_object_or_404
 from products.models import Product, Event
 
+def view_bag(request):
+    """ A view that renders the bag contents page """
 
+    return render(request, 'bag/bag.html')
 
 def add_to_bag(request, item_id):
     """ A view to handle adding a product/event to the shopping bag """
@@ -12,19 +15,7 @@ def add_to_bag(request, item_id):
     item_type = request.POST.get('item_type')
     item_id = request.POST.get('item_id')   
 
-    bag = request.session.get('bag', {})    
-
-    
-       
-
-    if item_id in list(bag.keys()):
-        bag[item_id]+- quantity
-    else:
-        bag[item_id] = quantity
-
-    request.session['bag'] = bag
-    print(request.session['bag'])    
-    return redirect(redirect_url)
+    bag = request.session.get('bag', {})
 
     # Note itmes are stored as either P- or E- for products/events and then id
     # Determine if the item being added already exists
@@ -42,7 +33,7 @@ def add_to_bag(request, item_id):
 
 
 
-    
+   
 
 
    

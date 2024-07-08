@@ -38,20 +38,23 @@
                             <th scope="col">Subtotal</th>
                         </tr>
                     </thead>
-                    {% for item in bag_items %}
-                        {% if item_id|slice:":2" == "P_" %}
+                    {% for item in bag_items %}                        
                     <tr>
                         <td class="p-3 w-25">
-                            <img class="img-fluid rounded" src="{{ item.product.image.url }}">
+                            {% if item.type == "product" %}
+                                <img class="img-fluid rounded" src="{{ item.product.image.url }}" alt="">
+                            {% elif item.type == "event" %}
+                                <img class="img-fluid rounded" src="{{ item.event.image.url }}" alt="">
+                            {% endif %}
                         </td>
                         <td class="py-3">
-                            <p class="my-0"><strong>{{ item.product.friendly_name }}</strong></p>
+                            <p class="my-0"><strong>Name</strong></p>
                         </td>
                         <td class="py-3">
-                            <p class="my-0">${{ item.product.price }}</p>
+                            <p class="my-0">Price</p>
                         </td>
                         <td class="py-3">
-                            <p class="my-0">{{ item.quantity }}</p>
+                            <p class="my-0">Quantit</p>
                         </td>
                         <td class="py-3">
                             <p class="my-0"><a href="#" data-toggle="modal" data-target="#messageModal">Y/N</a></p>
@@ -60,11 +63,11 @@
                             <p class="my-0"><a href="#" data-toggle="modal" data-target="#noteModal">Y/N</a></p>
                         </td>
                         <td class="py-3">
-                            <p class="my-0">${{ item.product.price }}</p>
+                            <p class="my-0">Total Price</p>
                         </td>
                     </tr>                    
-                    {% elif item_id|slice:":2" == "E_" %}
-                    <tr>
+                  
+                    <!-- <tr>
                         <td class="p-3 w-25">
                             <img class="img-fluid rounded" src="{{ item.product.image.url }}">
                         </td>
@@ -87,7 +90,7 @@
                             <p class="my-0">${{ item.product.price }}</p>
                         </td>
                     </tr>
-                    {% endif %}
+                  -->
 
                     {% endfor %}
                 </table>
@@ -151,13 +154,4 @@ Remember to write the Modal and adjust table based on events that are added.
         </div>
     </div>
 </div>
-
-
-
-
-
-
-
-
-
 {% endblock %}

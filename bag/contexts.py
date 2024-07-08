@@ -4,7 +4,7 @@ from decimal import Decimal
 from django.conf import settings
 
 from django.shortcuts import get_object_or_404
-from products.models import Product
+from products.models import Product, Event
 
 
 def bag_contents(request):
@@ -14,15 +14,29 @@ def bag_contents(request):
     product_count = 0
     bag = request.session.get('bag', {})
 
-    # for item_id, quantity in bag.items():
-    #     product = get_object_or_404(Product, pk=item_id)
-    #     total += quantity * product.price
-    #     product_count += quantity
-    #     bag_items.append({
-    #         'item_id': item_id,
-    #         'quantity': quantity,
-    #         'product': product,
-    #     })
+    for item_id, quantity in bag.items():
+        if item_id.startswith('P'):
+            product_id = item_id[2:]
+            product = get_object_or_404(Product, pk=product_id)
+            total += quantity * product.price
+            product_count += quantity
+            bag_items.append({
+                'item_id': item_id,
+                'quantity': quantity,
+                'product': product,
+                'type': 'product',
+        })
+        elif item_id.startswith('E'):
+            event_id = item_id[2:]
+            event = get_object_or_404(Event, pk=event_id)
+            total += quantity * event.price
+            event_count += quantity
+            bag_items.append({
+                'item_id': item_id,
+                'quantity': quantity,
+                'event': event,
+                'type': 'event',
+            })
 
     if total < settings.FREE_DELIVERY_THRESHOLD:
         delivery = total * Decimal(settings.STANDARD_DELIVERY_PERCENTAGE / 100)
@@ -37,6 +51,7 @@ def bag_contents(request):
         'bag_items': bag_items,
         'total': total,
         'product_count': product_count,
+        'event_count': event_count,
         'delivery': delivery,
         'free_delivery_delta': free_delivery_delta,
         'free_delivery_threshold': settings.FREE_DELIVERY_THRESHOLD,
