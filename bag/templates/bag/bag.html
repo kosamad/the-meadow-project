@@ -33,11 +33,13 @@
     <div class="row">
         <div class="col">
             {% if bag_items %}
-             <div class="table-responsive rounded">
+            <!-- Product Table -->
+            {% if product_count > 0 %}
+            <div class="table-responsive rounded">
                 <table class="table table-sm table-borderless">
                     <thead class="text-black">
                         <tr>
-                            <th scope="col">Products/Events</th>
+                            <th scope="col">Products</th>
                             <th scope="col">Price</th>
                             <th scope="col">Qty</th>
                             <th scope="col">Message</th>
@@ -46,22 +48,18 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for item in bag_items %}                        
+                        {% for item in bag_items %}
+                        {% if item.product %}
                         <tr>
                             <td class="p-3 w-25">
-                                {% if item.product %}
-                                <img src="{{ item.product.image.url }}" alt="{{ item.product.alt_text }}" class="img-fluid">
-                                <h3>{{ item.product.name }}</h3>
-                                {% elif item.event %}
-                                <img src="{{ item.event.image.url }}" alt="{{ item.event.alt_text }}" class="img-fluid">
-                                <h3>{{ item.event.name }}</h3>
-                                {% endif %}                                                 
+                                <img src="{{ item.product.image.url }}" alt="{{ item.product.alt_text }}"
+                                    class="img-fluid">
                             </td>
                             <td class="py-3">
-                                <p class="my-0">£{{ item.product.price|floatformat:2 }}</p> <!-- Assuming you're accessing price correctly -->
+                                <p class="my-0">£{{ item.product.price }}</p>
                             </td>
                             <td class="py-3">
-                                <p class="my-0">{{ item.quantity }}</p> <!-- Display quantity -->
+                                <p class="my-0">{{ item.quantity }}</p>
                             </td>
                             <td class="py-3">
                                 <p class="my-0"><a href="#" data-toggle="modal" data-target="#messageModal">Y/N</a></p>
@@ -70,25 +68,72 @@
                                 <p class="my-0"><a href="#" data-toggle="modal" data-target="#noteModal">Y/N</a></p>
                             </td>
                             <td class="py-3">
-                                <p class="my-0">£{{ item.product.price|floatformat:2 }}</p> <!-- Subtotal calculation goes here -->
+                                <p class="my-0">£{{ item.subtotal }}</p>
                             </td>
                         </tr>
-                        {% endfor %}                   
+                        {% endif %}
+                        {% endfor %}
                     </tbody>
                 </table>
-                <!-- Bag Cost information -->
-                <div class="row mt-4">
-                    <div class="col-6">
-                        <h6><strong>Bag Total: £{{ total|floatformat:2 }}</strong></h6>
-                        <h6>Delivery Method:</h6>
-                        <h6>Delivery: £{{ delivery|floatformat:2 }}</h6>
-                        <h4 class="mt-4"><strong>Grand Total: £{{ grand_total|floatformat:2 }}</strong></h4>
-                        {% if free_delivery_delta > 0 %}
-                        <p class="mb-1 text-danger">
-                            You could get free delivery by spending just <strong>£{{ free_delivery_delta }}</strong> more!
-                        </p>
+            </div>
+            {% endif %}
+
+            <!-- Events Table -->
+            {% if event_count > 0 %}
+            <div class="table-responsive rounded mt-4">
+                <table class="table table-sm table-borderless">
+                    <thead class="text-black">
+                        <tr>
+                            <th scope="col">Events</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Qty</th>
+                            <th scope="col">Message</th>
+                            <th scope="col">Note</th>
+                            <th scope="col">Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in bag_items %}
+                        {% if item.event %}
+                        <tr>
+                            <td class="p-3 w-25">
+                                <img src="{{ item.event.image.url }}" alt="{{ item.event.alt_text }}" class="img-fluid">
+                            </td>
+                            <td class="py-3">
+                                <p class="my-0">£{{ item.event.price }}</p>
+                            </td>
+                            <td class="py-3">
+                                <p class="my-0">{{ item.quantity }}</p>
+                            </td>
+                            <td class="py-3">
+                                <p class="my-0"><a href="#" data-toggle="modal" data-target="#messageModal">Y/N</a></p>
+                            </td>
+                            <td class="py-3">
+                                <p class="my-0"><a href="#" data-toggle="modal" data-target="#noteModal">Y/N</a></p>
+                            </td>
+                            <td class="py-3">
+                                <p class="my-0">£{{ item.subtotal }}</p>
+                            </td>
+                        </tr>
                         {% endif %}
-                    </div>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% endif %}
+
+            <!-- Bag Cost Information -->
+            <div class="row mt-4">
+                <div class="col-6">
+                    <h6><strong>Bag Total: £{{ total|floatformat:2 }}</strong></h6>
+                    <h6>Delivery Method:</h6>
+                    <h6>Delivery: £{{ delivery|floatformat:2 }}</h6>
+                    <h4 class="mt-4"><strong>Grand Total: £{{ grand_total|floatformat:2 }}</strong></h4>
+                    {% if free_delivery_delta > 0 %}
+                    <p class="mb-1 text-danger">
+                        You could get free delivery by spending just <strong>£{{ free_delivery_delta }}</strong> more!
+                    </p>
+                    {% endif %}
                 </div>
             </div>
             {% else %}

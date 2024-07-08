@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from products.models import Product, Event
 
 
 def index(request):

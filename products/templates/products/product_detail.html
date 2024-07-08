@@ -99,7 +99,7 @@
                 <h4>£<span id="product-price">{{ product.price }}</span></h4>
             </div>
             <div class="row">
-                <form method="POST" clas="form" action="{% url 'add_to_bag' product.id %}">
+                <form method="POST" clas="form" action="{% url 'add_product_to_bag' product.id %}">
                     {% csrf_token %}
                     <!-- Hidden 'is event' check -->                    
                     <input type="hidden" name="product_type" value="product">               

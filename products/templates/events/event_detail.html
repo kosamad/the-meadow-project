@@ -50,7 +50,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-lg-8 col-12 my-4">
-            <img src="{{  event.image.url }}" class="img-fluid rounded event-detail-image" alt="{{ event.alt_text }}">
+            <img src="{{ event.image.url }}" class="img-fluid rounded event-detail-image" alt="{{ event.alt_text }}">
         </div>
     </div>
     <div class="row align-items-center justify-content-center">
@@ -69,10 +69,10 @@
 <!-- event Order Form -->
 <div class="container my-4">
     <div class="row">
-        <form method="POST" clas="form" action="{% url 'add_to_bag' event.id %}">
+        <form method="POST" clas="form" action="{% url 'add_event_to_bag' event.id %}">
             {% csrf_token %}
              <!-- Hidden 'is event' check -->                    
-             <input type="hidden" name="product_type" value="event">                
+            <input type="hidden" name="product_type" value="event">                
             <!-- Date/Time -->
             <div class="row">
                 <div class="col-lg-8 col-12">
