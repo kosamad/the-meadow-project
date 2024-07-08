@@ -69,8 +69,10 @@
 <!-- event Order Form -->
 <div class="container my-4">
     <div class="row">
-        <form method="POST" clas="form" action="">
-            {% csrf_token %}           
+        <form method="POST" clas="form" action="{% url 'add_to_bag' event.id %}">
+            {% csrf_token %}
+             <!-- Hidden 'is event' check -->                    
+             <input type="hidden" name="product_type" value="event">                
             <!-- Date/Time -->
             <div class="row">
                 <div class="col-lg-8 col-12">

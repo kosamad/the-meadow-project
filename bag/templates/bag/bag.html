@@ -23,6 +23,11 @@
     </div>
 </div>
 
+<form action="{% url 'clear_basket' %}" method="post">
+    {% csrf_token %}
+    <button type="submit">Clear Basket</button>
+</form>
+
 
 <div class="container">
     <div class="row">
@@ -32,8 +37,7 @@
                 <table class="table table-sm table-borderless">
                     <thead class="text-black">
                         <tr>
-                            <th scope="col">Products</th>
-                            <th scope="col"></th>
+                            <th scope="col">Products/Events</th>
                             <th scope="col">Price</th>
                             <th scope="col">Qty</th>
                             <th scope="col">Message</th>
@@ -41,30 +45,36 @@
                             <th scope="col">Subtotal</th>
                         </tr>
                     </thead>
-                    {% for item in bag_items %}                        
-                    <tr>
-                        <td class="p-3 w-25">Image                          
-                        </td>
-                        <td class="py-3">
-                            <p class="my-0"><strong>Name</strong></p>
-                        </td>
-                        <td class="py-3">
-                            <p class="my-0">Price</p>
-                        </td>
-                        <td class="py-3">
-                            <p class="my-0">Quantit</p>
-                        </td>
-                        <td class="py-3">
-                            <p class="my-0"><a href="#" data-toggle="modal" data-target="#messageModal">Y/N</a></p>
-                        </td>
-                        <td class="py-3">
-                            <p class="my-0"><a href="#" data-toggle="modal" data-target="#noteModal">Y/N</a></p>
-                        </td>
-                        <td class="py-3">
-                            <p class="my-0">Total Price</p>
-                        </td>
-                    </tr>
-                    {% endfor %}                   
+                    <tbody>
+                        {% for item in bag_items %}                        
+                        <tr>
+                            <td class="p-3 w-25">
+                                {% if item.product %}
+                                <img src="{{ item.product.image.url }}" alt="{{ item.product.alt_text }}" class="img-fluid">
+                                <h3>{{ item.product.name }}</h3>
+                                {% elif item.event %}
+                                <img src="{{ item.event.image.url }}" alt="{{ item.event.alt_text }}" class="img-fluid">
+                                <h3>{{ item.event.name }}</h3>
+                                {% endif %}                                                 
+                            </td>
+                            <td class="py-3">
+                                <p class="my-0">£{{ item.product.price|floatformat:2 }}</p> <!-- Assuming you're accessing price correctly -->
+                            </td>
+                            <td class="py-3">
+                                <p class="my-0">{{ item.quantity }}</p> <!-- Display quantity -->
+                            </td>
+                            <td class="py-3">
+                                <p class="my-0"><a href="#" data-toggle="modal" data-target="#messageModal">Y/N</a></p>
+                            </td>
+                            <td class="py-3">
+                                <p class="my-0"><a href="#" data-toggle="modal" data-target="#noteModal">Y/N</a></p>
+                            </td>
+                            <td class="py-3">
+                                <p class="my-0">£{{ item.product.price|floatformat:2 }}</p> <!-- Subtotal calculation goes here -->
+                            </td>
+                        </tr>
+                        {% endfor %}                   
+                    </tbody>
                 </table>
                 <!-- Bag Cost information -->
                 <div class="row mt-4">
@@ -75,15 +85,14 @@
                         <h4 class="mt-4"><strong>Grand Total: £{{ grand_total|floatformat:2 }}</strong></h4>
                         {% if free_delivery_delta > 0 %}
                         <p class="mb-1 text-danger">
-                            You could get free delivery by spending just <strong>${{ free_delivery_delta }}</strong>
-                            more!
+                            You could get free delivery by spending just <strong>£{{ free_delivery_delta }}</strong> more!
                         </p>
                         {% endif %}
                     </div>
                 </div>
             </div>
             {% else %}
-            <p> Your basket is empty</p>
+            <p>Your basket is empty.</p>
             <div class="mt-4">
                 <a href="{% url 'shop' %}">
                     <button class="btn btn-green fw-bold">Go Shopping</button>
