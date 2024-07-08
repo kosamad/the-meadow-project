@@ -7,12 +7,13 @@ from products.models import Category, Product, Event
 
 def shop(request):
 
-    """ View function to render the shop page showing all categories of products
-#     plus all individual individual products/events """
+    """ View function to render the shop page showing ALL categories of products
+#     plus ALL individual individual products/events """
+
     # Gather data
     categories = Category.objects.all()
-    # products = Product.objects.all()
-    # events = Event.objects.all()
+    products = Product.objects.all()
+    events = Event.objects.all()
     # parameters so no errors when page is loaded if they don't exist/ arne't being used
     query = None
     categories = None
@@ -38,7 +39,7 @@ def shop(request):
         if 'category' in request.GET:
             categories = request.GET['category'].split(',')
             # __in syntax searches for the name field in Category model
-            # products = products.filter(category__name__in=categories)
+            products = products.filter(category__name__in=categories)
             events = events.filter(category__name__in=categories)     
             categories = Category.objects.filter(name__in=categories)  
 
@@ -51,26 +52,26 @@ def shop(request):
                 return redirect(reverse('shop'))
 
             # product and event queries for name, descritpion and category
-            # product_queries = (
-            # Q(name__icontains=query) | 
-            # Q(description__icontains=query) | 
-            # Q(category__friendly_name__icontains=query)
-            # )
-            # products = products.filter(product_queries)
+            product_queries = (
+            Q(name__icontains=query) | 
+            Q(description__icontains=query) | 
+            Q(category__friendly_name__icontains=query)
+            )
+            products = products.filter(product_queries)
 
-            # event_queries = (
-            #     Q(name__icontains=query) | 
-            #     Q(description__icontains=query) | 
-            #     Q(category__friendly_name__icontains=query)
-            # )                   
-            # events = events.filter(event_queries)
+            event_queries = (
+                Q(name__icontains=query) | 
+                Q(description__icontains=query) | 
+                Q(category__friendly_name__icontains=query)
+            )                   
+            events = events.filter(event_queries)
     
-    current_sorting = f'{sort}_{direction}'
+    current_sorting = f'{sort}_{direction}'  
 
     context = {
-        # 'products': products,
-        # 'events': events,
-        'search_term': query,
+        'products': products,
+        'events': events,
+        'search_term': query,        
         'current_categories': categories,
         'current_sorting': current_sorting
     }
@@ -78,8 +79,7 @@ def shop(request):
     return render(request, 'shop/shop.html', context)
 
 
-## below keep commented out
-
+## below keep commented
 # def shop(request):
 #     """ View function to render the shop page showing all categories of products and events
 #     plus all individual products and events """
