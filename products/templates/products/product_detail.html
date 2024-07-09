@@ -119,7 +119,7 @@
             <div class="row">
                 <form method="POST" clas="form" action="{% url 'add_product_to_bag' product.id %}">
                     {% csrf_token %}
-                    <!-- Hidden 'is event' check -->
+                    <!-- Hidden 'is event or product' check -->
                     <input type="hidden" name="product_type" value="product">
                     <!-- Size selection -->
                     <div class="size-selection mb-4 col-lg-4 col-md-6 col-12">
@@ -134,14 +134,15 @@
                             {% endfor %}
                         </select>
                     </div>
+
                     <!-- Size Hidden Value taken from size selected by user, default = M price -->
-                    <div class="col-lg-8 col-12">
+                    <!-- <div class="col-lg-8 col-12">
                         <input type="hidden" name="selected_variant" id="selected-variant" value="{{ default_variant_id }}">
-                    </div>
+                    </div> -->
                     <!-- Price Hidden, Taken from main display above which changes with user size input-->
-                    <div class="col-lg-8 col-12">
+                    <!-- <div class="col-lg-8 col-12">
                         <input type="hidden" name="selected_price" id="selected-price" value="{{ default_variant_id }}">
-                    </div>
+                    </div> -->
 
                     <!-- Card message -->
                     <div class="col-lg-8 col-12 mb-4">

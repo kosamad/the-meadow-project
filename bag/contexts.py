@@ -1,7 +1,7 @@
 from decimal import Decimal
 from django.conf import settings
 from django.shortcuts import get_object_or_404
-from products.models import Product, Event
+from products.models import Product, Event, ProductVariant
 
 
 def bag_contents(request):
@@ -16,6 +16,7 @@ def bag_contents(request):
         try:
             if details['product_type'] == 'product':
                 product = get_object_or_404(Product, id=item_id_str)
+                variant = get_object_or_404(ProductVariant, id=details['variant_id'])
                 subtotal = details['quantity'] * product.price
                 total += subtotal
                 product_count += details['quantity']
@@ -23,7 +24,10 @@ def bag_contents(request):
                     'item_id': item_id_str,
                     'quantity': details['quantity'],
                     'product': product,
+                    'variant': variant,
                     'subtotal': subtotal,
+                    'card_message': details.get('card_message', ''), # if no input, it's set to an empty string so no errors
+                    'note_to_seller': details.get('note_to_seller', ''), 
                 })
             elif details['product_type'] == 'event':
                 event = get_object_or_404(Event, id=item_id_str)
