@@ -96,19 +96,24 @@
                 <h2>{{ product.friendly_name }}</h2>
             </div>
             <div class="row mt-3">
-                <p id="price">Price: £<span id="variant-price">{{ default_price }}</span> add bit here to be out of stock if stok = 0</p>
+                <p id="price">Price: £<span id="variant-price">{{ default_price }}</span></p>
+                {% if variant.is_infinite_stock or variant.stock > 0 %}
+                <p id="stock-status"></p>
+                {% endif %}
             </div>
+            
             <!-- Select box for size/price variants -->
-            <label for="variant-select">Size:</label>
+            <!-- <label for="variant-select">Size:</label>
             <select id="variant-select">
                 {% for variant in variants %}
+                 Checks if what items are in stock/inifinitely stocked (flowers)-->
+                <!-- {% if variant.is_infinite_stock or variant.stock > 0 %}
                     <option value="{{ variant.id }}" data-price="{{ variant.price }}" data-size="{{ variant.size }}" {% if variant.id == default_variant_id %}selected{% endif %}>
                         {{ variant.get_size_display }}
                     </option>
+                    {% endif %}
                 {% endfor %}
-            </select>
-
-            need to make sure this only displays avaliable sizes and if no stock, doesn't show 
+            </select>           --> 
 
 
             <div class="row">
@@ -116,16 +121,36 @@
                     {% csrf_token %}
                     <!-- Hidden 'is event' check -->
                     <input type="hidden" name="product_type" value="product">
-                    <!-- Size -->
+                    <!-- Size selection -->
+                    <div class="size-selection mb-4 col-lg-4 col-md-6 col-12">
+                        <select id="size-selector" name="variant_id" class="form-select">
+                            {% for variant in variants %}
+                                <!-- Checks if what items are in stock/inifinitely stocked (flowers)-->
+                                {% if variant.is_infinite_stock or variant.stock > 0 %}
+                                    <option value="{{ variant.id }}" data-price="{{ variant.price }}" data-stock="{{ variant.stock }}" data-size="{{ variant.size }}" {% if variant.id == default_variant_id %}selected{% endif %}>
+                                        {{ variant.get_size_display }}
+                                    </option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <!-- Size Hidden Value taken from size selected by user, default = M price -->
                     <div class="col-lg-8 col-12">
                         <input type="hidden" name="selected_variant" id="selected-variant" value="{{ default_variant_id }}">
                     </div>
+                    <!-- Price Hidden, Taken from main display above which changes with user size input-->
+                    <div class="col-lg-8 col-12">
+                        <input type="hidden" name="selected_price" id="selected-price" value="{{ default_variant_id }}">
+                    </div>
+
                     <!-- Card message -->
                     <div class="col-lg-8 col-12">
                     </div>
+
                     <!-- Note to seller -->
                     <div class="col-lg-8 col-12">
                     </div>
+
                     <!-- Quantity -->
                     <div class="col-lg-2 col-4">
                         <div class="input-group">
@@ -158,28 +183,31 @@
 {{ block.super }}
 
 <script type="text/javascript">
-    // document.addEventListener('DOMContentLoaded', function () {
-    //     var sizeSelect = document.getElementById('id_size');
-    //     var productPriceElement = document.getElementById('product-price');
-    //     var selectedSizePriceInput = document.getElementById('id_selected_size_price');
-    //     var originalPrice = parseFloat('{{ product.price }}'); // Assuming product.price is a decimal number
+    document.addEventListener('DOMContentLoaded', function () {
+        var variantSelector = document.getElementById('size-selector');
+        var priceDisplay = document.getElementById('variant-price');
+        var stockStatus = document.getElementById('stock-status');
+        var priceValue = document.getElementById('selected-price');
 
-    //     sizeSelect.addEventListener('change', function () {
-    //         var selectedSize = sizeSelect.value;
-    //         var adjustedPrice = originalPrice; // Default to original price for 'M'
+        function updateVariantDetails() {
+            var selectedOption = variantSelector.options[variantSelector.selectedIndex];
+            var price = selectedOption.getAttribute('data-price');
+            var stock = selectedOption.getAttribute('data-stock');
+            
+            priceDisplay.textContent = price;
+            priceValue.value = price;
+            
+            if (stock > 0) {
+                stockStatus.textContent = '';
+            } else {
+                stockStatus.textContent = 'Out of stock';
+            }
+        }
 
-    //         if (selectedSize === 'S') {
-    //             adjustedPrice *= 0.7; // 70% of original price for small
-    //         } else if (selectedSize === 'L') {
-    //             adjustedPrice *= 1.3; // 130% of original price for large
-    //         }
+        variantSelector.addEventListener('change', updateVariantDetails);
 
-    //         productPriceElement.textContent = adjustedPrice.toFixed(2);
-    //         selectedSizePriceInput.value = adjustedPrice.toFixed(2); // Set hidden input value
-    //     });
-
-    //     // Trigger initial price update on page load
-    //     sizeSelect.dispatchEvent(new Event('change'));
-    // });
+        // Initial update
+        updateVariantDetails();
+    });    
 </script>
 {% endblock %}
