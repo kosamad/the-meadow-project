@@ -96,15 +96,27 @@
                 <h2>{{ product.friendly_name }}</h2>
             </div>
             <div class="row mt-3">
-                <h4>£<span id="product-price">{{ product.price }}</span></h4>
+                <p id="price">Price: £<span id="variant-price">{{ default_price }}</span> add bit here to be out of stock if stok = 0</p>
             </div>
+            <!-- Select box for size/price variants -->
+            <label for="variant-select">Size:</label>
+            <select id="variant-select">
+                {% for variant in variants %}
+                    <option value="{{ variant.id }}" data-price="{{ variant.price }}" data-size="{{ variant.size }}" {% if variant.id == default_variant_id %}selected{% endif %}>
+                        {{ variant.get_size_display }}
+                    </option>
+                {% endfor %}
+            </select>
+
+
             <div class="row">
                 <form method="POST" clas="form" action="{% url 'add_product_to_bag' product.id %}">
                     {% csrf_token %}
-                    <!-- Hidden 'is event' check -->                    
-                    <input type="hidden" name="product_type" value="product">               
+                    <!-- Hidden 'is event' check -->
+                    <input type="hidden" name="product_type" value="product">
                     <!-- Size -->
                     <div class="col-lg-8 col-12">
+                        <input type="hidden" name="selected_variant" id="selected-variant" value="{{ default_variant_id }}">
                     </div>
                     <!-- Card message -->
                     <div class="col-lg-8 col-12">
