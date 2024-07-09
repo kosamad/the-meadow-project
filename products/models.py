@@ -33,13 +33,13 @@ class Product(models.Model):
     name = models.CharField(max_length=254)
     friendly_name = models.CharField(max_length=254, null=False, blank=False)
     price = models.DecimalField(max_digits=6, decimal_places=2)
-    description = models.TextField()
-    has_sizes = models.BooleanField(default=False, null=True, blank=True)
+    description = models.TextField()    
     image = models.ImageField(null=True, blank=True, upload_to='product_images/')
     alt_text = models.TextField(default="")
     rating = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
     is_gift_card = models.BooleanField(default=False)    
-    is_active = models.BooleanField(default=True)         
+    is_active = models.BooleanField(default=True)
+    is_infinite_stock = models.BooleanField(default=False, help_text='Check if stock is a bouquet')  
 
     SIZE_CHOICES = (
         ('S', 'Small'),
@@ -47,14 +47,28 @@ class Product(models.Model):
         ('L', 'Large'),
     )
 
-    size = models.CharField(max_length=1, choices=SIZE_CHOICES, null=True, blank=True)
-
     # Default order on the site is by firendly_name
     class Meta:
         ordering = ['friendly_name'] 
 
     def __str__(self):
         return self.name
+
+
+
+class ProductVariant(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    product = models.ForeignKey(Product, related_name='variants', on_delete=models.CASCADE)
+    size = models.CharField(max_length=1, choices=Product.SIZE_CHOICES)
+    stock = models.PositiveIntegerField(default=0, help_text='Number of items available in stock for this size')
+    is_infinite_stock = models.BooleanField(default=False, help_text='Check if stock is a bouquet')
+
+    class Meta:
+        unique_together = ('product', 'size')  # Ensures each size variant is unique for a product
+
+    def __str__(self):
+        return f"{self.product.name} - {self.get_size_display()}"
+
 
 
 

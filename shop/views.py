@@ -19,22 +19,10 @@ def shop(request):
     categories = None
     sort = None
     direction = None
+    combined_list = []
 
-    if request.GET:
-        # Ordering the shop item
-        # if 'sort' in request.GET:
-        #     sortkey = request.GET['sort']
-        #     sort = sortkey
-        #     # Temp field added to model
-        #     if sortkey == 'name':
-        #         sortkey = 'lower_name'
-        #         products = products.annotate(lower_name=Lower('name'))
-        #     if 'direction' in request.GET:
-        #         direction = request.GET['direction']
-        #         if direction == 'desc':
-        #             sortkey = f'-{sortkey}'
-        #     products = products.order_by(sortkey)
-
+    if request.GET:            
+    
         # show the specific categories of products or event (note the event category does not have an s in Category)
         if 'category' in request.GET:
             categories = request.GET['category'].split(',')
@@ -66,14 +54,25 @@ def shop(request):
             )                   
             events = events.filter(event_queries)
     
-    current_sorting = f'{sort}_{direction}'  
+    
+    # group (append) products and events together for sorting.  
+    for product in products:
+        combined_list.append({
+            'item': product,
+            'item_type': 'Product',
+        })
+    for event in events:
+        combined_list.append({
+            'item': event,
+            'item_type': 'Event',
+        })
 
     context = {
         'products': products,
         'events': events,
         'search_term': query,        
-        'current_categories': categories,
-        'current_sorting': current_sorting
+        'current_categories': categories,        
+        'combined_list': combined_list
     }
 
     return render(request, 'shop/shop.html', context)
