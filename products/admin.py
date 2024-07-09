@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, Event, Product
+from .models import Category, Event, Product, ProductVariant
 
 
 class CategoryAdmin(admin.ModelAdmin):
@@ -24,8 +24,18 @@ class EventAdmin(admin.ModelAdmin):
         'event_datetime',
     )
 
+class ProductVariantAdmin(admin.ModelAdmin):
+    list_display = (
+        'product',
+        'size',              
+        'price',
+        'stock',
+        'is_infinite_stock',       
+    )
+
 # Register your models here.
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Event, EventAdmin)
+admin.site.register(ProductVariant, ProductVariantAdmin)
 
