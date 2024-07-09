@@ -207,6 +207,24 @@
 {{ block.super }}
 
 <script type="text/javascript">
+
+document.addEventListener('DOMContentLoaded', function () {
+        // Function to Count Returned Products +/ Events
+        function countDisplayedItems() {            
+            var displayedProducts = document.querySelectorAll('.product-item').length; // Count all products/events   
+            var combinedItemsElement = document.getElementById('combined_items');
+        
+            // Update the text based on the combined length (Product for 1  or products for many)
+            combinedItemsElement.textContent = displayedProducts + (displayedProducts === 1 ? ' Product' : ' Products');
+        }
+
+        countDisplayedItems();
+
+        document.getElementById('sortSelector').addEventListener('change', function () {
+            countDisplayedItems();
+        });
+    });
+
     $(document).ready(function () {
         // Function to sort produts/events loaded onto the page. Triggered by the sort selector box and iterates through all pairs of elements. 
         $('#sortSelector').change(function () {
@@ -244,24 +262,7 @@
         });
        
 
-    document.addEventListener('DOMContentLoaded', function () {
-        // Function to Count Returned Products +/ Events
-        function countDisplayedItems() {            
-        var displayedProducts = document.querySelectorAll('.product-item').length; // Count all products
-        var displayedEvents = document.querySelectorAll('.event-item').length; // Count all events
-        var combinedLength = displayedProducts + displayedEvents; // Combined length of products and events
-        var combinedItemsElement = document.getElementById('combined_items');
-        
-        // Update the text based on the combined length
-        combinedItemsElement.textContent = combinedLength + (combinedLength === 1 ? ' Product' : ' Products');
-        }
-
-        countDisplayedItems();
-
-        document.getElementById('sortSelector').addEventListener('change', function () {
-            countDisplayedItems();
-        });
-    });
+   
 }); 
 </script>
 {% endblock %}
