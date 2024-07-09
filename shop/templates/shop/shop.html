@@ -126,10 +126,37 @@
         </div>
     </div>
 
-    <!-- Returned Products -->
+<!-- Returned Products and Events -->
+<div class="row" id="productContainer">
+    {% for item_data in combined_list %}
+    <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4 product-item" data-price="{{ item_data.item.price }}"
+        data-name="{{ item_data.item.friendly_name }}">
+        <a href="{% if item_data.item_type == 'Product' %}{% url 'product_detail' item_data.item.id %}{% elif item_data.item_type == 'Event' %}{% url 'event_detail' item_data.item.id %}{% endif %}"
+            class="no-link-style">
+            <div class="thumbnail">
+                <div class="image-container">
+                    {% if item_data.item.image %}
+                    <img src="{{ item_data.item.image.url }}" class="shop-img" alt="{{ item_data.item.alt_text }}">
+                    {% else %}
+                    <img src="{{ MEDIA_URL }}noimage.png" class="shop-img" alt="{{ item_data.item.alt_text }}">
+                    {% endif %}
+                </div>
+            </div>
+            <div class="row text-center product-text mt-4 mb-4">
+                <h4 class="title-font">{{ item_data.item.friendly_name }}</h4>
+                <h4 class="title-font">£{{ item_data.item.price }}</h4>
+            </div>
+        </a>
+    </div>
+    {% endfor %}
+</div>
+
+
+
+    <!-- Returned Products
     <div class="row" id="productContainer">
         {% for product in products %}
-        <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4 product-item" data-price="" data-name="">
+        <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4 shop-item" data-price="" data-name="">
             <a href="{% url 'product_detail' product.id %}" class="no-link-style">
                 <div class="thumbnail">
                     <div class="image-container">
@@ -147,9 +174,9 @@
             </a>
         </div>
         {% endfor %}
-        <!-- Returned Events -->
-        {% for event in events %}
-        <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4 product-item" data-price=""
+        Returned Events -->
+        <!-- {% for event in events %}
+        <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4 shop-item" data-price=""
             data-name="{{ event.friendly_name }}">
             <a href="{% url 'event_detail' event.id %}" class="no-link-style">
                 <div class="thumbnail">
@@ -168,8 +195,8 @@
                 </div>
             </a>
         </div>
-        {% endfor %}
-    </div>
+        {% endfor %} --> 
+    <!-- </div> -->
 
 
 </div>
@@ -215,7 +242,7 @@
                 window.location.href = url.toString();
             }
         });
-    });
+       
 
     document.addEventListener('DOMContentLoaded', function () {
         // Function to Count Returned Products +/ Events
@@ -235,5 +262,6 @@
             countDisplayedItems();
         });
     });
+}); 
 </script>
 {% endblock %}
