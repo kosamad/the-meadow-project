@@ -104,6 +104,22 @@ color: #04724d;}
     color:#DC6874;
 }
 
+/* Footer */
+
+#footer-logo{     
+    height: 300px;     
+    }
+
+.footer-text{font-size: 12px;}
+
+.social-links a {
+    color:#04724d;
+}
+
+.social-links a:hover {
+    color:#DC6874;
+}
+
 /* Home */
 
 .img-hero {

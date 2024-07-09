@@ -56,104 +56,9 @@ interfering with the core requirements.-->
 </head>
 
 <body>
+    <!-- Navbar loaded -->
+    {% include 'navbar.html' %}
 
-    <header class="container-fluid fixed-top bg-white">
-        <div class="container-fluid">
-            <div class="row">
-
-                <!-- Logo -->
-                <div class="col-sm-2 col-3 my-0 ps-0 justify-content-start">
-                    <a href="{% url 'home' %}" class="nav-link">
-                        <img src="/media/short-logo.png" class="nav-logo" alt="Image 1">
-                    </a>
-                </div>
-
-                <!-- Navbar toggle and Links -->
-                <div class="col-sm-6 col-md-8 col-2 my-2">
-                    <nav class="navbar navbar-expand-lg">
-                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
-                            aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-                        <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
-                            <ul class="navbar-nav mx-auto d-flex justify-content-around w-100">
-                                <li class="nav-item">
-                                    <a href="{% url 'home' %}" class="nav-link main-logo-link">Home</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{% url 'shop' %}" class="nav-link">Shop</a>
-                                </li>                                
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">Blog</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">Contact & About</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </nav>
-                </div>
-                <!-- Account, Shopping Bag and Search-->
-                <div class="col-7 col-sm-4 col-md-2 my-4 d-flex justify-content-end">
-                    <ul class="list-inline list-unstyled mb-0 ml-lg-2">
-                        <!-- My Account + dropdown options -->
-                        <li class="list-inline-item mr-lg-4 dropdown nav-item">
-                            <a class="nav-link" href="#" id="user-options" data-bs-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">
-                                <div><i class="fas fa-user nav-icon"></i></div>
-                            </a>
-                            <div class="dropdown-menu border-0 bg-green" aria-labelledby="user-options">
-                                {% if request.user.is_authenticated %}
-                                {% if request.user.is_superuser %}
-                                <a href="" class="dropdown-item">TMP Management</a>
-                                {% endif %}
-                                <a href="" class="dropdown-item">My Profile</a>
-                                <a href="{% url 'account_logout' %}" class="dropdown-item">Logout</a>
-                                {% else %}
-                                <a href="{% url 'account_signup' %}" class="dropdown-item">Sign Up</a>
-                                <a href="{% url 'account_login' %}" class="dropdown-item">Login</a>
-                                {% endif %}
-                            </div>
-                        </li>
-
-                        <!-- Link to Shopping Bag -->
-                        <li class="list-inline-item nav-item">
-                            <a class="nav-link" href="{% url 'view_bag' %}">
-                                <i class="fas fa-shopping-bag nav-icon {% if grand_total %}icon-pink{% endif %}"></i>
-                            </a>
-                        </li>
-
-
-                        <!-- Search Toggle -->
-                        <li class="list-inline-item nav-item">
-                            <a class="nav-link search-icon-toggle" href="#">
-                                <i class="fas fa-search nav-icon"></i>
-                            </a>
-                        </li>
-                    </ul>
-                    <!-- Toggled Search bar -->
-                    <div class="search-overlay bg-white">
-                        <form method="GET" action="{% url 'shop' %}" class="form-inline mb-0">
-                            <div class="input-group">
-                                <input class="form-control form-control-sm border-green margin-10 rounded-0"
-                                    type="search" name="q" aria-label="Search" placeholder="Shop search">
-                                <div class="input-group-append">
-                                    <button class="btn btn-green margin-10" type="submit">
-                                        Search
-                                    </button>
-                                </div>
-                                <div class="input-group-append mr-3">
-                                    <button class="close-search btn-green btn margin-15" type="button">
-                                        <i class="fas fa-times"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-    </header>
 
     {% if messages %}
     <div class="message-container"></div>
@@ -166,6 +71,80 @@ interfering with the core requirements.-->
     <!--  Main Page content -->
     {% block content %}
     {% endblock %}
+
+    <!-- Footer -->
+    <div class="container-fluid bg-white border-top border-2">
+        <div class="container">
+            <div class="row mt-5">
+                <div class="col-12 col-lg-4 mt-4">
+                    <div class="row">
+                        <p class="text-justify">Be the first to hear about new events and discounts, and receive our
+                            monthly blog post with tips and tricks to keep your blooms marvellous!</p>
+                    </div>
+                    <div class="row text-center"><a href="" class="no-link-style strong">Sign Up Here</a></div>
+                </div>
+
+                <div class="col-12 col-lg-4 order-sm-3 order-lg-2 social-links">
+                    <div class="row justify-content-center">
+                        <a href="{% url 'home' %}" class="text-center">
+                            <img src="/media/full-logo.png" id="footer-logo" alt="The Meadow Project Logo"
+                                class="img-fluid">
+                        </a>
+                    </div>
+                    <div class="row justify-content-center mt-4">
+                        <div class="col text-center"><a href="https://en-gb.facebook.com/" target="_blank"
+                                aria-label="Facebook - Opens in a new tab">
+                                <i class="fa-brands fa-facebook fa-2x"></i>
+                            </a></div>
+                        <div class="col text-center"><a href="https://twitter.com/?lang=en" target="_blank"
+                                aria-label="Twitter - Opens in a new tab">
+                                <i class="fa-brands fa-square-x-twitter fa-2x"></i>
+                            </a></div>
+                        <div class="col text-center">
+                            <a href="https://www.instagram.com/" target="_blank"
+                                aria-label="Instagram - Opens in a new tab">
+                                <i class="fa-brands fa-instagram fa-2x"></i>
+                            </a>
+                        </div>
+                        <div class="col text-center d-block d-md-none">
+                            <a href="" target=""
+                                aria-label="">
+                                <i class="fa-solid fa-location-dot fa-2x"></i>
+                            </a>
+                        </div>                      
+                        <div class="col text-center d-block d-md-none">
+                            <a href="" target=""
+                                aria-label="">
+                                <i class="fa-solid fa-envelope fa-2x"></i>
+                            </a>
+                        </div>
+                        
+
+                    </div>
+                    <div class="row justify-content-center mt-5">
+                        <p class="text-center footer-text mb-0"> This website was created for educational purposes only</p>
+                        <p class="text-center footer-text"><i class="fa-regular fa-copyright"></i> Karen Samad 2024<span><a
+                                    href="https://www.linkedin.com/in/karen-samad-n%C3%A8e-onions-phd-0376a9149/"
+                                    target="_blank" aria-label="linkedin - Opens in a new tab" class="no-link-style">
+                                    <i class="fa-brands fa-linkedin"></i></span></a></p>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-4 d-none d-md-block order-sm-2 order-lg-3 mt-4">
+                    <div class="row mb-2 text-center">
+                        <div><p><span class="me-3"><i class="fa-solid fa-location-dot fa-lg mr-2"></i></span>  123 Meadow, Along A Lane, Bristol BS41 8RM</p></div>
+                      
+                    </div>
+                    <div class="row mb-2 text-center">
+                        <div><p><span class="me-3"><i class="fa-solid fa-phone fa-lg"></i></span>01245 687 543</p></div>                        
+                    </div>
+                    <div class="row mb-2 text-center">
+                        <div><p><span class="me-3"><i class="fa-solid fa-envelope fa-lg mr-2"></i></span>  Email Address@Email.com</p></div>                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!--  JS Loaded at end of body -->
     {% block postloadjs %}
