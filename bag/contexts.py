@@ -14,7 +14,7 @@ def bag_contents(request):
     for unique_key, details in bag.items():
         try:            
             if details['product_type'] == 'product':
-                item_id, variant_id, _, _ = unique_key.split('_', 3) # split my unique key to get id's
+                item_id, variant_id, _, _ = unique_key.split('_', 3) # split my unique key to get id's 
                 product = get_object_or_404(Product, id=item_id)
                 variant = get_object_or_404(ProductVariant, id=variant_id)
                 subtotal = details['quantity'] * Decimal(details['price'])

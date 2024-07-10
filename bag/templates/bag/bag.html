@@ -36,11 +36,11 @@
             <!-- Product Table -->
             {% if product_count > 0 %}
             <div class="table-responsive">
-                <table class="table table-borderless table-striped rounded">
+                <table class="table table-borderless rounded">
                     <thead class="text-black">
                         <tr>
                             <th scope="col">Products</th>
-                            <th scope="col">Size</th>
+                            <th scope="col"></th>                            
                             <th scope="col">Price</th>
                             <th scope="col">Qty</th>
                             <th scope="col">Message</th>
@@ -53,11 +53,16 @@
                         {% if item.product %}
                         <tr>
                             <td class="p-3 w-25">
+                                {% if item.product.image %}
                                 <img src="{{ item.product.image.url }}" alt="{{ item.product.alt_text }}"
                                     class="img-fluid">
+                                {% else %}
+                                <img class="img-fluid" src="{{ MEDIA_URL }}noimage.png" alt="{{ item.product.name }}">
+                                {% endif %}
                             </td>
                             <td class="py-3">
-                                <p class="my-0">£{{ item.variant.size }}</p>
+                                <p class="my-0"><strong>{{ item.product.friendly_name }}</strong></p>
+                                <p class="my-0">Size: {{ item.variant.size }}</p>
                             </td>
                             <td class="py-3">
                                 <p class="my-0">£{{ item.variant.price }}</p>
@@ -80,7 +85,10 @@
                     </tbody>
                 </table>
             </div>
-            {% endif %} 
+            {% endif %}
+
+            <hr class="my-4 border-top border-2 border-dark"> 
+
             <!-- Events Table -->
             {% if event_count > 0 %}
             <div class="table-responsive rounded mt-4">
@@ -88,6 +96,7 @@
                     <thead class="text-black">
                         <tr>
                             <th scope="col">Events</th>
+                            <th scope="col"></th> 
                             <th scope="col">Price</th>
                             <th scope="col">Qty</th>
                             <th scope="col">Attendee Info</th>
@@ -101,6 +110,9 @@
                         <tr>
                             <td class="p-3 w-25">
                                 <img src="{{ item.event.image.url }}" alt="{{ item.event.alt_text }}" class="img-fluid">
+                            </td>
+                            <td class="py-3">
+                                <p class="my-0"><strong>{{ item.event.friendly_name }}</strong></p>                                
                             </td>
                             <td class="py-3">
                                 <p class="my-0">£{{ item.event.price }}</p>
@@ -124,6 +136,8 @@
                 </table>
             </div>
             {% endif %}
+
+            <hr class="my-4 border-top border-2 border-dark">
 
             <!-- Bag Cost Information -->
             <div class="row mt-4">
@@ -150,13 +164,6 @@
         </div>
     </div>
 </div>
-
-
-Remember to write the Modal and adjust table based on events that are added.
-
-
-<!-- <p> Spend £{{ free_delivery_threshold }} to get free delivery </p> -->
-
 
 <div class="container">
     <!-- Collapsible delivery info button -->
