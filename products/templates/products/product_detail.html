@@ -12,6 +12,7 @@
 {% endblock %}
 
 {% block content %}
+<!-- Breadcrumbs -->
 <div class="container">
     <row class="mt-4 mb-4">
         <nav aria-label="breadcrumb">
@@ -23,7 +24,6 @@
                 <li class="breadcrumb-item active" aria-current="page">{{ product.friendly_name|title }}</li>
             </ol>
         </nav>
-</div>
 </div>
 
 <div class="container">
@@ -42,13 +42,14 @@
                     to fulfill your request.
                 </p>
             </div>
+            <!-- Delivery info -->
             <div class="row mt-2 text-center">
                 <div class="col">
-                    <!-- Collapsible delivery info button -->
+                    <!-- delivery info button -->
                     <button class="btn btn-green" data-bs-toggle="collapse" data-bs-target="#deliveryInfo"
                         aria-expanded="false" aria-controls="deliveryInfo">Delivery Info
                     </button>
-                    <!-- Collapsible delivery info content -->
+                    <!--  delivery info content -->
                     <div class="collapse mt-3" id="deliveryInfo">
                         <div class="card card-body">
                             <p class="fw-bold d-inline-block"><span>
@@ -100,22 +101,9 @@
                 {% if variant.is_infinite_stock or variant.stock > 0 %}
                 <p id="stock-status"></p>
                 {% endif %}
-            </div>
-            
-            <!-- Select box for size/price variants -->
-            <!-- <label for="variant-select">Size:</label>
-            <select id="variant-select">
-                {% for variant in variants %}
-                 Checks if what items are in stock/inifinitely stocked (flowers)-->
-                <!-- {% if variant.is_infinite_stock or variant.stock > 0 %}
-                    <option value="{{ variant.id }}" data-price="{{ variant.price }}" data-size="{{ variant.size }}" {% if variant.id == default_variant_id %}selected{% endif %}>
-                        {{ variant.get_size_display }}
-                    </option>
-                    {% endif %}
-                {% endfor %}
-            </select>           --> 
+            </div>     
 
-
+            <!-- Product Order Form -->
             <div class="row">
                 <form method="POST" clas="form" action="{% url 'add_product_to_bag' product.id %}">
                     {% csrf_token %}
@@ -125,24 +113,17 @@
                     <div class="size-selection mb-4 col-lg-4 col-md-6 col-12">
                         <select id="size-selector" name="variant_id" class="form-select">
                             {% for variant in variants %}
-                                <!-- Checks if what items are in stock/inifinitely stocked (flowers)-->
-                                {% if variant.is_infinite_stock or variant.stock > 0 %}
-                                    <option value="{{ variant.id }}" data-price="{{ variant.price }}" data-stock="{{ variant.stock }}" data-size="{{ variant.size }}" {% if variant.id == default_variant_id %}selected{% endif %}>
-                                        {{ variant.get_size_display }}
-                                    </option>
-                                {% endif %}
+                            <!-- Checks if what items are in stock/inifinitely stocked (flowers)-->
+                            {% if variant.is_infinite_stock or variant.stock > 0 %}
+                            <option value="{{ variant.id }}" data-price="{{ variant.price }}"
+                                data-stock="{{ variant.stock }}" data-size="{{ variant.size }}"
+                                {% if variant.id == default_variant_id %}selected{% endif %}>
+                                {{ variant.get_size_display }}
+                            </option>
+                            {% endif %}
                             {% endfor %}
                         </select>
-                    </div>
-
-                    <!-- Size Hidden Value taken from size selected by user, default = M price -->
-                    <!-- <div class="col-lg-8 col-12">
-                        <input type="hidden" name="selected_variant" id="selected-variant" value="{{ default_variant_id }}">
-                    </div> -->
-                    <!-- Price Hidden, Taken from main display above which changes with user size input-->
-                    <!-- <div class="col-lg-8 col-12">
-                        <input type="hidden" name="selected_price" id="selected-price" value="{{ default_variant_id }}">
-                    </div> -->
+                    </div>                   
 
                     <!-- Card message -->
                     <div class="col-lg-8 col-12 mb-4">
@@ -160,8 +141,24 @@
                     <div class="col-lg-2 col-4">
                         <label for="quantity">Quantity</label>
                         <div class="input-group">
+                            <div class="input-group-prepend">
+                                <button class="decrement-qty btn btn-green rounded-0" 
+                                    data-item_id="{{ product.id }}" id="decrement-qty_{{ product.id }}">
+                                    <span class="icon">
+                                        <i class="fas fa-minus"></i>
+                                    </span>
+                                </button>
+                            </div>
                             <input class="form-control qty_input" type="number" name="quantity" value="1" min="1"
                                 max="99" data-item_id="{{ product.id }}" id="id_qty_{{ product.id }}">
+                                <div class="input-group-append">
+                                    <button class="increment-qty btn btn-green rounded-0"
+                                        data-item_id="{{ product.id }}" id="increment-qty_{{ product.id }}">
+                                        <span class="icon">
+                                            <i class="fas fa-plus"></i>
+                                        </span>
+                                    </button>
+                                </div>
                         </div>
                     </div>
 
@@ -188,32 +185,7 @@
 {% block postloadjs %}
 {{ block.super }}
 
-<script type="text/javascript">
-    document.addEventListener('DOMContentLoaded', function () {
-        var variantSelector = document.getElementById('size-selector');
-        var priceDisplay = document.getElementById('variant-price');
-        var stockStatus = document.getElementById('stock-status');
-        var priceValue = document.getElementById('selected-price');
+{% include 'products/includes/quantity_input_script.html' %}
+{% include 'products/includes/size_selection_script.html' %}
 
-        function updateVariantDetails() {
-            var selectedOption = variantSelector.options[variantSelector.selectedIndex];
-            var price = selectedOption.getAttribute('data-price');
-            var stock = selectedOption.getAttribute('data-stock');
-            
-            priceDisplay.textContent = price;
-            priceValue.value = price;
-            
-            if (stock > 0) {
-                stockStatus.textContent = '';
-            } else {
-                stockStatus.textContent = 'Out of stock';
-            }
-        }
-
-        variantSelector.addEventListener('change', updateVariantDetails);
-
-        // Initial update
-        updateVariantDetails();
-    });    
-</script>
 {% endblock %}

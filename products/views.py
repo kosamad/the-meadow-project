@@ -27,6 +27,6 @@ def event_detail(request, event_uuid):
     context = {
         'event': event,
     }
-    return render(request, 'events/event_detail.html', context)
+    return render(request, 'products/event_detail.html', context)
 
 

@@ -1,0 +1,29 @@
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', function () {
+    // Size selection and Price Update
+        var variantSelector = document.getElementById('size-selector');
+        var priceDisplay = document.getElementById('variant-price');
+        var stockStatus = document.getElementById('stock-status');
+        var priceValue = document.getElementById('selected-price');
+
+        function updateVariantDetails() {
+            var selectedOption = variantSelector.options[variantSelector.selectedIndex];
+            var price = selectedOption.getAttribute('data-price');
+            var stock = selectedOption.getAttribute('data-stock');
+
+            priceDisplay.textContent = price;
+            priceValue.value = price;
+
+            if (stock > 0) {
+                stockStatus.textContent = '';
+            } else {
+                stockStatus.textContent = 'Out of stock';
+            }
+        }
+
+        variantSelector.addEventListener('change', updateVariantDetails);
+
+        // Initial update
+        updateVariantDetails();
+    });
+</script>
