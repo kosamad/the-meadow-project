@@ -12,9 +12,9 @@ def bag_contents(request):
     bag = request.session.get('bag', {})  
    
     for unique_key, details in bag.items():
-        try:
-            item_id, variant_id, _, _ = unique_key.split('_', 3) # split my unique key to get id's
+        try:            
             if details['product_type'] == 'product':
+                item_id, variant_id, _, _ = unique_key.split('_', 3) # split my unique key to get id's
                 product = get_object_or_404(Product, id=item_id)
                 variant = get_object_or_404(ProductVariant, id=variant_id)
                 subtotal = details['quantity'] * Decimal(details['price'])
@@ -30,16 +30,20 @@ def bag_contents(request):
                     'note_to_seller': details.get('note_to_seller', ''), 
                 })
             elif details['product_type'] == 'event':
-                event = get_object_or_404(Event, id=item_id_str)
-                subtotal = details['quantity'] * event.price
+                item_id, _, _= unique_key.split('_', 3)
+                event = get_object_or_404(Event, id=item_id)
+                subtotal = details['quantity'] * Decimal(details['price'])
                 total += subtotal
                 event_count += details['quantity']
                 bag_items.append({
-                    'item_id': item_id_str,
+                    'item_id': item_id,
                     'quantity': details['quantity'],
-                    'event': event,
-                    'subtotal': subtotal,
-                })
+                    'event': event,                
+                    'subtotal': subtotal,                   
+                    'attendee_name': details.get('attendee_name',''),
+                    'note_to_host': details.get('note_to_host',''),
+                    
+                })          
         except (Product.DoesNotExist, Event.DoesNotExist, ProductVariant.DoesNotExist):
             pass
 

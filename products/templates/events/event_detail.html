@@ -66,32 +66,39 @@
     </div>
 </div>
 
-<!-- event Order Form -->
+<!-- Event Order Form -->
 <div class="container my-4">
     <div class="row">
+        <div class="row mb-4">
+            <h2>Order Form:</h2> 
+        </div>
+        <div class="row mb-2">
+            <p>Please fill in the detials below to get booked onto the {{ event.friendly_name }}.<p> 
+        </div>         
         <form method="POST" clas="form" action="{% url 'add_event_to_bag' event.id %}">
             {% csrf_token %}
              <!-- Hidden 'is event' check -->                    
             <input type="hidden" name="product_type" value="event">                
-            <!-- Date/Time -->
-            <div class="row">
-                <div class="col-lg-8 col-12">
-                </div>
-            </div>
-            <!-- Optional message if this is a gift -->
-            <div class="row">
-                <div class="col-lg-8 col-12">
-                </div>
-            </div>
-            <!-- Note to , inc placeholder of state name of attendee -->
-            <div class="row">
-                <div class="col-lg-8 col-12">
-                </div>
-            </div>
+            <!-- Hidden Date/Time -->
+            <input type="hidden" name="event_datetime" value="{{ event.event_datetime }}">
+            <!-- Hidden Price -->
+            <input type="hidden" name="event_price" value="{{ event.price }}">     
+            <!-- Attendee Name -->             
+             <div class="col-lg-8 col-12 mb-4">
+                <label for="note-to-seller">Attendee Name</label>
+                <textarea class="form-control" name="attendee_name" id="attendee_name"></textarea>
+                <div id="attendeeNameHelp" class="form-text">Please add the names of all attendees in this order</div>
+            </div>  
+             <!-- Note to Host -->
+             <div class="col-lg-8 col-12 mb-4">
+                <label for="note-to-seller">Optional Note to Host</label>
+                <textarea class="form-control" name="note_to_host" id="note-to-host" rows="3"></textarea>
+            </div>            
             <!-- Quantity -->
             <div class="row">
-                <div class="col-lg-6 col-6">
-                    <div class="input-group">
+                <div class="col-lg-2 col-4">
+                    <label for="quantity">Quantity</label>
+                    <div class="input-group">                        
                         <input class="form-control qty_input" type="number" name="quantity" value="1" min="1" max="99"
                             data-item_id="{{ event.id }}" id="id_qty_{{ event.id }}">
                     </div>

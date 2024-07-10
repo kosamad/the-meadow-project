@@ -5,6 +5,7 @@ urlpatterns = [
     path('', views.view_bag, name='view_bag'),
     # path('add/<uuid:item_id>/', views.add_to_bag, name='add_to_bag'), 
     path('add_product_to_bag/<uuid:item_id>/', views.add_product_to_bag, name='add_product_to_bag'),
-    path('add_event_to_bag/<uuid:item_id>/', views.add_event_to_bag, name='add_event_to_bag'),  
+    path('add_event_to_bag/<uuid:item_id>/', views.add_event_to_bag, name='add_event_to_bag'),
+    path('update_card_message/<uuid:item_id>/', views.update_card_message, name='update_card_message'),
     path('clear-basket/', views.clear_basket, name='clear_basket'),    
 ]

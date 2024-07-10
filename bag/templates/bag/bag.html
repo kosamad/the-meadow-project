@@ -35,8 +35,8 @@
             {% if bag_items %}
             <!-- Product Table -->
             {% if product_count > 0 %}
-            <div class="table-responsive rounded">
-                <table class="table table-sm table-borderless">
+            <div class="table-responsive">
+                <table class="table table-borderless table-striped rounded">
                     <thead class="text-black">
                         <tr>
                             <th scope="col">Products</th>
@@ -65,11 +65,11 @@
                             <td class="py-3">
                                 <p class="my-0">{{ item.quantity }}</p>
                             </td>
-                            <td class="py-3">
-                                <p class="my-0"><a href="#" data-toggle="modal" data-target="#messageModal">{{ item.card_message }}</a></p>
+                            <td class="py-3 me-2" >
+                                <p>{{ item.card_message }}</p>
                             </td>
-                            <td class="py-3">
-                                <p class="my-0"><a href="#" data-toggle="modal" data-target="#noteModal">{{ item.note_to_seller }}</a></p>
+                            <td class="py-3 me-2">
+                                <p class="my-0">{{ item.note_to_seller }}</p>
                             </td>
                             <td class="py-3">
                                 <p class="my-0">£{{ item.subtotal }}</p>
@@ -80,8 +80,7 @@
                     </tbody>
                 </table>
             </div>
-            {% endif %}
-
+            {% endif %} 
             <!-- Events Table -->
             {% if event_count > 0 %}
             <div class="table-responsive rounded mt-4">
@@ -91,7 +90,7 @@
                             <th scope="col">Events</th>
                             <th scope="col">Price</th>
                             <th scope="col">Qty</th>
-                            <th scope="col">Message</th>
+                            <th scope="col">Attendee Info</th>
                             <th scope="col">Note</th>
                             <th scope="col">Subtotal</th>
                         </tr>
@@ -110,10 +109,10 @@
                                 <p class="my-0">{{ item.quantity }}</p>
                             </td>
                             <td class="py-3">
-                                <p class="my-0"><a href="#" data-toggle="modal" data-target="#messageModal">Y/N</a></p>
+                                <p class="my-0">{{ item.attendee_name }}</p>
                             </td>
                             <td class="py-3">
-                                <p class="my-0"><a href="#" data-toggle="modal" data-target="#noteModal">Y/N</a></p>
+                                <p class="my-0">{{ item.note_to_host}}</p>
                             </td>
                             <td class="py-3">
                                 <p class="my-0">£{{ item.subtotal }}</p>
