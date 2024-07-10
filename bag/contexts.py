@@ -11,17 +11,17 @@ def bag_contents(request):
     event_count = 0
     bag = request.session.get('bag', {})  
    
-    for item_id_str, details in bag.items():             
-
+    for unique_key, details in bag.items():
         try:
+            item_id, variant_id, _, _ = unique_key.split('_', 3) # split my unique key to get id's
             if details['product_type'] == 'product':
-                product = get_object_or_404(Product, id=item_id_str)
-                variant = get_object_or_404(ProductVariant, id=details['variant_id'])
-                subtotal = details['quantity'] * product.price
+                product = get_object_or_404(Product, id=item_id)
+                variant = get_object_or_404(ProductVariant, id=variant_id)
+                subtotal = details['quantity'] * Decimal(details['price'])
                 total += subtotal
                 product_count += details['quantity']
                 bag_items.append({
-                    'item_id': item_id_str,
+                    'item_id': item_id,
                     'quantity': details['quantity'],
                     'product': product,
                     'variant': variant,
@@ -40,7 +40,7 @@ def bag_contents(request):
                     'event': event,
                     'subtotal': subtotal,
                 })
-        except (Product.DoesNotExist, Event.DoesNotExist):
+        except (Product.DoesNotExist, Event.DoesNotExist, ProductVariant.DoesNotExist):
             pass
 
     if total < settings.FREE_DELIVERY_THRESHOLD:
@@ -64,6 +64,10 @@ def bag_contents(request):
     }
 
     return context
+
+
+
+
 
 # def bag_contents(request):
 #     bag_items = []

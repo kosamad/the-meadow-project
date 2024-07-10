@@ -40,6 +40,7 @@
                     <thead class="text-black">
                         <tr>
                             <th scope="col">Products</th>
+                            <th scope="col">Size</th>
                             <th scope="col">Price</th>
                             <th scope="col">Qty</th>
                             <th scope="col">Message</th>
@@ -56,8 +57,11 @@
                                     class="img-fluid">
                             </td>
                             <td class="py-3">
-                                <p class="my-0">£{{ item.product.price }}</p>
+                                <p class="my-0">£{{ item.variant.size }}</p>
                             </td>
+                            <td class="py-3">
+                                <p class="my-0">£{{ item.variant.price }}</p>
+                            </td>                            
                             <td class="py-3">
                                 <p class="my-0">{{ item.quantity }}</p>
                             </td>

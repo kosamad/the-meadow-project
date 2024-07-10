@@ -1,11 +1,18 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from products.models import Product, Event, ProductVariant
+import hashlib
 
 # Create your views here.
 def view_bag(request):
     """ A view that renders the bag contents page """
     
     return render(request, 'bag/bag.html')
+
+
+
+def hash_text(text):
+    """Function to create a hash of the text (card message/note_to_seller) for uniqueness."""
+    return hashlib.sha256(text.encode()).hexdigest()
 
 
 
@@ -24,13 +31,16 @@ def add_product_to_bag(request, item_id):
     
     # Get product and varient id's
     product = get_object_or_404(Product, id=item_id)
-    item_id_str = str(product.id)  # Convert item_id (UUID) to string before using it as a key
+    # item_id_str = str(product.id)  # Convert item_id (UUID) to string before using it as a key
     variant = get_object_or_404(ProductVariant, id=variant_id)
+
+    # Create a unique key for the bag item
+    unique_key = f"{product.id}_{variant.id}_{hash_text(card_message)}_{hash_text(note_to_seller)}"
         
-    if item_id_str in bag and variant in bag :
-        bag[item_id_str]['quantity'] += quantity
+    if unique_key in bag :
+        bag[unique_key]['quantity'] += quantity
     else:
-        bag[item_id_str] = {
+        bag[unique_key] = {
             'quantity': quantity,
             'product_type': product_type,
             'variant_id': variant_id,
@@ -69,36 +79,6 @@ def add_event_to_bag(request, item_id):
     request.session['bag'] = bag
     print(request.session['bag'])
     return redirect(redirect_url)
-
-
-# def add_to_bag(request, item_id):
-#     """ A view that adds a quantiy of a spcific product/event to the bag"""
-
-#     quantity = int(request.POST.get('quantity'))
-#     redirect_url = request.POST.get('redirect_url')
-#     product_type = request.POST.get('product_type') # i.e is it an event or a product
-
-#     bag = request.session.get('bag',{})
-
-#     # Convert item_id (UUID) to string before using it as a key and check if its' a product or event
-#     if product_type == 'product':
-#         product = get_object_or_404(Product, id=item_id)
-#         item_id_str = str(product.id)
-#     # elif product_type == 'event':
-#     #     event = get_object_or_404(Event, id=item_id)
-#     #     item_id_str = str(event.id)
-    
-#     if item_id_str in bag:
-#         bag[item_id_str] += quantity
-#     else:
-#         bag[item_id_str] = quantity
-
-#     request.session['bag'] = bag
-#     print(request.session['bag'])
-#     return redirect(redirect_url)
-
-
-# note: Ensure that wherever you retrieve items from the bag session dictionary, you consistently use string keys (e.g., str(item_id)) to access or modify items.
 
 
 
