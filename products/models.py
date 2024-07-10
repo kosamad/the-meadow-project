@@ -61,7 +61,7 @@ class ProductVariant(models.Model):
     size = models.CharField(max_length=1, choices=Product.SIZE_CHOICES)
     stock = models.PositiveIntegerField(default=0, help_text='Number of items available in stock for this size')
     is_infinite_stock = models.BooleanField(default=False, help_text='Check if stock is a bouquet')
-    price = models.DecimalField(max_digits=6, decimal_places=2)
+    price = models.DecimalField(max_digits=6, decimal_places=2)     
     is_active = models.BooleanField(default=True)
 
     class Meta:
