@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 import hashlib
 from decimal import Decimal
 from products.models import Product, Event, ProductVariant
+import uuid
 
 
 
@@ -51,7 +52,7 @@ def add_product_to_bag(request, item_id):
             'price': str(variant.price), # decimal fields must be converted to a string before JSON use
             'size': variant.size,
             'card_message': card_message,
-            'note_to_seller': note_to_seller
+            'note_to_seller': note_to_seller,            
         }
 
     request.session['bag'] = bag
@@ -107,16 +108,17 @@ def update_card_message(request, item_id):
 
     if request.method == 'POST':
         new_card_message = request.POST.get('card_message')
+        unique_key = request.POST.get('unique_key')
         bag = request.session.get('bag', {})
 
-        for unique_key, details in bag.items():
-            if details.get('item_id') == item_id:
-                details['card_message'] = new_card_message
-                # Update the unique_key with the new card_message hash
-                details['unique_key'] = f"{details['product_id']}_{details['variant_id']}_{hash_text(new_card_message)}_{hash_text(details['note_to_seller'])}"
-                break
+        if unique_key in bag:
+            bag_item = bag[unique_key]
+            bag_item['card_message'] = new_card_message
+            bag[unique_key] = bag_item
+            request.session['bag'] = bag
+        else:
+            return HttpResponseBadRequest("Item not found in shopping bag")
 
-        request.session['bag'] = bag
         return redirect('view_bag')
 
     return HttpResponseBadRequest("Bad request") 

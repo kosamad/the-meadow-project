@@ -51,7 +51,7 @@
                     <tbody>
                         {% for item in bag_items %}
                         {% if item.product %}
-                        <tr>
+                        <tr>                            
                             <td class="p-3 w-25">
                                 {% if item.product.image %}
                                 <img src="{{ item.product.image.url }}" alt="{{ item.product.alt_text }}"
@@ -71,7 +71,12 @@
                                 <p class="my-0">{{ item.quantity }}</p>
                             </td>
                             <td class="py-3 me-2">
-                                <p>{{ item.card_message }}</p>
+                                <form method = "POST" action="{% url 'update_card_message' item_id=item.unique_key %}">
+                                    {% csrf_token %}                                
+                                <textarea name="card_message" class="form-control">{{ item.card_message }}</textarea>
+                                <input type="hidden" name="unique_key" value="{{ item.unique_key }}">
+                                <button type="submit" class="btn btn-primary mt-2">Update</button>               
+                            </form>
                             </td>
                             <td class="py-3 me-2">
                                 <p class="my-0">{{ item.note_to_seller }}</p>
@@ -81,6 +86,7 @@
                             </td>
                         </tr>
                         {% endif %}
+                    
                         {% endfor %}
                     </tbody>
                 </table>
