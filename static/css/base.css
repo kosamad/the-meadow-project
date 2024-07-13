@@ -244,6 +244,15 @@ padding: 1%;}
 
 /* Bag */
 
+.table-info {width: 5%;}
+.table-qty{
+    width: 10%;
+}
+
+.table-cm {width: 20%;}
+
+.table-note{width: 20%;}
+
 
 /* Media Queries */
 

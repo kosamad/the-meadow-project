@@ -41,7 +41,6 @@
                         <tr>
                             <th scope="col">Products</th>
                             <th scope="col"></th>
-                            <th scope="col">Price</th>
                             <th scope="col">Qty</th>
                             <th scope="col">Message</th>
                             <th scope="col">Note</th>
@@ -51,7 +50,7 @@
                     <tbody>
                         {% for item in bag_items %}
                         {% if item.product %}
-                        <tr>                            
+                        <tr>
                             <td class="p-3 w-25">
                                 {% if item.product.image %}
                                 <img src="{{ item.product.image.url }}" alt="{{ item.product.alt_text }}"
@@ -60,42 +59,75 @@
                                 <img class="img-fluid" src="{{ MEDIA_URL }}noimage.png" alt="{{ item.product.name }}">
                                 {% endif %}
                             </td>
-                            <td class="py-3">
+                            <td class="py-3 table-info">
                                 <p class="my-0"><strong>{{ item.product.friendly_name }}</strong></p>
                                 <p class="my-0">Size: {{ item.variant.size }}</p>
-                            </td>
-                            <td class="py-3">
                                 <p class="my-0">£{{ item.variant.price }}</p>
                             </td>
-                            <td class="py-3">
-                                <p class="my-0">{{ item.quantity }}</p>
+                            <td class="py-3 table-qty">
+                                <form method="POST" action="{% url 'update_quantity' item.product.id %}">
+                                    {% csrf_token %}
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <button class="decrement-qty btn btn-green rounded-0"
+                                                data-item_id="{{ product.id }}" id="decrement-qty_{{ product.id }}">
+                                                <span class="icon">
+                                                    <i class="fas fa-minus"></i>
+                                                </span>
+                                            </button>
+                                        </div>
+                                        <input class="form-control" type="number" name="new_quantity"
+                                            value="{{ item.quantity }}" min="1" max="99">
+                                        <input type="hidden" name="unique_key" value="{{ item.unique_key }}">
+                                        <input type="hidden" name="variant_id" value="{{ item.variant.id }}">
+                                        <div class="input-group-append me-2">
+                                            <button class="increment-qty btn btn-green rounded-0"
+                                                data-item_id="{{ product.id }}" id="increment-qty_{{ product.id }}">
+                                                <span class="icon">
+                                                    <i class="fas fa-plus"></i>
+                                                </span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-green mt-2">Update</button>
+                                </form>
                             </td>
-                            <td class="py-3 me-2">
-                                <form method = "POST" action="{% url 'update_card_message' item.product.id %}">
-                                    {% csrf_token %}                                
-                                <textarea name="new_card_message" class="form-control">{{ item.card_message }}</textarea>
-                                <input type="hidden" name="unique_key" value="{{ item.unique_key }}">
-                                <input type="hidden" name="variant_id" value="{{ item.variant.id }}">
-                                <input type="hidden" name="note_to_seller" value="{{ item.note_to_seller }}">
-                                <button type="submit" class="btn btn-primary mt-2">Update</button>               
-                            </form>
+                            <td class="py-3 table-cm">
+                                <div class="card-message-display">
+                                    <p class="my-0">{{ item.card_message }}</p>
+                                    <button type="submit" class="btn btn-green mt-2" id="edit-cm-btn">Edit</button>
+                                </div>
                             </td>
-                            <td class="py-3 me-2">
-                                <form method = "POST" action="{% url 'update_note_to_seller' item.product.id %}">
-                                    {% csrf_token %}                                
-                                <textarea name="new_note_to_seller" class="form-control">{{ item.note_to_seller }}</textarea>
-                                <input type="hidden" name="unique_key" value="{{ item.unique_key }}">
-                                <input type="hidden" name="variant_id" value="{{ item.variant.id }}">
-                                <input type="hidden" name="card_message" value="{{ item.card_message }}">
-                                <button type="submit" class="btn btn-primary mt-2">Update</button>               
-                            </form>                               
+                            <!-- <td class="py-3 me-2">
+                                <div class="edit-card-message">
+                                    <form method="POST" action="{% url 'update_card_message' item.product.id %}">
+                                        {% csrf_token %}
+                                        <textarea name="new_card_message" class="form-control"
+                                            rows="4">{{ item.card_message }}</textarea>
+                                        <input type="hidden" name="unique_key" value="{{ item.unique_key }}">
+                                        <input type="hidden" name="variant_id" value="{{ item.variant.id }}">
+                                        <input type="hidden" name="note_to_seller" value="{{ item.note_to_seller }}">
+                                        <button type="submit" class="btn btn-green mt-2">Update</button>
+                                    </form>
+                                </div>
+                            </td> -->
+                            <td class="py-3 me-2 table-note">
+                                <form method="POST" action="{% url 'update_note_to_seller' item.product.id %}">
+                                    {% csrf_token %}
+                                    <textarea name="new_note_to_seller" class="form-control"
+                                        rows="4">{{ item.note_to_seller }}</textarea>
+                                    <input type="hidden" name="unique_key" value="{{ item.unique_key }}">
+                                    <input type="hidden" name="variant_id" value="{{ item.variant.id }}">
+                                    <input type="hidden" name="card_message" value="{{ item.card_message }}">
+                                    <button type="submit" class="btn btn-green mt-2">Update</button>
+                                </form>
                             </td>
                             <td class="py-3">
                                 <p class="my-0">£{{ item.subtotal }}</p>
                             </td>
                         </tr>
                         {% endif %}
-                    
+
                         {% endfor %}
                     </tbody>
                 </table>
@@ -113,7 +145,7 @@
                             <th scope="col">Events</th>
                             <th scope="col"></th>
                             <th scope="col">Price</th>
-                            <th scope="col">Qty</th>                            
+                            <th scope="col">Qty</th>
                             <th scope="col">Note</th>
                             <th scope="col">Subtotal</th>
                         </tr>
@@ -124,30 +156,30 @@
                         <tr>
                             <td class="p-3 w-25">
                                 {% if item.event.image %}
-                                <img src="{{ item.event.image.url }}" alt="{{ item.event.alt_text }}"
-                                    class="img-fluid">
+                                <img src="{{ item.event.image.url }}" alt="{{ item.event.alt_text }}" class="img-fluid">
                                 {% else %}
                                 <img class="img-fluid" src="{{ MEDIA_URL }}noimage.png" alt="{{ item.product.name }}">
-                                {% endif %}                                
+                                {% endif %}
                             </td>
                             <td class="py-3">
-                                <p class="my-0"><strong>{{ item.event.friendly_name }}</strong></p>                               
-                                <p class="my-0">For: {{ item.attendee_name }}</p>                               
+                                <p class="my-0"><strong>{{ item.event.friendly_name }}</strong></p>
+                                <p class="my-0">For: {{ item.attendee_name }}</p>
                             </td>
                             <td class="py-3">
                                 <p class="my-0">£{{ item.event.price }}</p>
                             </td>
                             <td class="py-3">
                                 <p class="my-0">{{ item.quantity }}</p>
-                            </td>                            
+                            </td>
                             <td class="py-3">
-                                <form method = "POST" action="{% url 'update_note_to_host' item.event.id %}">
-                                    {% csrf_token %}                                
-                                <textarea name="new_note_host" class="form-control">{{ item.note_to_host}}</textarea>
-                                <input type="hidden" name="unique_key" value="{{ item.unique_key }}">                                
-                                <input type="hidden" name="attendee_name" value="{{ item.attendee_name }}">
-                                <button type="submit" class="btn btn-primary mt-2">Update</button>               
-                            </form>                                
+                                <form method="POST" action="{% url 'update_note_to_host' item.event.id %}">
+                                    {% csrf_token %}
+                                    <textarea name="new_note_host"
+                                        class="form-control">{{ item.note_to_host}}</textarea>
+                                    <input type="hidden" name="unique_key" value="{{ item.unique_key }}">
+                                    <input type="hidden" name="attendee_name" value="{{ item.attendee_name }}">
+                                    <button type="submit" class="btn btn-primary mt-2">Update</button>
+                                </form>
                             </td>
                             <td class="py-3">
                                 <p class="my-0">£{{ item.subtotal }}</p>
@@ -185,8 +217,8 @@
             </div>
             <div class="col-7 col-md-4">
                 <!-- Collapsible delivery info button -->
-                <button class="btn btn-light col-12" type="button" data-bs-toggle="collapse" data-bs-target="#deliveryInfo"
-                    aria-expanded="false" aria-controls="deliveryInfo">
+                <button class="btn btn-light col-12" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#deliveryInfo" aria-expanded="false" aria-controls="deliveryInfo">
                     Delivery Info <i class="fa-solid fa-chevron-down"></i>
                 </button>
                 <!-- Collapsible delivery info content -->
@@ -232,4 +264,12 @@
 <div class="container">
 
 </div>
+{% endblock %}
+
+{% block postloadjs %}
+{{ block.super }}
+
+{% include 'bag/includes/quantity_input_script.html' %}
+{% include 'bag/includes/edit_items_script.html' %}
+
 {% endblock %}

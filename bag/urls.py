@@ -9,5 +9,6 @@ urlpatterns = [
     path('update_card_message/<uuid:item_id>/', views.update_card_message, name='update_card_message'),
     path('update_note_to_host/<uuid:item_id>/', views.update_note_to_host, name='update_note_to_host'),
     path('update_note_to_seller/<uuid:item_id>/', views.update_note_to_seller, name='update_note_to_seller'),
+    path('update_quantity/<uuid:item_id>/', views.update_quantity, name='update_quantity'),
     path('clear-basket/', views.clear_basket, name='clear_basket'),    
 ]

@@ -1,0 +1,22 @@
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', function() {
+    var cardMessageDisplay = document.querySelector('.card-message-display');    
+    var editCardBtn = document.getElementById('edit-cm-btn');
+
+    editCardBtn.addEventListener('click', function() {
+        cardMessageDisplay.innerHTML = `            
+                <form method="POST" action="{% url 'update_card_message' item.product.id %}">
+                    {% csrf_token %}
+                    <textarea name="new_card_message" class="form-control"
+                        rows="4">{{ item.card_message }}</textarea>
+                    <input type="hidden" name="unique_key" value="{{ item.unique_key }}">
+                    <input type="hidden" name="variant_id" value="{{ item.variant.id }}">
+                    <input type="hidden" name="note_to_seller" value="{{ item.note_to_seller }}">
+                    <button type="submit" class="btn btn-green mt-2">Update</button>
+                </form>            
+        `;
+    });
+});
+
+
+</script>

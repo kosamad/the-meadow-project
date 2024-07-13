@@ -130,6 +130,9 @@ def update_card_message(request, item_id):
         request.session['bag'] = bag
         return redirect('view_bag')  
 
+
+
+
 def update_note_to_seller(request, item_id):
     """View which allows the user to ammend the event note to seller (product)"""
 
@@ -161,6 +164,36 @@ def update_note_to_seller(request, item_id):
 
 
 
+
+
+
+
+def update_quantity(request, item_id):
+    """View which allows the user to ammend the event note to seller (product)"""
+   
+    if request.method == 'POST':
+        quantity = int(request.POST.get('new_quantity'))           
+        unique_key = request.POST.get('unique_key')
+        variant_id = request.POST.get('variant_id')        
+
+        bag = request.session.get('bag', {})
+
+        product = get_object_or_404(Product, id=item_id)
+        variant = get_object_or_404(ProductVariant, id=variant_id)                        
+       
+        if unique_key in bag:           
+            bag[unique_key]['quantity'] = quantity            
+            messages.success(request, "Your bag quantity was updated.")
+        else:           
+            messages.error(request, "The item you are trying to update was not found in your bag.")
+
+        request.session['bag'] = bag
+        return redirect('view_bag')  
+
+
+   
+
+       
 def update_note_to_host(request, item_id):
     """View which allows the user to ammend the event note to host (event)"""
 
@@ -187,11 +220,7 @@ def update_note_to_host(request, item_id):
             messages.error(request, "The item you are trying to update was not found in your bag.")
 
         request.session['bag'] = bag        
-        return redirect('view_bag')  
-   
-
-       
-
+        return redirect('view_bag')
  
     
  
