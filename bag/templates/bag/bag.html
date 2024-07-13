@@ -76,9 +76,9 @@
             <div class="row mt-2">
                 <div class="col-12">
                     <div class="card-message-display">
-                        <p class="my-0 text-justify"><span class="fw-bold">Card Message:</span> {{ item.card_message }}
+                        <p class="my-0 text-justify"><span class="fw-bold">Card Message:</span> {{ item.card_message }} <span><button type="button" class="btn btn-green py-0 edit-cm-btn"><i class="fas fa-pen fa-2xs"></i></button></span>
                         </p>
-                        <button type="button" class="btn btn-green mt-2 edit-cm-btn">Edit Message</button>
+                        
                     </div>
                     <div class="edit-card-message" style="display: none">
                         <form method="POST" action="{% url 'update_card_message' item.product.id %}">
@@ -97,8 +97,8 @@
             <div class="row mt-2">
                 <div class="col-12">
                     <div class="seller-note-display">
-                        <p class="my-0 text-justify"><span class="fw-bold">Note:</span> {{ item.note_to_seller }}</p>
-                        <button type="button" class="btn btn-green mt-2 edit-ns-btn">Edit Note</button>
+                        <p class="my-0 text-justify"><span class="fw-bold">Note:</span> {{ item.note_to_seller }} <span> <button type="button" class="btn btn-green py-0 edit-ns-btn"><i class="fas fa-pen fa-2xs"></i></button></span></p>
+                       
                     </div>
                     <div class="edit-note-seller" style="display: none">
                         <form method="POST" action="{% url 'update_note_to_seller' item.product.id %}">
