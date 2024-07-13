@@ -1,22 +1,42 @@
 <script type="text/javascript">
 document.addEventListener('DOMContentLoaded', function() {
-    var cardMessageDisplay = document.querySelector('.card-message-display');    
-    var editCardBtn = document.getElementById('edit-cm-btn');
+    // Function to handle the visibility toggling for card messages
+    function handleCardMessageEdit(button) {
+        button.addEventListener('click', function() {
+            var cardMessageDisplayTd = this.closest('td');
+            var editCardMessageTd = cardMessageDisplayTd.nextElementSibling;
 
-    editCardBtn.addEventListener('click', function() {
-        cardMessageDisplay.innerHTML = `            
-                <form method="POST" action="{% url 'update_card_message' item.product.id %}">
-                    {% csrf_token %}
-                    <textarea name="new_card_message" class="form-control"
-                        rows="4">{{ item.card_message }}</textarea>
-                    <input type="hidden" name="unique_key" value="{{ item.unique_key }}">
-                    <input type="hidden" name="variant_id" value="{{ item.variant.id }}">
-                    <input type="hidden" name="note_to_seller" value="{{ item.note_to_seller }}">
-                    <button type="submit" class="btn btn-green mt-2">Update</button>
-                </form>            
-        `;
+            if (cardMessageDisplayTd && editCardMessageTd) {
+                cardMessageDisplayTd.style.display = 'none';
+                editCardMessageTd.style.display = 'table-cell';
+            }
+        });
+    }
+
+    // Function to handle the visibility toggling for seller notes
+    function handleNoteSellerEdit(button) {
+        button.addEventListener('click', function() {
+            var noteSellerDisplayTd = this.closest('td');
+            var editNoteSellerTd = noteSellerDisplayTd.nextElementSibling;
+
+            if (noteSellerDisplayTd && editNoteSellerTd) {
+                noteSellerDisplayTd.style.display = 'none';
+                editNoteSellerTd.style.display = 'table-cell';
+            }
+        });
+    }
+
+    // Add event listeners to all card message edit buttons
+    var editCardButtons = document.querySelectorAll('.edit-cm-btn');
+    editCardButtons.forEach(function(button) {
+        handleCardMessageEdit(button);
+    });
+
+    // Add event listeners to all seller note edit buttons
+    var editNoteButtons = document.querySelectorAll('.edit-ns-btn');
+    editNoteButtons.forEach(function(button) {
+        handleNoteSellerEdit(button);
     });
 });
-
 
 </script>

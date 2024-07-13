@@ -51,6 +51,7 @@
                         {% for item in bag_items %}
                         {% if item.product %}
                         <tr>
+                            <!-- Item Image -->
                             <td class="p-3 w-25">
                                 {% if item.product.image %}
                                 <img src="{{ item.product.image.url }}" alt="{{ item.product.alt_text }}"
@@ -59,50 +60,53 @@
                                 <img class="img-fluid" src="{{ MEDIA_URL }}noimage.png" alt="{{ item.product.name }}">
                                 {% endif %}
                             </td>
-                            <td class="py-3 table-info">
+                             <!-- Item Summary info -->
+                            <td class="py-3 table-sum">
                                 <p class="my-0"><strong>{{ item.product.friendly_name }}</strong></p>
                                 <p class="my-0">Size: {{ item.variant.size }}</p>
                                 <p class="my-0">£{{ item.variant.price }}</p>
                             </td>
+                            <!-- Quantity w edit -->
                             <td class="py-3 table-qty">
                                 <form method="POST" action="{% url 'update_quantity' item.product.id %}">
                                     {% csrf_token %}
                                     <div class="input-group">
-                                        <div class="input-group-prepend">
+                                        <!-- <div class="input-group-prepend">
                                             <button class="decrement-qty btn btn-green rounded-0"
                                                 data-item_id="{{ product.id }}" id="decrement-qty_{{ product.id }}">
                                                 <span class="icon">
                                                     <i class="fas fa-minus"></i>
                                                 </span>
                                             </button>
-                                        </div>
+                                        </div> -->
                                         <input class="form-control" type="number" name="new_quantity"
                                             value="{{ item.quantity }}" min="1" max="99">
                                         <input type="hidden" name="unique_key" value="{{ item.unique_key }}">
                                         <input type="hidden" name="variant_id" value="{{ item.variant.id }}">
-                                        <div class="input-group-append me-2">
+                                        <!-- <div class="input-group-append me-2">
                                             <button class="increment-qty btn btn-green rounded-0"
                                                 data-item_id="{{ product.id }}" id="increment-qty_{{ product.id }}">
                                                 <span class="icon">
                                                     <i class="fas fa-plus"></i>
                                                 </span>
                                             </button>
-                                        </div>
+                                        </div> -->
                                     </div>
-                                    <button type="submit" class="btn btn-green mt-2">Update</button>
+                                    <button type="submit" class="btn btn-green mt-2 qty-update-btn">Update</button>
                                 </form>
                             </td>
-                            <td class="py-3 table-cm">
-                                <div class="card-message-display">
-                                    <p class="my-0">{{ item.card_message }}</p>
-                                    <button type="submit" class="btn btn-green mt-2" id="edit-cm-btn">Edit</button>
+                            <!-- Card message w edit -->
+                            <td class="py-3 table-cm card-message-display">
+                                <div class="">
+                                    <p class="my-0 text-justify">{{ item.card_message }}</p>
+                                    <button type="submit" class="btn btn-green mt-2 w-100 edit-cm-btn">Edit</button>
                                 </div>
                             </td>
-                            <!-- <td class="py-3 me-2">
-                                <div class="edit-card-message">
+                            <td class="py-3 me-2 table-cm edit-card-message" style="display: none">
+                                <div class="">
                                     <form method="POST" action="{% url 'update_card_message' item.product.id %}">
                                         {% csrf_token %}
-                                        <textarea name="new_card_message" class="form-control"
+                                        <textarea name="new_card_message" class="form-control text-justify"
                                             rows="4">{{ item.card_message }}</textarea>
                                         <input type="hidden" name="unique_key" value="{{ item.unique_key }}">
                                         <input type="hidden" name="variant_id" value="{{ item.variant.id }}">
@@ -110,8 +114,14 @@
                                         <button type="submit" class="btn btn-green mt-2">Update</button>
                                     </form>
                                 </div>
-                            </td> -->
-                            <td class="py-3 me-2 table-note">
+                            </td>
+                            <td class="py-3 table-note seller-note-display">
+                                <div class="">
+                                    <p class="my-0 text-justify">{{ item.note_to_seller }}</p>
+                                    <button type="submit" class="btn btn-green mt-2 w-100 edit-ns-btn">Edit</button>
+                                </div>
+                            </td>
+                            <td class="py-3 me-2 table-note edit-note-seller" style="display: none">
                                 <form method="POST" action="{% url 'update_note_to_seller' item.product.id %}">
                                     {% csrf_token %}
                                     <textarea name="new_note_to_seller" class="form-control"
@@ -127,7 +137,6 @@
                             </td>
                         </tr>
                         {% endif %}
-
                         {% endfor %}
                     </tbody>
                 </table>
