@@ -71,15 +71,24 @@
                                 <p class="my-0">{{ item.quantity }}</p>
                             </td>
                             <td class="py-3 me-2">
-                                <form method = "POST" action="{% url 'update_card_message' item_id=item.unique_key %}">
+                                <form method = "POST" action="{% url 'update_card_message' item.product.id %}">
                                     {% csrf_token %}                                
-                                <textarea name="card_message" class="form-control">{{ item.card_message }}</textarea>
+                                <textarea name="new_card_message" class="form-control">{{ item.card_message }}</textarea>
                                 <input type="hidden" name="unique_key" value="{{ item.unique_key }}">
+                                <input type="hidden" name="variant_id" value="{{ item.variant.id }}">
+                                <input type="hidden" name="note_to_seller" value="{{ item.note_to_seller }}">
                                 <button type="submit" class="btn btn-primary mt-2">Update</button>               
                             </form>
                             </td>
                             <td class="py-3 me-2">
-                                <p class="my-0">{{ item.note_to_seller }}</p>
+                                <form method = "POST" action="{% url 'update_note_to_seller' item.product.id %}">
+                                    {% csrf_token %}                                
+                                <textarea name="new_note_to_seller" class="form-control">{{ item.note_to_seller }}</textarea>
+                                <input type="hidden" name="unique_key" value="{{ item.unique_key }}">
+                                <input type="hidden" name="variant_id" value="{{ item.variant.id }}">
+                                <input type="hidden" name="card_message" value="{{ item.card_message }}">
+                                <button type="submit" class="btn btn-primary mt-2">Update</button>               
+                            </form>                               
                             </td>
                             <td class="py-3">
                                 <p class="my-0">£{{ item.subtotal }}</p>
@@ -132,7 +141,13 @@
                                 <p class="my-0">{{ item.quantity }}</p>
                             </td>                            
                             <td class="py-3">
-                                <p class="my-0">{{ item.note_to_host}}</p>
+                                <form method = "POST" action="{% url 'update_note_to_host' item.event.id %}">
+                                    {% csrf_token %}                                
+                                <textarea name="new_note_host" class="form-control">{{ item.note_to_host}}</textarea>
+                                <input type="hidden" name="unique_key" value="{{ item.unique_key }}">                                
+                                <input type="hidden" name="attendee_name" value="{{ item.attendee_name }}">
+                                <button type="submit" class="btn btn-primary mt-2">Update</button>               
+                            </form>                                
                             </td>
                             <td class="py-3">
                                 <p class="my-0">£{{ item.subtotal }}</p>

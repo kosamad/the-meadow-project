@@ -59,9 +59,14 @@ interfering with the core requirements.-->
     <!-- Navbar loaded -->
     {% include 'navbar.html' %}
 
-
     {% if messages %}
-    <div class="message-container"></div>
+    <div class="message-container">
+        <ul class="messages">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    </div>
     {% endif %}
 
     <!--  Additional "header" content -->

@@ -20,6 +20,7 @@ def bag_contents(request):
                 subtotal = details['quantity'] * Decimal(details['price'])
                 total += subtotal
                 product_count += details['quantity']
+                
                 bag_items.append({
                     'item_id': item_id,
                     'quantity': details['quantity'],
@@ -27,8 +28,11 @@ def bag_contents(request):
                     'variant': variant,
                     'subtotal': subtotal,
                     'card_message': details.get('card_message', ''), # if no input, it's set to an empty string so no errors
-                    'note_to_seller': details.get('note_to_seller', ''), 
+                    'note_to_seller': details.get('note_to_seller', ''),
+                    'unique_key': unique_key, 
+                    'variant_id': variant.id, 
                 })
+
             elif details['product_type'] == 'event':
                 item_id, _, _= unique_key.split('_', 3)
                 event = get_object_or_404(Event, id=item_id)
@@ -42,7 +46,7 @@ def bag_contents(request):
                     'subtotal': subtotal,                   
                     'attendee_name': details.get('attendee_name',''),
                     'note_to_host': details.get('note_to_host',''),
-                    
+                    'unique_key': unique_key,                                          
                 })          
         except (Product.DoesNotExist, Event.DoesNotExist, ProductVariant.DoesNotExist):
             pass
