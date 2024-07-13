@@ -51,6 +51,9 @@ def bag_contents(request):
         except (Product.DoesNotExist, Event.DoesNotExist, ProductVariant.DoesNotExist):
             pass
 
+    # Sort the bag to ensure it keeps a consitent format when bag items are edited.
+    bag_items.sort(key=lambda x: str(x['item_id']))
+
     if total < settings.FREE_DELIVERY_THRESHOLD:
         delivery = total * Decimal(settings.STANDARD_DELIVERY_PERCENTAGE / 100)
         free_delivery_delta = settings.FREE_DELIVERY_THRESHOLD - total

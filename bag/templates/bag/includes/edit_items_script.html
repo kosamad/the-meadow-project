@@ -1,42 +1,41 @@
 <script type="text/javascript">
-document.addEventListener('DOMContentLoaded', function() {
-    // Function to handle the visibility toggling for card messages
-    function handleCardMessageEdit(button) {
-        button.addEventListener('click', function() {
-            var cardMessageDisplayTd = this.closest('td');
-            var editCardMessageTd = cardMessageDisplayTd.nextElementSibling;
-
-            if (cardMessageDisplayTd && editCardMessageTd) {
-                cardMessageDisplayTd.style.display = 'none';
-                editCardMessageTd.style.display = 'table-cell';
-            }
+    document.addEventListener('DOMContentLoaded', function() {
+        // Function to handle the visibility toggling for card messages
+        function handleCardMessageEdit(button) {
+            button.addEventListener('click', function() {
+                var cardMessageDisplayDiv = this.closest('.card-message-display');
+                var editCardMessageDiv = cardMessageDisplayDiv.nextElementSibling;
+    
+                if (cardMessageDisplayDiv && editCardMessageDiv) {
+                    cardMessageDisplayDiv.style.display = 'none';
+                    editCardMessageDiv.style.display = 'block';
+                }
+            });
+        }
+    
+        // Function to handle the visibility toggling for seller notes
+        function handleNoteSellerEdit(button) {
+            button.addEventListener('click', function() {
+                var noteSellerDisplayDiv = this.closest('.seller-note-display');
+                var editNoteSellerDiv = noteSellerDisplayDiv.nextElementSibling;
+    
+                if (noteSellerDisplayDiv && editNoteSellerDiv) {
+                    noteSellerDisplayDiv.style.display = 'none';
+                    editNoteSellerDiv.style.display = 'block';
+                }
+            });
+        }
+    
+        // Add event listeners to all card message edit buttons
+        var editCardButtons = document.querySelectorAll('.edit-cm-btn');
+        editCardButtons.forEach(function(button) {
+            handleCardMessageEdit(button);
         });
-    }
-
-    // Function to handle the visibility toggling for seller notes
-    function handleNoteSellerEdit(button) {
-        button.addEventListener('click', function() {
-            var noteSellerDisplayTd = this.closest('td');
-            var editNoteSellerTd = noteSellerDisplayTd.nextElementSibling;
-
-            if (noteSellerDisplayTd && editNoteSellerTd) {
-                noteSellerDisplayTd.style.display = 'none';
-                editNoteSellerTd.style.display = 'table-cell';
-            }
+    
+        // Add event listeners to all seller note edit buttons
+        var editNoteButtons = document.querySelectorAll('.edit-ns-btn');
+        editNoteButtons.forEach(function(button) {
+            handleNoteSellerEdit(button);
         });
-    }
-
-    // Add event listeners to all card message edit buttons
-    var editCardButtons = document.querySelectorAll('.edit-cm-btn');
-    editCardButtons.forEach(function(button) {
-        handleCardMessageEdit(button);
     });
-
-    // Add event listeners to all seller note edit buttons
-    var editNoteButtons = document.querySelectorAll('.edit-ns-btn');
-    editNoteButtons.forEach(function(button) {
-        handleNoteSellerEdit(button);
-    });
-});
-
-</script>
+    </script>

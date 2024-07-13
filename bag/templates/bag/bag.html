@@ -13,7 +13,6 @@
 
 {% block content %}
 
-
 <div class="container">
     <!-- Page Title - Shop -->
     <div class="row mt-4 mb-4">
@@ -28,251 +27,243 @@
     <button type="submit">Clear Basket</button>
 </form>
 
-
 <div class="container">
+    {% if bag_items %}
+    <!-- Products Table -->
+    {% if product_count > 0 %}
     <div class="row">
         <div class="col">
-            {% if bag_items %}
-            <!-- Product Table -->
-            {% if product_count > 0 %}
-            <div class="table-responsive-lg">
-                <table class="table table-borderless rounded">
-                    <thead class="text-black">
-                        <tr>
-                            <th scope="col">Products</th>
-                            <th scope="col"></th>
-                            <th scope="col">Qty</th>
-                            <th scope="col">Message</th>
-                            <th scope="col">Note</th>
-                            <th scope="col">Subtotal</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for item in bag_items %}
-                        {% if item.product %}
-                        <tr>
-                            <!-- Item Image -->
-                            <td class="p-3 w-25">
-                                {% if item.product.image %}
-                                <img src="{{ item.product.image.url }}" alt="{{ item.product.alt_text }}"
-                                    class="img-fluid">
-                                {% else %}
-                                <img class="img-fluid" src="{{ MEDIA_URL }}noimage.png" alt="{{ item.product.name }}">
-                                {% endif %}
-                            </td>
-                             <!-- Item Summary info -->
-                            <td class="py-3 table-sum">
-                                <p class="my-0"><strong>{{ item.product.friendly_name }}</strong></p>
-                                <p class="my-0">Size: {{ item.variant.size }}</p>
-                                <p class="my-0">£{{ item.variant.price }}</p>
-                            </td>
-                            <!-- Quantity w edit -->
-                            <td class="py-3 table-qty">
-                                <form method="POST" action="{% url 'update_quantity' item.product.id %}">
-                                    {% csrf_token %}
-                                    <div class="input-group">
-                                        <!-- <div class="input-group-prepend">
-                                            <button class="decrement-qty btn btn-green rounded-0"
-                                                data-item_id="{{ product.id }}" id="decrement-qty_{{ product.id }}">
-                                                <span class="icon">
-                                                    <i class="fas fa-minus"></i>
-                                                </span>
-                                            </button>
-                                        </div> -->
-                                        <input class="form-control" type="number" name="new_quantity"
-                                            value="{{ item.quantity }}" min="1" max="99">
-                                        <input type="hidden" name="unique_key" value="{{ item.unique_key }}">
-                                        <input type="hidden" name="variant_id" value="{{ item.variant.id }}">
-                                        <!-- <div class="input-group-append me-2">
-                                            <button class="increment-qty btn btn-green rounded-0"
-                                                data-item_id="{{ product.id }}" id="increment-qty_{{ product.id }}">
-                                                <span class="icon">
-                                                    <i class="fas fa-plus"></i>
-                                                </span>
-                                            </button>
-                                        </div> -->
-                                    </div>
-                                    <button type="submit" class="btn btn-green mt-2 qty-update-btn">Update</button>
-                                </form>
-                            </td>
-                            <!-- Card message w edit -->
-                            <td class="py-3 table-cm card-message-display">
-                                <div class="">
-                                    <p class="my-0 text-justify">{{ item.card_message }}</p>
-                                    <button type="submit" class="btn btn-green mt-2 w-100 edit-cm-btn">Edit</button>
-                                </div>
-                            </td>
-                            <td class="py-3 me-2 table-cm edit-card-message" style="display: none">
-                                <div class="">
-                                    <form method="POST" action="{% url 'update_card_message' item.product.id %}">
-                                        {% csrf_token %}
-                                        <textarea name="new_card_message" class="form-control text-justify"
-                                            rows="4">{{ item.card_message }}</textarea>
-                                        <input type="hidden" name="unique_key" value="{{ item.unique_key }}">
-                                        <input type="hidden" name="variant_id" value="{{ item.variant.id }}">
-                                        <input type="hidden" name="note_to_seller" value="{{ item.note_to_seller }}">
-                                        <button type="submit" class="btn btn-green mt-2">Update</button>
-                                    </form>
-                                </div>
-                            </td>
-                            <td class="py-3 table-note seller-note-display">
-                                <div class="">
-                                    <p class="my-0 text-justify">{{ item.note_to_seller }}</p>
-                                    <button type="submit" class="btn btn-green mt-2 w-100 edit-ns-btn">Edit</button>
-                                </div>
-                            </td>
-                            <td class="py-3 me-2 table-note edit-note-seller" style="display: none">
-                                <form method="POST" action="{% url 'update_note_to_seller' item.product.id %}">
-                                    {% csrf_token %}
-                                    <textarea name="new_note_to_seller" class="form-control"
-                                        rows="4">{{ item.note_to_seller }}</textarea>
-                                    <input type="hidden" name="unique_key" value="{{ item.unique_key }}">
-                                    <input type="hidden" name="variant_id" value="{{ item.variant.id }}">
-                                    <input type="hidden" name="card_message" value="{{ item.card_message }}">
-                                    <button type="submit" class="btn btn-green mt-2">Update</button>
-                                </form>
-                            </td>
-                            <td class="py-3">
-                                <p class="my-0">£{{ item.subtotal }}</p>
-                            </td>
-                        </tr>
-                        {% endif %}
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-            {% endif %}
-
-            <hr class="my-4 border-top border-2 border-dark">
-
-            <!-- Events Table -->
-            {% if event_count > 0 %}
-            <div class="table-responsive rounded mt-4">
-                <table class="table table-sm table-borderless">
-                    <thead class="text-black">
-                        <tr>
-                            <th scope="col">Events</th>
-                            <th scope="col"></th>
-                            <th scope="col">Price</th>
-                            <th scope="col">Qty</th>
-                            <th scope="col">Note</th>
-                            <th scope="col">Subtotal</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for item in bag_items %}
-                        {% if item.event %}
-                        <tr>
-                            <td class="p-3 w-25">
-                                {% if item.event.image %}
-                                <img src="{{ item.event.image.url }}" alt="{{ item.event.alt_text }}" class="img-fluid">
-                                {% else %}
-                                <img class="img-fluid" src="{{ MEDIA_URL }}noimage.png" alt="{{ item.product.name }}">
-                                {% endif %}
-                            </td>
-                            <td class="py-3">
-                                <p class="my-0"><strong>{{ item.event.friendly_name }}</strong></p>
-                                <p class="my-0">For: {{ item.attendee_name }}</p>
-                            </td>
-                            <td class="py-3">
-                                <p class="my-0">£{{ item.event.price }}</p>
-                            </td>
-                            <td class="py-3">
-                                <p class="my-0">{{ item.quantity }}</p>
-                            </td>
-                            <td class="py-3">
-                                <form method="POST" action="{% url 'update_note_to_host' item.event.id %}">
-                                    {% csrf_token %}
-                                    <textarea name="new_note_host"
-                                        class="form-control">{{ item.note_to_host}}</textarea>
-                                    <input type="hidden" name="unique_key" value="{{ item.unique_key }}">
-                                    <input type="hidden" name="attendee_name" value="{{ item.attendee_name }}">
-                                    <button type="submit" class="btn btn-primary mt-2">Update</button>
-                                </form>
-                            </td>
-                            <td class="py-3">
-                                <p class="my-0">£{{ item.subtotal }}</p>
-                            </td>
-                        </tr>
-                        {% endif %}
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-            {% endif %}
-
-            <hr class="my-4 border-top border-2 border-dark">
-
-            <!-- Bag Cost Information -->
-            <div class="row mt-4">
-                <div class="col-6">
-                    <h6><strong>Bag Total: £{{ total|floatformat:2 }}</strong></h6>
-                    <h6>Delivery Method:</h6>
-                    <h6>Delivery: £{{ delivery|floatformat:2 }}</h6>
-                    <h4 class="mt-4"><strong>Grand Total: £{{ grand_total|floatformat:2 }}</strong></h4>
-                    {% if free_delivery_delta > 0 %}
-                    <p class="mb-1 text-danger">
-                        You could get free delivery by spending just <strong>£{{ free_delivery_delta }}</strong> more!
-                    </p>
-                    {% endif %}
-                </div>
-            </div>
+            <h3 class="title-font">Products</h3>
         </div>
-        <div class="row mt-2 mb-4">
-            <div class="col-5 col-md-3">
-                <a href="{% url 'shop' %}">
-                    <button class="btn btn-green col-12 fw-bold"> Shop</button>
-                </a>
+    </div>
+    <!-- Product Items -->
+    <div class="row">
+        {% for item in bag_items %}
+        {% if item.product %}
+        <div class="col-md-3 col-4 mt-4">
+            {% if item.product.image %}
+            <img src="{{ item.product.image.url }}" alt="{{ item.product.alt_text }}" class="img-fluid">
+            {% else %}
+            <img class="img-fluid" src="{{ MEDIA_URL }}noimage.png" alt="{{ item.product.name }}">
+            {% endif %}
+        </div>
+        <div class="col-md-9 col-8 mt-4">
+            <div class="mt-2 d-flex align-items-center">
+                <p class="my-0"><span class="fw-bold">Name:</span> {{ item.product.friendly_name }}</p>
             </div>
-            <div class="col-7 col-md-4">
-                <!-- Collapsible delivery info button -->
-                <button class="btn btn-light col-12" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#deliveryInfo" aria-expanded="false" aria-controls="deliveryInfo">
-                    Delivery Info <i class="fa-solid fa-chevron-down"></i>
-                </button>
-                <!-- Collapsible delivery info content -->
-                <div class="collapse mt-3" id="deliveryInfo">
-                    <div class="card card-body">
-                        <p class="fw-bold">Delivery Information</p>
-                        <p>
-                            We deliver bouquets, plants, and gifts to postcodes beginning with BS1 to BS6.
-                            Remember to place
-                            your orders before 9:30 PM for next-day delivery (delivery is not available on
-                            Sundays). For
-                            same-day deliveries, please call us at 0117 123 4567 or contact us online with any
-                            inquiries. We
-                            prioritize eco-friendly delivery methods, using bicycles whenever possible and our
-                            green,
-                            zero-emission van as a backup.
+            <div class="mt-2 d-flex align-items-center">
+                <p class="my-0"><span class="fw-bold">Size: </span>{{ item.variant.size }}</p>
+            </div>
+            <div class="mt-2 d-flex align-items-center">
+                <p class="my-0"><span class="fw-bold">Price:</span> £{{ item.variant.price }}</p>
+            </div>
+            <div class=" mt-2 d-flex align-items-center">
+                <p class="my-0 me-2"><span class="fw-bold">Qty:</span></p>
+                <!-- Quantity w edit -->
+                <form class="d-flex align-items-center" method="POST"
+                    action="{% url 'update_quantity' item.product.id %}">
+                    {% csrf_token %}
+                    <div class="me-2">
+                        <input class="form-control" type="number" name="new_quantity" value="{{ item.quantity }}"
+                            min="1" max="99">
+                        <input type="hidden" name="unique_key" value="{{ item.unique_key }}">
+                        <input type="hidden" name="variant_id" value="{{ item.variant.id }}">
+                    </div>
+                    <button type="submit" class="btn btn-green qty-update-btn"><i class="fas fa-check"></i></button>
+                </form>
+            </div>
+            <!-- Card Message w edit -->
+            <div class="row mt-2">
+                <div class="col-12">
+                    <div class="card-message-display">
+                        <p class="my-0 text-justify"><span class="fw-bold">Card Message:</span> {{ item.card_message }}
                         </p>
-                        <p class="fw-bold">Collection Information</p>
-                        <p>You can collect your order instore for free (The Meadow Project, Bristol, BS4 3QP) on
-                            your
-                            specified collection date. Note we are open (Tuesday to Friday 10:00-17:00 and
-                            Saturday:
-                            9:00-17:00). Your order will be ready from 10:00 unless otherwsie prearranged. If
-                            you miss your
-                            collection, and haven’t given us notice, we will be unable to make another bouquet
-                            for you.
-                        </p>
+                        <button type="button" class="btn btn-green mt-2 edit-cm-btn">Edit Message</button>
+                    </div>
+                    <div class="edit-card-message" style="display: none">
+                        <form method="POST" action="{% url 'update_card_message' item.product.id %}">
+                            {% csrf_token %}
+                            <textarea name="new_card_message" class="form-control text-justify"
+                                rows="4">{{ item.card_message }}</textarea>
+                            <input type="hidden" name="unique_key" value="{{ item.unique_key }}">
+                            <input type="hidden" name="variant_id" value="{{ item.variant.id }}">
+                            <input type="hidden" name="note_to_seller" value="{{ item.note_to_seller }}">
+                            <button type="submit" class="btn btn-green mt-2">Update</button>
+                        </form>
                     </div>
                 </div>
             </div>
-            {% else %}
-            <p>Your basket is empty.</p>
-            <div class="mt-4">
-                <a href="{% url 'shop' %}">
-                    <button class="btn btn-green fw-bold">Go Shopping</button>
-                </a>
+            <!-- Note to seller w edit -->
+            <div class="row mt-2">
+                <div class="col-12">
+                    <div class="seller-note-display">
+                        <p class="my-0 text-justify"><span class="fw-bold">Note:</span> {{ item.note_to_seller }}</p>
+                        <button type="button" class="btn btn-green mt-2 edit-ns-btn">Edit Note</button>
+                    </div>
+                    <div class="edit-note-seller" style="display: none">
+                        <form method="POST" action="{% url 'update_note_to_seller' item.product.id %}">
+                            {% csrf_token %}
+                            <textarea name="new_note_to_seller" class="form-control"
+                                rows="4">{{ item.note_to_seller }}</textarea>
+                            <input type="hidden" name="unique_key" value="{{ item.unique_key }}">
+                            <input type="hidden" name="variant_id" value="{{ item.variant.id }}">
+                            <input type="hidden" name="card_message" value="{{ item.card_message }}">
+                            <button type="submit" class="btn btn-green mt-2">Update</button>
+                        </form>
+                    </div>
+                </div>
             </div>
+
+            <div class="row mt-2">
+                <p class="my-0"><span class="fw-bold">Sub Total:</span>£{{ item.subtotal }}</p>
+            </div>
+            <div class="row">Delete this item from bag</div>
+        </div>
+        <hr class="my-4 border-top border-2 border-dark">
+        {% endif %}
+        {% endfor %}
+    </div>
+    {% endif %}
+
+
+    <!-- Events Table -->
+    {% if event_count > 0 %}
+    <div class="row">
+        <div class="col">
+            <h3 class="title-font">Events</h3>
+        </div>
+    </div>
+    <div class="row">
+        {% for item in bag_items %}
+        {% if item.event %}
+        <div class="col-md-3 col-4 mt-4">
+            {% if item.event.image %}
+            <img src="{{ item.event.image.url }}" alt="{{ item.event.alt_text }}" class="img-fluid">
+            {% else %}
+            <img class="img-fluid" src="{{ MEDIA_URL }}noimage.png" alt="{{ item.product.name }}">
+            {% endif %}
+        </div>
+        <div class="col-md-9 col-8 mt-4">
+            <div class="mt-2 d-flex align-items-center">
+                <p class="my-0"><span class="fw-bold">Name:</span> {{ item.event.friendly_name }}</p>
+            </div>
+            <div class="mt-2 d-flex align-items-center">
+                <p class="my-0"><span class="fw-bold">Attendee Info:</span> {{ item.attendee_name }}</p>
+            </div>
+            <div class="mt-2 d-flex align-items-center">
+                <p class="my-0"><span class="fw-bold">Price:</span> £{{ item.event.price }}</p>
+            </div>
+            <div class=" mt-2 d-flex align-items-center">
+                <p class="my-0 me-2"><span class="fw-bold">Qty:</span></p>
+                <!-- Quantity w edit -->
+                <form class="d-flex align-items-center" method="POST" action="">
+                    {% csrf_token %}
+                    <div class="me-2">
+                        <input class="form-control" type="number" name="new_quantity" value="{{ item.quantity }}"
+                            min="1" max="99">
+                        <input type="hidden" name="unique_key" value="{{ item.unique_key }}">
+                        <input type="hidden" name="variant_id" value="{{ item.variant.id }}">
+                    </div>
+                    <button type="submit" class="btn btn-green qty-update-btn"><i class="fas fa-check"></i></button>
+                </form>
+            </div>
+            <div class="row mt-2">
+                <div class="col-12">
+                    <form method="POST" action="{% url 'update_note_to_host' item.event.id %}">
+                        {% csrf_token %}
+                        <textarea name="new_note_host" class="form-control">{{ item.note_to_host}}</textarea>
+                        <input type="hidden" name="unique_key" value="{{ item.unique_key }}">
+                        <input type="hidden" name="attendee_name" value="{{ item.attendee_name }}">
+                        <button type="submit" class="btn btn-primary mt-2">Update</button>
+                    </form>
+                </div>
+                <div class="row mt-2">
+                    <p class="my-0"><span class="fw-bold">Sub Total:</span>£{{ item.subtotal }}</p>
+                </div>
+                <div class="row">Delete this item from bag</div>
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+
+    {% endif %}
+    
+
+
+
+
+    <!-- Bag Cost Information -->
+    <div class="row mt-4">
+        <div class="col-6">
+            <h6><strong>Bag Total: £{{ total|floatformat:2 }}</strong></h6>
+            <h6>Delivery Method:</h6>
+            <h6>Delivery: £{{ delivery|floatformat:2 }}</h6>
+            <h4 class="mt-4"><strong>Grand Total: £{{ grand_total|floatformat:2 }}</strong></h4>
+            {% if free_delivery_delta > 0 %}
+            <p class="mb-1 text-danger">
+                You could get free delivery by spending just <strong>£{{ free_delivery_delta }}</strong> more!
+            </p>
             {% endif %}
         </div>
     </div>
+
+    <div class="row mt-2 mb-4">
+        <div class="col-5 col-md-3">
+            <a href="{% url 'shop' %}">
+                <button class="btn btn-green col-12 fw-bold"> Shop</button>
+            </a>
+        </div>
+        <div class="col-7 col-md-4">
+            <!-- Collapsible delivery info button -->
+            <button class="btn btn-light col-12" type="button" data-bs-toggle="collapse" data-bs-target="#deliveryInfo"
+                aria-expanded="false" aria-controls="deliveryInfo">
+                Delivery Info <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <!-- Collapsible delivery info content -->
+            <div class="collapse mt-3" id="deliveryInfo">
+                <div class="card card-body">
+                    <p class="fw-bold">Delivery Information</p>
+                    <p>
+                        We deliver bouquets, plants, and gifts to postcodes beginning with BS1 to BS6.
+                        Remember to place
+                        your orders before 9:30 PM for next-day delivery (delivery is not available on
+                        Sundays). For
+                        same-day deliveries, please call us at 0117 123 4567 or contact us online with any
+                        inquiries. We
+                        prioritize eco-friendly delivery methods, using bicycles whenever possible and our
+                        green,
+                        zero-emission van as a backup.
+                    </p>
+                    <p class="fw-bold">Collection Information</p>
+                    <p>You can collect your order instore for free (The Meadow Project, Bristol, BS4 3QP) on
+                        your
+                        specified collection date. Note we are open (Tuesday to Friday 10:00-17:00 and
+                        Saturday:
+                        9:00-17:00). Your order will be ready from 10:00 unless otherwsie prearranged. If
+                        you miss your
+                        collection, and haven’t given us notice, we will be unable to make another bouquet
+                        for you.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    {% else %}
+    <p>Your basket is empty.</p>
+    <div class="mt-4">
+        <a href="{% url 'shop' %}">
+            <button class="btn btn-green fw-bold">Go Shopping</button>
+        </a>
+    </div>
+    {% endif %}
 </div>
 
-<div class="container">
 
-</div>
+
+
 {% endblock %}
 
 {% block postloadjs %}
