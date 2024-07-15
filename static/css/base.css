@@ -37,10 +37,11 @@ h2, .title-font {
 /* Toasts */
 .message-container{
     position:fixed;
-    top:72px;
+    top:100px;
     right:15px;
     z-index: 999999999999999;
 }
+
 .custom-toast {
     overflow:visible;
 }
@@ -48,6 +49,7 @@ h2, .title-font {
 .toast-caper{
     height:2px;
 }
+
 
 
 /* backgrounds/buttons */

@@ -50,7 +50,7 @@ def add_product_to_bag(request, item_id):
             
 
         request.session['bag'] = bag
-        messages.success(request, 'Added Something to your bag.')       
+        messages.success(request, f'Added {product.friendly_name} in {variant.size} to your bag.')       
         return redirect(redirect_url)
 
 

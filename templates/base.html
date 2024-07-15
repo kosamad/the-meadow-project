@@ -150,11 +150,20 @@ interfering with the core requirements.-->
 
     <!-- Message container if req -->
     {% if messages %}
-    <div class="message-container">
+    <div class="message-container">        
         <ul class="messages">
             {% for message in messages %}
-                {% include 'includes/toasts/toast_success.html' %}
-            <!-- <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li> -->
+            {% with message.level as level %}
+                    {% if level == 40 %}
+                        {% include 'includes/toasts/toast_error.html' %}
+                    {% elif level == 30 %}
+                        warning
+                    {% elif level == 25 %}
+                        {% include 'includes/toasts/toast_success.html' %}
+                    {% else %}
+                        {% include 'includes/toasts/toast_info.html' %}
+                    {% endif %}
+                {% endwith %}
             {% endfor %}
         </ul>
     </div>
@@ -175,21 +184,18 @@ interfering with the core requirements.-->
             });
         });
 
-        
+
         // Toasts JS from Bootstrap
 
-        
-      
-    
-        // const toastTrigger = document.getElementById('liveToastBtn')
-        // const toastLiveExample = document.getElementById('liveToast')
-
-        // if (toastTrigger) {
-        //     const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
-        //     toastTrigger.addEventListener('click', () => {
-        //         toastBootstrap.show()
-        //     })
-        // }
+        // Select all elements with the class 'toast'
+        const toastElList = document.querySelectorAll('.toast');
+        // Iterate through each 'toast' element and initialize it using Bootstrap's Toast class
+        toastElList.forEach(function (toastEl) {
+            // Create a new instance of Bootstrap Toast for each 'toast' element
+            const toast = new bootstrap.Toast(toastEl);
+            // Trigger the toast to show
+            toast.show();
+        });
     </script>
     {% endblock %}
 
