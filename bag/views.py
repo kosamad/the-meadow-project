@@ -227,7 +227,7 @@ def remove_item(request, item_id):
             try:
                 del bag[unique_key]
                 request.session['bag'] = bag
-                messages.success(request, "Your item was successfully removed from your bag.")
+                messages.success(request, "The item was successfully removed from your bag.")
             except KeyError:
                 messages.error(request, "There was an error removing the item from your bag")
             except Exception as e:
