@@ -34,6 +34,21 @@ h2, .title-font {
     color: black;
 }
 
+/* Toasts */
+.message-container{
+    position:fixed;
+    top:72px;
+    right:15px;
+    z-index: 999999999999999;
+}
+.custom-toast {
+    overflow:visible;
+}
+
+.toast-caper{
+    height:2px;
+}
+
 
 /* backgrounds/buttons */
 .bg-lpink {

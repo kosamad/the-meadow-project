@@ -47,9 +47,10 @@ def add_product_to_bag(request, item_id):
                 'card_message': card_message,
                 'note_to_seller': note_to_seller,            
             }
+            
 
         request.session['bag'] = bag
-        print(request.session['bag'])
+        messages.success(request, 'Added Something to your bag.')       
         return redirect(redirect_url)
 
 
@@ -198,8 +199,7 @@ def update_note_to_host(request, item_id):
        
         if unique_key in bag:            
             bag[unique_key]['note_to_host'] = note_to_host            
-            new_unique_key = f"{event.id}_{attendee_name}_{note_to_host}"
-            print ('nk:', new_unique_key) 
+            new_unique_key = f"{event.id}_{attendee_name}_{note_to_host}"            
             if new_unique_key != unique_key:
                 bag[new_unique_key] = bag.pop(unique_key)
                 unique_key = new_unique_key
@@ -221,11 +221,17 @@ def remove_item(request, item_id):
         unique_key = request.POST.get('unique_key')
 
         bag = request.session.get('bag', {})
-
+        # remove item and defensive programming in place in case something goes wrong.
         if unique_key in bag:
-            del bag[unique_key]
-            messages.success(request, "Your item was deleted from your bag.")   
-
-        request.session['bag'] = bag
+            try:
+                del bag[unique_key]
+                request.session['bag'] = bag
+                messages.success(request, "Your item was successfully removed from your bag.")
+            except KeyError:
+                messages.error(request, "Item with unique key not found in your bag.")
+            except Exception as e:
+                messages.error(request, f"An error occurred: {e}")
+        else:
+            messages.error(request, "Item with unique key not found in your bag.")         
 
     return redirect('view_bag')

@@ -59,16 +59,6 @@ interfering with the core requirements.-->
     <!-- Navbar loaded -->
     {% include 'navbar.html' %}
 
-    {% if messages %}
-    <div class="message-container">
-        <ul class="messages">
-            {% for message in messages %}
-                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-            {% endfor %}
-        </ul>
-    </div>
-    {% endif %}
-
     <!--  Additional "header" content -->
     {% block page_header %}
     {% endblock %}
@@ -112,24 +102,23 @@ interfering with the core requirements.-->
                             </a>
                         </div>
                         <div class="col text-center d-block d-md-none">
-                            <a href="" target=""
-                                aria-label="">
+                            <a href="" target="" aria-label="">
                                 <i class="fa-solid fa-location-dot fa-2x"></i>
                             </a>
-                        </div>                      
+                        </div>
                         <div class="col text-center d-block d-md-none">
-                            <a href="" target=""
-                                aria-label="">
+                            <a href="" target="" aria-label="">
                                 <i class="fa-solid fa-envelope fa-2x"></i>
                             </a>
                         </div>
-                        
+
 
                     </div>
                     <div class="row justify-content-center mt-5">
-                        <p class="text-center footer-text mb-0"> This website was created for educational purposes only</p>
-                        <p class="text-center footer-text"><i class="fa-regular fa-copyright"></i> Karen Samad 2024<span><a
-                                    href="https://www.linkedin.com/in/karen-samad-n%C3%A8e-onions-phd-0376a9149/"
+                        <p class="text-center footer-text mb-0"> This website was created for educational purposes only
+                        </p>
+                        <p class="text-center footer-text"><i class="fa-regular fa-copyright"></i> Karen Samad
+                            2024<span><a href="https://www.linkedin.com/in/karen-samad-n%C3%A8e-onions-phd-0376a9149/"
                                     target="_blank" aria-label="linkedin - Opens in a new tab" class="no-link-style">
                                     <i class="fa-brands fa-linkedin"></i></span></a></p>
                     </div>
@@ -137,19 +126,39 @@ interfering with the core requirements.-->
 
                 <div class="col-12 col-lg-4 d-none d-md-block order-sm-2 order-lg-3 mt-4">
                     <div class="row mb-2 text-center">
-                        <div><p><span class="me-3"><i class="fa-solid fa-location-dot fa-lg mr-2"></i></span>  123 Meadow, Along A Lane, Bristol BS41 8RM</p></div>
-                      
+                        <div>
+                            <p><span class="me-3"><i class="fa-solid fa-location-dot fa-lg mr-2"></i></span> 123 Meadow,
+                                Along A Lane, Bristol BS41 8RM</p>
+                        </div>
+
                     </div>
                     <div class="row mb-2 text-center">
-                        <div><p><span class="me-3"><i class="fa-solid fa-phone fa-lg"></i></span>01245 687 543</p></div>                        
+                        <div>
+                            <p><span class="me-3"><i class="fa-solid fa-phone fa-lg"></i></span>01245 687 543</p>
+                        </div>
                     </div>
                     <div class="row mb-2 text-center">
-                        <div><p><span class="me-3"><i class="fa-solid fa-envelope fa-lg mr-2"></i></span>  Email Address@Email.com</p></div>                        
+                        <div>
+                            <p><span class="me-3"><i class="fa-solid fa-envelope fa-lg mr-2"></i></span> Email
+                                Address@Email.com</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Message container if req -->
+    {% if messages %}
+    <div class="message-container">
+        <ul class="messages">
+            {% for message in messages %}
+                {% include 'includes/toasts/toast_success.html' %}
+            <!-- <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li> -->
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
 
     <!--  JS Loaded at end of body -->
     {% block postloadjs %}
@@ -165,6 +174,22 @@ interfering with the core requirements.-->
                 $('.search-overlay').hide(); // Hide the search form
             });
         });
+
+        
+        // Toasts JS from Bootstrap
+
+        
+      
+    
+        // const toastTrigger = document.getElementById('liveToastBtn')
+        // const toastLiveExample = document.getElementById('liveToast')
+
+        // if (toastTrigger) {
+        //     const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
+        //     toastTrigger.addEventListener('click', () => {
+        //         toastBootstrap.show()
+        //     })
+        // }
     </script>
     {% endblock %}
 
