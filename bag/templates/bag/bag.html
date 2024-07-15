@@ -22,7 +22,7 @@
     </div>
 </div>
 
-
+<!-- Products/Events in Basket + Totals -->
 <div class="container">
     {% if bag_items %}
     <!-- Products Table -->
@@ -126,8 +126,7 @@
 
             <div class="row mt-2">
                 <p class="my-0"><span class="fw-bold">Sub Total:</span>£{{ item.subtotal }}</p>
-            </div>
-            <div class="row">Delete this item from bag</div>
+            </div>            
         </div>
         <hr class="my-4 border-top border-2 border-dark">
         {% endif %}
@@ -143,6 +142,7 @@
             <h3 class="title-font">Events</h3>
         </div>
     </div>
+    <!-- Event Items -->
     <div class="row">
         {% for item in bag_items %}
         {% if item.event %}
@@ -206,42 +206,47 @@
                 </div>
                 <div class="row mt-2">
                     <p class="my-0"><span class="fw-bold">Sub Total:</span>£{{ item.subtotal }}</p>
-                </div>
-                <div class="row">Delete this item from bag</div>
+                </div>                
             </div>
         </div>
+        <hr class="my-4 border-top border-2 border-dark">
         {% endif %}
         {% endfor %}
     </div>
-
     {% endif %}
 
-
-
-
-
     <!-- Bag Cost Information -->
+    <div class="row">
+        <div class="col">
+            <h3 class="title-font">Summary</h3>
+        </div>
+    </div>
+
     <div class="row mt-4">
-        <div class="col-6">
-            <h6><strong>Bag Total: £{{ total|floatformat:2 }}</strong></h6>
-            <h6>Delivery Method:</h6>
+        <div class="col-12 col-md-6">
+            <h6><strong>Bag Total: £{{ total|floatformat:2 }}</strong></h6>            
             <h6>Delivery: £{{ delivery|floatformat:2 }}</h6>
             <h4 class="mt-4"><strong>Grand Total: £{{ grand_total|floatformat:2 }}</strong></h4>
             {% if free_delivery_delta > 0 %}
             <p class="mb-1 text-danger">
-                You could get free delivery by spending just <strong>£{{ free_delivery_delta }}</strong> more!
+                You could get free delivery by spending just <strong>£{{ free_delivery_delta }}</strong> more, or by chosing collect from shop at the checkout (next page).
             </p>
             {% endif %}
         </div>
     </div>
-
+    <!-- Bag Filled Buttons -->
     <div class="row mt-2 mb-4">
-        <div class="col-5 col-md-3">
+        <div class="col-sm-4 col-md-3 col-lg-2">
             <a href="{% url 'shop' %}">
-                <button class="btn btn-green col-12 fw-bold"> Shop</button>
+                <button class="btn btn-green col-12 fw-bold"> Checkout</button>
             </a>
         </div>
-        <div class="col-7 col-md-4">
+        <div class="col-sm-4 col-md-3 col-lg-2">
+            <a href="{% url 'shop' %}">
+                <button class="btn btn-pink col-12 fw-bold"> Shop </button>
+            </a>
+        </div>
+        <div class="col-sm-4 col-md-3 col-lg-2">
             <!-- Collapsible delivery info button -->
             <button class="btn btn-light col-12" type="button" data-bs-toggle="collapse" data-bs-target="#deliveryInfo"
                 aria-expanded="false" aria-controls="deliveryInfo">
@@ -252,7 +257,7 @@
                 <div class="card card-body">
                     <p class="fw-bold">Delivery Information</p>
                     <p>
-                        We deliver bouquets, plants, and gifts to postcodes beginning with BS1 to BS6.
+                        We deliver bouquets, plants and gift cards to postcodes beginning with BS1 to BS6. 
                         Remember to place
                         your orders before 9:30 PM for next-day delivery (delivery is not available on
                         Sundays). For
@@ -262,6 +267,7 @@
                         green,
                         zero-emission van as a backup.
                     </p>
+                    <p>Event tickets are emailed.</p>
                     <p class="fw-bold">Collection Information</p>
                     <p>You can collect your order instore for free (The Meadow Project, Bristol, BS4 3QP) on
                         your
@@ -280,7 +286,7 @@
 
     {% else %}
     <p>Your basket is empty.</p>
-    <div class="mt-4">
+    <div class="mt-4 mb-4">
         <a href="{% url 'shop' %}">
             <button class="btn btn-green fw-bold">Go Shopping</button>
         </a>

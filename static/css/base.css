@@ -54,6 +54,11 @@ h2, .title-font {
     background-color: #ade5d3;
 }
 
+.btn-pink{ 
+    background-color: #DC6874;
+    color:white; 
+}
+
 .btn-green {
     background-color: #04724d;
     color:white;   
@@ -63,6 +68,11 @@ h2, .title-font {
     background-color: #ade5d3;
     color: black;
     border: none;    
+}
+
+.btn-pink:hover { 
+    background-color: #ffc4ca;
+    color: black;
 }
 
 .img-page-break {

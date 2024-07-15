@@ -54,12 +54,20 @@ def bag_contents(request):
     # Sort the bag to ensure it keeps a consitent format when bag items are edited.
     bag_items.sort(key=lambda x: str(x['item_id']))
 
-    if total < settings.FREE_DELIVERY_THRESHOLD:
-        delivery = total * Decimal(settings.STANDARD_DELIVERY_PERCENTAGE / 100)
-        free_delivery_delta = settings.FREE_DELIVERY_THRESHOLD - total
-    else:
-        delivery = 0
+    # Delivery costs    
+    # No delivery charge for event items as are emailed
+    if event_count > 0:
+        delivery = 0  
         free_delivery_delta = 0
+
+    # product delivery
+    else:
+        if total < settings.FREE_DELIVERY_THRESHOLD:
+            delivery = total * Decimal(settings.STANDARD_DELIVERY_PERCENTAGE / 100)
+            free_delivery_delta = settings.FREE_DELIVERY_THRESHOLD - total
+        else:
+            delivery = 0
+            free_delivery_delta = 0  
 
     grand_total = delivery + total
 
