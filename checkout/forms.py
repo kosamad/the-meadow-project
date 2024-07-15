@@ -1,14 +1,21 @@
 from django import forms
 from .models import Order
 
-
+DELIVERY_CHOICES = [
+    ('delivery', 'Delivery'),
+    ('pickup', 'Store Pickup'),
+]
 
 class OrderForm(forms.ModelForm):
+
+    delivery_method = forms.ChoiceField(choices=DELIVERY_CHOICES, widget=forms.RadioSelect())
+
     class Meta:
         model = Order
         fields = ('full_name', 'email', 'phone_number',
                   'street_address1', 'street_address2',
-                  'town_or_city', 'postcode', 'county',)
+                  'town_or_city', 'postcode', 'county',
+                  'delivery_method', 'delivery_date')
 
 
     def __init__(self, *args, **kwargs):
@@ -16,7 +23,8 @@ class OrderForm(forms.ModelForm):
         Add placeholders for form boxes and classes, remove auto-generated
         labels and set autofocus on first field
         """
-        super().__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)        
+        
         placeholders = {
             'full_name': 'Full Name',
             'email': 'Email Address',
@@ -37,3 +45,6 @@ class OrderForm(forms.ModelForm):
             self.fields[field].widget.attrs['placeholder'] = placeholder
             self.fields[field].widget.attrs['class'] = 'stripe-style-input'
             self.fields[field].label = False
+
+       
+# Event Specific order form

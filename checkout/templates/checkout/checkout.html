@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'checkout/css/checkout.css' %}">
+{% endblock %}
+
 
 {% block page_header %}
 <div class="container header-container">
@@ -24,10 +28,46 @@
         </div>
     </div>
     <div class="row">
-        <div class="col"><p>Please Fill out the form to complete your order</p></div></div>
+        <div class="col">
+            <p>Please fill out the form to complete your order.</p>
+        </div>
+    </div>
 
     <div class="row">
-        <div class="col-lg-6 col-12">Customer Details</div>
+        <div class="col-lg-6 col-12">
+            <form action="" method="POST" id="payment-form-prodcut">
+                {% csrf_token %}
+                <div class="fieldset-container mb-4" id="step-1">
+                    <fieldset class="rounded px-3 mb-4">
+                        <legend class="fieldset-label small px-2 w-auto">Customer Details</legend>
+                        {{ order_form.full_name | as_crispy_field }}
+                        {{ order_form.email | as_crispy_field }}
+                    </fieldset>
+                    <button type="button" class="btn btn-green" onclick="showNextStep(2)">Next</button>
+                </div>
+
+                <div class="fieldset-container mb-4" id="step-2">
+                    {{ order_form.delivery_method }}
+                    {{ order_form.delivery_date | as_crispy_field }}                   
+                    <button type="button" class="btn btn-green" onclick="showNextStep(2)">Next</button>
+                </div>
+
+                <div class="fieldset-container mb-4" id="step-2" style="display: none;">
+                    <fieldset class="rounded px-3 mb-5">
+                        <legend class="fieldset-label small text-black px-2 w-auto">Delivery Information</legend>
+                        {{ order_form.phone_number | as_crispy_field }}
+                        {{ order_form.street_address1 | as_crispy_field }}
+                        {{ order_form.street_address2 | as_crispy_field }}
+                        {{ order_form.town_or_city | as_crispy_field }}
+                        {{ order_form.county | as_crispy_field }}
+                        {{ order_form.postcode | as_crispy_field }}
+                    </fieldset>
+                    <button type="button" class="btn btn-pink" onclick="showPreviousStep(1)">Previous</button>
+                    <button type="submit" class="btn btn-green">Submit</button>
+                </div>
+            </form>
+        </div>
+
         <div class="col-lg-6 col-12">Order Summary</div>
     </div>
 </div>
@@ -42,7 +82,24 @@
 
 {{ block.super }}
 
-{% include 'bag/includes/quantity_input_script.html' %}
-{% include 'bag/includes/edit_items_script.html' %}
+<script>
+   
+    document.addEventListener('DOMContentLoaded', function () {
+        
+
+        // Functions to show/hide the different form parts. step = current step user is on. 
+        // Hide's previous step and displays current step
+        function showNextStep(step) {
+            document.getElementById(`step-${step - 1}`).style.display = 'none';
+            document.getElementById(`step-${step}`).style.display = 'block';
+        }
+
+        // hide's the next step from view
+        function showPreviousStep(step) {
+            document.getElementById(`step-${step + 1}`).style.display = 'none';
+            document.getElementById(`step-${step}`).style.display = 'block';
+        }
+    });
+</script>
 
 {% endblock %}

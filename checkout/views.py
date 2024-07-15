@@ -6,7 +6,7 @@ from .models import Order, OrderLineItem
 from products.models import Product, Event, ProductVariant
 
 # Create your views here.
-def checkout(request):
+def product_checkout(request):
     bag = request.session.get('bag', {})
     if not bag:
         messages.error(request, "There's nothing in your bag at the moment")
