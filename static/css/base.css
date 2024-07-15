@@ -44,12 +44,19 @@ h2, .title-font {
 
 .custom-toast {
     overflow:visible;
+    max-width: 90vw;
 }
 
 .toast-caper{
     height:2px;
 }
 
+.bag-notification-wrapper{
+    max-height: 100px;
+    overflow-x: hidden;
+    overflow-y: auto;
+
+}
 
 
 /* backgrounds/buttons */

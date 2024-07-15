@@ -9,6 +9,7 @@ def bag_contents(request):
     total = 0
     product_count = 0
     event_count = 0
+    total_items = 0
     bag = request.session.get('bag', {})  
    
     for unique_key, details in bag.items():
@@ -70,6 +71,7 @@ def bag_contents(request):
             free_delivery_delta = 0  
 
     grand_total = delivery + total
+    total_items = product_count + event_count
 
     context = {
         'bag_items': bag_items,
@@ -80,6 +82,7 @@ def bag_contents(request):
         'free_delivery_delta': free_delivery_delta,
         'free_delivery_threshold': settings.FREE_DELIVERY_THRESHOLD,
         'grand_total': grand_total,
+        'total_items': total_items,
     }
 
     return context
