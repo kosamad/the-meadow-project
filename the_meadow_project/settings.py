@@ -46,9 +46,10 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'home',
-    'products',    
+    'products',   
     'shop',
-    'bag',  
+    'bag',
+    'checkout',
     'crispy_forms',
     'crispy_bootstrap5',
 ]
