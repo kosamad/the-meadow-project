@@ -88,13 +88,6 @@ def add_event_to_bag(request, item_id):
 
 
 
-def clear_basket(request):
-    if 'bag' in request.session:
-        del request.session['bag']
-    return redirect('shop')
-
-
-
 
 def update_card_message(request, item_id):
     """View which allows the user to ammend their card message"""
@@ -165,9 +158,6 @@ def update_note_to_seller(request, item_id):
 
 
 
-
-
-
 def update_quantity(request, item_id):
     """View which allows the user to ammend the event note to seller (product)"""
    
@@ -222,5 +212,29 @@ def update_note_to_host(request, item_id):
         request.session['bag'] = bag        
         return redirect('view_bag')
  
-    
- 
+
+
+
+
+def clear_basket(request):
+    if 'bag' in request.session:
+        del request.session['bag']
+    return redirect('shop')
+
+
+
+def remove_item(request, item_id):
+
+    if request.method == 'POST':      
+             
+        unique_key = request.POST.get('unique_key')
+
+        bag = request.session.get('bag', {})
+
+        if unique_key in bag:
+            del bag[unique_key]
+            messages.success(request, "Your item was deleted from your bag.")   
+
+        request.session['bag'] = bag
+        
+    return redirect('view_bag')

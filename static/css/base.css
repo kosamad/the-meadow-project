@@ -21,6 +21,10 @@ h2, .title-font {
     color:#DC6874;
 }
 
+.text-green{
+    color:#04724d;
+}
+
 .text-justify{
     text-align: justify;
 }
@@ -31,7 +35,7 @@ h2, .title-font {
 }
 
 
-/* backgrounds */
+/* backgrounds/buttons */
 .bg-lpink {
     background-color: #ffc4ca;
 }
@@ -44,6 +48,10 @@ h2, .title-font {
     min-height: 150px;
     padding: 1% 0;
     margin-bottom: 5rem;
+}
+
+.btn-lgreen{
+    background-color: #ade5d3;
 }
 
 .btn-green {
@@ -283,6 +291,8 @@ padding: 1%;}
         align-items: center;
         justify-content: center;
         }
+
+    .delete-event-btn {padding: 1%;}
 }
 
 

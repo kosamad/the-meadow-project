@@ -40,14 +40,24 @@
     <div class="row">
         {% for item in bag_items %}
         {% if item.product %}
-        <div class="col-md-3 col-4 mt-4">
+        <!-- Delete item button -->
+        <div class="col-md-1 col-2 mt-4 d-flex align-items-start justify-content-end">
+            <form method="POST" action="{% url 'remove_item' item.product.id %}">
+                {% csrf_token %}
+                <input type="hidden" name="unique_key" value="{{ item.unique_key }}">
+                <button type="submit" class="btn btn-danger py-0 delete-item-btn ms-auto">
+                    <i class="fas fa-trash fa-2xs"></i>
+                </button>
+            </form>
+        </div>
+        <div class="col-md-3 col-3 mt-4">
             {% if item.product.image %}
             <img src="{{ item.product.image.url }}" alt="{{ item.product.alt_text }}" class="img-fluid">
             {% else %}
             <img class="img-fluid" src="{{ MEDIA_URL }}noimage.png" alt="{{ item.product.name }}">
             {% endif %}
         </div>
-        <div class="col-md-9 col-8 mt-4">
+        <div class="col-md-8 col-7 mt-4">
             <div class="mt-2 d-flex align-items-center">
                 <p class="my-0"><span class="fw-bold">Name:</span> {{ item.product.friendly_name }}</p>
             </div>
@@ -69,16 +79,18 @@
                         <input type="hidden" name="unique_key" value="{{ item.unique_key }}">
                         <input type="hidden" name="variant_id" value="{{ item.variant.id }}">
                     </div>
-                    <button type="submit" class="btn btn-green qty-update-btn"><i class="fas fa-check"></i></button>
+                    <button type="submit" class="btn qty-update-btn text-green">Update</button>
                 </form>
             </div>
             <!-- Card Message w edit -->
             <div class="row mt-2">
                 <div class="col-12">
                     <div class="card-message-display">
-                        <p class="my-0 text-justify"><span class="fw-bold">Card Message:</span> {{ item.card_message }} <span><button type="button" class="btn btn-green py-0 edit-cm-btn"><i class="fas fa-pen fa-2xs"></i></button></span>
+                        <p class="my-0 text-justify"><span class="fw-bold">Card Message:</span> {{ item.card_message }}
+                            <span><button type="button" class="btn btn-lgreen py-0 edit-cm-btn ms-2"><i
+                                        class="fas fa-pen fa-2xs"></i></button></span>
                         </p>
-                        
+
                     </div>
                     <div class="edit-card-message" style="display: none">
                         <form method="POST" action="{% url 'update_card_message' item.product.id %}">
@@ -97,8 +109,10 @@
             <div class="row mt-2">
                 <div class="col-12">
                     <div class="seller-note-display">
-                        <p class="my-0 text-justify"><span class="fw-bold">Note:</span> {{ item.note_to_seller }} <span> <button type="button" class="btn btn-green py-0 edit-ns-btn"><i class="fas fa-pen fa-2xs"></i></button></span></p>
-                       
+                        <p class="my-0 text-justify"><span class="fw-bold">Note:</span> {{ item.note_to_seller }} <span>
+                                <button type="button" class="btn btn-lgreen py-0 edit-ns-btn ms-2"><i
+                                        class="fas fa-pen fa-2xs"></i></button></span></p>
+
                     </div>
                     <div class="edit-note-seller" style="display: none">
                         <form method="POST" action="{% url 'update_note_to_seller' item.product.id %}">
@@ -136,15 +150,25 @@
     <div class="row">
         {% for item in bag_items %}
         {% if item.event %}
-        <div class="col-md-3 col-4 mt-4">
+        <!-- Delete item button -->
+        <div class="col-md-1 col-2 mt-4 d-flex align-items-start justify-content-end">
+            <form method="POST" action="{% url 'remove_item' item.event.id %}">
+                {% csrf_token %}
+                <input type="hidden" name="unique_key" value="{{ item.unique_key }}">
+                <button type="submit" class="btn btn-danger py-0 delete-item-btn ms-auto">
+                    <i class="fas fa-trash fa-2xs"></i>
+                </button>
+            </form>
+        </div>
+        <div class="col-md-3 col-3 mt-4">
             {% if item.event.image %}
             <img src="{{ item.event.image.url }}" alt="{{ item.event.alt_text }}" class="img-fluid">
             {% else %}
             <img class="img-fluid" src="{{ MEDIA_URL }}noimage.png" alt="{{ item.product.name }}">
             {% endif %}
         </div>
-        <div class="col-md-9 col-8 mt-4">
-            <div class="mt-2 d-flex align-items-center">
+        <div class="col-md-8 col-7 mt-4">
+            <div class="d-flex align-items-center">
                 <p class="my-0"><span class="fw-bold">Name:</span> {{ item.event.friendly_name }}</p>
             </div>
             <div class="mt-2 d-flex align-items-center">
@@ -164,18 +188,25 @@
                         <input type="hidden" name="unique_key" value="{{ item.unique_key }}">
                         <input type="hidden" name="variant_id" value="{{ item.variant.id }}">
                     </div>
-                    <button type="submit" class="btn btn-green qty-update-btn"><i class="fas fa-check"></i></button>
+                    <button type="submit" class="btn qty-update-btn text-green">Update</button>
                 </form>
             </div>
             <div class="row mt-2">
                 <div class="col-12">
-                    <form method="POST" action="{% url 'update_note_to_host' item.event.id %}">
-                        {% csrf_token %}
-                        <textarea name="new_note_host" class="form-control">{{ item.note_to_host}}</textarea>
-                        <input type="hidden" name="unique_key" value="{{ item.unique_key }}">
-                        <input type="hidden" name="attendee_name" value="{{ item.attendee_name }}">
-                        <button type="submit" class="btn btn-primary mt-2">Update</button>
-                    </form>
+                    <div class="host-note-display">
+                        <p class="my-0 text-justify"><span class="fw-bold">Note:</span> {{ item.note_to_host }} <span>
+                                <button type="button" class="btn btn-lgreen py-0 edit-nh-btn ms-2"><i
+                                        class="fas fa-pen fa-2xs"></i></button></span></p>
+                    </div>
+                    <div class="edit-note-host" style="display: none">
+                        <form method="POST" action="{% url 'update_note_to_host' item.event.id %}">
+                            {% csrf_token %}
+                            <textarea name="new_note_host" class="form-control">{{ item.note_to_host}}</textarea>
+                            <input type="hidden" name="unique_key" value="{{ item.unique_key }}">
+                            <input type="hidden" name="attendee_name" value="{{ item.attendee_name }}">
+                            <button type="submit" class="btn btn-primary mt-2">Update</button>
+                        </form>
+                    </div>
                 </div>
                 <div class="row mt-2">
                     <p class="my-0"><span class="fw-bold">Sub Total:</span>£{{ item.subtotal }}</p>
@@ -188,7 +219,7 @@
     </div>
 
     {% endif %}
-    
+
 
 
 

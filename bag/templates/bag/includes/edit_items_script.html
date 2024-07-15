@@ -25,6 +25,19 @@
                 }
             });
         }
+
+        // Function to handle the visibility toggling for host notes
+        function handleNoteHostEdit(button) {
+            button.addEventListener('click', function() {
+                var hostNoteDisplayDiv = this.closest('.host-note-display');
+                var editNoteHostDiv = hostNoteDisplayDiv.nextElementSibling;
+
+                if (hostNoteDisplayDiv && editNoteHostDiv) {
+                hostNoteDisplayDiv.style.display = 'none';
+                editNoteHostDiv.style.display = 'block';
+                }
+        });
+        }
     
         // Add event listeners to all card message edit buttons
         var editCardButtons = document.querySelectorAll('.edit-cm-btn');
@@ -37,5 +50,12 @@
         editNoteButtons.forEach(function(button) {
             handleNoteSellerEdit(button);
         });
+
+        // Add event listeners to all host note edit buttons
+        var editNoteHostButtons = document.querySelectorAll('.edit-nh-btn');
+        editNoteHostButtons.forEach(function(button) {
+        handleNoteHostEdit(button);
+        });
+
     });
     </script>
