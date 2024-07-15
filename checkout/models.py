@@ -3,7 +3,7 @@ from django.db import models
 from django.db.models import Sum
 from django.conf import settings
 
-from products.models import Product, ProductVariant
+from products.models import Product, ProductVariant, Event
 
 # Create your models here.
 class Order(models.Model):
@@ -71,12 +71,14 @@ class Order(models.Model):
 
 
 
-class OrderLineItemProduct(models.Model):
+class OrderLineItem(models.Model):
     order = models.ForeignKey(Order, null=False, blank=False, on_delete=models.CASCADE, related_name='lineitems')
-    product = models.ForeignKey(Product, null=False, blank=False, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, null=True, blank=True, on_delete=models.CASCADE)
+    event = models.ForeignKey(Event, null=False, blank=False, on_delete=models.CASCADE)
     product_variant = models.ForeignKey(ProductVariant, null=True, blank=True, on_delete=models.SET_NULL)
     card_message = models.TextField(blank=True, default='')
     note_to_seller = models.TextField(blank=True, default='')
+    note_to_host = models.TextField(blank=True, default='')
     quantity = models.IntegerField(null=False, blank=False, default=0)
     lineitem_total = models.DecimalField(max_digits=6, decimal_places=2, null=False, blank=False, editable=False)
 
@@ -85,8 +87,18 @@ class OrderLineItemProduct(models.Model):
         Override the original save method to set the lineitem total
         and update the order total.
         """
-        self.lineitem_total = self.product.price * self.quantity
+        if self.product:
+            if self.product_variant:
+                self.lineitem_total = self.product_variant.price * self.quantity
+            else:
+                self.lineitem_total = self.product.price * self.quantity
+        elif self.event:
+            self.lineitem_total = self.event.price * self.quantity
+
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return f'Name: {self.product.friendly_name} on Order number: {self.order.order_number}'
+        if self.product:
+            return f'Name: {self.product.friendly_name} on Order number: {self.order.order_number}'
+        elif self.event:
+            return f'Name: {self.event.friendly_name} on Order number: {self.order.order_number}'
