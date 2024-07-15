@@ -22,10 +22,6 @@
     </div>
 </div>
 
-<form action="{% url 'clear_basket' %}" method="post">
-    {% csrf_token %}
-    <button type="submit">Clear Basket</button>
-</form>
 
 <div class="container">
     {% if bag_items %}

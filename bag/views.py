@@ -214,15 +214,6 @@ def update_note_to_host(request, item_id):
  
 
 
-
-
-def clear_basket(request):
-    if 'bag' in request.session:
-        del request.session['bag']
-    return redirect('shop')
-
-
-
 def remove_item(request, item_id):
 
     if request.method == 'POST':      
@@ -236,5 +227,5 @@ def remove_item(request, item_id):
             messages.success(request, "Your item was deleted from your bag.")   
 
         request.session['bag'] = bag
-        
+
     return redirect('view_bag')
