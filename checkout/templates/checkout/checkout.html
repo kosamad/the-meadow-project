@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block page_header %}
+<div class="container header-container">
+    <div class="row">
+        <div class="col"></div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container">
+    <!-- Page Title - Shop -->
+    <div class="row mt-4 mb-4">
+        <div class="col text-left">
+            <h2>Checkout</h2>
+        </div>
+        <div class="col text-right">
+            <p>continue shopping button</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col"><p>Please Fill out the form to complete your order</p></div></div>
+
+    <div class="row">
+        <div class="col-lg-6 col-12">Customer Details</div>
+        <div class="col-lg-6 col-12">Order Summary</div>
+    </div>
+</div>
+
+
+
+
+
+{% endblock %}
+
+{% block postloadjs %}
+
+{{ block.super }}
+
+{% include 'bag/includes/quantity_input_script.html' %}
+{% include 'bag/includes/edit_items_script.html' %}
+
+{% endblock %}
