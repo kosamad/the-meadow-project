@@ -18,7 +18,7 @@
 {% block content %}
 
 <div class="container">
-    <!-- Page Title - Shop -->
+    <!-- Page Title - Checkout Page -->
     <div class="row mt-4 mb-4">
         <div class="col text-left">
             <h2>Checkout</h2>
@@ -35,10 +35,11 @@
 
     <div class="row">
         <div class="col-lg-6 col-12">
+            <!-- Checkout Form  -->
             <form action="" method="POST" id="payment-form-prodcut">
                 {% csrf_token %}
                 <input type="hidden" name="order_type" value="{{ order_type }}">
-
+                <!-- Section 1 - Customer Details -->
                 <div class="fieldset-container mb-4" id="step-1">
                     <fieldset class="rounded px-3 mb-4">
                         <legend class="fieldset-label small px-2 w-auto">Customer Details</legend>
@@ -47,7 +48,7 @@
                     </fieldset>
                     <button type="button" class="btn btn-green" onclick="validateAndShowNextStep(1)">Next</button>
                 </div>
-
+                <!-- Section 2 Customer Address -->
                 <div class="fieldset-container mb-4" id="step-2" style="display: none;">
                     <fieldset class="rounded px-3 mb-5">
                         <legend class="fieldset-label small text-black px-2 w-auto">Customer Address</legend>
@@ -62,7 +63,7 @@
                     <button type="button" class="btn btn-green" onclick="validateAndShowNextStep(2)">Next</button>
                 </div>
 
-
+                <!-- Section 3- if product = deliery info, if event = info about event "delivery" -->
                 <div class="fieldset-container mb-4" id="step-3" style="display: none;">
                     {% if order_type == 'product' %}
                     <div id="delivery_method_wrapper">
@@ -101,7 +102,8 @@
                     <button type="button" class="btn btn-green" onclick="validateAndShowNextStep(3)">Next</button>
                 </div>
 
-
+                <!-- Final form submission button -->
+                <button type="button" class="btn btn-pink" onclick="showPreviousStep(3)">Previous</button>
                 <button type="submit" class="btn btn-green">Submit</button>
 
 
