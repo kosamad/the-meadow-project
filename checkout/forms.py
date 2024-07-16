@@ -21,8 +21,7 @@ class OrderForm(forms.ModelForm):
         Add placeholders for form boxes and classes, remove auto-generated
         labels and set autofocus on first field
         """
-        super().__init__(*args, **kwargs)        
-        
+        super().__init__(*args, **kwargs)       
         placeholders = {
             'full_name': 'Full Name',
             'email': 'Email Address',
