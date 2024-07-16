@@ -16,7 +16,10 @@ def checkout(request):
     order_form = OrderForm()
     product_form = ProductOrderForm()
     event_form = EventOrderForm()
-    order_type = 'product' if 'product' in bag else 'event'
+    order_type = 'product' if any(item['product_type'] == 'product' for item in bag.values()) else 'event'
+    print ( bag )
+    print( order_type)
+    form = product_form if order_type == 'product' else event_form
 
     # Render correct product/event order form 
     if request.method == 'POST': 
@@ -26,8 +29,9 @@ def checkout(request):
             form = EventOrderForm(request.POST)
         
         if form.is_valid():
-            # Save form data to database, etc.
-            form.save()
+            # Save form data to database, etc.            
+            instance = form.save(commit=False)
+            instance.save()
             # Redirect to success page or another view
             return redirect('order_success')
     

@@ -49,6 +49,7 @@ class OrderForm(forms.ModelForm):
 # Product and or Event Specific order form
 class ProductOrderForm(forms.ModelForm):
     delivery_method = forms.ChoiceField(choices=DELIVERY_CHOICES, widget=forms.RadioSelect)
+    delivery_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
 
     class Meta:
         model = ProductOrderLineItem
@@ -75,7 +76,7 @@ class ProductOrderForm(forms.ModelForm):
             'delivery_county': 'Delivery County'
         }
 
-        self.fields['delivery_method'].widget.attrs['autofocus'] = True
+        self.fields['delivery_date'].widget.attrs['autofocus'] = True
 
         for field in self.fields:            
             if self.fields[field].required:
@@ -93,9 +94,7 @@ class EventOrderForm(forms.ModelForm):
         fields = ('event', 'quantity')
 
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['delivery_method'].required = False
-        self.fields['delivery_date'].required = False
+        super().__init__(*args, **kwargs)        
 
         placeholders = {
             'event': 'Event',

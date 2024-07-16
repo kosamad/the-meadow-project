@@ -38,6 +38,7 @@
             <form action="" method="POST" id="payment-form-prodcut">
                 {% csrf_token %}
                 <input type="hidden" name="order_type" value="{{ order_type }}">
+
                 <div class="fieldset-container mb-4" id="step-1">
                     <fieldset class="rounded px-3 mb-4">
                         <legend class="fieldset-label small px-2 w-auto">Customer Details</legend>
@@ -64,23 +65,23 @@
 
                 <div class="fieldset-container mb-4" id="step-3" style="display: none;">
                     {% if order_type == 'product' %}
-                    <div id="product-form">
+                    <div id="delivery_method_wrapper">
                         <fieldset class="rounded px-3 mb-5">
                             <legend class="fieldset-label small text-black px-2 w-auto">Delivery Information</legend>
                             {{form.delivery_date | as_crispy_field }}
                             {{form.delivery_method }}
                         </fieldset>
                     </div>
-                    <div class="delivery-details">
+                    <div class="delivery-details" style="display: none;">
                         <fieldset class="rounded px-3 mb-5">
                             <legend class="fieldset-label small text-black px-2 w-auto">Delivery Information</legend>
-                            {{ delivery_name | as_crispy_field }}
-                            {{ delivery_street_address1 | as_crispy_field }}
-                            {{ delivery_street_address2 | as_crispy_field }}
-                            {{ delivery_town_or_city | as_crispy_field }}
-                            {{ delivery_street_address2 | as_crispy_field }}
-                            {{ delivery_county | as_crispy_field }}
-                            {{ delivery_postcode | as_crispy_field }}
+                            {{ form.delivery_name | as_crispy_field }}
+                            {{ form.delivery_street_address1 | as_crispy_field }}
+                            {{ form.delivery_street_address2 | as_crispy_field }}
+                            {{ form.delivery_town_or_city | as_crispy_field }}
+                            {{ form.delivery_street_address2 | as_crispy_field }}
+                            {{ form.delivery_county | as_crispy_field }}
+                            {{ form.delivery_postcode | as_crispy_field }}
                         </fieldset>
                     </div>
                     {% elif order_type == 'event' %}
@@ -124,43 +125,51 @@
     document.addEventListener('DOMContentLoaded', function () {
 
         // Render correct form based on if Product (and event) or just event
-        function showForm(orderType) {
-            document.getElementById('product-form').style.display = (orderType === 'product') ? 'block' :
-                'none';
-            document.getElementById('event-form').style.display = (orderType === 'event') ? 'block' : 'none';
-        }
+        // function showForm(orderType) {
+        //     document.getElementById('product-form').style.display = (orderType === 'product') ? 'block' :
+        //         'none';
+        //     document.getElementById('event-form').style.display = (orderType === 'event') ? 'block' : 'none';
+        // }
 
         // If user selects store pick up then delivery detail fileds are blocked. 
-        function toggleDeliveryDetails() {
-            const deliveryMethod = document.querySelector('input[name="delivery_method"]:checked').value;
-            const deliveryFields = document.querySelectorAll('.delivery-details');
-            if (deliveryMethod === 'delivery') {
-                deliveryDetails.style.display = 'block';
-            } else {
-                deliveryDetails.style.display = 'none';
-            }
-        }
-
-        // Ensure correct fields are shown on load
-        toggleDeliveryDetails();
-        var deliveryMethodRadios = document.querySelectorAll('input[name="delivery_method"]');
-        deliveryMethodRadios.forEach(function (radio) {
-            radio.addEventListener('change', toggleDeliveryDetails);
+        const deliveryMethodInput = document.querySelectorAll('input[name="delivery_method"]');
+        deliveryMethodInput.forEach(input => {
+            input.addEventListener('change', toggleDeliveryDetails);
         });
 
-        // Functions to show/hide the different form parts. step = current step user is on. 
-        // Hide's previous step and displays current step
-        function showNextStep(step) {
-            document.getElementById(`step-${step - 1}`).style.display = 'none';
-            document.getElementById(`step-${step}`).style.display = 'block';
-        }
 
-        // hide's the next step from view
-        function showPreviousStep(step) {
-            document.getElementById(`step-${step + 1}`).style.display = 'none';
-            document.getElementById(`step-${step}`).style.display = 'block';
-        }
+        toggleDeliveryDetails();
+
     });
+
+    //Functions to show/hide the different form parts. step = current step user is on. 
+    //Hide's previous step and displays current step
+    function showNextStep(step) {
+        document.getElementById(`step-${step - 1}`).style.display = 'none';
+        document.getElementById(`step-${step}`).style.display = 'block';
+    }
+
+    // hide's the next step from view
+    function showPreviousStep(step) {
+        document.getElementById(`step-${step + 1}`).style.display = 'none';
+        document.getElementById(`step-${step}`).style.display = 'block';
+    }
+
+    const deliveryMethodSelect = document.querySelector('#delivery_method_wrapper select');
+    deliveryMethodSelect.addEventListener('change', function() {
+        toggleDeliveryDetails(); // Call your toggle function when the delivery method changes
+    });
+
+    function toggleDeliveryDetails() {
+        const deliveryDetails = document.querySelector('.delivery-details');
+        const deliveryMethod = document.querySelector('input[name="delivery_method"]:checked');
+        if (deliveryMethod && deliveryMethod.value === 'delivery') {
+            deliveryDetails.style.display = 'block';
+        } else {
+            deliveryDetails.style.display = 'none';
+        }
+    }
+
 </script>
 
 {% endblock %}
