@@ -37,6 +37,7 @@
         <div class="col-lg-6 col-12">
             <form action="" method="POST" id="payment-form-prodcut">
                 {% csrf_token %}
+                <input type="hidden" name="order_type" value="{{ order_type }}">
                 <div class="fieldset-container mb-4" id="step-1">
                     <fieldset class="rounded px-3 mb-4">
                         <legend class="fieldset-label small px-2 w-auto">Customer Details</legend>
@@ -46,15 +47,9 @@
                     <button type="button" class="btn btn-green" onclick="showNextStep(2)">Next</button>
                 </div>
 
-                <div class="fieldset-container mb-4" id="step-2">
-                    {{ order_form.delivery_method }}
-                    {{ order_form.delivery_date | as_crispy_field }}                   
-                    <button type="button" class="btn btn-green" onclick="showNextStep(2)">Next</button>
-                </div>
-
                 <div class="fieldset-container mb-4" id="step-2" style="display: none;">
                     <fieldset class="rounded px-3 mb-5">
-                        <legend class="fieldset-label small text-black px-2 w-auto">Delivery Information</legend>
+                        <legend class="fieldset-label small text-black px-2 w-auto">Customer Address</legend>
                         {{ order_form.phone_number | as_crispy_field }}
                         {{ order_form.street_address1 | as_crispy_field }}
                         {{ order_form.street_address2 | as_crispy_field }}
@@ -63,8 +58,51 @@
                         {{ order_form.postcode | as_crispy_field }}
                     </fieldset>
                     <button type="button" class="btn btn-pink" onclick="showPreviousStep(1)">Previous</button>
-                    <button type="submit" class="btn btn-green">Submit</button>
+                    <button type="button" class="btn btn-green" onclick="showNextStep(3)">Next</button>
                 </div>
+
+
+                <div class="fieldset-container mb-4" id="step-3" style="display: none;">
+                    {% if order_type == 'product' %}
+                    <div id="product-form">
+                        <fieldset class="rounded px-3 mb-5">
+                            <legend class="fieldset-label small text-black px-2 w-auto">Delivery Information</legend>
+                            {{form.delivery_date | as_crispy_field }}
+                            {{form.delivery_method }}
+                        </fieldset>
+                    </div>
+                    <div class="delivery-details">
+                        <fieldset class="rounded px-3 mb-5">
+                            <legend class="fieldset-label small text-black px-2 w-auto">Delivery Information</legend>
+                            {{ delivery_name | as_crispy_field }}
+                            {{ delivery_street_address1 | as_crispy_field }}
+                            {{ delivery_street_address2 | as_crispy_field }}
+                            {{ delivery_town_or_city | as_crispy_field }}
+                            {{ delivery_street_address2 | as_crispy_field }}
+                            {{ delivery_county | as_crispy_field }}
+                            {{ delivery_postcode | as_crispy_field }}
+                        </fieldset>
+                    </div>
+                    {% elif order_type == 'event' %}
+                    <div id="event-form">
+                        <fieldset class="rounded px-3 mb-5">
+                            <legend class="fieldset-label small text-black px-2 w-auto">Delivery Information
+                            </legend>
+                            <p>Your Order will be Emailed to you following payment.</p>
+                        </fieldset>
+                    </div>
+                    {% endif %}
+                    <button type="button" class="btn btn-pink" onclick="showPreviousStep(2)">Previous</button>
+                    <button type="button" class="btn btn-green" onclick="showNextStep(4)">Next</button>
+                </div>
+
+
+                <button type="submit" class="btn btn-green">Submit</button>
+
+
+
+
+
             </form>
         </div>
 
@@ -83,9 +121,32 @@
 {{ block.super }}
 
 <script>
-   
     document.addEventListener('DOMContentLoaded', function () {
-        
+
+        // Render correct form based on if Product (and event) or just event
+        function showForm(orderType) {
+            document.getElementById('product-form').style.display = (orderType === 'product') ? 'block' :
+                'none';
+            document.getElementById('event-form').style.display = (orderType === 'event') ? 'block' : 'none';
+        }
+
+        // If user selects store pick up then delivery detail fileds are blocked. 
+        function toggleDeliveryDetails() {
+            const deliveryMethod = document.querySelector('input[name="delivery_method"]:checked').value;
+            const deliveryFields = document.querySelectorAll('.delivery-details');
+            if (deliveryMethod === 'delivery') {
+                deliveryDetails.style.display = 'block';
+            } else {
+                deliveryDetails.style.display = 'none';
+            }
+        }
+
+        // Ensure correct fields are shown on load
+        toggleDeliveryDetails();
+        var deliveryMethodRadios = document.querySelectorAll('input[name="delivery_method"]');
+        deliveryMethodRadios.forEach(function (radio) {
+            radio.addEventListener('change', toggleDeliveryDetails);
+        });
 
         // Functions to show/hide the different form parts. step = current step user is on. 
         // Hide's previous step and displays current step

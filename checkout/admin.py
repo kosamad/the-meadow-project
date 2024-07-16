@@ -1,14 +1,19 @@
 from django.contrib import admin
-from .models import Order, OrderLineItem
+from .models import Order, ProductOrderLineItem, EventOrderLineItem
 
 # Add and edit line items in the admin panel
-class OrderLineItemAdminInline(admin.TabularInline):
-    model = OrderLineItem
+class ProductOrderLineItemAdminInline(admin.TabularInline):
+    model = ProductOrderLineItem
     readonly_fields = ('lineitem_total',)
 
 
+class EventOrderLineItemAdminInline(admin.TabularInline):
+    model = EventOrderLineItem
+    readonly_fields = ('lineitem_total',)
+
+# Order admin configuration
 class OrderAdmin(admin.ModelAdmin):
-    inlines = (OrderLineItemAdminInline,)
+    inlines = (ProductOrderLineItemAdminInline, EventOrderLineItemAdminInline)
 
     readonly_fields = ('order_number', 'date',
                        'delivery_cost', 'order_total',

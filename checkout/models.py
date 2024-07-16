@@ -5,6 +5,12 @@ from django.conf import settings
 
 from products.models import Product, ProductVariant, Event
 
+DELIVERY_CHOICES = [
+    ('delivery', 'Delivery'),
+    ('pickup', 'Shop Pickup'),
+]
+
+
 # Create your models here.
 class Order(models.Model):
 
@@ -71,16 +77,26 @@ class Order(models.Model):
 
 
 
-class OrderLineItem(models.Model):
-    order = models.ForeignKey(Order, null=False, blank=False, on_delete=models.CASCADE, related_name='lineitems')
-    product = models.ForeignKey(Product, null=True, blank=True, on_delete=models.CASCADE)
-    event = models.ForeignKey(Event, null=False, blank=False, on_delete=models.CASCADE)
+class ProductOrderLineItem(models.Model):
+    """
+    For Products and/or Events if together in the basket
+    """
+    order = models.ForeignKey(Order, null=False, blank=False, on_delete=models.CASCADE, related_name='product_lineitems')
+    product = models.ForeignKey(Product, null=True, blank=True, on_delete=models.CASCADE)    
     product_variant = models.ForeignKey(ProductVariant, null=True, blank=True, on_delete=models.SET_NULL)
     card_message = models.TextField(blank=True, default='')
-    note_to_seller = models.TextField(blank=True, default='')
-    note_to_host = models.TextField(blank=True, default='')
+    note_to_seller = models.TextField(blank=True, default='')    
     quantity = models.IntegerField(null=False, blank=False, default=0)
     lineitem_total = models.DecimalField(max_digits=6, decimal_places=2, null=False, blank=False, editable=False)
+    # delivery details   
+    delivery_method = models.CharField(max_length=20, choices=DELIVERY_CHOICES, null=True, blank=True)
+    delivery_date = models.DateField(null=True, blank=True)
+    delivery_name = models.CharField(max_length=20, null=True, blank=True)
+    delivery_street_address1 = models.CharField(max_length=80, null=True, blank=True)
+    delivery_street_address2 = models.CharField(max_length=80, null=True, blank=True)
+    delivery_town_or_city = models.CharField(max_length=40, null=True, blank=True)
+    delivery_postcode = models.CharField(max_length=20, null=True, blank=True)
+    delivery_county = models.CharField(max_length=80, null=True, blank=True)
 
     def save(self, *args, **kwargs):
         """
@@ -91,14 +107,33 @@ class OrderLineItem(models.Model):
             if self.product_variant:
                 self.lineitem_total = self.product_variant.price * self.quantity
             else:
-                self.lineitem_total = self.product.price * self.quantity
-        elif self.event:
-            self.lineitem_total = self.event.price * self.quantity
+                self.lineitem_total = self.product.price * self.quantity     
 
         super().save(*args, **kwargs)
 
     def __str__(self):
-        if self.product:
-            return f'Name: {self.product.friendly_name} on Order number: {self.order.order_number}'
-        elif self.event:
-            return f'Name: {self.event.friendly_name} on Order number: {self.order.order_number}'
+        return f'Name: {self.product.friendly_name} on Order number: {self.order.order_number}'
+       
+
+
+class EventOrderLineItem(models.Model):
+    """
+    For Event only orders
+    """
+    order = models.ForeignKey(Order, null=False, blank=False, on_delete=models.CASCADE, related_name='event_lineitems')
+    event = models.ForeignKey(Event, null=False, blank=False, on_delete=models.CASCADE)
+    note_to_host = models.TextField(blank=True, default='')
+    quantity = models.IntegerField(null=False, blank=False, default=0)
+    lineitem_total = models.DecimalField(max_digits=6, decimal_places=2, null=False, blank=False, editable=False)
+
+    def save(self, *args, **kwargs):
+        """
+        Override the original save method to set the lineitem total
+        and update the order total.
+        """
+             
+        self.lineitem_total = self.event.price * self.quantity
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f'Name: {self.event.friendly_name} on Order number: {self.order.order_number}'
