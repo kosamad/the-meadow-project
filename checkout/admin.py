@@ -10,6 +10,7 @@ class ProductOrderLineItemAdminInline(admin.TabularInline):
 class EventOrderLineItemAdminInline(admin.TabularInline):
     model = EventOrderLineItem
     readonly_fields = ('lineitem_total',)
+    
 
 # Order admin configuration
 class OrderAdmin(admin.ModelAdmin):

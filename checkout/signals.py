@@ -3,6 +3,7 @@ from django.dispatch import receiver
 
 from .models import Order, ProductOrderLineItem, EventOrderLineItem
 
+# Allow totals to be updated when new line items are added. 
 
 @receiver(post_save, sender=ProductOrderLineItem)
 @receiver(post_save, sender=EventOrderLineItem)
