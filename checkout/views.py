@@ -1,12 +1,19 @@
 from django.shortcuts import render, redirect, reverse, get_object_or_404, HttpResponse
 from django.contrib import messages
+from django.conf import settings
 
 from .forms import OrderForm, ProductOrderForm, EventOrderForm
 from .models import Order, ProductOrderLineItem, EventOrderLineItem
 from products.models import Product, Event, ProductVariant
+from bag.contexts import bag_contents
+
+import json
 
 # Create your views here.
 def checkout(request):
+    stripe_public_key = settings.STRIPE_PUBLIC_KEY
+    stripe_secret_key = settings.STRIPE_SECRET_KEY
+
     bag = request.session.get('bag', {})
     if not bag:
         messages.error(request, "There's nothing in your bag at the moment")
@@ -41,6 +48,8 @@ def checkout(request):
         'order_form': order_form,        
         'form': form,
         'order_type': order_type,
+        'stripe_public_key': stripe_public_key,
+        # 'client_secret': client_secret,
     }
     return render(request, template, context)
 

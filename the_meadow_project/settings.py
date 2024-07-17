@@ -186,5 +186,20 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Payment parts
 
+# Stripe
+
+STRIPE_CURRENCY = 'usd'
+
+# production mode settings
+if os.environ.get("DEVELOPMENT") == "True":
+    STRIPE_PUBLIC_KEY = os.environ.get('STRIPE_PUBLIC_KEY', '')
+    STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY', '')
+    STRIPE_WH_SECRET = os.environ.get('STRIPE_WH_SECRET', '')
+# dev mode settings
+else:
+    STRIPE_PUBLIC_KEY = os.environ.get('STRIPE_PUBLIC_KEY', '')
+    STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY', '')
+    STRIPE_WH_SECRET = os.environ.get('STRIPE_WH_SECRET', '')
+
 FREE_DELIVERY_THRESHOLD = 50
 STANDARD_DELIVERY_PERCENTAGE = 10
