@@ -168,7 +168,10 @@
         </div>
         <div class="col-lg-6 col-12">
             <div class="row">
-                <h3 class="title-font">Order Summary ({{ total_items }})</h3>
+                <div class="col">
+                    <h3 class="title-font">Order Summary ({{ total_items }})<span><a href="{% url 'view_bag' %}"
+                        class="btn text-green standard-font ">Adjust Bag</a></span></h3>
+                </div>
             </div>
             <div class="row">
                 <div class="col-7 offset-2">
@@ -194,13 +197,13 @@
                     <p class="my-0"><strong>{{ item.product.friendly_name }}</strong></p>
                     <p class="my-0 small text-muted">Size: {{ item.variant.size }} </p>
                     <p class="my-0 small text-muted">Qty: {{ item.quantity }}</p>
-                    <p class="my-0 small text-muted">Card Message: 
+                    <p class="my-0 small text-muted">Card Message:
                         {% if item.card_message %}Y{% else %}N{% endif %}
                     </p>
-                    <p class="my-0 small text-muted">Note To Seller: 
+                    <p class="my-0 small text-muted">Note To Seller:
                         {% if item.note_to_seller %}Y{% else %}N{% endif %}
                     </p>
-                    
+
                 </div>
                 <div class="col-3 text-right">
                     <p class="my-0 small text-muted">£{{ item.subtotal }} </p>
@@ -219,12 +222,12 @@
                     </a>
                 </div>
                 <div class="col-7">
-                    <p class="my-0"><strong>{{ item.event.friendly_name }}</strong></p>                    
+                    <p class="my-0"><strong>{{ item.event.friendly_name }}</strong></p>
                     <p class="my-0 small text-muted">Qty: {{ item.quantity }}</p>
-                    <p class="my-0 small text-muted">Attendee/s: {{ item.attendee_name }}</p>                      
-                    <p class="my-0 small text-muted">Note To Host: 
+                    <p class="my-0 small text-muted">Attendee/s: {{ item.attendee_name }}</p>
+                    <p class="my-0 small text-muted">Note To Host:
                         {% if item.note_to_host %}Y{% else %}N{% endif %}
-                    </p>                    
+                    </p>
                 </div>
                 <div class="col-3 text-right">
                     <p class="my-0 small text-muted">£{{ item.subtotal }} </p>
@@ -232,6 +235,19 @@
             </div>
             {% endif %}
             {% endfor %}
+            <hr class="mb-2">
+            <div class="row text-black text-right">
+                <div class="col-7 offset-2">
+                    <p class="my-0">Order Total:</p>
+                    <p class="my-0">Delivery:</p>
+                    <p class="my-0">Grand Total:</p>
+                </div>
+                <div class="col-3">
+                    <p class="my-0">£{{ total | floatformat:2 }}</p>
+                    <p class="my-0">£{{ delivery | floatformat:2 }}</p>
+                    <p class="my-0"><strong>£{{ grand_total | floatformat:2 }}</strong></p>
+                </div>
+            </div>
 
 
         </div>
