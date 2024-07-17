@@ -48,13 +48,13 @@ class OrderForm(forms.ModelForm):
 # Product and or Event Specific order form
 class ProductOrderForm(forms.ModelForm):
     delivery_method = forms.ChoiceField(choices=DELIVERY_CHOICES, widget=forms.RadioSelect)
-    delivery_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
+    delivery_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))    
 
     class Meta:
         model = ProductOrderLineItem
-        fields = ('product', 'product_variant', 'quantity', 'delivery_method', 'delivery_name', 'delivery_date',
+        fields = ('product', 'product_variant', 'delivery_method', 'delivery_name', 'delivery_date',
                   'delivery_street_address1', 'delivery_street_address2', 'delivery_town_or_city',
-                  'delivery_postcode', 'delivery_county')
+                  'delivery_postcode', 'delivery_county',)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -63,8 +63,7 @@ class ProductOrderForm(forms.ModelForm):
 
         placeholders = {
             'product': 'Product',
-            'product_variant': 'Variant',
-            'quantity': 'Quantity',            
+            'product_variant': 'Variant',                     
             'delivery_method': 'Delivery Method',
             'delivery_date': 'Delivery/Pick Up Date',
             'delivery_name': 'Delivery Recipient',
@@ -92,14 +91,13 @@ class ProductOrderForm(forms.ModelForm):
 class EventOrderForm(forms.ModelForm):
     class Meta:
         model = EventOrderLineItem
-        fields = ('event', 'quantity')
+        fields = ('event',)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)        
 
         placeholders = {
-            'event': 'Event',
-            'quantity': 'Quantity',
+            'event': 'Event',          
         }
 
         for field in self.fields:            

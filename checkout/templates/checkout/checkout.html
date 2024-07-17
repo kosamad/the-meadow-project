@@ -77,14 +77,14 @@
                         </div>
 
                         <!-- Section 3- if product = deliery info, if event = info about event "delivery" -->
-                        <div class="fieldset-container mb-4" id="step-3" style="display: none;">
+                        <div class="fieldset-container mb-4" id="step-3" style="display: none;">                            
                             {% if order_type == 'product' %}
                             <div id="delivery_method_wrapper">
                                 <fieldset class="rounded px-3 mb-3">
-                                    <legend class="fieldset-label small text-black px-2 w-auto">Delivery Information
+                                    <legend class="fieldset-label small text-black px-2 w-auto">Delivery Information:
                                     </legend>
-                                    {{form.delivery_date | as_crispy_field }}
-                                    {{form.delivery_method | as_crispy_field }}
+                                    {{product_form.delivery_date | as_crispy_field }}
+                                    {{product_form.delivery_method | as_crispy_field }}
                                 </fieldset>
                             </div>
                             <div class="shop-details" style="display: none;">
@@ -95,25 +95,62 @@
                                 <fieldset class="rounded px-3 mb-5">
                                     <legend class="fieldset-label small text-black px-2 w-auto">Delivery Information
                                     </legend>
-                                    {{ form.delivery_name | as_crispy_field }}
-                                    {{ form.delivery_street_address1 | as_crispy_field }}
-                                    {{ form.delivery_street_address2 | as_crispy_field }}
-                                    {{ form.delivery_town_or_city | as_crispy_field }}
-                                    {{ form.delivery_street_address2 | as_crispy_field }}
-                                    {{ form.delivery_county | as_crispy_field }}
-                                    {{ form.delivery_postcode | as_crispy_field }}
-                                </fieldset>
-                            </div>
-
-                            {% elif order_type == 'event' %}
-                            <div id="event-form">
-                                <fieldset class="rounded px-3 mb-5">
-                                    <legend class="fieldset-label small text-black px-2 w-auto">Delivery Information
-                                    </legend>
-                                    <p>Your Order will be Emailed to you following payment.</p>
+                                    {{ product_form.delivery_name | as_crispy_field }}
+                                    {{ product_form.delivery_street_address1 | as_crispy_field }}
+                                    {{ product_form.delivery_street_address2 | as_crispy_field }}
+                                    {{ product_form.delivery_town_or_city | as_crispy_field }}
+                                    {{ product_form.delivery_street_address2 | as_crispy_field }}
+                                    {{ product_form.delivery_county | as_crispy_field }}
+                                    {{ product_form.delivery_postcode | as_crispy_field }}
                                 </fieldset>
                             </div>
                             {% endif %}
+                            {% if order_type == 'event' %}
+                            <div id="event-form">
+                                <fieldset class="rounded px-3 mb-5">
+                                    <legend class="fieldset-label small text-black px-2 w-auto">Event Items:
+                                    </legend>
+                                    <p>Your Tickets will be emailed to you following payment.</p>
+                                </fieldset>
+                            </div>
+                            {% endif %}
+                            {% if order_type == 'product and event' %}
+                            <div id="delivery_method_wrapper">
+                                <fieldset class="rounded px-3 mb-2">
+                                    <legend class="fieldset-label small px-2 w-auto">Delivery Information
+                                    </legend>
+                                    <legend class="fieldset-label small px-2 w-auto">Please chose a date and delivery method. 
+                                    </legend>
+                                    {{ product_form.delivery_date | as_crispy_field }}
+                                    {{ product_form.delivery_method | as_crispy_field }}
+                                </fieldset>
+                            </div>
+                            <div class="shop-details" style="display: none;">
+                                <p class="ms-3"> Our address is 123 Meadow, Along A Lane, Bristol, BS41 8RM. Open
+                                    9am-4.30pm</p>
+                            </div>
+                            <div class="delivery-details" style="display: none;">
+                                <fieldset class="rounded px-3 mb-5">
+                                    <legend class="fieldset-label smallpx-2 w-auto">Delivery Address:
+                                    </legend>
+                                    {{ product_form.delivery_name | as_crispy_field }}
+                                    {{ product_form.delivery_street_address1 | as_crispy_field }}
+                                    {{ product_form.delivery_street_address2 | as_crispy_field }}
+                                    {{ product_form.delivery_town_or_city | as_crispy_field }}
+                                    {{ product_form.delivery_postcode | as_crispy_field }}
+                                    {{ product_form.delivery_county | as_crispy_field }}
+                                </fieldset>
+                            </div>
+
+                            <div id="event-form">
+                                <fieldset class="rounded px-3 mb-5">
+                                    <legend class="fieldset-label small px-2 w-auto">Event Items:
+                                    </legend>
+                                    <p class="ms-3">Your Ticket will be emailed to you following payment.</p>
+                                </fieldset>
+                            </div>
+                            {% endif %}
+
                             <button type="button" class="btn btn-pink ms-3" onclick="showPreviousStep(2)"> <span
                                     class="icon">
                                     <i class="fas fa-chevron-left"></i>
@@ -136,9 +173,9 @@
                             </fieldset>
                             <div class="text-right mt-5 mb-2">
                                 <button type="button" class="btn btn-pink ms-3" onclick="showPreviousStep(3)"> <span
-                                    class="icon">
-                                    <i class="fas fa-chevron-left"></i>
-                                </span> Previous</button>
+                                        class="icon">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </span> Previous</button>
                                 <button type="submit" id="submit-button" class="btn btn btn-green">
                                     <span class="font-weight-bold">Complete Order</span>
                                     <span class="icon">
@@ -150,7 +187,7 @@
                                         <i class="fas fa-chevron-left"></i>
                                     </span>
                                     <span class="font-weight-bold">Adjust Bag</span>
-                                </a>                               
+                                </a>
                                 <p class="small text-danger my-0">
                                     <span>
                                         <i class="fas fa-exclamation-circle"></i>
@@ -176,7 +213,7 @@
             <div class="row">
                 <div class="col">
                     <h3 class="title-font">Order Summary ({{ total_items }})<span><a href="{% url 'view_bag' %}"
-                        class="btn text-green standard-font ">Adjust Bag</a></span></h3>
+                                class="btn text-green standard-font ">Adjust Bag</a></span></h3>
                 </div>
             </div>
             <div class="row">
