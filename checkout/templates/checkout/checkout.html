@@ -84,7 +84,15 @@
                                     <legend class="fieldset-label small text-black px-2 w-auto">Delivery Information
                                     </legend>
                                     {{form.delivery_date | as_crispy_field }}
-                                    {{form.delivery_method }}
+                                    <div id="id_delivery_method">
+                                        {{ form.delivery_method.label_tag }}
+                                        {% for subwidget in form.delivery_method %}
+                                            <div class="form-check">
+                                                {{ subwidget.tag }}
+                                                {{ subwidget.choice_label }}
+                                            </div>
+                                        {% endfor %}
+                                    </div>
                                 </fieldset>
                             </div>
                             <div class="shop-details" style="display: none;">

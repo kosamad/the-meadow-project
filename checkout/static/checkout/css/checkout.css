@@ -8,6 +8,7 @@
 .StripeElement,
 .stripe-style-input {
   box-sizing: border-box;
+  color: #000;
   height: 40px;
   padding: 10px 12px;
   border: 1px solid transparent;
