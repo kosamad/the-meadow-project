@@ -7,6 +7,7 @@ from .models import Order, ProductOrderLineItem, EventOrderLineItem
 from products.models import Product, Event, ProductVariant
 from bag.contexts import bag_contents
 
+import stripe
 import json
 
 # Create your views here.
@@ -19,13 +20,24 @@ def checkout(request):
         messages.error(request, "There's nothing in your bag at the moment")
         return redirect(reverse('shop'))    
 
-    # General order form 
+    # Getting the bag information (Amount for stripe)
+    current_bag = bag_contents(request)
+    total = current_bag['grand_total']    
+    stripe_total = round(total * 100) #req amount as an int
+    stripe.api_key = stripe_secret_key # set secret key on stripe
+    intent = stripe.PaymentIntent.create(
+            amount=stripe_total,
+            currency=settings.STRIPE_CURRENCY,
+        )
+  
+
+    # General order form
     order_form = OrderForm()
     product_form = ProductOrderForm()
     event_form = EventOrderForm()
     order_type = 'product' if any(item['product_type'] == 'product' for item in bag.values()) else 'event'
-    print ( bag )
-    print( order_type)
+    # print ( bag )
+    # print( order_type)
     form = product_form if order_type == 'product' else event_form
 
     # Render correct product/event order form 
@@ -42,14 +54,18 @@ def checkout(request):
             # Redirect to success page or another view
             return redirect('order_success')
     
-    
+    # warning in case public key not set.
+    if not stripe_public_key:
+            messages.warning(request, 'Stripe public key is missing. \
+                Did you forget to set it in your environment?')
+
     template = 'checkout/checkout.html'
     context = {
         'order_form': order_form,        
         'form': form,
         'order_type': order_type,
         'stripe_public_key': stripe_public_key,
-        # 'client_secret': client_secret,
+        'client_secret': intent.client_secret,
     }
     return render(request, template, context)
 

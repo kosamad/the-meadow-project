@@ -185,10 +185,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Payment parts
-
 # Stripe
 
-STRIPE_CURRENCY = 'usd'
+STRIPE_CURRENCY = 'gbp'
 
 # production mode settings
 if os.environ.get("DEVELOPMENT") == "True":

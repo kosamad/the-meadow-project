@@ -34,17 +34,13 @@ class OrderForm(forms.ModelForm):
         }
 
         self.fields['full_name'].widget.attrs['autofocus'] = True
-        for field in self.fields:         
+        for field in self.fields:            
             if self.fields[field].required:
                 placeholder = f'{placeholders[field]} *'
             else:
                 placeholder = placeholders[field]
             self.fields[field].widget.attrs['placeholder'] = placeholder
-            # Ensure 'delivery_method' has no class ad
-            if field != 'delivery_method': 
-                self.fields[field].widget.attrs['class'] = 'stripe-style-input'
-            else:                
-                self.fields[field].widget.attrs.pop('class', None)
+            self.fields[field].widget.attrs['class'] = 'stripe-style-input'
             self.fields[field].label = False
 
     
@@ -90,6 +86,8 @@ class ProductOrderForm(forms.ModelForm):
             self.fields[field].widget.attrs['class'] = 'stripe-style-input'
             self.fields[field].label = False
 
+            
+    
 # Event Specific order form
 class EventOrderForm(forms.ModelForm):
     class Meta:

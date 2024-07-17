@@ -30,7 +30,7 @@
             <div class="row">
                 <!-- Checkout Form  -->
                 <div class="col-lg-9 col-12">
-                    <form action="" method="POST" id="payment-form-prodcut">
+                    <form action="" method="POST" id="payment-form">
                         {% csrf_token %}
                         <input type="hidden" name="order_type" value="{{ order_type }}">
                         <!-- Section 1 - Customer Details -->
@@ -84,15 +84,7 @@
                                     <legend class="fieldset-label small text-black px-2 w-auto">Delivery Information
                                     </legend>
                                     {{form.delivery_date | as_crispy_field }}
-                                    <div id="id_delivery_method">
-                                        {{ form.delivery_method.label_tag }}
-                                        {% for subwidget in form.delivery_method %}
-                                            <div class="form-check">
-                                                {{ subwidget.tag }}
-                                                {{ subwidget.choice_label }}
-                                            </div>
-                                        {% endfor %}
-                                    </div>
+                                    {{form.delivery_method | as_crispy_field }}
                                 </fieldset>
                             </div>
                             <div class="shop-details" style="display: none;">
@@ -136,31 +128,31 @@
                             <fieldset class="rounded px-3 mb-3">
                                 <legend class="fieldset-label small text-black px-2 w-auto">Payment Details</legend>
                                 <!-- A Stripe card element will go here from JS file -->
-                                <div class="mb-3" id="card-element"></div>
-                                <!-- Used to display form errors -->
+                                <div id="card-element"></div>
+                                <!-- Used to display form errors (see JS) -->
                                 <div class="mb-3 text-danger" id="card-errors" role="alert"></div>
                                 <!-- Pass the client secret to the view so we can get the payment intent id -->
                                 <input type="hidden" value="" name="client_secret">
                             </fieldset>
-                            <div class="submit-button text-right mt-5 mb-2">
-                                <button type="button" class="btn btn-pink ms-3" onclick="showPreviousStep(2)"> <span
+                            <div class="text-right mt-5 mb-2">
+                                <button type="button" class="btn btn-pink ms-3" onclick="showPreviousStep(3)"> <span
                                     class="icon">
                                     <i class="fas fa-chevron-left"></i>
                                 </span> Previous</button>
-                                <button id="submit-button" class="btn btn btn-green">
+                                <button type="submit" id="submit-button" class="btn btn btn-green">
                                     <span class="font-weight-bold">Complete Order</span>
                                     <span class="icon">
                                         <i class="fas fa-lock"></i>
                                     </span>
                                 </button>
                                 <a href="{% url 'view_bag' %}" class="btn btn-lgreen">
-                                    <span class="icon">
+                                    <span>
                                         <i class="fas fa-chevron-left"></i>
                                     </span>
                                     <span class="font-weight-bold">Adjust Bag</span>
                                 </a>                               
                                 <p class="small text-danger my-0">
-                                    <span class="icon">
+                                    <span>
                                         <i class="fas fa-exclamation-circle"></i>
                                     </span>
                                     <span>Your card will be charged
@@ -281,10 +273,9 @@
 {% block postloadjs %}
 {{ block.super }}
 
+{% include 'checkout/includes/checkout_js_script.html' %}
+{% include 'checkout/includes/stripe_elements_script.html' %}
 {{ stripe_public_key|json_script:"id_stripe_public_key" }}
 {{ client_secret|json_script:"id_client_secret" }}
-<!-- checkout javascript -->
-<script src="{% static 'checkout/js/checkout.js' %}"></script>
-<script src="{% static 'checkout/js/stripe_elements.js' %}"></script>
 
 {% endblock %}
