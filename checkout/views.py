@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, reverse, get_object_or_404, HttpResponse
 from django.contrib import messages
 from django.conf import settings
+from decimal import Decimal
 
 from .forms import OrderForm, ProductOrderForm
 from .models import Order, ProductOrderLineItem, EventOrderLineItem
@@ -86,8 +87,8 @@ def checkout(request):
                             )
                             order_line_item.save()
 
-                        elif details['product_type'] == 'event':
-                            item_id, _, _ = unique_key.split('_', 3)
+                        if details['product_type'] == 'event':
+                            item_id, _, _ = unique_key.split('_', 2)
                             event = get_object_or_404(Event, id=item_id)
                             quantity = details.get('quantity', 0)
                             note_to_host = details.get('note_to_host', '')

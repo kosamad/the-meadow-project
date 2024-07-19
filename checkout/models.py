@@ -41,15 +41,17 @@ class Order(models.Model):
         Update grand total each time a line item is added,
         accounting for delivery costs and differences between events and products.
         """
-        self.order_total = self.lineitems.aggregate(Sum('lineitem_total'))['lineitem_total__sum'] or 0
+        product_total = self.product_lineitems.aggregate(Sum('lineitem_total'))['lineitem_total__sum'] or 0   
+        event_total = self.event_lineitems.aggregate(Sum('lineitem_total'))['lineitem_total__sum'] or 0
+        self.order_total = product_total + event_total
         
         # Calculate delivery cost based on order items
         event_items = self.event_lineitems.all()
         product_items = self.product_lineitems.all()
         
-        if event_items.exists():
+        if self.event_lineitems.exists():
             self.delivery_cost = 0  # Free delivery for events
-        elif product_items.exists() and self.order_total < settings.FREE_DELIVERY_THRESHOLD:
+        elif self.product_lineitems.exists() and self.order_total < Decimal(settings.FREE_DELIVERY_THRESHOLD):
             self.delivery_cost = self.order_total * Decimal(settings.STANDARD_DELIVERY_PERCENTAGE / 100)
         else:
             self.delivery_cost = 0
