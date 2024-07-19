@@ -17,7 +17,7 @@ def checkout(request):
 
     if request.method == 'POST':
         bag = request.session.get('bag', {})
-        print("Bag contents:", bag) 
+        print("Bag contents:", bag)
 
         general_form_data = {
             'full_name': request.POST['full_name'],
@@ -39,66 +39,64 @@ def checkout(request):
             'delivery_town_or_city': request.POST['delivery_town_or_city'],
             'delivery_postcode': request.POST['delivery_postcode'],
             'delivery_county': request.POST['delivery_county'],
-        }      
+        }
 
         order_type = request.POST.get('order_type')
         order_form = OrderForm(general_form_data)
-        product_form = ProductOrderForm(product_form_data) if 'product' in order_type else None   
+        product_form = ProductOrderForm(product_form_data) if 'product' in order_type else None
 
-        print("Order Type:", order_type)           
+        print("Order Type:", order_type)
 
         if order_form.is_valid():
-            print("Order form is valid.")
+            print("General Order form is valid.")
             order_instance = order_form.save(commit=False)
-            order_instance.save()
             try:
-                for unique_key, details in bag.items():
-                    print("Processing item:", unique_key)
-                    print("Details:", details)
+                order_instance.save()
+                print("Processing bag contents")
+                for unique_key, item_data in bag.items():
+                    print(f"Processing item: {unique_key} with data: {item_data}")                    
+                    product_type = item_data.get('product_type')
                     try:
-                        if details['product_type'] == 'product':
-                            item_id, variant_id, _, _ = unique_key.split('_', 3)
+                        if product_type == 'product':
+                            item_id = unique_key.split('_')[0]
+                            variant_id = item_data.get('variant_id')
                             print("Product ID:", item_id)
                             print("Variant ID:", variant_id)
                             product = get_object_or_404(Product, id=item_id)
                             variant = get_object_or_404(ProductVariant, id=variant_id)
-                            quantity = details.get('quantity', 0)
-                            card_message = details.get('card_message', '')
-                            note_to_seller = details.get('note_to_seller', '')
+                            quantity = item_data.get('quantity', 0)
+                            card_message = item_data.get('card_message', '')
+                            note_to_seller = item_data.get('note_to_seller', '')
                             print("Product:", product)
                             print("Variant:", variant)
-                            print("note_to_seller:", note_to_seller)
+                            print(f"Creating ProductOrderLineItem with product: {product}, variant: {variant}, quantity: {quantity}")
 
                             order_line_item = ProductOrderLineItem(
                                 order=order_instance,
                                 product=product,
                                 product_variant=variant,
                                 quantity=quantity,
-                                delivery_method=details.get('delivery_method'),
-                                delivery_date=details.get('delivery_date'),
-                                delivery_name=details.get('delivery_name'),
-                                delivery_street_address1=details.get('delivery_street_address1'),
-                                delivery_street_address2=details.get('delivery_street_address2'),
-                                delivery_town_or_city=details.get('delivery_town_or_city'),
-                                delivery_postcode=details.get('delivery_postcode'),
-                                delivery_county=details.get('delivery_county'),
+                                delivery_method=item_data.get('delivery_method'),
+                                delivery_date=item_data.get('delivery_date'),
+                                delivery_name=item_data.get('delivery_name'),
+                                delivery_street_address1=item_data.get('delivery_street_address1'),
+                                delivery_street_address2=item_data.get('delivery_street_address2'),
+                                delivery_town_or_city=item_data.get('delivery_town_or_city'),
+                                delivery_postcode=item_data.get('delivery_postcode'),
+                                delivery_county=item_data.get('delivery_county'),
                                 card_message=card_message,
                                 note_to_seller=note_to_seller
                             )
+                            print(f"Saving ProductOrderLineItem: {order_line_item}")                           
                             order_line_item.save()
+                            print('Product order line item saved')
 
-                        if details['product_type'] == 'event':
-                            item_id, _, _ = unique_key.split('_', 2)
+                        elif product_type == 'event':
+                            item_id = unique_key.split('_')[0]
                             event = get_object_or_404(Event, id=item_id)
-                            quantity = details.get('quantity', 0)
-                            note_to_host = details.get('note_to_host', '')
-                            attendee_name = details.get('attendee_name', '')
-
-                            print("Event ID:", item_id)
-                            print("Event:", event)
-                            print("Quantity:", quantity)
-                            print("Note to Host:", note_to_host)
-                            print("Attendee Name:", attendee_name)
+                            quantity = item_data.get('quantity', 0)
+                            note_to_host = item_data.get('note_to_host', '')
+                            attendee_name = item_data.get('attendee_name', '')
 
                             order_line_item = EventOrderLineItem(
                                 order=order_instance,
@@ -107,36 +105,39 @@ def checkout(request):
                                 note_to_host=note_to_host,
                                 attendee_name=attendee_name,
                             )
+                            print(f"Saving EventOrderLineItem: {order_line_item}")
                             order_line_item.save()
+                            print('Event order line item saved')
 
                     except Exception as e:
-                        messages.error(request, "One of the items in your basket wasn't found in our database. Please call us for assistance!")
+                        print(f"Exception during item processing: {e}")
+                        messages.error(request, f"One of the items in your basket wasn't found in our database. Please call us for assistance! Error: {e}")
                         order_instance.delete()
                         return redirect(reverse('view_bag'))
 
+                # Process and save product_form only after saving all line items
                 if product_form and product_form.is_valid():
                     product_instance = product_form.save(commit=False)
                     product_instance.order = order_instance
-                    product_instance.save() 
+                    product_instance.save()
+                    print("Product form saved.")
 
                 # Save the info to the user's profile if they checked the box
                 request.session['save_info'] = 'save-info' in request.POST
                 return redirect(reverse('checkout_success', args=[order_instance.order_number]))
 
             except Exception as e:
-                messages.error(request, 'There was an error with your form. Please double check your information.')
-                print("General form data:", general_form_data)
-                print("Product form data:", product_form_data)
-                print("Exception during save:", e)
-                print("Order form errors:", order_form.errors)
-                print("Product form errors:", product_form.errors if product_form else 'N/A')                
+                print(f"Error saving order: {e}")
+                messages.error(request, f"There was an error processing your order. Please try again. Error: {e}")
                 order_instance.delete()
                 return redirect(reverse('view_bag'))
 
         else:
+            print("Order form is not valid.")
+            print(order_form.errors)
             messages.error(request, 'There was an error with your form. Please double check your information.')
             messages.error(request, f'Order form errors: {order_form.errors}')
-            
+
     else:
         bag = request.session.get('bag', {})
         if not bag:
@@ -183,7 +184,6 @@ def checkout(request):
             'client_secret': intent.client_secret,
         }
         return render(request, template, context)
-
 
 
 def checkout_success(request):
