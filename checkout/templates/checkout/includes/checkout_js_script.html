@@ -45,12 +45,11 @@
     // Validate fields for the current step by getting the form elements required.
     // Alert if a field is missing. 
     
-    let orderType = "{{ order_type }}";
+    // let orderType = "{{ order_type }}";
     
     // Function to validate fields and show next step
-    function validateAndShowNextStep(currentStep) {
-        const orderType = "{{ order_type }}";
-    
+    function validateAndShowNextStep(currentStep) {        
+        const orderType = "{{ order_type }}";    
         if (currentStep === 1) {
             const fullName = document.getElementById('id_full_name').value.trim();
             const email = document.getElementById('id_email').value.trim();
@@ -70,10 +69,10 @@
                 alert('Please fill out all fields required by Customer Address');
                 return;
             }
-        } else if (currentStep === 3) {
-            if (orderType === 'product') {
+        } else if (currentStep === 3) {            
+            if (orderType === 'product' || orderType === 'product and event') {                
                 const deliveryMethod = document.querySelector('input[name="delivery_method"]:checked');
-                const deliveryDate = document.getElementById('id_delivery_date').value.trim();
+                const deliveryDate = document.getElementById('id_delivery_date').value.trim();           
                 if (!deliveryMethod || !deliveryDate) {
                     alert('Please select a delivery method and date.');
                     return;
