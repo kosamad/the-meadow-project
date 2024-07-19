@@ -44,8 +44,8 @@ class Order(models.Model):
         self.order_total = self.lineitems.aggregate(Sum('lineitem_total'))['lineitem_total__sum'] or 0
         
         # Calculate delivery cost based on order items
-        event_items = self.lineitems.filter(product__product_type='event')
-        product_items = self.lineitems.filter(product__product_type='product')
+        event_items = self.event_lineitems.all()
+        product_items = self.product_lineitems.all()
         
         if event_items.exists():
             self.delivery_cost = 0  # Free delivery for events
@@ -107,9 +107,12 @@ class ProductOrderLineItem(models.Model):
             if self.product_variant:
                 self.lineitem_total = self.product_variant.price * self.quantity
             else:
-                self.lineitem_total = self.product.price * self.quantity     
+                self.lineitem_total = self.product.price * self.quantity
+        else:
+            raise ValueError("Product is required to calculate line item total")
 
         super().save(*args, **kwargs)
+        self.order.update_total()
 
     def __str__(self):
         return f'Name: {self.product.friendly_name} on Order number: {self.order.order_number}'
@@ -123,17 +126,22 @@ class EventOrderLineItem(models.Model):
     order = models.ForeignKey(Order, null=False, blank=False, on_delete=models.CASCADE, related_name='event_lineitems')
     event = models.ForeignKey(Event, null=False, blank=False, on_delete=models.CASCADE)
     note_to_host = models.TextField(blank=True, default='')
+    attendee_name = models.CharField(max_length=80, blank=True, default='')
     quantity = models.IntegerField(null=False, blank=False, default=0)
-    lineitem_total = models.DecimalField(max_digits=6, decimal_places=2, null=False, blank=False, editable=False)
+    lineitem_total = models.DecimalField(max_digits=6, decimal_places=2, null=False, blank=False, editable=False,)
 
     def save(self, *args, **kwargs):
         """
         Override the original save method to set the lineitem total
         and update the order total.
         """
-             
-        self.lineitem_total = self.event.price * self.quantity
+        if self.event:     
+            self.lineitem_total = self.event.price * self.quantity
+        else:
+            raise ValueError("Event is required to calculate line item total")
+
         super().save(*args, **kwargs)
+        self.order.update_total()
 
     def __str__(self):
         return f'Name: {self.event.friendly_name} on Order number: {self.order.order_number}'

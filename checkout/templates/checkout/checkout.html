@@ -47,7 +47,7 @@
                         <!-- Section 2 Customer Address -->
                         <div class="fieldset-container mb-4" id="step-2" style="display: none;">
                             <fieldset class="rounded px-3 mb-2">
-                                <legend class="fieldset-label small text-black px-2 w-auto">Customer Address</legend>
+                                <legend class="fieldset-label small text-black px-2 w-auto">Customer/Billing Address</legend>
                                 {{ order_form.phone_number | as_crispy_field }}
                                 {{ order_form.street_address1 | as_crispy_field }}
                                 {{ order_form.street_address2 | as_crispy_field }}
@@ -314,5 +314,6 @@
 {% include 'checkout/includes/stripe_elements_script.html' %}
 {{ stripe_public_key|json_script:"id_stripe_public_key" }}
 {{ client_secret|json_script:"id_client_secret" }}
+
 
 {% endblock %}

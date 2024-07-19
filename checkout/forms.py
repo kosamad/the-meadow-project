@@ -52,7 +52,7 @@ class ProductOrderForm(forms.ModelForm):
 
     class Meta:
         model = ProductOrderLineItem
-        fields = ('product', 'product_variant', 'delivery_method', 'delivery_name', 'delivery_date',
+        fields = ('delivery_method', 'delivery_name', 'delivery_date',
                   'delivery_street_address1', 'delivery_street_address2', 'delivery_town_or_city',
                   'delivery_postcode', 'delivery_county',)
 
@@ -61,9 +61,7 @@ class ProductOrderForm(forms.ModelForm):
         self.fields['delivery_method'].required = True
         self.fields['delivery_date'].required = True
 
-        placeholders = {
-            'product': 'Product',
-            'product_variant': 'Variant',                     
+        placeholders = {                     
             'delivery_method': 'Delivery Method',
             'delivery_date': 'Delivery/Pick Up Date',
             'delivery_name': 'Delivery Recipient',
@@ -88,23 +86,3 @@ class ProductOrderForm(forms.ModelForm):
             
     
 # Event Specific order form
-class EventOrderForm(forms.ModelForm):
-    class Meta:
-        model = EventOrderLineItem
-        fields = ('event',)
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)        
-
-        placeholders = {
-            'event': 'Event',          
-        }
-
-        for field in self.fields:            
-            if self.fields[field].required:
-                placeholder = f'{placeholders[field]} *'
-            else:
-                placeholder = placeholders[field]
-            self.fields[field].widget.attrs['placeholder'] = placeholder
-            self.fields[field].widget.attrs['class'] = 'stripe-style-input'
-            self.fields[field].label = False

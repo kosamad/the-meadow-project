@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'checkout/css/checkout.css' %}">
+{% endblock %}
+
+
+{% block page_header %}
+<div class="container header-container">
+    <div class="row">
+        <div class="col"></div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container">
+    <!-- Page Title - Checkout Page -->
+    <div class="row mt-4 mb-4">
+        <div class="col-lg-6 col-12">
+            <div class="row text-left">
+                <h2>Thank you!</h2>
+            </div>
+            <div class="row">
+                <p>Your order information is below and a confirmation email has been sent to . Please contact us if you have any problems.</p>
+            </div>
+            <div class="row">
+                <p class="my-0"><strong>Order Number:</strong> </p>
+                <p class="my-0"><strong>Order Date:</strong></p>
+                <p class="my-0"><strong>Delivery Info</strong>     
+
+            </div>
+        </div>
+
+        <!-- Order Summary  -->
+        <div class="col-lg-6 col-12">    
+            
+        </div>
+       </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}
+
+{% block postloadjs %}
+{{ block.super }}
+
+{% endblock %}
