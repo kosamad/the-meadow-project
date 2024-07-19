@@ -101,30 +101,24 @@ class ProductOrderLineItem(models.Model):
     delivery_postcode = models.CharField(max_length=20, null=True, blank=True)
     delivery_county = models.CharField(max_length=80, null=True, blank=True)
 
-    debug_save_called = False
-
     def save(self, *args, **kwargs):
         """
         Override the original save method to set the lineitem total
         and update the order total.
         """
-        if not self.debug_save_called:
-            self.debug_save_called = True
-            print(f"Saving ProductOrderLineItem ID: {self.id} for product {self.product} and variant {self.product_variant}")
-            if self.product:
-                if self.product_variant:
-                    print(f"Variant price: {self.product_variant.price}")
-                    self.lineitem_total = self.product_variant.price * self.quantity
-                else:
-                    print(f"Product price: {self.product.price}")
-                    self.lineitem_total = self.product.price * self.quantity
+        print(f"111Saving ProductOrderLineItem for product {self.product} and variant {self.product_variant}")
+        if self.product:
+            if self.product_variant:
+                self.lineitem_total = self.product_variant.price * self.quantity
             else:
-                print("Error: Product is missing, setting lineitem_total to 0")
-                self.lineitem_total = 0
+                self.lineitem_total = self.product.price * self.quantity
+        else:
+            print("Error: Product is missing, setting lineitem_total to 0")
+            self.lineitem_total = 0
 
-            super().save(*args, **kwargs)
-            self.order.update_total()
-            print(f"111 ProductOrderLineItem ID: {instance_id} saved and order total updated")
+        super().save(*args, **kwargs)
+        self.order.update_total()
+        print("111ProductOrderLineItem saved and order total updated")
 
     def __str__(self):
         return f'Name: {self.product.friendly_name} on Order number: {self.order.order_number}'
