@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, reverse, get_object_or_404, HttpR
 from django.contrib import messages
 from django.conf import settings
 from decimal import Decimal
+from django.core.exceptions import ObjectDoesNotExist
 
 from .forms import OrderForm, ProductOrderForm
 from .models import Order, ProductOrderLineItem, EventOrderLineItem
@@ -30,16 +31,19 @@ def checkout(request):
             'county': request.POST['county'],
         }
 
-        product_form_data = {
-            'delivery_method': request.POST['delivery_method'],
-            'delivery_date': request.POST['delivery_date'],
-            'delivery_name': request.POST['delivery_name'],
-            'delivery_street_address1': request.POST['delivery_street_address1'],
-            'delivery_street_address2': request.POST['delivery_street_address2'],
-            'delivery_town_or_city': request.POST['delivery_town_or_city'],
-            'delivery_postcode': request.POST['delivery_postcode'],
-            'delivery_county': request.POST['delivery_county'],
-        }
+        # Product form data only if it's a product order (prevents Event errors)
+        product_form_data = {}
+        if 'product' in request.POST.get('order_type', ''):
+            product_form_data = {
+                'delivery_method': request.POST.get('delivery_method'),
+                'delivery_date': request.POST.get('delivery_date'),
+                'delivery_name': request.POST.get('delivery_name'),
+                'delivery_street_address1': request.POST.get('delivery_street_address1'),
+                'delivery_street_address2': request.POST.get('delivery_street_address2'),
+                'delivery_town_or_city': request.POST.get('delivery_town_or_city'),
+                'delivery_postcode': request.POST.get('delivery_postcode'),
+                'delivery_county': request.POST.get('delivery_county'),
+            }
 
         order_type = request.POST.get('order_type')
         order_form = OrderForm(general_form_data)
@@ -53,17 +57,27 @@ def checkout(request):
             try:
                 order_instance.save()
                 print("Processing bag contents")
+
+                if product_form and not product_form.is_valid():
+                    messages.error(request, "There was an error with the product form. Please double-check your information.")
+                    order_instance.delete() # Clean up partially saved order.
+                    return redirect(reverse('view_bag'))          
+
                 for unique_key, item_data in bag.items():
-                    print(f"Processing item: {unique_key} with data: {item_data}")                    
+                    print(f"Processing item: {unique_key} with data: {item_data}")                                       
                     product_type = item_data.get('product_type')
-                    try:
-                        if product_type == 'product':
-                            item_id = unique_key.split('_')[0]
-                            variant_id = item_data.get('variant_id')
-                            print("Product ID:", item_id)
-                            print("Variant ID:", variant_id)
-                            product = get_object_or_404(Product, id=item_id)
-                            variant = get_object_or_404(ProductVariant, id=variant_id)
+
+                    # Product only processing    
+                    if product_type == 'product':
+                        item_id = unique_key.split('_')[0]
+                        variant_id = item_data.get('variant_id')
+                        print("Product ID:", item_id)
+                        print("Variant ID:", variant_id)
+
+                        # Exception handling for Product and ProductVariant to prevent double save error
+                        try:
+                            product = Product.objects.get(id=item_id)
+                            variant = ProductVariant.objects.get(id=variant_id)
                             quantity = item_data.get('quantity', 0)
                             card_message = item_data.get('card_message', '')
                             note_to_seller = item_data.get('note_to_seller', '')
@@ -87,13 +101,19 @@ def checkout(request):
                                 card_message=card_message,
                                 note_to_seller=note_to_seller
                             )
-                            print(f"Saving ProductOrderLineItem: {order_line_item}")                           
+                            print(f"Saving ProductOrderLineItem: {order_line_item}")
                             order_line_item.save()
                             print('Product order line item saved')
 
-                        elif product_type == 'event':
-                            item_id = unique_key.split('_')[0]
-                            event = get_object_or_404(Event, id=item_id)
+                        except ObjectDoesNotExist as e:
+                            print(f"Product or ProductVariant not found: {e}")           
+                            messages.warning(request, f"Item with ID {item_id} or variant ID {variant_id} was not found and has been skipped.")
+
+                    elif product_type == 'event':
+                        item_id = unique_key.split('_')[0]                           
+                        # Exception handling for Event
+                        try:
+                            event = Event.objects.get(id=item_id)
                             quantity = item_data.get('quantity', 0)
                             note_to_host = item_data.get('note_to_host', '')
                             attendee_name = item_data.get('attendee_name', '')
@@ -109,20 +129,11 @@ def checkout(request):
                             order_line_item.save()
                             print('Event order line item saved')
 
-                    except Exception as e:
-                        print(f"Exception during item processing: {e}")
-                        messages.error(request, f"One of the items in your basket wasn't found in our database. Please call us for assistance! Error: {e}")
-                        order_instance.delete()
-                        return redirect(reverse('view_bag'))
+                        except ObjectDoesNotExist as e:
+                            print(f"Event not found: {e}")
+                            messages.warning(request, f"Event with ID {item_id} was not found and has been skipped.")
 
-                # Process and save product_form only after saving all line items
-                if product_form and product_form.is_valid():
-                    product_instance = product_form.save(commit=False)
-                    product_instance.order = order_instance
-                    product_instance.save()
-                    print("Product form saved.")
-
-                # Save the info to the user's profile if they checked the box
+                # save user profile info if they checked the box
                 request.session['save_info'] = 'save-info' in request.POST
                 return redirect(reverse('checkout_success', args=[order_instance.order_number]))
 
@@ -186,7 +197,7 @@ def checkout(request):
         return render(request, template, context)
 
 
-def checkout_success(request):
+def checkout_success(request, order_number):
     """
     View to handle successful checkouts
     """

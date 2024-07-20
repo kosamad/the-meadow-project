@@ -113,7 +113,7 @@ class ProductOrderLineItem(models.Model):
             else:
                 self.lineitem_total = self.product.price * self.quantity
         else:
-            print("Error: Product is missing, setting lineitem_total to 0")
+            print("Error: Product is missing, setting lineitem_total to 0") #prevents error from 111Saving ProductOrderLineItem for product None and variant None 
             self.lineitem_total = 0
 
         super().save(*args, **kwargs)
