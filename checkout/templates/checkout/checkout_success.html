@@ -19,27 +19,161 @@
 
 <div class="container">
     <!-- Page Title - Checkout Page -->
-    <div class="row mt-4 mb-4">
+    <div class="row mt-4 mb-4 justify-content-center">
         <div class="col-lg-6 col-12">
-            <div class="row text-left">
+            <div class="row text-center">
                 <h2>Thank you!</h2>
             </div>
             <div class="row">
-                <p>Your order information is below and a confirmation email has been sent to . Please contact us if you have any problems.</p>
+                <p>Your order information is below and a confirmation email has been sent to
+                    <strong>{{ order.email }}</strong> . Please contact us if you have any problems.</p>
             </div>
             <div class="row">
-                <p class="my-0"><strong>Order Number:</strong> </p>
-                <p class="my-0"><strong>Order Date:</strong></p>
-                <p class="my-0"><strong>Delivery Info</strong>     
+                <p class="my-0"><strong>Order Number:</strong> {{ order.order_number }} </p>
+                <p class="my-0"><strong>Order Date and Time:</strong> {{ order.date }} </p>
+            </div>
 
+            <hr class="my-4 border-top border-2 border-dark">
+
+            <!-- Customer Details -->
+            <div class="row">
+                <div class="row text-center">
+                    <h2>Your Details</h2>
+                </div>
+                <div class="row">
+                    <p class="mb-2"><strong>Name:</strong> {{ order.full_name }}</p>
+                    <p class="mb-2"><strong>Email:</strong> {{ order.email }}</p>
+                    <p class="mb-2"><strong>Tel:</strong> {{ order.phone_number }}</p>
+                    <p class="mb-0"><strong>Address:</strong></p>
+                    <p class="mb-0">{{ order.street_address1 }}</p>
+                    {% if order.street_address2 %}
+                    <p class="mb-0">{{ order.street_address2 }}</p>
+                    {% endif %}
+                    <p class="mb-0">{{ order.town_or_city }}</p>
+                    <p class="mb-0">{{ order.county }}</p>
+                    <p>{{ order.postcode }}</p>
+                </div>
+            </div>
+            <hr class="my-4 border-top border-2 border-dark">
+
+            <!-- Ordered Items Info -->
+            <div class="row">
+                <div class="row text-center">
+                    <h2>You Have Ordered</h2>
+                </div>
+                <!-- Product Items -->
+                {% if product_lineitems %}
+                <div class="row">
+                    <h3 class="title-font">Products</h3>
+                </div>
+                <div class="row ms-4">
+                    <ul class="list-unstyled">
+                        {% for item in product_lineitems %}
+                        <li>
+                            {% if item.product.image %}
+                            <img src="{{ item.product.image.url }}" alt="{{ item.product.alt_text }}" width="100">
+                            {% else %}
+                            <img width="100" src="{{ MEDIA_URL }}noimage.png" alt="{{ item.product.name }}">
+                            {% endif %}
+                            <p class="mb-0"><strong>Name:</strong> {{ item.product.friendly_name }}</p>
+                            <p class="mb-0"><strong>Size:</strong> {{ item.product_variant.size }}</p>
+                            <p class="mb-0"><strong>Quantity:</strong> {{ item.quantity }}</p>
+                            <p class="mb-0"><strong>Card Message:</strong> {{ item.card_message|default:"None" }}</p>
+                            <p class="mb-0"><strong>Note to Seller:</strong> {{ item.note_to_seller|default:"None" }}
+                            </p>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    <!-- Delivery Info -->
+                    <div class="row">
+                        <p><strong>DELIVERY INFO FOR YOUR PRODUCTS</strong></p>
+                    </div>
+                    {% with product_lineitem=product_lineitems.0 %}
+                    <p class="mb-0"><strong>Delivery Method:</strong> {{ product_lineitem.delivery_method|title  }} on
+                        {{ product_lineitem.delivery_date }}</p>
+
+                    {% if product_lineitem.delivery_method == 'delivery' %}
+                    <p class="mb-0"><strong>Delivery Address:</strong></p>
+                    <p class="mb-0">{{ product_lineitem.delivery_name }}</p>
+                    <p class="mb-0">{{ product_lineitem.delivery_street_address1 }}</p>
+                    {% if product_lineitem.delivery_street_address2 %}
+                    <p class="mb-0">{{ product_lineitem.delivery_street_address2 }}</p>
+                    {% endif %}
+                    <p class="mb-0">{{ product_lineitem.delivery_town_or_city }}</p>
+                    <p class="mb-0">{{ product_lineitem.delivery_county }}</p>
+                    <p>{{ product_lineitem.delivery_postcode }}</p>
+                    {% endif %}
+                    {% endwith %}
+                </div>
+                {% endif %}
+                <!-- Event Items -->
+                {% if event_lineitems %}
+                <div class="row mt-4">
+                    <h3 class="title-font">Events</h3>
+                </div>
+                <div class="row ms-4">
+                    <ul class="list-unstyled">
+                        {% for item in event_lineitems %}
+                        <li>
+                            {% if item.event.image %}
+                            <img src="{{ item.event.image.url }}" alt="{{ item.event.name }}" width="100">
+                            {% else %}
+                            <img width="100" src="{{ MEDIA_URL }}noimage.png" alt="{{ item.event.name }}">
+                            {% endif %}                            
+                            <p class="mb-0"><strong>Name:</strong> {{ item.event.friendly_name }}</p>
+                            <p class="mb-0"><strong>Attendee Name:</strong> {{ item.attendee_name}}</p>
+                            <p class="mb-0"><strong>Quantity:</strong> {{ item.quantity }}</p>
+                            <p class="mb-0"><strong>Note to Seller:</strong> {{ item.note_to_host|default:"None" }}
+                            </p>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    <div class="row">
+                        <p><strong>DELIVERY:</strong></p>
+                    </div>
+                    <div class="row ms-4">
+                        <p class="my-0">An email ticket will be sent to
+                            {{ order.email }}</p>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+
+            <hr class="my-4 border-top border-2 border-dark">
+
+            <!-- Order Costs Info -->
+            <div class="row">
+                <div class="row text-center">
+                    <h2>Order Summary</h2>
+                </div>
+                <div class="row">
+                    <p class="mb-0"><strong>Order Total:</strong> {{ order.order_total }}</p>
+                    <p class="mb-0"><strong>Delivery Costs:</strong> {{ order.delivery_cost }}</p>
+                    <p class="mb-0"><strong>Grand Total:</strong> {{ order.grand_total }}</p>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-4 col-6">
+                    <!-- Next Step Buttons -->
+                    <a href="{% url 'shop' %}" class="btn btn-green">
+                        <span class="text-uppercase">Back To The Shop</span>
+                    </a>
+                </div>
             </div>
         </div>
 
-        <!-- Order Summary  -->
-        <div class="col-lg-6 col-12">    
-            
-        </div>
-       </div>
+
+
+
+
+
+
+
+
+    </div>
+
+
+</div>
 </div>
 
 

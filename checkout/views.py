@@ -44,6 +44,7 @@ def checkout(request):
                 'delivery_postcode': request.POST.get('delivery_postcode'),
                 'delivery_county': request.POST.get('delivery_county'),
             }
+            print("Product form data:", product_form_data)
 
         order_type = request.POST.get('order_type')
         order_form = OrderForm(general_form_data)
@@ -81,6 +82,14 @@ def checkout(request):
                             quantity = item_data.get('quantity', 0)
                             card_message = item_data.get('card_message', '')
                             note_to_seller = item_data.get('note_to_seller', '')
+                            delivery_method = request.POST.get('delivery_method')
+                            delivery_date = request.POST.get('delivery_date')
+                            delivery_name = request.POST.get('delivery_name')
+                            delivery_street_address1 = request.POST.get('delivery_street_address1')
+                            delivery_street_address2 = request.POST.get('delivery_street_address2')
+                            delivery_town_or_city = request.POST.get('delivery_town_or_city')
+                            delivery_postcode = request.POST.get('delivery_postcode')
+                            delivery_county = request.POST.get('delivery_county')
                             print("Product:", product)
                             print("Variant:", variant)
                             print(f"Creating ProductOrderLineItem with product: {product}, variant: {variant}, quantity: {quantity}")
@@ -90,24 +99,26 @@ def checkout(request):
                                 product=product,
                                 product_variant=variant,
                                 quantity=quantity,
-                                delivery_method=item_data.get('delivery_method'),
-                                delivery_date=item_data.get('delivery_date'),
-                                delivery_name=item_data.get('delivery_name'),
-                                delivery_street_address1=item_data.get('delivery_street_address1'),
-                                delivery_street_address2=item_data.get('delivery_street_address2'),
-                                delivery_town_or_city=item_data.get('delivery_town_or_city'),
-                                delivery_postcode=item_data.get('delivery_postcode'),
-                                delivery_county=item_data.get('delivery_county'),
+                                delivery_method=delivery_method,
+                                delivery_date=delivery_date,
+                                delivery_name=delivery_name,
+                                delivery_street_address1=delivery_street_address1,
+                                delivery_street_address2=delivery_street_address2,
+                                delivery_town_or_city=delivery_town_or_city,
+                                delivery_postcode=delivery_postcode,
+                                delivery_county=delivery_county,
                                 card_message=card_message,
                                 note_to_seller=note_to_seller
                             )
+                            print(f"Delivery Method: {order_line_item.delivery_method}")
+                            print(f"Delivery Date: {order_line_item.delivery_date}")
                             print(f"Saving ProductOrderLineItem: {order_line_item}")
                             order_line_item.save()
                             print('Product order line item saved')
 
                         except ObjectDoesNotExist as e:
-                            print(f"Product or ProductVariant not found: {e}")           
-                            messages.warning(request, f"Item with ID {item_id} or variant ID {variant_id} was not found and has been skipped.")
+                            print(f"Product or ProductVariant not found and skipped: {e}")                                                             
+                            
 
                     elif product_type == 'event':
                         item_id = unique_key.split('_')[0]                           
@@ -130,8 +141,7 @@ def checkout(request):
                             print('Event order line item saved')
 
                         except ObjectDoesNotExist as e:
-                            print(f"Event not found: {e}")
-                            messages.warning(request, f"Event with ID {item_id} was not found and has been skipped.")
+                            print(f"Event not found: {e}")                                      
 
                 # save user profile info if they checked the box
                 request.session['save_info'] = 'save-info' in request.POST
@@ -210,8 +220,9 @@ def checkout_success(request, order_number):
 
     # Delete bag   
     if 'bag' in request.session:
-        del request.session['bag']
+        del request.session['bag']  
 
+   
     template = 'checkout/checkout_success.html'
     context = {
         'order': order,
