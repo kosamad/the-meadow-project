@@ -67,22 +67,17 @@ class StripeWH_Handler:
                     delivery_date = None
             except ValueError:
                 delivery_date = None
-        else:
+                delivery_method = ''
+        elif order_type == 'event':
             delivery_date = None
             delivery_method = ''
 
-        if shipping_details:
-             # Clean data in the shipping details
-            if shipping_details.address:
-                for field, value in shipping_details.address.items():
-                    if value == "":
-                        shipping_details.address[field] = None
-        else:
-        # If no shipping details, ensure that delivery_method is correctly handled
-            if delivery_method == '':
-                delivery_method = 'pickup'      
-          
-
+        if order_type == 'product' or order_type == 'product and event':
+            # Clean data in the shipping details
+            for field, value in shipping_details.address.items():
+                if value == "":
+                    shipping_details.address[field] = None    
+            
         # Does the order exist in our database?
         order_exists = False
         attempt = 1
@@ -142,14 +137,22 @@ class StripeWH_Handler:
                             card_message = item_data.get('card_message', '')
                             note_to_seller = item_data.get('note_to_seller', '')
 
-                            # Extract delivery information from shipping_details                            
-                            delivery_name = shipping_details.get('name', '')
-                            delivery_street_address1 = shipping_details.address.line1
-                            delivery_street_address2 = shipping_details.address.line2
-                            delivery_town_or_city = shipping_details.address.city
-                            delivery_postcode = shipping_details.address.postal_code
-                            delivery_county = shipping_details.address.state
-
+                            if delivery_method == 'pickup':
+                                delivery_name = ''
+                                delivery_street_address1 = ''
+                                delivery_street_address2 = ''
+                                delivery_town_or_city = ''
+                                delivery_postcode = ''
+                                delivery_county = ''
+                            else:
+                                # Extract delivery information from shipping_details
+                                delivery_name = shipping_details.get('name', '')
+                                delivery_street_address1 = shipping_details.address.line1
+                                delivery_street_address2 = shipping_details.address.line2
+                                delivery_town_or_city = shipping_details.address.city
+                                delivery_postcode = shipping_details.address.postal_code
+                                delivery_county = shipping_details.address.state                        
+                                
                             order_line_item = ProductOrderLineItem(
                                 order=order_instance,
                                 product=product,
@@ -191,7 +194,9 @@ class StripeWH_Handler:
                             order_line_item.save()
                         except Event.DoesNotExist:
                             # Handle missing event
-                            pass            
+                            pass     
+                    else:
+                        print ('the order type is not being set correclty')     
             except Exception as e:
                 if order_instance:
                     order_instance.delete()

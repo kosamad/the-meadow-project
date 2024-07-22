@@ -20,27 +20,25 @@ def cache_checkout_data(request):
         pid = request.POST.get('client_secret').split('_secret')[0] # payment intent id
         stripe.api_key = settings.STRIPE_SECRET_KEY
 
-        # Check if 'product' is in the order_type
-        if 'product' in request.POST.get('order_type', ''):        
-            delivery_date = request.POST.get('delivery_date', '')
-            delivery_method = request.POST.get('delivery_method', '')
-        else:           
-            delivery_date = ''
-            delivery_method = ''
-       
-        stripe.PaymentIntent.modify(pid, metadata={
+        # metadata
+        metadata = {
             'bag': json.dumps(request.session.get('bag', {})),
             'save_info': request.POST.get('save_info'),
             'username': request.user,
-            'order_type': request.POST.get('order_type'),      
-            'delivery_date': request.POST.get('delivery_date'),
-            'delivery_method': request.POST.get('delivery_method'),
-        })
+            'order_type': request.POST.get('order_type')
+        }
+
+        # Check if 'product' is in the order_type
+        if 'product' in request.POST.get('order_type', ''):
+            metadata['delivery_date'] = request.POST.get('delivery_date', '')
+            metadata['delivery_method'] = request.POST.get('delivery_method', '')
+
+        stripe.PaymentIntent.modify(pid, metadata=metadata)
+
         return HttpResponse(status=200)
     except Exception as e:
-        messages.error(request, 'Sorry, your payment cannot be \
-            processed right now. Please try again later.')
-        return HttpResponse(content=e, status=400)
+        messages.error(request, 'Sorry, your payment cannot be processed right now. Please try again later.')
+        return HttpResponse(content=str(e), status=400)
 
 
 def checkout(request):
