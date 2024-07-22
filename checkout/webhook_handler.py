@@ -1,8 +1,12 @@
 from django.http import HttpResponse
+from django.core.exceptions import ObjectDoesNotExist, ValidationError
 import json
 import time
+import stripe
 from .models import Order, ProductVariant, ProductOrderLineItem, EventOrderLineItem
 from products.models import Product, Event
+from django.conf import settings
+from datetime import datetime
 
 
 class StripeWH_Handler:
@@ -31,26 +35,60 @@ class StripeWH_Handler:
         bag = intent.metadata.bag
         save_info = intent.metadata.save_info
 
-        billing_details = intent.charges.data[0].billing_details
+        # Get the Charge object
+        stripe_charge = stripe.Charge.retrieve(
+        intent.latest_charge
+        )
+
+        billing_details = stripe_charge.billing_details    
         shipping_details = intent.shipping
-        grand_total = round(intent.charges.data[0].amount / 100, 2)
-
-        # Clean data in the shipping details
-        for field, value in shipping_details.address.items():
-            if value == "":
-                shipping_details.address[field] = None
-
+        grand_total = round(stripe_charge.amount / 100, 2)
+      
         # Clean data in the billing details       
         for field, value in billing_details.address.items():
             if value == "":
                 billing_details.address[field] = None
+
+        # Custom metadata fields for delivery date and method
+        order_type = intent.metadata.get('order_type', '')
+
+        # Initialize delivery variables
+        delivery_date = None
+        delivery_method = ''
+
+        if order_type == 'product' or order_type == 'product and event':
+            delivery_date_str = intent.metadata.get('delivery_date', '')
+            delivery_method = intent.metadata.get('delivery_method', '')
+            # Validate delivery_date format
+            try:
+                if delivery_date_str:
+                    delivery_date = datetime.strptime(delivery_date_str, '%Y-%m-%d').date()
+                else:
+                    delivery_date = None
+            except ValueError:
+                delivery_date = None
+        else:
+            delivery_date = None
+            delivery_method = ''
+
+        if shipping_details:
+             # Clean data in the shipping details
+            if shipping_details.address:
+                for field, value in shipping_details.address.items():
+                    if value == "":
+                        shipping_details.address[field] = None
+        else:
+        # If no shipping details, ensure that delivery_method is correctly handled
+            if delivery_method == '':
+                delivery_method = 'pickup'      
+          
 
         # Does the order exist in our database?
         order_exists = False
         attempt = 1
         while attempt <= 5:
             try:
-                order = Order.objects.get(
+                order_instance = Order.objects.get(
                     full_name__iexact=billing_details.name,
                     email__iexact=billing_details.email,
                     phone_number__iexact=billing_details.phone,                    
@@ -69,15 +107,15 @@ class StripeWH_Handler:
                 attempt += 1
                 time.sleep(1)
         if order_exists:
-            self._send_confirmation_email(order)
+            # self._send_confirmation_email(order_instance)
             return HttpResponse(
                 content=f'Webhook received: {event["type"]} | SUCCESS: Verified order already in database',
                 status=200)
         else:
-            order = None
+            order_instance  = None
             try:
                 bag_items = json.loads(bag)
-                order = Order.objects.create(
+                order_instance  = Order.objects.create(
                     full_name=billing_details.name,
                     # user_profile=profile,
                     email=billing_details.email,
@@ -104,9 +142,7 @@ class StripeWH_Handler:
                             card_message = item_data.get('card_message', '')
                             note_to_seller = item_data.get('note_to_seller', '')
 
-                            # Extract delivery information from shipping_details
-                            delivery_method = shipping_details.get('method', '')
-                            delivery_date = shipping_details.get('date', '')
+                            # Extract delivery information from shipping_details                            
                             delivery_name = shipping_details.get('name', '')
                             delivery_street_address1 = shipping_details.address.line1
                             delivery_street_address2 = shipping_details.address.line2
@@ -115,7 +151,7 @@ class StripeWH_Handler:
                             delivery_county = shipping_details.address.state
 
                             order_line_item = ProductOrderLineItem(
-                                order=order,
+                                order=order_instance,
                                 product=product,
                                 product_variant=variant,
                                 quantity=quantity,
@@ -157,12 +193,12 @@ class StripeWH_Handler:
                             # Handle missing event
                             pass            
             except Exception as e:
-                if order:
-                    order.delete()
+                if order_instance:
+                    order_instance.delete()
                 return HttpResponse(
                     content=f'Webhook received: {event["type"]} | ERROR: {e}',
                     status=500)
-        self._send_confirmation_email(order)
+        # self._send_confirmation_email(order)
         return HttpResponse(
             content=f'Webhook received: {event["type"]} | SUCCESS: Created order in webhook',
             status=200)

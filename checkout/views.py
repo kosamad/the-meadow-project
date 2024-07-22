@@ -19,10 +19,22 @@ def cache_checkout_data(request):
     try:
         pid = request.POST.get('client_secret').split('_secret')[0] # payment intent id
         stripe.api_key = settings.STRIPE_SECRET_KEY
+
+        # Check if 'product' is in the order_type
+        if 'product' in request.POST.get('order_type', ''):        
+            delivery_date = request.POST.get('delivery_date', '')
+            delivery_method = request.POST.get('delivery_method', '')
+        else:           
+            delivery_date = ''
+            delivery_method = ''
+       
         stripe.PaymentIntent.modify(pid, metadata={
             'bag': json.dumps(request.session.get('bag', {})),
             'save_info': request.POST.get('save_info'),
             'username': request.user,
+            'order_type': request.POST.get('order_type'),      
+            'delivery_date': request.POST.get('delivery_date'),
+            'delivery_method': request.POST.get('delivery_method'),
         })
         return HttpResponse(status=200)
     except Exception as e:
@@ -75,8 +87,8 @@ def checkout(request):
             order_instance = order_form.save(commit=False)
             print("General Order form is valid.")
             pid = request.POST.get('client_secret').split('_secret')[0]
-            order.stripe_pid = pid             
-            order.original_bag = json.dumps(bag)                          
+            order_instance.stripe_pid = pid             
+            order_instance.original_bag = json.dumps(bag)                          
             try:
                 order_instance.save()
                 print("Processing bag contents")
