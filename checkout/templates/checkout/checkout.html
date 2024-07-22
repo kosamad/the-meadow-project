@@ -33,6 +33,7 @@
                     <form action="" method="POST" id="payment-form">
                         {% csrf_token %}
                         <input type="hidden" name="order_type" value="{{ order_type }}">
+
                         <!-- Section 1 - Customer Details -->
                         <div class="fieldset-container mb-4" id="step-1">
                             <fieldset class="rounded px-3 mb-4">
@@ -167,8 +168,8 @@
                                 <div id="card-element"></div>
                                 <!-- Used to display form errors (see JS) -->
                                 <div class="mb-3 text-danger" id="card-errors" role="alert"></div>
-                                <!-- Pass the client secret to the view so we can get the payment intent id -->
-                                <input type="hidden" value="" name="client_secret">
+                                <!-- Pass the client secret to the view so we can get the payment intent id -->                              
+                                <input type="hidden" value="{{ client_secret }}" name="client_secret">
                             </fieldset>
                             <div class="text-right mt-5 mb-2">
                                 <button type="button" class="btn btn-pink ms-3" onclick="showPreviousStep(3)"> <span

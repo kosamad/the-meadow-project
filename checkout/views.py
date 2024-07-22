@@ -72,8 +72,11 @@ def checkout(request):
         print("Order Type:", order_type)
 
         if order_form.is_valid():
-            print("General Order form is valid.")
             order_instance = order_form.save(commit=False)
+            print("General Order form is valid.")
+            pid = request.POST.get('client_secret').split('_secret')[0]
+            order.stripe_pid = pid             
+            order.original_bag = json.dumps(bag)                          
             try:
                 order_instance.save()
                 print("Processing bag contents")
