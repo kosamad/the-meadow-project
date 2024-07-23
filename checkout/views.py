@@ -44,10 +44,10 @@ def checkout(request):
         #     delivery_date = request.POST.get('delivery_date')
              
     
-        request.session['delivery_method'] = delivery_method
-        request.session['delivery_date'] = delivery_date
-        print('Session delivery_method:', request.session.get('delivery_method'))
-        print('Session delivery_date:', request.session.get('delivery_date'))          
+        # request.session['delivery_method'] = delivery_method
+        # request.session['delivery_date'] = delivery_date
+        # print('Session delivery_method:', request.session.get('delivery_method'))
+        # print('Session delivery_date:', request.session.get('delivery_date'))          
        
         general_form_data = {
             'full_name': request.POST['full_name'],
@@ -252,9 +252,9 @@ def cache_checkout_data(request):
             'bag': json.dumps(request.session.get('bag', {})),
             'save_info': request.POST.get('save_info'),
             'username': str(request.user.username), 
-            'order_type': request.session.get('order_type'),
-            'delivery_date': request.session.get('delivery_date', ''),
-            'delivery_method' : request.session.get('delivery_method', '')
+            'order_type': request.POST.get('order_type'),
+            'delivery_date': request.POST.get('delivery_date', ''),
+            'delivery_method' : request.POST.get('delivery_method', '')
         }        
 
         # # Check if 'product' is in the order_type

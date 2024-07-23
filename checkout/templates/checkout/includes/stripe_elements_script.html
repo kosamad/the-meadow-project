@@ -46,7 +46,7 @@
         });
 
         // Handle form submit
-        var form = document.getElementById('payment-form');
+        var form = document.getElementById('payment-form');        
 
         form.addEventListener('submit', function (ev) {
             ev.preventDefault();
@@ -54,6 +54,9 @@
                 'disabled': true
             });
             $('#submit-button').attr('disabled', true);
+
+            var deliveryMethod = $('input[name="delivery_method"]:checked').val() || $('#delivery_method_wrapper select').val();
+            var deliveryDate = $('#id_delivery_date').val();
 
             // Construct the shipping details only if they are provided by products, checked by looking for a deivery name
             var shippingDetails = null;
@@ -75,11 +78,16 @@
             var saveInfo = Boolean($('#id-save-info').attr('checked'));
             // From using {% csrf_token %} in the form
             var csrfToken = $('input[name="csrfmiddlewaretoken"]').val();
+            
+            var orderType = $('input[name="order_type"]').val();
             // pass info to view
             var postData = {
                 'csrfmiddlewaretoken': csrfToken,
                 'client_secret': clientSecret,
                 'save_info': saveInfo,
+                'delivery_method':deliveryMethod,
+                'delivery_date':deliveryDate,
+                'order_type': orderType,
             };
 
             // URL
