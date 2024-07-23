@@ -13,46 +13,42 @@ from bag.contexts import bag_contents
 import stripe
 import json
 
-# check if user has requested to save their data
-@require_POST
-def cache_checkout_data(request):
-    try:
-        pid = request.POST.get('client_secret').split('_secret')[0] # payment intent id
-        stripe.api_key = settings.STRIPE_SECRET_KEY
 
-        # metadata
-        metadata = {
-            'bag': json.dumps(request.session.get('bag', {})),
-            'save_info': request.POST.get('save_info'),
-            'username': request.user,
-            'order_type': request.POST.get('order_type')
-        }
-
-        print('Metadata being set:', metadata) 
-
-        # Check if 'product' is in the order_type
-        if 'product' in request.POST.get('order_type', ''):
-            metadata['delivery_date'] = request.POST.get('delivery_date', '')
-            metadata['delivery_method'] = request.POST.get('delivery_method', '')
-
-        stripe.PaymentIntent.modify(pid, metadata=metadata)
-
-        return HttpResponse(status=200)
-    except Exception as e:
-        messages.error(request, 'Sorry, your payment cannot be processed right now. Please try again later.')
-        return HttpResponse(content=str(e), status=400)
-
+    
 
 def checkout(request):
     stripe_public_key = settings.STRIPE_PUBLIC_KEY
-    stripe_secret_key = settings.STRIPE_SECRET_KEY
+    stripe_secret_key = settings.STRIPE_SECRET_KEY   
 
+    # # Initialise delivery variables with default values - stops event errors?
+    # delivery_method = request.POST.get('delivery_method', '')
+    # delivery_date = request.POST.get('delivery_date', '')   
+    
+     
     if request.method == 'POST':
         bag = request.session.get('bag', {})
         print("Bag contents:", bag)
-        order_type = request.POST.get('order_type')
-        print("Order Type:", order_type)   
+        print("POST data:", request.POST)
 
+        # Store order_type, and delivery method/date for use in webhook
+        order_type = request.POST.get('order_type')
+        delivery_method = request.POST.get('delivery_method', '')
+        delivery_date = request.POST.get('delivery_date', '')
+        print('aa', delivery_method)
+        print('add', delivery_date)  
+        print("Order Type from cs:", order_type)
+        request.session['order_type'] = order_type
+        # if 'product' in order_type:            
+        #     # Save delivery details in session if available
+        #     delivery_method = request.POST.get('delivery_method')            
+        #     delivery_date = request.POST.get('delivery_date')
+             
+    
+        request.session['delivery_method'] = delivery_method
+        request.session['delivery_date'] = delivery_date
+        print('Session delivery_method:', request.session.get('delivery_method'))
+        print('Session delivery_date:', request.session.get('delivery_date'))          
+       
         general_form_data = {
             'full_name': request.POST['full_name'],
             'email': request.POST['email'],
@@ -76,14 +72,11 @@ def checkout(request):
                 'delivery_town_or_city': request.POST.get('delivery_town_or_city'),
                 'delivery_postcode': request.POST.get('delivery_postcode'),
                 'delivery_county': request.POST.get('delivery_county'),
-            }
-            print("Product form data:", product_form_data)
+            }         
 
         
         order_form = OrderForm(general_form_data)
-        product_form = ProductOrderForm(product_form_data) if 'product' in order_type else None
-
-        
+        product_form = ProductOrderForm(product_form_data) if 'product' in order_type else None     
 
         if order_form.is_valid():
             order_instance = order_form.save(commit=False)
@@ -224,6 +217,9 @@ def checkout(request):
         else:
             messages.error(request, "There's nothing in your bag at the moment")
             return redirect(reverse('shop'))
+          
+        request.session['order_type'] = order_type
+       
 
         # Initialise product and event forms for rendering
         order_form = OrderForm()
@@ -243,6 +239,41 @@ def checkout(request):
         return render(request, template, context)
 
 
+
+# check if user has requested to save their data
+@require_POST
+def cache_checkout_data(request):
+    try:
+        pid = request.POST.get('client_secret').split('_secret')[0] # payment intent id
+        stripe.api_key = settings.STRIPE_SECRET_KEY        
+
+        # metadata
+        metadata = {
+            'bag': json.dumps(request.session.get('bag', {})),
+            'save_info': request.POST.get('save_info'),
+            'username': str(request.user.username), 
+            'order_type': request.session.get('order_type'),
+            'delivery_date': request.session.get('delivery_date', ''),
+            'delivery_method' : request.session.get('delivery_method', '')
+        }        
+
+        # # Check if 'product' is in the order_type
+        # if 'product' in request.POST.get('order_type', ''):
+        #     metadata['delivery_date'] = request.session.get('delivery_date', '')
+        #     metadata['delivery_method'] = request.session.get('delivery_method', '')
+
+        
+        print('Metadata being set:', metadata) 
+
+        stripe.PaymentIntent.modify(pid, metadata=metadata)
+
+        return HttpResponse(status=200)
+    except Exception as e:
+        messages.error(request, 'Sorry, your payment cannot be processed right now. Please try again later.')
+        return HttpResponse(content=str(e), status=400)
+
+
+
 def checkout_success(request, order_number):
     """
     View to handle successful checkouts
@@ -254,7 +285,7 @@ def checkout_success(request, order_number):
         Your order number is {order_number}. A confirmation \
         email will be sent to {order.email}.')
 
-    # Delete bag   
+    # Delete bag and other session data
     if 'bag' in request.session:
         del request.session['bag']  
 
@@ -267,3 +298,6 @@ def checkout_success(request, order_number):
     }
 
     return render(request, template, context)
+
+
+

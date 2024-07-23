@@ -7,6 +7,7 @@ from .models import Order, ProductVariant, ProductOrderLineItem, EventOrderLineI
 from products.models import Product, Event
 from django.conf import settings
 from datetime import datetime
+from pprint import pprint
 
 
 class StripeWH_Handler:
@@ -30,47 +31,40 @@ class StripeWH_Handler:
         """
         Handle the payment_intent.succeeded webhook from Stripe
         """
+
         intent = event.data.object
         pid = intent.id
         bag = intent.metadata.bag
         save_info = intent.metadata.save_info
+        order_type = intent.metadata.order_type
+        delivery_date_str = intent.metadata.get('delivery_date', '')
+        delivery_method = intent.metadata.get('delivery_method', '')
+
+        print('wh says', order_type)
+        print('wh delivery is', delivery_method)
 
         # Get the Charge object
         stripe_charge = stripe.Charge.retrieve(
         intent.latest_charge
         )
-
+      
         billing_details = stripe_charge.billing_details    
-        shipping_details = intent.shipping
+        shipping_details = intent.shipping or {} 
         grand_total = round(stripe_charge.amount / 100, 2)
+
+        pprint(shipping_details)
+        pprint(billing_details)
       
         # Clean data in the billing details       
         for field, value in billing_details.address.items():
             if value == "":
                 billing_details.address[field] = None
+         
+        # Validate delivery_date format        
+        delivery_date = datetime.strptime(delivery_date_str, '%Y-%m-%d').date() if delivery_date_str else None   
 
-        # Custom metadata fields for delivery date and method
-        order_type = intent.metadata.get('order_type', '')
-        print('wh says', order_type)
-
-        # Initialize delivery variables
-        delivery_date = None
-        delivery_method = ''
-
-        if order_type == 'product' or order_type == 'product and event':
-            delivery_date_str = intent.metadata.get('delivery_date', '')
-            delivery_method = intent.metadata.get('delivery_method', '')
-            print('wh delivery', delivery_method)
-            # Validate delivery_date format
-            try:
-                if delivery_date_str:
-                    delivery_date = datetime.strptime(delivery_date_str, '%Y-%m-%d').date()
-                else:
-                    delivery_date = None
-            except ValueError:
-                delivery_date = None
-                delivery_method = ''
-            # Clean data in the shipping details
+        if delivery_method == 'delivery':
+            address = shipping_details.get('address', {})
             for field, value in shipping_details.address.items():
                 if value == "":
                     shipping_details.address[field] = None  
