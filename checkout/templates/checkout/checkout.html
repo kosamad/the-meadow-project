@@ -33,6 +33,7 @@
                     <form action="" method="POST" id="payment-form">
                         {% csrf_token %}
                         <input type="hidden" name="order_type" value="{{ order_type }}">
+                        <input type="hidden" name="hidden_postcode" id="hidden_postcode">
 
                         <!-- Section 1 - Customer Details -->
                         <div class="fieldset-container mb-4" id="step-1">

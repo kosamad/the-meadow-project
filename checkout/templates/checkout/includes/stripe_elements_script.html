@@ -1,5 +1,6 @@
 <script>
     document.addEventListener('DOMContentLoaded', function () {
+        console.log('Script is running!'); 
         // Code taken and adapted from the CI tutorial for Boutiqu Ado
         // Get keys
         var stripePublicKey = $('#id_stripe_public_key').text().slice(1, -1);
@@ -46,7 +47,7 @@
         });
 
         // Handle form submit
-        var form = document.getElementById('payment-form');        
+        var form = document.getElementById('payment-form');
 
         form.addEventListener('submit', function (ev) {
             ev.preventDefault();
@@ -55,15 +56,31 @@
             });
             $('#submit-button').attr('disabled', true);
 
-            var deliveryMethod = $('input[name="delivery_method"]:checked').val() || $('#delivery_method_wrapper select').val();
+            var deliveryMethod = $('input[name="delivery_method"]:checked').val() || $(
+                '#delivery_method_wrapper select').val();
             var deliveryDate = $('#id_delivery_date').val();
+
+            const billingDetails = {
+                name: $.trim(form.full_name.value),
+                phone: $.trim(form.phone_number.value),
+                email: $.trim(form.email.value),
+                address: {
+                    line1: $.trim(form.street_address1.value),
+                    line2: $.trim(form.street_address2.value),
+                    city: $.trim(form.town_or_city.value),
+                    state: $.trim(form.county.value),
+                    postal_code: $.trim(form.postcode.value)
+                }
+            };
+
+            alert('Billing Details: ' + JSON.stringify(billingDetails));
 
             // Construct the shipping details only if they are provided by products, checked by looking for a deivery name
             var shippingDetails = null;
             if ($.trim(form.delivery_name.value)) {
                 shippingDetails = {
                     name: $.trim(form.delivery_name.value),
-                    phone: $.trim(form.phone_number.value),                    
+                    phone: $.trim(form.phone_number.value),
                     address: {
                         line1: $.trim(form.delivery_street_address1.value),
                         line2: $.trim(form.delivery_street_address2.value),
@@ -73,20 +90,22 @@
                     }
                 };
             }
+
             
+
             // Does the user want to save their info?
             var saveInfo = Boolean($('#id-save-info').attr('checked'));
             // From using {% csrf_token %} in the form
             var csrfToken = $('input[name="csrfmiddlewaretoken"]').val();
-            
+
             var orderType = $('input[name="order_type"]').val();
             // pass info to view
             var postData = {
                 'csrfmiddlewaretoken': csrfToken,
                 'client_secret': clientSecret,
                 'save_info': saveInfo,
-                'delivery_method':deliveryMethod,
-                'delivery_date':deliveryDate,
+                'delivery_method': deliveryMethod,
+                'delivery_date': deliveryDate,
                 'order_type': orderType,
             };
 
@@ -94,20 +113,23 @@
             var url = '/checkout/cache_checkout_data/';
 
             $.post(url, postData).done(function () {
+                // const billingDetails = {
+                //     name: $.trim(form.full_name.value),
+                //     phone: $.trim(form.phone_number.value),
+                //     email: $.trim(form.email.value),
+                //     address: {
+                //         line1: $.trim(form.street_address1.value),
+                //         line2: $.trim(form.street_address2.value),
+                //         city: $.trim(form.town_or_city.value),
+                //         state: $.trim(form.county.value),
+                //         postal_code: $.trim(form.postcode.value)
+                //     }
+                // };                
+
                 stripe.confirmCardPayment(clientSecret, {
                     payment_method: {
                         card: card,
-                        billing_details: {
-                            name: $.trim(form.full_name.value),
-                            phone: $.trim(form.phone_number.value),
-                            email: $.trim(form.email.value),
-                            address: {
-                                line1: $.trim(form.street_address1.value),
-                                line2: $.trim(form.street_address2.value),
-                                city: $.trim(form.town_or_city.value),
-                                state: $.trim(form.county.value),
-                            }
-                        },                        
+                        billing_details: billingDetails,
                     },
                     shipping: shippingDetails,
                 }).then(function (result) {
@@ -134,6 +156,6 @@
                 location.reload();
             })
         });
-
     });
+    
 </script>

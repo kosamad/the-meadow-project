@@ -52,14 +52,16 @@ class StripeWH_Handler:
         shipping_details = intent.shipping or {} 
         grand_total = round(stripe_charge.amount / 100, 2)
 
-        pprint(shipping_details)
-        pprint(billing_details)
-      
+        print('Billing details:', billing_details)
+        print('Shipping details:', shipping_details)
+
+              
         # Clean data in the billing details       
         for field, value in billing_details.address.items():
-            if value == "":
+            if value == "":                
                 billing_details.address[field] = None
-         
+            print('Billing address postal_code:', billing_details.address.get('postal_code'))
+                         
         # Validate delivery_date format        
         delivery_date = datetime.strptime(delivery_date_str, '%Y-%m-%d').date() if delivery_date_str else None   
 
@@ -67,7 +69,11 @@ class StripeWH_Handler:
             address = shipping_details.get('address', {})
             for field, value in shipping_details.address.items():
                 if value == "":
-                    shipping_details.address[field] = None  
+                    shipping_details.address[field] = None
+                    
+
+        pprint(shipping_details)
+        pprint(billing_details)  
 
         # elif order_type == 'event':
         #     delivery_date = None
@@ -82,7 +88,7 @@ class StripeWH_Handler:
                     full_name__iexact=billing_details.name,
                     email__iexact=billing_details.email,
                     phone_number__iexact=billing_details.phone,                    
-                    postcode__iexact=billing_details.address.postal_code,
+                    # postcode__iexact=shipping_details.address.postal_code,
                     town_or_city__iexact=billing_details.address.city,
                     street_address1__iexact=billing_details.address.line1,
                     street_address2__iexact=billing_details.address.line2,
@@ -163,7 +169,7 @@ class StripeWH_Handler:
                                 delivery_county=delivery_county,
                                 card_message=card_message,
                                 note_to_seller=note_to_seller
-                            )
+                            )                            
                             order_line_item.save()
 
                         except Product.DoesNotExist or ProductVariant.DoesNotExist:
