@@ -51,6 +51,7 @@ class StripeWH_Handler:
 
         # Custom metadata fields for delivery date and method
         order_type = intent.metadata.get('order_type', '')
+        print('wh says', order_type)
 
         # Initialize delivery variables
         delivery_date = None
@@ -59,6 +60,7 @@ class StripeWH_Handler:
         if order_type == 'product' or order_type == 'product and event':
             delivery_date_str = intent.metadata.get('delivery_date', '')
             delivery_method = intent.metadata.get('delivery_method', '')
+            print('wh delivery', delivery_method)
             # Validate delivery_date format
             try:
                 if delivery_date_str:
@@ -68,16 +70,15 @@ class StripeWH_Handler:
             except ValueError:
                 delivery_date = None
                 delivery_method = ''
-        elif order_type == 'event':
-            delivery_date = None
-            delivery_method = ''
-
-        if order_type == 'product' or order_type == 'product and event':
             # Clean data in the shipping details
             for field, value in shipping_details.address.items():
                 if value == "":
-                    shipping_details.address[field] = None    
-            
+                    shipping_details.address[field] = None  
+
+        # elif order_type == 'event':
+        #     delivery_date = None
+        #     delivery_method = ''
+
         # Does the order exist in our database?
         order_exists = False
         attempt = 1

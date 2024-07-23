@@ -28,6 +28,8 @@ def cache_checkout_data(request):
             'order_type': request.POST.get('order_type')
         }
 
+        print('Metadata being set:', metadata) 
+
         # Check if 'product' is in the order_type
         if 'product' in request.POST.get('order_type', ''):
             metadata['delivery_date'] = request.POST.get('delivery_date', '')
@@ -48,6 +50,8 @@ def checkout(request):
     if request.method == 'POST':
         bag = request.session.get('bag', {})
         print("Bag contents:", bag)
+        order_type = request.POST.get('order_type')
+        print("Order Type:", order_type)   
 
         general_form_data = {
             'full_name': request.POST['full_name'],
@@ -75,11 +79,11 @@ def checkout(request):
             }
             print("Product form data:", product_form_data)
 
-        order_type = request.POST.get('order_type')
+        
         order_form = OrderForm(general_form_data)
         product_form = ProductOrderForm(product_form_data) if 'product' in order_type else None
 
-        print("Order Type:", order_type)
+        
 
         if order_form.is_valid():
             order_instance = order_form.save(commit=False)
