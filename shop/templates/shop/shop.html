@@ -84,19 +84,16 @@
     <div class="row align-items-center mb-4">
         <div class="col-6">
             <p class="text-muted mt-4 text-left">
-            {% if search_term %}
-            <p><span id="combined_items"></span> {{ item_count }} in {{ search_term }} <span class="small"><a href="{% url 'shop' %}" class="green-link-style"> Clear Search</a></span></p>
-            {% elif selected_category %}
-                    {% if selected_category == 'events' %}
-                        <span id="combined_items">{{ item_count }}</span> in Events
-                    {% elif selected_category == 'products' %}
-                        <span id="combined_items">{{ item_count }}</span> in Products
-                    {% else %}
-                    <p><span id="combined_items">{{ item_count }}</span> in "{{ selected_category|title }}{% if selected_category == 'Event' and item_count > 1 %}s{% endif %}"</p>
-                    {% endif %}
-            {% else %}
-            <p><span id="combined_items"></span>{{ item_count }} in All</p>
-            {% endif %}
+                {% if search_term %}
+                <p><span id="combined_items"></span> {{ search_term }} <span class="small"><a href="{% url 'shop' %}"
+                            class="green-link-style"> Clear Search</a></span></p>
+                {% elif selected_category %}
+                <p><span id="combined_items">{{ item_count }}</span> in
+                    "{{ selected_category|title }}{% if selected_category == 'Event' and item_count > 1 %}s{% endif %}"
+                </p>
+                {% else %}
+                <p><span id="combined_items"></span>{{ item_count }} in All</p>
+                {% endif %}
             </p>
         </div>
 
@@ -129,30 +126,30 @@
         </div>
     </div>
 
-<!-- Returned Products and Events -->
-<div class="row" id="productContainer">
-    {% for item_data in combined_list %}
-    <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4 product-item" data-price="{{ item_data.item.price }}"
-        data-name="{{ item_data.item.friendly_name }}">
-        <a href="{% if item_data.item_type == 'Product' %}{% url 'product_detail' item_data.item.id %}{% elif item_data.item_type == 'Event' %}{% url 'event_detail' item_data.item.id %}{% endif %}"
-            class="no-link-style">
-            <div class="thumbnail">
-                <div class="image-container">
-                    {% if item_data.item.image %}
-                    <img src="{{ item_data.item.image.url }}" class="shop-img" alt="{{ item_data.item.alt_text }}">
-                    {% else %}
-                    <img src="{{ MEDIA_URL }}noimage.png" class="shop-img" alt="{{ item_data.item.alt_text }}">
-                    {% endif %}
+    <!-- Returned Products and Events -->
+    <div class="row" id="productContainer">
+        {% for item_data in combined_list %}
+        <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4 product-item" data-price="{{ item_data.item.price }}"
+            data-name="{{ item_data.item.friendly_name }}">
+            <a href="{% if item_data.item_type == 'Product' %}{% url 'product_detail' item_data.item.id %}{% elif item_data.item_type == 'Event' %}{% url 'event_detail' item_data.item.id %}{% endif %}"
+                class="no-link-style">
+                <div class="thumbnail">
+                    <div class="image-container">
+                        {% if item_data.item.image %}
+                        <img src="{{ item_data.item.image.url }}" class="shop-img" alt="{{ item_data.item.alt_text }}">
+                        {% else %}
+                        <img src="{{ MEDIA_URL }}noimage.png" class="shop-img" alt="{{ item_data.item.alt_text }}">
+                        {% endif %}
+                    </div>
                 </div>
-            </div>
-            <div class="row text-center product-text mt-4 mb-4">
-                <h4 class="title-font">{{ item_data.item.friendly_name }}</h4>
-                <h4 class="title-font">£{{ item_data.item.price }}</h4>
-            </div>
-        </a>
+                <div class="row text-center product-text mt-4 mb-4">
+                    <h4 class="title-font">{{ item_data.item.friendly_name }}</h4>
+                    <h4 class="title-font">£{{ item_data.item.price }}</h4>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
     </div>
-    {% endfor %}
-</div>
 
 
 
@@ -178,7 +175,7 @@
         </div>
         {% endfor %}
         Returned Events -->
-        <!-- {% for event in events %}
+    <!-- {% for event in events %}
         <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4 shop-item" data-price=""
             data-name="{{ event.friendly_name }}">
             <a href="{% url 'event_detail' event.id %}" class="no-link-style">
@@ -198,7 +195,7 @@
                 </div>
             </a>
         </div>
-        {% endfor %} --> 
+        {% endfor %} -->
     <!-- </div> -->
 
 
@@ -210,17 +207,18 @@
 {{ block.super }}
 
 <script type="text/javascript">
-
-document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function () {
         // Function to Count Returned Products +/ Events
-        function countDisplayedItems() {            
-            var displayedProducts = document.querySelectorAll('.product-item').length; // Count all products/events   
+        function countDisplayedItems() {
+            var displayedProducts = document.querySelectorAll('.product-item')
+            .length; // Count all products/events   
             var displayedEvents = document.querySelectorAll('.event-item').length;
             var combinedItemsElement = document.getElementById('combined_items');
-        
+
             // Update the text based on the combined length (Product for 1  or products for many)
             var totalDisplayedItems = displayedProducts + displayedEvents;
-            combinedItemsElement.textContent = totalDisplayedItems + (totalDisplayedItems === 1 ? ' Item' : ' Items');
+            combinedItemsElement.textContent = totalDisplayedItems + (totalDisplayedItems === 1 ? ' Item' :
+                ' Items');
         }
 
         countDisplayedItems();
@@ -265,9 +263,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 window.location.href = url.toString();
             }
         });
-       
 
-   
-}); 
+
+
+    });
 </script>
 {% endblock %}
