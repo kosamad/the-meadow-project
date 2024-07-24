@@ -290,6 +290,14 @@ padding: 1%;}
 
 /* Bag */
 
+/* Blog */
+.page-item.active .page-link {
+    background-color:#DC6874;
+    border-color: #DC6874;
+}
+
+.page-link { color: black;}
+
 
 /* Media Queries */
 
