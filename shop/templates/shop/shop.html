@@ -85,14 +85,17 @@
         <div class="col-6">
             <p class="text-muted mt-4 text-left">
             {% if search_term %}
-            <p><span id="combined_items"></span> in {{ search_term }} <span class="small"><a href="{% url 'shop' %}" class="green-link-style"> Clear Search</a></span></p>
-            {% elif current_categories %}
-            <!-- iterate through current_categories to access Category objects -->
-            {% for category in current_categories %}
-            <p><span id="combined_items"></span> in {{ category.friendly_name|title }}</p>
-            {% endfor %}
+            <p><span id="combined_items"></span> {{ item_count }} in {{ search_term }} <span class="small"><a href="{% url 'shop' %}" class="green-link-style"> Clear Search</a></span></p>
+            {% elif selected_category %}
+                    {% if selected_category == 'events' %}
+                        <span id="combined_items">{{ item_count }}</span> in Events
+                    {% elif selected_category == 'products' %}
+                        <span id="combined_items">{{ item_count }}</span> in Products
+                    {% else %}
+                    <p><span id="combined_items">{{ item_count }}</span> in "{{ selected_category|title }}{% if selected_category == 'Event' and item_count > 1 %}s{% endif %}"</p>
+                    {% endif %}
             {% else %}
-            <p><span id="combined_items"></span> in All</p>
+            <p><span id="combined_items"></span>{{ item_count }} in All</p>
             {% endif %}
             </p>
         </div>
@@ -212,10 +215,12 @@ document.addEventListener('DOMContentLoaded', function () {
         // Function to Count Returned Products +/ Events
         function countDisplayedItems() {            
             var displayedProducts = document.querySelectorAll('.product-item').length; // Count all products/events   
+            var displayedEvents = document.querySelectorAll('.event-item').length;
             var combinedItemsElement = document.getElementById('combined_items');
         
             // Update the text based on the combined length (Product for 1  or products for many)
-            combinedItemsElement.textContent = displayedProducts + (displayedProducts === 1 ? ' Product' : ' Products');
+            var totalDisplayedItems = displayedProducts + displayedEvents;
+            combinedItemsElement.textContent = totalDisplayedItems + (totalDisplayedItems === 1 ? ' Item' : ' Items');
         }
 
         countDisplayedItems();

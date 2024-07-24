@@ -15,21 +15,33 @@ def shop(request):
     products = Product.objects.all()
     events = Event.objects.all()
     # parameters so no errors when page is loaded if they don't exist/ arne't being used
-    query = None
-    categories = None
+    query = None  
     sort = None
     direction = None
     combined_list = []
+    selected_category = None 
 
     if request.GET:            
     
         # show the specific categories of products or event (note the event category does not have an s in Category)
         if 'category' in request.GET:
-            categories = request.GET['category'].split(',')
-            # __in syntax searches for the name field in Category model
-            products = products.filter(category__name__in=categories)
-            events = events.filter(category__name__in=categories)     
-            categories = Category.objects.filter(name__in=categories)  
+            # categories = request.GET['category'].split(',')
+            # # __in syntax searches for the name field in Category model
+            # products = products.filter(category__name__in=categories)
+            # events = events.filter(category__name__in=categories)     
+            # categories = Category.objects.filter(name__in=categories)
+            selected_category = request.GET['category']
+            if selected_category == 'events':
+                products = Product.objects.none()
+                events = Event.objects.all()
+            elif selected_category == 'products':
+                products = Product.objects.all()
+                events = Event.objects.none()
+            else:
+                products = products.filter(category__name__icontains=selected_category)
+                events = events.filter(category__name__icontains=selected_category)
+        
+        
 
         # checking for queries sent from the search box
         if 'q' in request.GET:
@@ -67,12 +79,21 @@ def shop(request):
             'item_type': 'Event',
         })
 
+     # Format selected_category for display
+    if selected_category:
+        display_category = selected_category.replace('_', ' ').title()  # Format category name
+    else:
+        display_category = 'All'
+
     context = {
         'products': products,
         'events': events,
-        'search_term': query,        
-        'current_categories': categories,        
-        'combined_list': combined_list
+        'search_term': query,
+        'current_categories': Category.objects.filter(name=selected_category) if selected_category else categories,
+        'combined_list': combined_list,
+        'item_count': len(combined_list),
+        'selected_category': display_category,
+        
     }
 
     return render(request, 'shop/shop.html', context)
