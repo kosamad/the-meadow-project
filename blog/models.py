@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from products.models import Product, Event
+from django.urls import reverse
 
 # Create your models here.
 
@@ -18,6 +19,11 @@ class Post(models.Model):
         Return title
         """
         return self.title
+
+    # URL so Admin can add posts from the form
+    def get_absolute_url(self):
+        # redirect to the id of the post just created.
+        return reverse('post_detail', args=[self.id])
 
     # def get_product_name(self):
     #     if self.product:

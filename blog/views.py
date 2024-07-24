@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.core.paginator import Paginator
 from django.db.models import Q
 from .models import Post
+from django.views.generic import CreateView
 
 
 
@@ -58,7 +59,12 @@ def post_detail(request, post_id):
     }
 
     return render(request, 'blog/post_detail.html', context)
+    
 
-
+# Code to add a blog post using CreateView ammended from Youtube tutorial by Codemy
+class AddPostView(CreateView):
+    model = Post
+    template_name = 'blog/add_post.html'
+    fields = '__all__'
 
 
