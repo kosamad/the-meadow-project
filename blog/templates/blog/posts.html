@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_header %}
+<div class="container header-container">
+    <div class="row">
+        <div class="col"></div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+    <!-- Page Title - Shop -->
+    <div class="row mt-4 mb-4">
+        <div class="col-12 text-center">
+            <h2>Blog Posts</h2>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 text-center">
+            <p>Search Bar</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 text-end">
+            <p>Add Post Admin only button<p>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        {% for post in posts %}
+        <div class="col-lg-4 col-md-6 col-12">
+            <a href=""
+            class="no-link-style">
+            <div class="thumbnail">
+                <div class="image-container">
+                    {% if post.image %}
+                    <img src="{{ post.image.url }}" class="shop-img" alt="{{ post.alt_text }}">
+                    {% else %}
+                    <img src="{{ MEDIA_URL }}noimage.png" class="shop-img" alt="{{ post.title }}">
+                    {% endif %}
+                </div>
+            </div>
+            <div class="row text-center product-text mt-4 mb-4">
+                <h4 class="title-font">{{ post.title }}</h4>
+                <h4 class="title-font">{{ post.date }}</h4>
+                <p>{{ post.body }}</p>
+            </div>            
+            </a>
+        </div>
+        {% endfor %}       
+    </div>
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+{% endblock %}
