@@ -38,10 +38,7 @@ class StripeWH_Handler:
         save_info = intent.metadata.save_info
         order_type = intent.metadata.order_type
         delivery_date_str = intent.metadata.get('delivery_date', '')
-        delivery_method = intent.metadata.get('delivery_method', '')
-
-        print('wh says', order_type)
-        print('wh delivery is', delivery_method)
+        delivery_method = intent.metadata.get('delivery_method', '')       
 
         # Get the Charge object
         stripe_charge = stripe.Charge.retrieve(
@@ -50,36 +47,24 @@ class StripeWH_Handler:
       
         billing_details = stripe_charge.billing_details    
         shipping_details = intent.shipping or {} 
-        grand_total = round(stripe_charge.amount / 100, 2)
-
-        print('Billing details:', billing_details)
-        print('Shipping details:', shipping_details)
-
+        grand_total = round(stripe_charge.amount / 100, 2)     
               
         # Clean data in the billing details       
         for field, value in billing_details.address.items():
             if value == "":                
-                billing_details.address[field] = None
-            print('Billing address postal_code:', billing_details.address.get('postal_code'))
+                billing_details.address[field] = None           
                          
-        # Validate delivery_date format        
-        delivery_date = datetime.strptime(delivery_date_str, '%Y-%m-%d').date() if delivery_date_str else None   
+        # Validate and reformat delivery_date format        
+        delivery_date = datetime.strptime(delivery_date_str, '%Y-%m-%d').date() if delivery_date_str else None
 
+        # Clean data in the shipping info if there is a delivery
         if delivery_method == 'delivery':
             address = shipping_details.get('address', {})
             for field, value in shipping_details.address.items():
                 if value == "":
-                    shipping_details.address[field] = None
-                    
-
-        pprint(shipping_details)
-        pprint(billing_details)  
-
-        # elif order_type == 'event':
-        #     delivery_date = None
-        #     delivery_method = ''
-
-        # Does the order exist in our database?
+                    shipping_details.address[field] = None                   
+             
+        # Checking if the order has alread been created in the database
         order_exists = False
         attempt = 1
         while attempt <= 5:
@@ -87,8 +72,7 @@ class StripeWH_Handler:
                 order_instance = Order.objects.get(
                     full_name__iexact=billing_details.name,
                     email__iexact=billing_details.email,
-                    phone_number__iexact=billing_details.phone,                    
-                    # postcode__iexact=shipping_details.address.postal_code,
+                    phone_number__iexact=billing_details.phone,
                     town_or_city__iexact=billing_details.address.city,
                     street_address1__iexact=billing_details.address.line1,
                     street_address2__iexact=billing_details.address.line2,
@@ -108,7 +92,7 @@ class StripeWH_Handler:
                 content=f'Webhook received: {event["type"]} | SUCCESS: Verified order already in database',
                 status=200)
         else:
-            order_instance  = None
+            order_instance  = None            
             try:
                 bag_items = json.loads(bag)
                 order_instance  = Order.objects.create(

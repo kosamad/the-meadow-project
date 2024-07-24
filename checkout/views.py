@@ -245,24 +245,23 @@ def checkout(request):
 def cache_checkout_data(request):
     try:
         pid = request.POST.get('client_secret').split('_secret')[0] # payment intent id
-        stripe.api_key = settings.STRIPE_SECRET_KEY        
+        stripe.api_key = settings.STRIPE_SECRET_KEY
 
-        # metadata
+        order_type = request.POST.get('order_type', '')
+        
+        # metadata common to both products and events
         metadata = {
             'bag': json.dumps(request.session.get('bag', {})),
             'save_info': request.POST.get('save_info'),
             'username': str(request.user.username), 
-            'order_type': request.POST.get('order_type'),
-            'delivery_date': request.POST.get('delivery_date', ''),
-            'delivery_method' : request.POST.get('delivery_method', '')
-        }        
+            'order_type': order_type,
+        }
 
-        # # Check if 'product' is in the order_type
-        # if 'product' in request.POST.get('order_type', ''):
-        #     metadata['delivery_date'] = request.session.get('delivery_date', '')
-        #     metadata['delivery_method'] = request.session.get('delivery_method', '')
-
-        
+        # Add metadata specific for products
+        if order_type == 'product':
+            metadata['delivery_date'] = request.POST.get('delivery_date', '')
+            metadata['delivery_method'] = request.POST.get('delivery_method', '')     
+    
         print('Metadata being set:', metadata) 
 
         stripe.PaymentIntent.modify(pid, metadata=metadata)
@@ -288,7 +287,6 @@ def checkout_success(request, order_number):
     # Delete bag and other session data
     if 'bag' in request.session:
         del request.session['bag']  
-
    
     template = 'checkout/checkout_success.html'
     context = {

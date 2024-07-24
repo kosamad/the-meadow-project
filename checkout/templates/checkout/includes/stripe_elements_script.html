@@ -1,7 +1,7 @@
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        console.log('Script is running!'); 
-        // Code taken and adapted from the CI tutorial for Boutiqu Ado
+        console.log('Script is running!');
+        // Code taken but heavily adapted from the CI tutorial for Boutique Ado
         // Get keys
         var stripePublicKey = $('#id_stripe_public_key').text().slice(1, -1);
         var clientSecret = $('#id_client_secret').text().slice(1, -1);
@@ -56,11 +56,10 @@
             });
             $('#submit-button').attr('disabled', true);
 
-            var deliveryMethod = $('input[name="delivery_method"]:checked').val() || $(
-                '#delivery_method_wrapper select').val();
-            var deliveryDate = $('#id_delivery_date').val();
+            var orderType = $('input[name="order_type"]').val();
+            console.log('order tuype is', orderType)
 
-            const billingDetails = {
+            var billingDetails = {
                 name: $.trim(form.full_name.value),
                 phone: $.trim(form.phone_number.value),
                 email: $.trim(form.email.value),
@@ -73,11 +72,30 @@
                 }
             };
 
-            alert('Billing Details: ' + JSON.stringify(billingDetails));
+            // Initialise delivery variables so don't get errors for events.
+            var deliveryMethod = '';
+            var deliveryDate = '';
 
-            // Construct the shipping details only if they are provided by products, checked by looking for a deivery name
+
+            // Use querySelector to get form fields (only gets if product and doesn't error if event)
+            var deliveryMethodField = document.querySelector('input[name="delivery_method"]:checked') ||
+                document.querySelector('#delivery_method_wrapper select');
+            var deliveryDateField = document.querySelector('#id_delivery_date');
+
+            // Set delivery information only if order type is 'product'
+            if (orderType === 'product' || orderType === 'product and event') {
+                if (deliveryMethodField) {
+                    deliveryMethod = deliveryMethodField.value || '';
+                }
+                if (deliveryDateField) {
+                    deliveryDate = deliveryDateField.value || '';
+                }
+            }
+
+            // Construct the shipping details only if they are provided by products and there is a 'delivery' field
             var shippingDetails = null;
-            if ($.trim(form.delivery_name.value)) {
+            var deliveryNameField = document.querySelector('input[name="delivery_name"]');
+            if (deliveryNameField && $.trim(deliveryNameField.value) && (orderType === 'product' || orderType === 'product and event')) {
                 shippingDetails = {
                     name: $.trim(form.delivery_name.value),
                     phone: $.trim(form.phone_number.value),
@@ -90,8 +108,6 @@
                     }
                 };
             }
-
-            
 
             // Does the user want to save their info?
             var saveInfo = Boolean($('#id-save-info').attr('checked'));
@@ -112,20 +128,7 @@
             // URL
             var url = '/checkout/cache_checkout_data/';
 
-            $.post(url, postData).done(function () {
-                // const billingDetails = {
-                //     name: $.trim(form.full_name.value),
-                //     phone: $.trim(form.phone_number.value),
-                //     email: $.trim(form.email.value),
-                //     address: {
-                //         line1: $.trim(form.street_address1.value),
-                //         line2: $.trim(form.street_address2.value),
-                //         city: $.trim(form.town_or_city.value),
-                //         state: $.trim(form.county.value),
-                //         postal_code: $.trim(form.postcode.value)
-                //     }
-                // };                
-
+            $.post(url, postData).done(function () {                          
                 stripe.confirmCardPayment(clientSecret, {
                     payment_method: {
                         card: card,
@@ -157,5 +160,4 @@
             })
         });
     });
-    
 </script>
