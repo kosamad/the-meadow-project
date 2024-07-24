@@ -19,6 +19,17 @@
             <h2>Blog Posts</h2>
         </div>
     </div>
+    <!-- Introduction -->
+    <div class="row text-center align-items-center justify-content-center mt-4 mb-4">
+        <div class="col-12 col-md-9 col-lg-6">
+            <p>
+                We’re passionate about all things plants and love sharing our knowledge with you! Check back regularly
+                for new blog posts on everything from gardening tips to plant care guides. To stay updated on our latest
+                content, make sure to <span class="row text-center"><a href="" class="strong">sign up</a></span>for notifications. If you’re searching for something specific and can’t
+                find it, let us know—we might just write a post on it!
+            </p>
+        </div>
+    </div>
 
     <div class="row justify-content-center">
         <div class="col-lg-4 col-md-6 col-12 text-center">
@@ -35,7 +46,7 @@
                     </div>
                     <div class="input-group-append me-0">
                         <a href="{% url 'posts' %}" class="no-link-style" aria-label="Clear search">
-                            <button class="btn-pink btn" type="button"> Clear                              
+                            <button class="btn-pink btn" type="button"> Clear
                             </button>
                         </a>
                     </div>
@@ -43,7 +54,7 @@
 
             </form>
         </div>
-    </div>    
+    </div>
 
     <div class="row">
         <div class="col-12 text-end">
@@ -60,10 +71,10 @@
     </div>
     {% endif %}
 
-    <div class="row justify-content-center">    
+    <div class="row justify-content-center">
         {% for post in page_obj %}
         <div class="col-lg-4 col-md-6 col-12">
-            <a href="" class="no-link-style">
+            <a href="{% url 'post_detail' post.id %}" class="no-link-style">
                 <div class="thumbnail">
                     <div class="image-container">
                         {% if post.image %}

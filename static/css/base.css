@@ -297,6 +297,13 @@ padding: 1%;}
     border-color: #DC6874;
 }
 
+.blog-img {
+    display: block;
+    width: 100%;    
+    object-fit: cover;
+    object-position: center;
+}
+
 .page-link { color: black;}
 
 

@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.core.paginator import Paginator
 from django.db.models import Q
 from .models import Post
@@ -47,5 +47,18 @@ def all_posts(request):
         }
 
     return render(request, 'blog/posts.html', context)
+
+
+def post_detail(request, post_id):
+    
+    post = get_object_or_404(Post, id=post_id)
+
+    context = {
+        'post': post
+    }
+
+    return render(request, 'blog/post_detail.html', context)
+
+
 
 
