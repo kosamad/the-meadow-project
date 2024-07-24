@@ -13,7 +13,8 @@ def all_posts(request):
     posts = Post.objects.all()
 
     # Search requests
-    query = ''  
+    query = ''
+    no_results = False 
     if 'q' in request.GET:
         query = request.GET['q']
         # if the query is blank = an error message
@@ -26,7 +27,10 @@ def all_posts(request):
         Q(title__icontains=query) | 
         Q(body__icontains=query)              
         )
+        # Check if there are no results
         posts = posts.filter(post_queries)
+        if not posts.exists():
+            no_results = True
 
     # pagination to limit how many posts per page
     paginator = Paginator(posts, 6)
@@ -39,6 +43,7 @@ def all_posts(request):
         'page_number': page_number,
         'page_obj': page_obj,
         'search_term': query,
+        'no_results': no_results, 
         }
 
     return render(request, 'blog/posts.html', context)
