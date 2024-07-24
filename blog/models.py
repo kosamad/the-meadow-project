@@ -8,6 +8,7 @@ class Post(models.Model):
     title = models.CharField(max_length=255)
     date = models.DateTimeField(auto_now_add=True)
     image = models.ImageField(null=True, blank=True, upload_to='blog_images/')
+    alt_text = models.TextField(default="")
     product = models.ForeignKey(Product, null=True, blank=True, on_delete=models.CASCADE)
     event = models.ForeignKey(Event, null=True, blank=True, on_delete=models.CASCADE)
     body = models.TextField()   

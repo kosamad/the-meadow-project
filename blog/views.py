@@ -5,17 +5,21 @@ from .models import Post
 
 # Create your views here.
 
-def blog(request):
-    """ A view to return the blog page """
+def all_posts(request):
+    """ A view to return the blog page with all blog items """
     # Gather data
     posts = Post.objects.all()
 
+    context = {
+        'posts': posts,
+    }
 
 
 
 
 
 
-    return render(request, 'blog/blog.html')
+
+    return render(request, 'blog/posts.html', context)
 
 
