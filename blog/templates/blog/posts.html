@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block extra_title %}
+- Blog Posts
+{% endblock %}
+
 {% block page_header %}
 <div class="container header-container">
     <div class="row">
@@ -56,7 +60,7 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row mb-4">
         <div class="col-12 text-end">            
                 <a href="{{ 'add_post' }}">Add Post Admin only button</a>
         </div>

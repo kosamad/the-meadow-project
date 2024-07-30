@@ -1,5 +1,10 @@
 {% extends "base.html" %}
 {% load static %}
+
+{% block extra_title %}
+- {{ event.friendly_name|title }}
+{% endblock %}
+
 {% load crispy_forms_tags %}
 {% load crispy_forms_filters %}
 
