@@ -1,5 +1,14 @@
 {% extends "base.html" %}
 {% load static %}
+{% block extra_css %}
+ <!-- Summernote CSS -->
+ <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote-bs4.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block extra_js %}
+ <!-- Summernote JS -->
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote-bs4.min.js"></script>
+{% endblock %}
 
 {% block extra_title %}
 - Add Post
@@ -12,6 +21,8 @@
     </div>
 </div>
 {% endblock %}
+
+
 
 {% block content %}
 

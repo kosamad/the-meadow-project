@@ -20,7 +20,7 @@
     <!-- Page Title --->
     <div class="row mt-4 mb-2">
         <div class="col-12 text-center">
-            <h2>{{ post.title|title  }}</h2>            
+            <h2>{{ post.title|title  }}</h2>
         </div>
     </div>
 
@@ -28,17 +28,16 @@
         <div class="col text-center mb-4">
             <p>{{ post.date|date:"F j, Y" }}</p>
             <div class="row">
-                <p ><small>
-                    <a class="text-green" href="{% url 'post_update' post.id %}">Admin ONLY!
-                        Edit</a>
-                    <a class="text-danger" href="{% url 'post_delete' post.id %}">Delete</a></small>
-            </p>
+                <p><small>
+                        <a class="text-green" href="{% url 'post_update' post.id %}">Admin ONLY!
+                            Edit</a>
+                        <a class="text-danger" href="{% url 'post_delete' post.id %}">Delete</a></small>
+                </p>
             </div>
         </div>
-        
     </div>
 
-    <div class="row justify-content-center">
+    <div class="row justify-content-center mb-4">
         <div class="col-md-6 col-12">
             <div class="thumbnail">
                 <div class="post-image-container">
@@ -49,13 +48,30 @@
                     {% endif %}
                 </div>
             </div>
-        </div>                    
-    </div>    
-    <div class="row mt-4 mb-4">
+        </div>
+    </div>
+    {% if post.event %}
+    <div class="row">
+        <div class="col-12 text-center">
+            <p>In this post we talk about our <a class="no-link-style"
+                    href="{% url 'event_detail' post.event.id %}"><strong>{{ post.event.friendly_name }}</a></strong></p>
+        </div>
+    </div>
+    {% endif %}
+    {% if post.product %}
+    <div class="row mt-2">
+        <div class="col-12 text-center">
+            <p>In this post we talk about our <a class="no-link-style"
+                    href="{% url 'product_detail' post.product.id %}"><strong>{{ post.product.friendly_name }}</strong></a>
+            </p>
+        </div>
+    </div>
+    {% endif %}
+    <div class="row mt-5 mb-4">
         <div class="col-12">
             <!-- Safe ensures content is rendered as HTML -->
-        <p class="text-justify">{{ post.body|safe }}</p>
-    </div>
+            <p class="text-justify">{{ post.body|safe }}</p>
+        </div>
     </div>
 
     <div class="row justify-content-center mb-4">
