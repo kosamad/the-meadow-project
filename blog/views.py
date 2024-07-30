@@ -3,6 +3,7 @@ from django.core.paginator import Paginator
 from django.db.models import Q
 from .models import Post
 from django.views.generic import CreateView
+from .forms import PostForm
 
 
 
@@ -64,7 +65,8 @@ def post_detail(request, post_id):
 # Code to add a blog post using CreateView ammended from Youtube tutorial by Codemy
 class AddPostView(CreateView):
     model = Post
+    form_class = PostForm
     template_name = 'blog/add_post.html'
-    fields = '__all__'
+    # fields = '__all__'
 
 
