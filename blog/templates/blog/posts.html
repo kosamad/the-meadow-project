@@ -90,9 +90,11 @@
                 </div>
                 <div class="row text-center product-text mt-4 mb-4">
                     <div class="row">
-                        <p class="text-end"><small><a class="text-end text-green"
-                                    href="{% url 'post_update' post.id %}">Admin ONLY! Edit</a>
-                                <a class="text-danger" href="{% url 'post_delete' post.id %}">Delete</a></small></p>
+                        <p class="text-end"><small>
+                                <a class="text-end text-green" href="{% url 'post_update' post.id %}">Admin ONLY!
+                                    Edit</a>
+                                <a class="text-danger" href="{% url 'post_delete' post.id %}">Delete</a></small>
+                        </p>
                     </div>
                     <h3 class="title-font">{{ post.title }}</h3>
                     <p>{{ post.date|date:"F j, Y" }}</p>

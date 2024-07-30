@@ -4,7 +4,7 @@ from django.db.models import Q
 from .models import Post
 from django.views.generic import CreateView, UpdateView, DeleteView
 from .forms import PostForm
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 
 
 
@@ -12,8 +12,8 @@ from django.urls import reverse_lazy
 
 def all_posts(request):
     """ A view to return the blog page with all blog items """
-    # Gather data
-    posts = Post.objects.all()
+    # Gather data and order by date (newset first)
+    posts = Post.objects.all().order_by('-date')
 
     # Search requests
     query = ''
@@ -27,8 +27,8 @@ def all_posts(request):
 
         # product and event queries for name, descritpion and category
         post_queries = (
-        Q(title__icontains=query) | 
-        Q(body__icontains=query)              
+            Q(title__icontains=query) | 
+            Q(body__icontains=query)              
         )
         # Check if there are no results
         posts = posts.filter(post_queries)

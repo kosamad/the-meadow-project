@@ -28,9 +28,11 @@
         <div class="col text-center mb-4">
             <p>{{ post.date|date:"F j, Y" }}</p>
             <div class="row">
-                <p><small><a class="text-green"
-                            href="{% url 'post_update' post.id %}">Admin ONLY! Edit</a>
-                        <a class="text-danger" href="">Delete</a></small></p>
+                <p ><small>
+                    <a class="text-green" href="{% url 'post_update' post.id %}">Admin ONLY!
+                        Edit</a>
+                    <a class="text-danger" href="{% url 'post_delete' post.id %}">Delete</a></small>
+            </p>
             </div>
         </div>
         
@@ -39,7 +41,7 @@
     <div class="row justify-content-center">
         <div class="col-md-6 col-12">
             <div class="thumbnail">
-                <div class="image-container">
+                <div class="post-image-container">
                     {% if post.image %}
                     <img src="{{ post.image.url }}" class="blog-img" alt="{{ post.alt_text }}">
                     {% else %}
@@ -51,7 +53,8 @@
     </div>    
     <div class="row mt-4 mb-4">
         <div class="col-12">
-        <p class="text-justify">{{ post.body }}</p>
+            <!-- Safe ensures content is rendered as HTML -->
+        <p class="text-justify">{{ post.body|safe }}</p>
     </div>
     </div>
 

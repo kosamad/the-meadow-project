@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'checkout',
     'crispy_forms',
     'crispy_bootstrap5',
+    'django_summernote',  
 ]
 
 MIDDLEWARE = [
