@@ -12,8 +12,8 @@ class PostForm(forms.ModelForm):
                   'body'
                   )
         widgets = {
-            'alt_text': forms.TextInput,
-            'title': forms.TextInput(attrs={'placeholder':'Blog post title'}),
+            'alt_text': forms.TextInput(attrs={'placeholder':'Add descriptive text for your image'}),
+            'title': forms.TextInput,
             'image': forms.ClearableFileInput,        
             'body': forms.Textarea(attrs={'rows': 10, 'placeholder': 'Write your blog post here...'}),
         }

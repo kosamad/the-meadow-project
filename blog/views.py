@@ -2,8 +2,9 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.core.paginator import Paginator
 from django.db.models import Q
 from .models import Post
-from django.views.generic import CreateView
+from django.views.generic import CreateView, UpdateView
 from .forms import PostForm
+from django.urls import reverse_lazy
 
 
 
@@ -60,13 +61,28 @@ def post_detail(request, post_id):
     }
 
     return render(request, 'blog/post_detail.html', context)
+
+
     
 
-# Code to add a blog post using CreateView ammended from Youtube tutorial by Codemy
+# Code to add/eidt a blog post using CreateView/Update View ammended from Youtube tutorial by Codemy
 class AddPostView(CreateView):
     model = Post
     form_class = PostForm
     template_name = 'blog/add_post.html'
-    # fields = '__all__'
+
+
+
+class UpdatePostView(UpdateView):
+    model = Post
+    form_class = PostForm
+    template_name = 'blog/post_update.html'    
+    context_object_name = 'post'
+
+    # Resolve Url when needed
+    def get_success_url(self):
+        return reverse_lazy('post_detail', kwargs={'post_id': self.object.id})
+   
+    
 
 

@@ -18,16 +18,22 @@
 <div class="container">
 
     <!-- Page Title --->
-    <div class="row mt-4 mb-4">
+    <div class="row mt-4 mb-2">
         <div class="col-12 text-center">
-            <h2>{{ post.title|title  }}</h2>
+            <h2>{{ post.title|title  }}</h2>            
         </div>
     </div>
 
     <div class="row">
         <div class="col text-center mb-4">
             <p>{{ post.date|date:"F j, Y" }}</p>
+            <div class="row">
+                <p><small><a class="text-green"
+                            href="{% url 'post_update' post.id %}">Admin ONLY! Edit</a>
+                        <a class="text-danger" href="">Delete</a></small></p>
+            </div>
         </div>
+        
     </div>
 
     <div class="row justify-content-center">
@@ -52,7 +58,7 @@
     <div class="row justify-content-center mb-4">
         <div class="text-center">
             <a href="{% url 'posts' %}" class="no-link-style">
-                <button class="btn btn-green">Back</button></a>
+                <button class="btn btn-green">Back To Posts</button></a>
         </div>
     </div>
 
