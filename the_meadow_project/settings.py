@@ -110,6 +110,25 @@ AUTHENTICATION_BACKENDS = (
 
 SITE_ID = 1
 
+SUMMERNOTE_CONFIG = {
+    'summernote': {
+        'toolbar': [
+            ['style', ['style']],
+            ['font', ['bold', 'italic', 'underline', 'clear']],
+            ['fontsize', ['fontsize']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['height', ['height']],
+            ['table', ['table']],          
+            ['view', ['fullscreen', 'codeview', 'help']],
+            ['undo', ['undo', 'redo']],
+        ],
+        'dialogsInBody': True,
+    }
+}
+
+X_FRAME_OPTIONS = 'SAMEORIGIN'  # For Summernote to work in iframe mode
+
 # email functionality
 if 'DEVELOPMENT' in os.environ:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

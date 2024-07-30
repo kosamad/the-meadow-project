@@ -195,31 +195,7 @@ interfering with the core requirements.-->
                 e.preventDefault();
                 $('.search-overlay').hide(); // Hide the search form
             });
-
-            // Summernote requirements
-            $('#summernote').summernote({
-                height: 300, // Set editor height
-                toolbar: [
-                    ['style', ['style']],
-                    ['font', ['bold', 'italic', 'underline', 'clear']],
-                    ['color', ['color']],
-                    ['para', ['ul', 'ol', 'paragraph']],
-                    ['table', ['table']],                    
-                    ['view', ['fullscreen', 'codeview', 'help','undo', 'redo']],
-                    ['align', ['align']],
-                ],
-                dialogsInBody: true,
-                callbacks: {
-                onImageUpload: function(files) {
-                    // Override the default image upload behavior
-                    console.log('Image upload attempt blocked');
-                    // Return false to prevent image upload
-                    return false;
-                }
-            }       
-            });
         });
-
 
         // Toasts JS from Bootstrap
 
@@ -232,8 +208,6 @@ interfering with the core requirements.-->
             // Trigger the toast to show
             toast.show();
         });
-
-
     </script>
     {% endblock %}
 

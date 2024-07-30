@@ -297,6 +297,10 @@ padding: 1%;}
     border-color: #DC6874;
 }
 
+.note-group-select-from-files {
+    display: none;
+  }
+
 
 
 .blog-img {
