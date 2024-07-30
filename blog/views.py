@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.core.paginator import Paginator
 from django.db.models import Q
 from .models import Post
-from django.views.generic import CreateView, UpdateView
+from django.views.generic import CreateView, UpdateView, DeleteView
 from .forms import PostForm
 from django.urls import reverse_lazy
 
@@ -65,7 +65,7 @@ def post_detail(request, post_id):
 
     
 
-# Code to add/eidt a blog post using CreateView/Update View ammended from Youtube tutorial by Codemy
+# Code to add/eidt/delete a blog post using CreateView/UpdateView/DeleteView ammended from Youtube tutorial by Codemy
 class AddPostView(CreateView):
     model = Post
     form_class = PostForm
@@ -82,6 +82,21 @@ class UpdatePostView(UpdateView):
     # Resolve Url when needed
     def get_success_url(self):
         return reverse_lazy('post_detail', kwargs={'post_id': self.object.id})
+
+
+class DeletePostView(DeleteView):
+    model = Post
+    template_name = 'blog/post_delete.html'
+
+    # Function ensures users 'go back' to the page they came from
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['previous_url'] = self.request.META.get('HTTP_REFERER', reverse_lazy('posts'))
+        return context 
+
+    # redirect after successful deletion.     
+    def get_success_url(self):
+        return reverse_lazy('posts')
    
     
 

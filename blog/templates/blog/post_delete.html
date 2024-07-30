@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_title %}
+- Delete Post
+{% endblock %}
+
+{% block page_header %}
+<div class="container header-container">
+    <div class="row">
+        <div class="col"></div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+    <!-- Page Title --->
+    <div class="row mt-4 mb-4">
+        <div class="col-12 text-center">
+            <h2>Post Delete</h2>
+        </div>
+    </div>
+
+    <div class="row text-center align-items-center justify-content-center mt-4 mb-4">
+        <div class="col-12 col-md-9 col-lg-6">
+            <h3>
+                Do you want to delete the blog post {{post.title}}?
+            </h3>
+        </div>
+    </div>
+
+    <div class="row justify-content-center mb-4">
+        <div class="col-md-6 col-12">
+            <div class="form-group">
+                <form action="{% url 'post_delete' post.id %}" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="row justify-content-center">                 
+                    <button type="submit" class="btn btn-green col-3">Yes, Delete</button>                    
+                    <a href="{{ previous_url }}" class="btn btn-danger col-3 ms-2">No! Go Back</a>                
+                </div> 
+                </form>
+            </div>            
+        </div>
+    </div>
+
+</div>
+
+
+{% endblock %}
