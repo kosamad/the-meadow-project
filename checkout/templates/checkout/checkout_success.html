@@ -157,10 +157,19 @@
             </div>
             <div class="row justify-content-center">
                 <div class="col-md-4 col-6">
+                    {% if from_profile %}
+                    <a href="{% url 'profile' %}" class="btn btn-green">
+                        <span><i class="fas fa-user"></i></span>
+                        <span class="text-uppercase">Back To Profile</span>
+                    </a>
+                    {% else %}
                     <!-- Next Step Buttons -->
                     <a href="{% url 'shop' %}" class="btn btn-green">
                         <span class="text-uppercase">Back To The Shop</span>
                     </a>
+                    {% endif %}
+                    
+
                 </div>
             </div>
         </div>

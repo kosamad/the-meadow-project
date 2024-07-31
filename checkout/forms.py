@@ -54,7 +54,7 @@ class ProductOrderForm(forms.ModelForm):
         model = ProductOrderLineItem
         fields = ('delivery_method', 'delivery_name', 'delivery_date',
                   'delivery_street_address1', 'delivery_street_address2', 'delivery_town_or_city',
-                  'delivery_postcode', 'delivery_county',)
+                  'delivery_postcode', 'delivery_county',) 
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

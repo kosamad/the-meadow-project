@@ -23,7 +23,7 @@
 
 <div class="container">
     <!-- Page Title - Profile Page -->
-    
+
     <div class="row mt-4 mb-4">
         <div class="col-12 text-center">
             <h2>My Profile</h2>
@@ -34,7 +34,7 @@
         <div class="col-12 col-md-9 col-lg-6">
             <p>
                 Welcome to The Meadow Project's shop! Discover our exquisite collection of flowers and plants, available
-                
+
             </p>
         </div>
     </div>
@@ -45,34 +45,83 @@
         <p><strong>Email:</strong> {{ email }}</p>
     </div>
 
-     <div class="row mb-4">
-        <div class="col-lg-6 col-12">            
+    <div class="row mb-4">
+        <div class="col-lg-6 col-12">
             <div class="row">
                 <legend class="fieldset-label small w-auto"><strong>Default Address Information</strong></legend>
-                <form class= "mt-4" action="{% url 'profile'}" method="POST" id="profile-update-form">
+                <form class="mt-4" action="{% url 'profile' %}" method="POST" id="profile-update-form">
                     {% csrf_token %}
                     {{ form|crispy }}
                     <div class="row">
-                        <div class="col text-center"><button class="btn btn-green" >Update Information</button></div>
-                        
-                    </div>                    
+                        <div class="col text-center"><button class="btn btn-green">Update Information</button></div>
+                    </div>
                 </form>
-                
             </div>
-            
 
 
         </div>
         <div class="col-lg-6 col-12">
             <legend class="fieldset-label small w-auto"><strong>Order History</strong></legend>
-             {{ orders }}
-            
+            <div class="row">
+                <div class="col">
+                    <div class="order-history table-responsive">
+                        <table class=" table table-sm table-borderless">
+                            <thead>
+                                <tr>
+                                    <th>Order No'</th>
+                                    <th>Date</th>
+                                    <th>Items</th>
+                                    <th>Order Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for order in orders %}
+                                <tr>
+                                    <td><a href="{% url 'order_history' order.order_number %}"
+                                            title="{{ order.order_number }}">{{ order.order_number|truncatechars:6 }}</a>
+                                    </td>
+                                    <td> {{order.date }} </td>
+                                    <td>
+                                        <ul class="list-unstyled">
+                                            <!-- Check if there are any product line items -->
+                                            {% if order.product_lineitems.exists %}                                            
+                                            {% for item in order.product_lineitems.all %}
+                                            <li>
+                                                {% if item.product_variant %}
+                                                Size {{ item.product_variant.size }}
+                                                {% endif %}
+                                                {{ item.product.friendly_name }} x {{ item.quantity }} -
+                                                {{ item.lineitem_total }}
+                                            </li>
+                                            {% endfor %}
+                                            {% endif %}
+                                            <!-- Check if there are any event line items -->
+                                            {% if order.event_lineitems.exists %}
+                                            <h5>Events in your order:</h5>
+                                            {% for item in order.event_lineitems.all %}
+                                            <li class="small">
+                                                {{ item.event.name }} x {{ item.quantity }} - {{ item.lineitem_total }}
+                                            </li>
+                                            {% endfor %}                                            
+                                            {% endif %}                                     
+                                        </ul>
+                                    </td>
+                                    <td> {{order.grand_total }} </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+
         </div>
 
 
-     </div>
+    </div>
     {{ profile }}
-</div>       
+</div>
 
 
 
@@ -84,6 +133,3 @@
 
 
 {% endblock %}
-
-
-

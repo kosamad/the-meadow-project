@@ -7,28 +7,21 @@ from django.core.exceptions import ObjectDoesNotExist
 
 from .forms import OrderForm, ProductOrderForm
 from .models import Order, ProductOrderLineItem, EventOrderLineItem
+from profiles.forms import UserProfileForm
+from profiles.models import UserProfile
 from products.models import Product, Event, ProductVariant
 from bag.contexts import bag_contents
 
 import stripe
 import json
-
-
     
 
 def checkout(request):
     stripe_public_key = settings.STRIPE_PUBLIC_KEY
     stripe_secret_key = settings.STRIPE_SECRET_KEY   
-
-    # # Initialise delivery variables with default values - stops event errors?
-    # delivery_method = request.POST.get('delivery_method', '')
-    # delivery_date = request.POST.get('delivery_date', '')   
-    
-     
+         
     if request.method == 'POST':
-        bag = request.session.get('bag', {})
-        print("Bag contents:", bag)
-        print("POST data:", request.POST)
+        bag = request.session.get('bag', {})        
 
         # Store order_type, and delivery method/date for use in webhook
         order_type = request.POST.get('order_type')
@@ -37,18 +30,9 @@ def checkout(request):
         print('aa', delivery_method)
         print('add', delivery_date)  
         print("Order Type from cs:", order_type)
-        request.session['order_type'] = order_type
-        # if 'product' in order_type:            
-        #     # Save delivery details in session if available
-        #     delivery_method = request.POST.get('delivery_method')            
-        #     delivery_date = request.POST.get('delivery_date')
-             
-    
-        # request.session['delivery_method'] = delivery_method
-        # request.session['delivery_date'] = delivery_date
-        # print('Session delivery_method:', request.session.get('delivery_method'))
-        # print('Session delivery_date:', request.session.get('delivery_date'))          
-       
+        request.session['order_type'] = order_type       
+               
+        # Initialise general form data and get data
         general_form_data = {
             'full_name': request.POST['full_name'],
             'email': request.POST['email'],
@@ -60,49 +44,59 @@ def checkout(request):
             'county': request.POST['county'],
         }
 
-        # Product form data only if it's a product order (prevents Event errors)
+        # Determine if delivery address should be the same as billing address
+        use_same_address = 'use_same_address' in request.POST
+
+        # Initialise Product form data only if it's a product order (prevents Event errors)
         product_form_data = {}
         if 'product' in request.POST.get('order_type', ''):
-            product_form_data = {
-                'delivery_method': request.POST.get('delivery_method'),
-                'delivery_date': request.POST.get('delivery_date'),
-                'delivery_name': request.POST.get('delivery_name'),
-                'delivery_street_address1': request.POST.get('delivery_street_address1'),
-                'delivery_street_address2': request.POST.get('delivery_street_address2'),
-                'delivery_town_or_city': request.POST.get('delivery_town_or_city'),
-                'delivery_postcode': request.POST.get('delivery_postcode'),
-                'delivery_county': request.POST.get('delivery_county'),
-            }         
+            if use_same_address:
+                product_form_data = {
+                    'delivery_method': request.POST.get('delivery_method'),
+                    'delivery_date': request.POST.get('delivery_date'),
+                    'delivery_name': general_form_data['full_name'],
+                    'delivery_street_address1': general_form_data['street_address1'],
+                    'delivery_street_address2': general_form_data['street_address2'],
+                    'delivery_town_or_city': general_form_data['town_or_city'],
+                    'delivery_postcode': general_form_data['postcode'],
+                    'delivery_county': general_form_data['county'],
+                }
+            else:
+                product_form_data = {
+                    'delivery_method': request.POST.get('delivery_method'),
+                    'delivery_date': request.POST.get('delivery_date'),
+                    'delivery_name': request.POST.get('delivery_name'),
+                    'delivery_street_address1': request.POST.get('delivery_street_address1'),
+                    'delivery_street_address2': request.POST.get('delivery_street_address2'),
+                    'delivery_town_or_city': request.POST.get('delivery_town_or_city'),
+                    'delivery_postcode': request.POST.get('delivery_postcode'),
+                    'delivery_county': request.POST.get('delivery_county'),
+                }         
 
         
         order_form = OrderForm(general_form_data)
         product_form = ProductOrderForm(product_form_data) if 'product' in order_type else None     
 
         if order_form.is_valid():
-            order_instance = order_form.save(commit=False)
-            print("General Order form is valid.")
+            order_instance = order_form.save(commit=False)            
             pid = request.POST.get('client_secret').split('_secret')[0]
             order_instance.stripe_pid = pid             
             order_instance.original_bag = json.dumps(bag)                          
             try:
-                order_instance.save()
-                print("Processing bag contents")
+                order_instance.save()                
 
                 if product_form and not product_form.is_valid():
                     messages.error(request, "There was an error with the product form. Please double-check your information.")
                     order_instance.delete() # Clean up partially saved order.
                     return redirect(reverse('view_bag'))          
 
-                for unique_key, item_data in bag.items():
-                    print(f"Processing item: {unique_key} with data: {item_data}")                                       
+                for unique_key, item_data in bag.items():                                                           
                     product_type = item_data.get('product_type')
 
                     # Product only processing    
                     if product_type == 'product':
                         item_id = unique_key.split('_')[0]
-                        variant_id = item_data.get('variant_id')
-                        print("Product ID:", item_id)
-                        print("Variant ID:", variant_id)
+                        variant_id = item_data.get('variant_id')                        
 
                         # Exception handling for Product and ProductVariant to prevent double save error
                         try:
@@ -119,10 +113,7 @@ def checkout(request):
                             delivery_town_or_city = request.POST.get('delivery_town_or_city')
                             delivery_postcode = request.POST.get('delivery_postcode')
                             delivery_county = request.POST.get('delivery_county')
-                            print("Product:", product)
-                            print("Variant:", variant)
-                            print(f"Creating ProductOrderLineItem with product: {product}, variant: {variant}, quantity: {quantity}")
-
+                            
                             order_line_item = ProductOrderLineItem(
                                 order=order_instance,
                                 product=product,
@@ -139,11 +130,9 @@ def checkout(request):
                                 card_message=card_message,
                                 note_to_seller=note_to_seller
                             )
-                            print(f"Delivery Method: {order_line_item.delivery_method}")
-                            print(f"Delivery Date: {order_line_item.delivery_date}")
-                            print(f"Saving ProductOrderLineItem: {order_line_item}")
+                            
                             order_line_item.save()
-                            print('Product order line item saved')
+                            
 
                         except ObjectDoesNotExist as e:
                             print(f"Product or ProductVariant not found and skipped: {e}")                                                             
@@ -165,9 +154,9 @@ def checkout(request):
                                 note_to_host=note_to_host,
                                 attendee_name=attendee_name,
                             )
-                            print(f"Saving EventOrderLineItem: {order_line_item}")
+                            
                             order_line_item.save()
-                            print('Event order line item saved')
+                            
 
                         except ObjectDoesNotExist as e:
                             print(f"Event not found: {e}")                                      
@@ -220,9 +209,25 @@ def checkout(request):
           
         request.session['order_type'] = order_type
        
-
+        if request.user.is_authenticated:
+            try:
+                profile = UserProfile.objects.get(user=request.user)
+                order_form = OrderForm(initial={
+                    'full_name': profile.user.get_full_name(),
+                    'email': profile.user.email,
+                    'phone_number': profile.default_phone_number,                    
+                    'postcode': profile.default_postcode,
+                    'town_or_city': profile.default_town_or_city,
+                    'street_address1': profile.default_street_address1,
+                    'street_address2': profile.default_street_address2,
+                    'county': profile.default_county,
+                })
+            except UserProfile.DoesNotExist:
+                order_form = OrderForm()
+        else:
         # Initialise product and event forms for rendering
-        order_form = OrderForm()
+            order_form = OrderForm()
+        
         product_form = ProductOrderForm() if has_product else None        
 
         if not stripe_public_key:
@@ -280,6 +285,25 @@ def checkout_success(request, order_number):
 
     save_info = request.session.get('save_info') # for user profile
     order = get_object_or_404(Order, order_number=order_number) # get order number and send to view
+    # get user profile info and attach to the order
+    profile = UserProfile.objects.get(user=request.user)
+    order.user_profile=profile
+    order.save()
+
+    if save_info:
+        profile_data = {
+                'default_phone_number': order.phone_number,            
+                'default_postcode': order.postcode,
+                'default_town_or_city': order.town_or_city,
+                'default_street_address1': order.street_address1,
+                'default_street_address2': order.street_address2,
+                'default_county': order.county,
+            }
+        # instance of user profile form
+        user_profile_form = UserProfileForm(profile_data, instance=profile)
+        if user_profile_form.is_valid():
+                user_profile_form.save()
+
     messages.success(request, f'Order successfully processed! \
         Your order number is {order_number}. A confirmation \
         email will be sent to {order.email}.')

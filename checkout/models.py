@@ -3,6 +3,9 @@ from django.db import models
 from django.db.models import Sum
 from django.conf import settings
 from decimal import Decimal
+from django.core.exceptions import ValidationError
+from django.utils import timezone
+from .validators import validate_date
 
 from products.models import Product, ProductVariant, Event
 from profiles.models import UserProfile
@@ -99,7 +102,7 @@ class ProductOrderLineItem(models.Model):
     lineitem_total = models.DecimalField(max_digits=6, decimal_places=2, null=False, blank=False, editable=False)
     # delivery details   
     delivery_method = models.CharField(max_length=20, choices=DELIVERY_CHOICES, null=True, blank=True)
-    delivery_date = models.DateField(null=True, blank=True)
+    delivery_date = models.DateField(null=True, blank=True, validators=[validate_date])
     delivery_name = models.CharField(max_length=20, null=True, blank=True)
     delivery_street_address1 = models.CharField(max_length=80, null=True, blank=True)
     delivery_street_address2 = models.CharField(max_length=80, null=True, blank=True)

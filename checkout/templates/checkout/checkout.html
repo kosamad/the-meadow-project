@@ -60,7 +60,13 @@
                                 {{ order_form.county | as_crispy_field }}
                                 {{ order_form.postcode | as_crispy_field }}
                             </fieldset>
+                            <!-- Allows a user to use same information for delivery (as customer/billing) -->
                             <div class="form-check float-right ms-3 mb-3">
+                                <input class="form-check-input" type="checkbox" id="id-use-same-address" name="use_same_address">
+                                <label class="form-check-label" for="id-use-same-address">Use the same information for delivery</label>
+                            </div>
+                            <div class="form-check float-right ms-3 mb-3">
+                                <!-- Allows a user to save info to their profile -->
                                 {% if user.is_authenticated %}
                                 <label class="form-check-label" for="id-save-info">Save this delivery information to my
                                     profile</label>
@@ -91,6 +97,7 @@
                                     {{product_form.delivery_date | as_crispy_field }}
                                     {{product_form.delivery_method | as_crispy_field }}
                                 </fieldset>
+                                <span id="date-error" style="color: red; display: none;">Delivery date cannot be in the past.</span>
                             </div>
                             <div class="shop-details" style="display: none;">
                                 <p class="ms-3"> Our address is 123 Meadow, Along A Lane, Bristol, BS41 8RM. Open

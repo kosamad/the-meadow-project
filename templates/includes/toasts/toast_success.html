@@ -7,7 +7,7 @@
     <div class="toast-body">
         <strong>{{ message }}</strong>
         <!-- Code adapted from CI Boutique Ado project -->
-        {% if grand_total %}
+        {% if grand_total and not on_profile_page %}
         <p class="logo-font bg-white text-black py-1 mb-1">Your Bag ({{ total_items }})</p>
         <p> Please note that variations of items will be displayed individually.</p>
         <div class="bag-notification-wrapper">
