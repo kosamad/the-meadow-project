@@ -29,6 +29,6 @@
     <form method="post" action="{% url 'account_email' %}">
         {% csrf_token %}
         {{ form|crispy }}
-        <button name="action_add" type="submit" class="btn btn-green">{% trans "Change Email" %}</button>
+        <button name="action_add" type="submit">{% trans "Change Email" %}</button>
     </form>
 {% endblock %}
