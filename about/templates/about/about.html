@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block extra_title %}
-- Home
+- About & Contact
 {% endblock %}
 
 {% block page_header %}
@@ -14,6 +14,151 @@
 {% endblock %}
 
 {% block content %}
+
+<!-- Initial Info container -->
+<div class="container">
+    <!-- Page Title - About Page -->
+    <div class="row mt-4 mb-5">
+        <div class="col-12 text-center">
+            <h2>About Us</h2>
+        </div>
+    </div>
+
+    <!-- Page break image -->
+    <div class="container">
+        <div class="row justify-content-center mt-2 mb-5">
+            <div class="col-12 mb-2 ">
+                <img src="/media/pexels-gary-barnes-6231781.jpg" class="img-fluid img-page-break" alt="Image 1">
+            </div>
+        </div>
+    </div>
+
+    <!-- Introduction -->
+    <div class="row text-center align-items-center justify-content-center mt-4 mb-5">
+        <div class="col-12 col-md-9 col-lg-6">
+            <div class="row">
+                <div class="col-12 text-center mb-4">
+                    <i class="fa-brands fa-pagelines fa-3x mb-2"></i>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <p class="text-justify">The Meadow Project is a team of passionate gardeners onn a mission to
+                        transform our local meadow into a vibrant,
+                        eco-friendly haven. Using sustainable methods, we enrich the landscape with beautiful,
+                        affordable wildflowers and cultivated plants that bring joy to homes throughout our community.
+                        Our commitment extends beyond gardening—through engaging outreach programs, informative blog
+                        posts and community events,
+                        we aim to educate and inspire our neighbours to embrace green practices and cultivate their own
+                        green
+                        spaces. Join them in celebrating nature and nurturing a more beautiful, environmentally
+                        conscious community.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-12">
+                    <div class="row">
+                        <div class="col-6 mb-2">
+                            <a href="{% url 'posts' %}" class="btn btn-green no-link-style text-white d-block">Posts</a>
+                        </div>
+                        <div class="col-6 mb-2">
+                            <a href="{% url 'shop' %}" class="btn btn-green no-link-style text-white d-block">Shop</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-12">
+                    <div class="row">
+                        <div class="col-6 mb-2">
+                            <a href="{% url 'shop' %}?category=events"
+                                class="btn btn-green no-link-style text-white d-block">Events</a>
+                        </div>
+                        <div class="col-6 mb-2">
+                            <a href="" class="btn btn-green no-link-style text-white d-block">Contact</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- About the meadow container -->
+<div class="container">
+    <div class="row justify-content-center mt-2 mb-5">
+        <div class="col-lg-5 offset-lg-1 col-md-6 col-12 mt-4 d-flex align-items-center">
+            <img src="/media/pexels-mina-marie-michell-161605-570041.jpg" class="img-fluid img-side-about"
+                alt="Image 1">
+        </div>
+        <div
+            class=" col-lg-4 offset-lg-1 col-md-6 col-12 mt-4 d-flex flex-column justify-content-center align-items-center">
+            <i class="fa-solid fa-leaf fa-3x mb-2"></i>
+            <p class="text-justify mt-4">Nestled in the heart of our community, the meadow bursts with life and
+                color, showcasing a dazzling array of wildflowers and cultivated plants. This lush, eco-friendly
+                oasis is more than just a visual delight; it’s a testament to nature’s beauty and the power of
+                sustainable gardening. From the delicate blush of meadow lilies to the vibrant hues of sunflowers
+                and the calming presence of lavender, each flower contributes to a tapestry of natural splendor. The
+                meadow not only enriches the local landscape but also provides a serene retreat for residents and a
+                bounty of affordable, beautiful blooms for their homes. Experience the charm and tranquility of this
+                verdant paradise, where every blossom tells a story of ecological harmony and community spirit..</p>
+        </div>
+    </div>
+</div>
+
+<!-- About Delivery container  -->
+<div class="container">
+    <div class="row justify-content-center mt-4">
+        <!-- Text on the left -->
+        <div
+            class="col-lg-4 offset-lg-1 col-md-6 col-12 mt-4 d-flex flex-column justify-content-center align-items-center">
+            <i class="fa-solid fa-bicycle fa-3x mb-2"></i>
+            <p class="text-justify mt-4">Our commitment to sustainability extends to our delivery service. Whenever
+                possible, we use eco-friendly bikes to deliver your orders, minimising our carbon footprint and
+                promoting a healthier environment. For larger or less accessible deliveries, we use energy-efficient
+                vans, ensuring that every step of our process aligns with our dedication to eco-conscious practices.
+                Enjoy your purchase with the assurance that it arrives in the greenest way possible!</p>
+        </div>
+        <!-- Image on the right -->
+        <div class="col-lg-5 offset-lg-1 col-md-6 col-12 mt-4 d-flex align-items-center">
+            <img src="/media/pexels-ian-panelo-9693904.jpg" class="img-fluid img-side-delivery" alt="Image 1">
+        </div>
+    </div>
+</div>
+
+<!-- Map + Address container-->
+<div class="container">
+    <div class="row mt-5">
+        <div class="col-3 d-flex justify-content-center align-items-center map-background">          
+                <div class="col text-center">
+                    <a href="https://maps.app.goo.gl/1g2XEe6cmXtv7QYe9" class="no-link-style" target="_blank">
+                    <h4 class="text-white">
+                        <i class="fa-solid fa-location-dot mb-4 text-white"></i> Find Us!
+                    </h4></a>
+                    <p class="open-p address-space">THE MEADOW PROJECT</p>
+                    <p class="open-p address-space">123 Meadow</p>
+                    <p class="open-p">Along A lane</p>
+                    <p class="open-p">Bristol</p>
+                </div>           
+        </div>
+        <div class="col-9">
+            <a href="https://maps.app.goo.gl/1g2XEe6cmXtv7QYe9" class="no-link-style" target="_blank">
+            <div class="map-image-container">
+                <img src="/media/map-image.PNG" class="img-fluid" alt="Image 1">
+            </div>
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Contact info container -->
+<div class="container">
+<div class="row mt-5 mb-4">
+    <div class="col-12 text-center">
+        <h2>Contact</h2>
+    </div>
+</div>
+</div>
+
+</div>
 
 
 {% endblock %}
