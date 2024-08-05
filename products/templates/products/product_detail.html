@@ -60,10 +60,7 @@
                                     <i class="fa fa-solid fa-bicycle"></i>
                                 </span> Delivery Information</p>
                             <p class="text-justify">
-                                We deliver bouquets, plants, and gifts to postcodes beginning with BS1 to BS6.
-                                Remember to place
-                                your orders before 9:30 PM for next-day delivery (delivery is not available on
-                                Sundays). For
+                                We deliver bouquets, plants, and gifts to postcodes beginning with BS1 to BS6. For
                                 same-day deliveries, please call us at 0117 123 4567 or contact us online with
                                 any
                                 inquiries. We
@@ -105,7 +102,7 @@
                 {% if variant.is_infinite_stock or variant.stock > 0 %}
                 <p id="stock-status"></p>
                 {% endif %}
-            </div>     
+            </div>
 
             <!-- Product Order Form -->
             <div class="row">
@@ -127,7 +124,7 @@
                             {% endif %}
                             {% endfor %}
                         </select>
-                    </div>                   
+                    </div>
 
                     <!-- Card message -->
                     <div class="col-lg-8 col-12 mb-4">
@@ -146,8 +143,8 @@
                         <label for="quantity">Quantity</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
-                                <button class="decrement-qty btn btn-green rounded-0" 
-                                    data-item_id="{{ product.id }}" id="decrement-qty_{{ product.id }}">
+                                <button class="decrement-qty btn btn-green rounded-0" data-item_id="{{ product.id }}"
+                                    id="decrement-qty_{{ product.id }}">
                                     <span class="icon">
                                         <i class="fas fa-minus"></i>
                                     </span>
@@ -155,14 +152,14 @@
                             </div>
                             <input class="form-control qty_input" type="number" name="quantity" value="1" min="1"
                                 max="99" data-item_id="{{ product.id }}" id="id_qty_{{ product.id }}">
-                                <div class="input-group-append">
-                                    <button class="increment-qty btn btn-green rounded-0"
-                                        data-item_id="{{ product.id }}" id="increment-qty_{{ product.id }}">
-                                        <span class="icon">
-                                            <i class="fas fa-plus"></i>
-                                        </span>
-                                    </button>
-                                </div>
+                            <div class="input-group-append">
+                                <button class="increment-qty btn btn-green rounded-0" data-item_id="{{ product.id }}"
+                                    id="increment-qty_{{ product.id }}">
+                                    <span class="icon">
+                                        <i class="fas fa-plus"></i>
+                                    </span>
+                                </button>
+                            </div>
                         </div>
                     </div>
 

@@ -70,6 +70,8 @@
                 return;
             }
         } else if (currentStep === 3) {
+            // if there are products in the basket
+            //if yes, make sure delivery method and date
             if (orderType === 'product' || orderType === 'product and event') {
                 const deliveryMethod = document.querySelector('input[name="delivery_method"]:checked');
                 const deliveryDate = document.getElementById('id_delivery_date').value.trim();
@@ -77,6 +79,8 @@
                     alert('Please select a delivery method and date.');
                     return;
                 }
+
+                // make sure date is in the future
                 const selectedDate = new Date(deliveryDate);
                 const today = new Date();
                 today.setHours(0, 0, 0, 0); // Reset time to the start of the day
@@ -85,26 +89,51 @@
                     return;
                 }
 
+                // make sure delivery is not a Sunday
                 if (deliveryMethod.value === 'delivery') {
                     const selectedDay = selectedDate.getDay(); // 0 for Sunday, 1 for Monday, etc.
                     if (selectedDay === 0) { // Check if it's Sunday
                         alert('Delivery is not available on Sundays.');
                         return;
                     }
+
+                    // get delivery information (user checking box control) 
                     const deliveryName = document.getElementById('id_delivery_name').value.trim();
                     const deliveryStreetAddress1 = document.getElementById('id_delivery_street_address1').value.trim();
                     const deliveryTownOrCity = document.getElementById('id_delivery_town_or_city').value.trim();
                     const deliveryCounty = document.getElementById('id_delivery_county').value.trim();
                     const deliveryPostcode = document.getElementById('id_delivery_postcode').value.trim();
+
+                    // check user has filled out all details
                     if (!deliveryName || !deliveryStreetAddress1 || !deliveryTownOrCity || !deliveryCounty || !
                         deliveryPostcode) {
                         alert('Please fill out all required Delivery Information.');
                         return;
                     }
+
+                    // Check delviery postcode is within delviery range
+                    const validPostCodes = ['BS1', 'BS2', 'BS3', 'BS4', 'BS5', 'BS6'];
+                    const postcodeParts = deliveryPostcode.split(' ');
+                    const deliveryPostcodePrefix = postcodeParts[0].toUpperCase();
+                    // checks are within valid range and that there are only 3 characters in the first part.
+                    if (!validPostCodes.includes(deliveryPostcodePrefix.substring(0, 3)) || deliveryPostcodePrefix
+                        .length >
+                        3) {
+                        alert('We only deliver to postcodes beginning with BS1 to BS6.');
+                        return;
+                    }
+                }
+                // if they have selected pick up, check date isn't a Sunday (shop shut)
+                if (deliveryMethod.value === 'pickup') {
+                    const selectedDay = selectedDate.getDay(); // 0 for Sunday, 1 for Monday, etc.
+                    if (selectedDay === 0) { 
+                        alert('Sorry, our shop is not open on a Sunday.');
+                        return;
+                    }
                 }
             }
-        }
 
+        }
         // If form is valid hide current step and display next step.    
         document.getElementById(`step-${currentStep}`).style.display = 'none';
         document.getElementById(`step-${currentStep + 1}`).style.display = 'block';
