@@ -2,14 +2,20 @@ from django.shortcuts import render, redirect
 from django.core.mail import send_mail
 from django.contrib import messages
 
+from django.contrib.auth.decorators import login_required
+
 # Create your views here.
 
 
-
-
-# Contact form code adapted from Codemy.com YouTube video series https://www.youtube.com/watch?v=xNqnHmXIuzU
+# Contact form code inspired by (but adapted from) Codemy.com YouTube video series https://www.youtube.com/watch?v=xNqnHmXIuzU
 def contact(request):
     """ A view to return the index page """
+
+    context = {}
+
+    if request.user.is_authenticated:
+        user = request.user
+        context['user'] = user
 
     if request.method == 'POST':
         message_name = request.POST.get('message-name')
