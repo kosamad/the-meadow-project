@@ -24,29 +24,53 @@
         </div>
     </div>
 
-        <!-- Contact Form -->
-        <div class="row justify-content-center mb-5">
-            <div class="col-lg-6 col-md-8 col-12">                
-                <form method="POST" clas="form" action="{% url 'contact' %}">
-                    {% csrf_token %}
-                    <!-- Contact Name -->
-                    <div class="col-12 mb-4">
-                        <input type="text" name="message-name" class="form-control mb-30" placeholder="Your Name"
+    <!-- Contact Form -->
+    <div class="row justify-content-center mb-5">
+        <div class="col-lg-6 col-md-8 col-12">
+            <form method="POST" clas="form" action="{% url 'contact' %}">
+                {% csrf_token %}
+                <!-- Contact Name -->
+                <div class="col-12 mb-4">
+                    <input type="text" name="message-name" class="form-control mb-30" placeholder="Your Name"
                         value="{% if user.is_authenticated %}{{ user.get_username}}{% endif %}">
-                    </div>
-                    <div class="col-12 mb-4">
-                        <input type="email" name="message-email" class="form-control mb-30" placeholder="Your Email" value="{% if user.is_authenticated %}{{ user.email }}{% endif %}">
-                    </div>
-                    <div class="col-12 mb-4">
-                        <textarea name="message" class="form-control mb-30" placeholder="Your Message"></textarea>
-                    </div>
-                    <div class="text-center">
-                        <button type="submit" class="btn btn-green">SEND</button>
-                    </div>
-                </form>
-            </div>
+                </div>
+                 <!-- Contact Email -->
+                <div class="col-12 mb-4">
+                    <input type="email" name="message-email" class="form-control mb-30" placeholder="Your Email"
+                        value="{% if user.is_authenticated %}{{ user.email }}{% endif %}">
+                </div>
+                 <!-- Contact Order info if they are logged in -->
+                {% if user.is_authenticated %}
+                <div class="col-12 mb-4">
+                    <label for="order-number">Order Number (optional)</label>
+                    <select name="order-number" class="form-control mb-30">
+                        <option value="">Select an order</option>
+                        {% for order in orders %}
+                            <option value="{{ order.order_number }}">{{ order.order_number }}</option>
+                        {% empty %}
+                            <option value="">No orders available</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            {% endif %}
+            <!-- Message area -->
+                <div class="col-12 mb-4">
+                    <textarea name="message" class="form-control mb-30" placeholder="Your Message"
+                        style="height: 200px;"></textarea>
+                </div>
+                 <!-- Submit button -->
+                <div class="text-center">
+                    <button type="submit" class="btn btn-green">SEND</button>
+                </div>
+            </form>
         </div>
+    </div>
 
+    HERE
+
+    {% for order in orders %}
+    <div>{{ order.order_number|truncatechars:6 }}</div>
+    {% endfor %}
 
     <!-- Map + Address container-->
     <div class="container">
