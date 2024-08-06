@@ -322,8 +322,7 @@ h2,
     object-position: center;
 }
 
-.img-side-delivery {
-    min-height: 400px;
+.img-side-delivery {  
     width: 100%;
     object-fit: cover;
     object-position: center;

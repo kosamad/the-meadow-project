@@ -62,18 +62,18 @@
                             <a href="{% url 'posts' %}" class="btn btn-green no-link-style text-white d-block">Posts</a>
                         </div>
                         <div class="col-6 mb-2">
-                            <a href="{% url 'shop' %}" class="btn btn-green no-link-style text-white d-block">Shop</a>
+                            <a href="#shop-container"class="btn btn-green no-link-style text-white d-block">Shop</a>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6 col-12">
                     <div class="row">
                         <div class="col-6 mb-2">
-                            <a href="{% url 'shop' %}?category=events"
+                            <a href="#events-container"
                                 class="btn btn-green no-link-style text-white d-block">Events</a>
                         </div>
                         <div class="col-6 mb-2">
-                            <a href="" class="btn btn-green no-link-style text-white d-block">Contact</a>
+                            <a href="#delivery-container" class="btn btn-green no-link-style text-white d-block">Delivery</a>
                         </div>
                     </div>
                 </div>
@@ -84,50 +84,70 @@
 
 
 
-<!-- About the meadow container -->
-<div class="container">
-    <div class="row justify-content-center mt-2 mb-5">
+<!-- About the shop container -->
+<div class="container"  id="shop-container">
+    <div class="row justify-content-center mt-2 mb-2">
         <div class="col-lg-4 offset-lg-1 col-md-6 col-12 mt-4 d-flex align-items-center">
             <img src="/media/will-TWJmj182gu4-unsplash.jpg" class="img-fluid img-side-about" alt="Shop front">
         </div>
         <div
             class=" col-lg-4 offset-lg-1 col-md-6 col-12 mt-4 d-flex flex-column justify-content-center align-items-center">
-            <i class="fa-solid fa-shop fa-3x mb-3"></i>
+            <i class="fa-solid fa-shop fa-3x mt-2 mb-3"></i>
             <h3 class="title-font text-center mb-3">Our Shop</h3>
             <p class="text-justify"><strong>Opening hours:</strong> Tuesday to Friday 10:00-17:00 and
                 Saturday: 9:00-17:00. There is free parking on site and we are easily accessible via bus and bike!</p>
-            <p class="text-justify"><strong>Collection info: </strong>If you're picking up an order from us it from 10:00 unless otherwsie prearranged. If you miss your collection, and haven’t given us notice, we will be unable to make another bouquet for you.</p>
-            <p><strong><a href="{% url 'contact' %}" class="no-link-style">Find Us Here</a></strong></p>
+            <p class="text-justify"><strong>Collection info: </strong>If you're picking up an order from us it will be
+                avaliable from 10:00 unless otherwsie prearranged. If you miss your collection, and haven’t given us
+                notice, we will be unable to make another bouquet for you.</p>
+            <p><strong><a href="{% url 'contact' %}" class="no-link-style">Find Us Here</a></strong> or <strong><a href="{% url 'shop' %}" class="no-link-style">Go Shopping</a></strong> </p>
         </div>
     </div>
 </div>
 
 <!-- About Delivery container  -->
-<div class="container mb-5">
-    <div class="row justify-content-center mt-4">
-        <!-- Text on the left -->
-        <div
-            class="col-lg-4 offset-lg-1 col-md-6 col-12 mt-4 d-flex flex-column justify-content-center align-items-center">
-            
-            <i class="fa-solid fa-bicycle fa-3x mb-2"></i>
-            <h3 class="title-font text-center mb-3">Delivery</h3>
-            <p class="text-justify mt-4">Our commitment to sustainability extends to our delivery service. Whenever
-                possible, we use eco-friendly bikes to deliver your orders, minimising our carbon footprint and
-                promoting a healthier environment. For larger or less accessible deliveries, we use energy-efficient
-                vans, ensuring that every step of our process aligns with our dedication to eco-conscious practices.
-                Enjoy your purchase with the assurance that it arrives in the greenest way possible!</p>
-        </div>
-        <!-- Image on the right -->
-        <div class="col-lg-5 offset-lg-1 col-md-6 col-12 mt-4 d-flex align-items-center">
-            <img src="/media/pexels-ian-panelo-9693904.jpg" class="img-fluid img-side-delivery" alt="Image 1">
-        </div>
+<div class="container" id="delivery-container">
+    <div class="row">
+    <div class="col-lg-4 col-md-6 col-12 mt-4">
+        <img src="/media/pexels-ian-panelo-9693904.jpg" class="img-fluid img-side-delivery" alt="Image 1">
     </div>
+    <div class="col-lg-4 col-md-6 col-12 mt-4">
+        <img src="/media/pexels-hatice-uyar-460317377-18013277.jpg" class="img-fluid img-side-delivery" alt="Image 1">
+    </div>
+    <div class="col-lg-4 d-none d-md-block mt-4">
+        <img src="/media/jorge-zapata-6FgbPqag3h8-unsplash.jpg" class="img-fluid img-side-delivery" alt="Image 1">
+    </div>
+</div>
+<div class="row justify-content-center mt-4">
+    <div class="col-md-9 col-12 d-flex flex-column justify-content-center align-items-center">
+        <i class="fa-solid fa-bicycle fa-3x mb-2 text-center"></i>
+            <h3 class="title-font text-center mb-2">Delivery</h3>
+            <p class="text-justify">Our commitment to sustainability extends to our delivery service. Whenever
+                possible, we use eco-friendly bikes to deliver your orders, minimising our carbon footprint. For larger
+                or less accessible deliveries, we use energy-efficient
+                vans.
+            </p>
+            <p class="text-justify"><strong>Enjoy your purchase with the assurance that it arrives in the greenest way possible!</strong>
+            </p>
+            <p class="text-justify"><strong>Delivery info: </strong>
+                We deliver bouquets, plants, and gifts to postcodes beginning with BS1 to BS6. For
+                same-day deliveries, please call us at 0117 123 4567 or contact us online with
+                any
+                inquiries. We
+                prioritize eco-friendly delivery methods, using bicycles whenever possible and
+                our
+                green,
+                zero-emission van as a backup.
+                <p> Spend £{{ free_delivery_threshold }} to get free delivery else delivery is
+                    calulated at {{ standard_delivery_percentage }}%.</p>
+            </p>
+    </div>
+</div>
 </div>
 
 <!-- Bootstrap Carousel -->
-<div class="container">
-    <div class="row mt-5 mb-5 justify-content-center">
-        <div class="col-lg-6 col-md-9 col-12 mb-2 ">
+<div class="container"  id="events-container">
+    <div class="row mt-4 mb-5 justify-content-center">
+        <div class="col-lg-6 col-12 mb-2 ">
             <div id="eventCarousel" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
                     <!-- First Slide -->
@@ -162,29 +182,19 @@
                 </button>
             </div>
         </div>
-    </div>
-    <div class="row justify-content-center">
-        <div class="col-md-9 col-12 mb-2">
+        <div class="col-lg-6 col-12 mb-2 d-flex flex-column justify-content-center align-items-center">
+            <i class="fa-solid fa-ticket fa-3x mb-2"></i>
             <h3 class="title-font text-center mb-3">Our Events</h3>
             <p class="text-justify">Join us at our beautifully maintained, all-weather venue located right on site (free
                 parking). During the summer months, we also host events out in the field, making the most of the great
                 outdoors.</p>
 
-            <p>No matter the occasion, refreshments are always available for you to enjoy, even if you're not attending
+            <p class="text-justify">No matter the occasion, refreshments are always available for you to enjoy, even if you're not attending
                 a lunch-specific event.</p>
-            <p> Check out our <a href="{% url 'shop' %}?category=events" class="text-green"><strong>Events Page</strong>
+            <p class="text-justify"> Check out our <a href="{% url 'shop' %}?category=events" class="text-green"><strong>Events Page</strong>
                 </a>to see what we've got going on</p>
         </div>
-    </div>
-</div>
-
-<!-- Contact info container -->
-<div class="container">
-    <div class="row mt-5 mb-4">
-        <div class="col-12 text-center">
-            <h2>Add info about events/plants</h2>
-        </div>
-    </div>
+    </div>   
 </div>
 
 </div>
