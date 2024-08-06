@@ -316,7 +316,7 @@ h2,
 /* About */
 
 .img-side-about {
-    min-height: 600px;
+    min-height: 400px;
     width: 100%;
     object-fit: cover;
     object-position: center;
@@ -329,9 +329,9 @@ h2,
     object-position: center;
 }
 
+
+
 /* Contact */
-
-
 
 .map-background {    
     background:#04724d;
