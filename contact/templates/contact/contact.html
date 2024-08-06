@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_title %}
+- About & Contact
+{% endblock %}
+
+{% block page_header %}
+<div class="container header-container">
+    <div class="row">
+        <div class="col"></div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+
+<!-- Initial Info container -->
+<div class="container">
+    <!-- Page Title - About Page -->
+    <div class="row mt-4 mb-5">
+        <div class="col-12 text-center">
+            <h2>Contact</h2>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+    <!-- Map + Address container-->
+    <div class="container">
+        <div class="row mt-5 mb-5">
+            <div class="col-lg-8 col-12 align-items-center">
+                <div class="map-container">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d19888.52459899491!2d-2.6675401337156126!3d51.45695245709615!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48718db8284dd485%3A0x78bc0b8bc70517c7!2sLeigh%20Woods%20Meadows%2C%20Roots%20Allotments%20Site!5e0!3m2!1sen!2suk!4v1722939023346!5m2!1sen!2suk"
+                        style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+                        class="responsive-iframe"></iframe>
+                </div>
+            </div>
+            <div class="col-lg-4 col-12 d-none d-lg-flex justify-content-center align-items-center map-background">
+                <div class="col text-center">
+                    <a href="https://maps.app.goo.gl/1g2XEe6cmXtv7QYe9" class="no-link-style" target="_blank"></a>
+                    <div class="row mb-2 mt-4 text-center">
+                        <p class="mb-1"><span class="me-3"><i class="fa-solid fa-location-dot text-white"></i></span>
+                            THE MEADOW
+                            PROJECT</p>
+                        <p class="mb-1">123 Meadow</p>
+                        <p class="mb-1">Along A lane</p>
+                        <p class="">Bristol</p>
+                    </div>
+                    </a>
+                    <div class="row mb-1 text-center">
+                        <div>
+                            <p><span class="me-3"><i class="fa-solid fa-phone fa-lg"></i></span>01245 687 543</p>
+                        </div>
+                    </div>
+                    <div class="row mb-2 text-center">
+                        <div>
+                            <p><span class="me-3"><i class="fa-solid fa-envelope fa-lg mr-2"></i></span> Email
+                                Address@Email.com</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Address on smaller screens -->
+        <div class="row d-block d-lg-none d-flex justify-content-center mb-5">
+            <div class="col-md-4 col-8 text-center map-background">
+                <a href="https://maps.app.goo.gl/1g2XEe6cmXtv7QYe9" class="no-link-style" target="_blank"></a>
+                <div class="row mb-2 mt-4 text-center">
+                    <p class="mb-1"><span class="me-3"><i class="fa-solid fa-location-dot text-white"></i></span>
+                        THE MEADOW
+                        PROJECT</p>
+                    <p class="mb-1">123 Meadow</p>
+                    <p class="mb-1">Along A lane</p>
+                    <p class="">Bristol</p>
+                </div>
+                </a>
+                <div class="row mb-1 text-center">
+                    <div>
+                        <p><span class="me-3"><i class="fa-solid fa-phone fa-lg"></i></span>01245 687 543</p>
+                    </div>
+                </div>
+                <div class="row mb-2 text-center">
+                    <div>
+                        <p><span class="me-3"><i class="fa-solid fa-envelope fa-lg mr-2"></i></span> Email
+                            Address@Email.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- contact form -->
+     <div class="row justify-content-center d-flex">
+    <div class="col-md-8 col-12">
+        <div class="contact-form">
+            <!-- Heading -->
+             <div>
+                <h4>Get In Touch</h4>
+             </div>
+             <!-- Contact Form -->
+             <div class="row">
+                <form method="POST" clas="form" action="{% url 'contact' %}">
+                    {% csrf_token %}
+                     <!-- Contact Name -->
+                     <div class="col-lg-8 col-12 mb-4">
+                        <input type="text" name="message-name" class="form-control mb-30" placeholder = "Your Name">                        
+                    </div>
+                    <div class="col-lg-8 col-12 mb-4">
+                        <input type="email" name="message-email" class="form-control mb-30" placeholder = "Your Email">                        
+                    </div>
+                    <div class="col-lg-8 col-12 mb-4">
+                        <textarea name="message" class="form-control mb-30" placeholder = "Your Message"></textarea>                        
+                    </div>                                     
+                <div class="">
+                    <button type="submit" class="btn btn-green">SEND</button>
+                </div>                
+              </form>
+        </div>
+
+    </div>
+</div>
+</div>
+
+
+</div>
+</div>
+
+
+{% endblock %}
