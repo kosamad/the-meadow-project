@@ -24,12 +24,27 @@
         </div>
     </div>
 
-
-
-
-
-
-
+        <!-- Contact Form -->
+        <div class="row justify-content-center mb-5">
+            <div class="col-lg-6 col-md-8 col-12">                
+                <form method="POST" clas="form" action="{% url 'contact' %}">
+                    {% csrf_token %}
+                    <!-- Contact Name -->
+                    <div class="col-12 mb-4">
+                        <input type="text" name="message-name" class="form-control mb-30" placeholder="Your Name">
+                    </div>
+                    <div class="col-12 mb-4">
+                        <input type="email" name="message-email" class="form-control mb-30" placeholder="Your Email">
+                    </div>
+                    <div class="col-12 mb-4">
+                        <textarea name="message" class="form-control mb-30" placeholder="Your Message"></textarea>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-green">SEND</button>
+                    </div>
+                </form>
+            </div>
+        </div>
 
 
     <!-- Map + Address container-->
@@ -98,34 +113,11 @@
     </div>
 
     <!-- contact form -->
-     <div class="row justify-content-center d-flex">
-    <div class="col-md-8 col-12">
-        <div class="contact-form">
-            <!-- Heading -->
-             <div>
-                <h4>Get In Touch</h4>
-             </div>
-             <!-- Contact Form -->
-             <div class="row">
-                <form method="POST" clas="form" action="{% url 'contact' %}">
-                    {% csrf_token %}
-                     <!-- Contact Name -->
-                     <div class="col-lg-8 col-12 mb-4">
-                        <input type="text" name="message-name" class="form-control mb-30" placeholder = "Your Name">                        
-                    </div>
-                    <div class="col-lg-8 col-12 mb-4">
-                        <input type="email" name="message-email" class="form-control mb-30" placeholder = "Your Email">                        
-                    </div>
-                    <div class="col-lg-8 col-12 mb-4">
-                        <textarea name="message" class="form-control mb-30" placeholder = "Your Message"></textarea>                        
-                    </div>                                     
-                <div class="">
-                    <button type="submit" class="btn btn-green">SEND</button>
-                </div>                
-              </form>
-        </div>
 
-    </div>
+
+
+
+</div>
 </div>
 </div>
 
