@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_title %}
+- Review
+{% endblock %}
+
+{% block page_header %}
+<div class="container header-container">
+    <div class="row">
+        <div class="col"></div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+
+<!-- Initial Info container -->
+<div class="container">
+    <!-- Page Title - About Page -->
+    <div class="row mt-4 mb-5">
+        <div class="col-12 text-center">
+            <h2>Review</h2>
+            {% if product_line_item %}
+            <p>You Are reviewing {{ product_line_item.product.friendly_name }}</p>
+            {% elif event_line_item %}
+            <p>You are reviewing the event: {{ event_line_item.event.friendly_name }}</p>
+            {% endif %}
+        </div>
+    </div>
+
+    {% if user.is_authenticated %}
+    <!-- Review Form -->
+    <div class="row justify-content-center mb-5">
+        <div class="col-lg-6 col-md-8 col-12">
+            <form method="POST" clas="form" action="{% url 'review_item' %}">
+                {% csrf_token %}
+                <!-- Hidden Fields -->
+                <input type="hidden" name="username " value="{{ user.get_username }}">
+                {% if product_line_item %}
+                <input type="hidden" name="product_line_item_id" value="{{ product_line_item.id }}">
+                {% endif %}
+                {% if event_line_item %}
+                <input type="hidden" name="event_line_item_id" value="{{ event_line_item.id }}">
+                {% endif %}
+
+                <!-- Message area -->
+                <div class="form-group">
+                    <label for="review_text">Review</label>
+                    <textarea name="review_text" class="form-control" placeholder="Write your review"></textarea>
+                </div>
+
+                <!-- Submit button -->
+                <div class="text-center">
+                    <button type="submit" class="btn btn-green">Submit Review</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if user.is_not_authenticated %}
+    <p>You do not have autherisation to be on this page. </p>
+    {% endif %}
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+</div>
+</div>
+
+
+</div>
+</div>
+
+
+{% endblock %}
