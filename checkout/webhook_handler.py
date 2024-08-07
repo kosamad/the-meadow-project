@@ -5,6 +5,7 @@ import time
 import stripe
 from .models import Order, ProductVariant, ProductOrderLineItem, EventOrderLineItem
 from products.models import Product, Event
+from profiles.models import UserProfile
 from django.conf import settings
 from datetime import datetime
 from pprint import pprint
@@ -62,7 +63,24 @@ class StripeWH_Handler:
             address = shipping_details.get('address', {})
             for field, value in shipping_details.address.items():
                 if value == "":
-                    shipping_details.address[field] = None                   
+                    shipping_details.address[field] = None
+
+        # Update Profile information if save_info was checked
+        profile = None
+        username = intent.metadata.username
+        if username != 'AnonymousUser':
+            # get profile
+            profile = UserProfile.objects.get(user__username=username)
+            if save_info:                                
+                profile.default_postcode = billing_details.name,
+                profile.default_email = billing_details.email,
+                profile.phone_number = billing_details.phone
+                profile.phone_number = billing_details.address.postal_code,        
+                profile.default_town_or_city = billing_details.address.city
+                profile.default_street_address1 = billing_details.address.line1
+                profile.default_street_address2 = billing_details.address.line2
+                profile.default_county = billing_details.address.state
+                profile.save() 
              
         # Checking if the order has alread been created in the database
         order_exists = False
@@ -71,8 +89,7 @@ class StripeWH_Handler:
             try:
                 order_instance = Order.objects.get(
                     full_name__iexact=billing_details.name,
-                    email__iexact=billing_details.email,
-                    phone_number__iexact=billing_details.phone,
+                    email__iexact=billing_details.email,                    
                     town_or_city__iexact=billing_details.address.city,
                     street_address1__iexact=billing_details.address.line1,
                     street_address2__iexact=billing_details.address.line2,
@@ -97,7 +114,7 @@ class StripeWH_Handler:
                 bag_items = json.loads(bag)
                 order_instance  = Order.objects.create(
                     full_name=billing_details.name,
-                    # user_profile=profile,
+                    user_profile=profile,
                     email=billing_details.email,
                     phone_number=billing_details.phone,                    
                     postcode=billing_details.address.postal_code,
