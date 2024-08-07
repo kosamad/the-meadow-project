@@ -5,7 +5,7 @@ from checkout.models import Order, ProductOrderLineItem, EventOrderLineItem
 # Create your models here.
 
 class Review(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     order = models.ForeignKey(Order, on_delete=models.CASCADE)    
     review_text = models.TextField(null=False, blank=False,)
 

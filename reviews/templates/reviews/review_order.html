@@ -52,7 +52,7 @@
                     <p class="my-0"><strong>{{ item.product.friendly_name }}</strong></p>
                     {% if item.product_variant %}
                     Size {{ item.product_variant.size }}
-                    {% endif %}                    
+                    {% endif %}
                 </div>
                 {% endfor %}
                 {% endif %}
@@ -86,7 +86,7 @@
         <!-- Review Form -->
         <div class="row justify-content-center mb-5">
             <div class="col-lg-6 col-md-8 col-12">
-                <form method="POST" clas="form" action="{% url 'review_order' order.id %}">
+                <form method="POST" class="form" action="{% url 'review_order' order.id %}">
                     {% csrf_token %}
                     <label for="username">Your Username:</label>
                     <input type="text" id="username" name="username" value="{{ user.username }}" readonly
@@ -94,7 +94,9 @@
                     <!-- Message area -->
                     <div class="form-group mb-3">
                         <label for="review_text">Your Review</label>
-                        <textarea id="review_text" name="review_text" class="form-control" rows="5" required></textarea>
+                        <textarea id="review_text" name="review_text" class="form-control" rows="5" required
+                            maxlength="500"></textarea>
+                            <small id="charCount" class="form-text text-muted">500 characters remaining</small>
                     </div>
                     <!-- Submit button -->
                     <div class="text-center">
@@ -103,30 +105,32 @@
                 </form>
             </div>
         </div>
+        {% else %}
+        <p>You do not have authorisation to be on this page.</p>
         {% endif %}
-
-        {% if user.is_not_authenticated %}
-        <p>You do not have autherisation to be on this page. </p>
-        {% endif %}
-
-
-
-
-
-
-
-
-
-
-
 
     </div>
 </div>
-</div>
 
 
-</div>
-</div>
+{% endblock %}
+
+{% block postloadjs %}
+{{ block.super }}
+
+<script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function () {
+        // Function to give the user a count down of remaining characters for the reveiw
+        const reviewText = document.getElementById('review_text');
+        const charCount = document.getElementById('charCount');
+        reviewText.addEventListener('input', function () {
+            const textLength = this.value.length;
+            const maxLength = parseInt(this.getAttribute('maxlength'));
+            const remainingChars = maxLength - textLength;
+            charCount.textContent = `${remainingChars} characters remaining`;
+        });   
+    });
+</script>
 
 
 {% endblock %}
