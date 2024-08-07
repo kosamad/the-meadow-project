@@ -259,14 +259,21 @@ h2,
 }
 
 .review-text {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     font-style: italic;
 }
 
 .review-author {
-    font-size: 1.2rem;
+    font-size: 1rem;
     margin-top: 1rem;
     font-weight: bold;
+}
+
+#carouselReveiw {
+    position: relative;
+    min-height: 300px;
+    align-items: center;
+    justify-content: center;
 }
 
 /* Shop pages (inc products and events */
