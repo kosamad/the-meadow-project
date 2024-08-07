@@ -21,60 +21,106 @@
     <div class="row mt-4 mb-5">
         <div class="col-12 text-center">
             <h2>Review</h2>
-            {% if product_line_item %}
-            <p>You Are reviewing {{ product_line_item.product.friendly_name }}</p>
-            {% elif event_line_item %}
-            <p>You are reviewing the event: {{ event_line_item.event.friendly_name }}</p>
+            <p>You are reviewing Order: {{ order.order_number }}</p>
+        </div>
+
+        <!-- Order Summary  -->
+        <div class="col-lg-6 col-12">
+            <div class="row">
+                <div class="col">
+                    <h3 class="title-font">Order Summary</h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-7 offset-2">
+                    <p class="mb-1 mt-0 small text-muted">Item</p>
+                </div>
+            </div>
+            {% if order.product_lineitems.exists %}
+            {% for item in order.product_lineitems.all %}
+            <div class="row">
+                <div class="col-2 mb-1">
+                    <a href="{% url 'product_detail' item.product.id %}">
+                        {% if item.product.image %}
+                        <img src="{{ item.product.image.url }}" alt="{{ item.product.alt_text }}" class="img-fluid">
+                        {% else %}
+                        <img class="img-fluid" src="{{ MEDIA_URL }}noimage.png" alt="{{ item.product.name }}">
+                        {% endif %}
+                    </a>
+                </div>
+                <div class="col-7">
+                    <p class="my-0"><strong>{{ item.product.friendly_name }}</strong></p>
+                    {% if item.product_variant %}
+                    Size {{ item.product_variant.size }}
+                    {% endif %}                    
+                </div>
+                {% endfor %}
+                {% endif %}
+            </div>
+            {% if order.event_lineitems.exists %}
+            {% for item in order.event_lineitems.all %}
+            <div class="row">
+                <div class="col-2 mb-1">
+                    {% if item.event.image %}
+                    <img src="{{ item.event.image.url }}" alt="{{ item.event.alt_text }}" class="img-fluid">
+                    {% else %}
+                    <img class="img-fluid" src="{{ MEDIA_URL }}noimage.png" alt="{{ item.event.name }}">
+                    {% endif %}
+                </div>
+                <div class="col-7">
+                    <p class="my-0"><strong>{{ item.event.friendly_name }}</strong></p>
+                    <p class="my-0 small text-muted">Qty: {{ item.quantity }}</p>
+                </div>
+            </div>
+            {% endfor %}
             {% endif %}
-        </div>
-    </div>
-
-    {% if user.is_authenticated %}
-    <!-- Review Form -->
-    <div class="row justify-content-center mb-5">
-        <div class="col-lg-6 col-md-8 col-12">
-            <form method="POST" clas="form" action="{% url 'review_item' %}">
-                {% csrf_token %}
-                <!-- Hidden Fields -->
-                <input type="hidden" name="username " value="{{ user.get_username }}">
-                {% if product_line_item %}
-                <input type="hidden" name="product_line_item_id" value="{{ product_line_item.id }}">
-                {% endif %}
-                {% if event_line_item %}
-                <input type="hidden" name="event_line_item_id" value="{{ event_line_item.id }}">
-                {% endif %}
-
-                <!-- Message area -->
-                <div class="form-group">
-                    <label for="review_text">Review</label>
-                    <textarea name="review_text" class="form-control" placeholder="Write your review"></textarea>
+            <hr class="mb-2">
+            <div class="row">
+                <div class="col">
+                    <p>Order Total: {{order.grand_total }} </p>
                 </div>
-
-                <!-- Submit button -->
-                <div class="text-center">
-                    <button type="submit" class="btn btn-green">Submit Review</button>
-                </div>
-            </form>
+            </div>
         </div>
+
+        {% if user.is_authenticated %}
+        <!-- Review Form -->
+        <div class="row justify-content-center mb-5">
+            <div class="col-lg-6 col-md-8 col-12">
+                <form method="POST" clas="form" action="{% url 'review_order' order.id %}">
+                    {% csrf_token %}
+                    <label for="username">Your Username:</label>
+                    <input type="text" id="username" name="username" value="{{ user.username }}" readonly
+                        class="form-control mb-3">
+                    <!-- Message area -->
+                    <div class="form-group mb-3">
+                        <label for="review_text">Your Review</label>
+                        <textarea id="review_text" name="review_text" class="form-control" rows="5" required></textarea>
+                    </div>
+                    <!-- Submit button -->
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-green">Submit Review</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if user.is_not_authenticated %}
+        <p>You do not have autherisation to be on this page. </p>
+        {% endif %}
+
+
+
+
+
+
+
+
+
+
+
+
     </div>
-    {% endif %}
-
-    {% if user.is_not_authenticated %}
-    <p>You do not have autherisation to be on this page. </p>
-    {% endif %}
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
 </div>
 </div>
 

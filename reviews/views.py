@@ -2,12 +2,12 @@ from django.shortcuts import render
 
 # Create your views here.
 
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from django.contrib.auth.models import User
 from profiles.models import UserProfile
 from django.contrib.auth.decorators import login_required
-from checkout.models import Order, ProductOrderLineItem, EventOrderLineItem
+from checkout.models import Order
 from .models import Review 
 
 # Create your views here.
@@ -23,12 +23,15 @@ def reviews(request):
 
     return render (request, template, context)
 
+
+
+
 @login_required
-def review_order(request, order_id=None):
+def review_order(request, order_id):
     '''Display the leave a reveiw page'''
 
-    profile = get_object_or_404(UserProfile, user=request.user)    
-    orders = profile.orders.all() # get users orders
+    order = get_object_or_404(Order, id=order_id)
+    profile = get_object_or_404(UserProfile, user=request.user)
 
     # get users username and eamil for display
     username = profile.user.username
@@ -46,25 +49,26 @@ def review_order(request, order_id=None):
         if not review_text:
             messages.error(request, 'Please leave a review in the box')
             context = {
-                'orders':orders,        
-                'username': username,                    
-                'username': username,           
+                'order':order,        
+                'username': username,     
             }
-            return render(request, 'reviews/review.html', context)
+            return render(request, 'reviews/review_order.html', context)
     
-        review = Review(user=request.user, review_text=review_text)        
-       
+        # Create and save the review
+        review = Review(
+            user=request.user,
+            order=order,
+            review_text=review_text
+        )
         review.save()
+
         messages.success(request, 'Your review has been successfully submitted!')
-        return redirect('review_item')   
+        return redirect('profile')   
   
-    template = 'reviews/review_item.html'
+    template = 'reviews/review_order.html'
     context = {        
         'order':order,        
         'username': username,
-        'review_text':review_text                 
-    }
-
-   
+    }   
     return render (request, template, context)
 
