@@ -35,9 +35,14 @@
         <!-- Product Image and Description -->
         <div class="col-12 col-md-6 col-lg-4 my-4">
             <div class="row">
+                {% if product.image %}
                 <a href="{{ product.image.url }}" target="_blank">
                     <img src="{{  product.image.url }}" class="product-detail-img" alt="{{ product.alt_text }}">
                 </a>
+                {% else %}
+                <img src="{{ MEDIA_URL }}noimage.png" class="img-fluid rounded product-detail-img"
+                    alt="{{ product.friendly_name }}">
+                {% endif %}
             </div>
             <div class="row mt-2">
                 <p class="mt-4 text-justify">{{ product.description }}</p>
@@ -97,7 +102,7 @@
             <div class="row">
                 <h2>{{ product.friendly_name }}</h2>
             </div>
-              <!-- Product/Variant Add and Edit Links for Admin -->
+            <!-- Variant Add and Product Edit Links for Admin -->
             {% if user.is_authenticated and user.is_superuser %}
             <div class="row mt-2">
                 <h4 class="title-font">Admin controls</h4>
@@ -107,7 +112,7 @@
                                 Variant</a> <a href="{% url 'edit_product' product.id %}" class="btn btn-pink">Edit
                                 Product</a></p>
                     </div>
-                </div>              
+                </div>
                 <div class="row">
                     <div class="col">
                         <p> {% for variant in variants %}<a href="{% url 'edit_product_variant' variant.id %}"
