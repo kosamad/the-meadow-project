@@ -46,7 +46,7 @@
                     <select name="order-number" class="form-control mb-30">
                         <option value="">Select an order</option>
                         {% for order in orders %}
-                            <option value="{{ order.order_number }}">{{ order.order_number }}</option>
+                            <option value="{{ order.order_number }}">{{ order.order_number }} on {{ order.date }}</option>
                         {% empty %}
                             <option value="">No orders available</option>
                         {% endfor %}
@@ -65,13 +65,7 @@
             </form>
         </div>
     </div>
-
-    HERE
-
-    {% for order in orders %}
-    <div>{{ order.order_number|truncatechars:6 }}</div>
-    {% endfor %}
-
+    
     <!-- Map + Address container-->
     <div class="container">
         <div class="row mt-5 mb-5">
