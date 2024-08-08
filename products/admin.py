@@ -11,8 +11,7 @@ class CategoryAdmin(admin.ModelAdmin):
 
 class ProductAdmin(admin.ModelAdmin):
     list_display = (
-        'name',              
-        'price',
+        'name',        
         'image',        
     )
 
@@ -28,9 +27,7 @@ class ProductVariantAdmin(admin.ModelAdmin):
     list_display = (
         'product',
         'size',              
-        'price',
-        'stock',
-        'is_infinite_stock',       
+        'price',      
     )
 
 # Register your models here.

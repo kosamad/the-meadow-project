@@ -5,6 +5,7 @@ import uuid
 from django.db import models
 
 
+
 class Category(models.Model):
     """
     A model for product categories.
@@ -32,7 +33,7 @@ class Product(models.Model):
     category = models.ForeignKey('Category', null=True, blank=True, on_delete=models.SET_NULL)       
     name = models.CharField(max_length=254)
     friendly_name = models.CharField(max_length=254, null=False, blank=False)
-    price = models.DecimalField(max_digits=6, decimal_places=2)
+    price = models.DecimalField(max_digits=6, decimal_places=2, default=0.00)
     description = models.TextField()    
     image = models.ImageField(null=True, blank=True, upload_to='product_images/')
     alt_text = models.TextField(default="")
@@ -55,7 +56,6 @@ class Product(models.Model):
         return self.name
 
 
-
 class ProductVariant(models.Model):    
     product = models.ForeignKey(Product, related_name='variants', on_delete=models.CASCADE)
     size = models.CharField(max_length=1, choices=Product.SIZE_CHOICES)
@@ -69,9 +69,6 @@ class ProductVariant(models.Model):
 
     def __str__(self):
         return f"{self.product.name} - {self.get_size_display()}"
-        
-
-
 
 
 class Event(models.Model): 

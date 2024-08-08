@@ -1,6 +1,11 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse
 from .models import Product, Event, ProductVariant
-from .forms import ProductForm
+from .forms import ProductForm, ProductVariantForm
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+
+
 
 def product_detail(request, product_uuid):
     """ A view to show the product details for an individual item """
@@ -32,17 +37,54 @@ def event_detail(request, event_uuid):
 
 
 def add_product(request):
-    """ Add a product to the store """    
-
-
-    form = ProductForm()        
-      
-        
+    if request.method == 'POST':
+        product_form = ProductForm(request.POST, request.FILES)
+        if product_form.is_valid():
+            product = product_form.save()
+            messages.success(request, 'Product added successfully! Now add variants.')
+            # return redirect(reverse('add_product_variant', args=[product.id]))
+        else:
+            messages.error(request, 'Failed to add product. Please ensure the form is valid.')
+    else:
+        product_form = ProductForm()
+    
     template = 'products/add_product.html'
     context = {
-        'form': form,
+        'product_form': product_form,
+    }
+    return render(request, template, context)
+
+
+
+
+def add_product_variant(request, product_uuid):
+
+    # get product info
+    product = get_object_or_404(Product, id=product_uuid)
+
+    if request.method == 'POST':
+        variant_form = ProductVariantForm(request.POST, request.FILES)
+        if variant_form.is_valid():
+            variant = variant_form.save(commit=False)
+            variant.product = product
+            variant.save()
+
+            messages.success(request, 'Product variant added successfully!')
+            return redirect(reverse('product_detail', args=[product.id]))
+        else:
+            messages.error(request, 'Failed to add product variant. Please ensure the form is valid.')
+    else:
+        variant_form = ProductVariantForm()
+    
+    template = 'products/add_product_variant.html'
+    context = {
+        'variant_form': variant_form,
+        'product': product,
     }
 
     return render(request, template, context)
+
+
+
 
 

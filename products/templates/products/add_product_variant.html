@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block extra_title %}
-- Add Product
+- Add Product Variant
 {% endblock %}
 
 {% block page_header %}
@@ -24,21 +24,21 @@
                 <h2>Product Management</h2>
             </div>
             <div class="row mt-4">
-                <p class="text-muted">Add A Product</p>
+                <p class="text-muted">Add A Product Variant</p>
             </div>
             <hr>
             <div class="row">
                 <!-- Checkout Form  -->
                 <div class="col-lg-9 col-12">
-                    <form method="POST" action="{% url 'add_product' %}" class="form mb-2"
+                    <form method="POST" action="" class="form mb-2"
                         enctype="multipart/form-data">
                         {% csrf_token %}
                         <div class="col-12">
-                            {{ product_form|crispy }}
+                            {{ variant_form|crispy }}
                         </div>                      
                         <div class="text-end">
-                            <a class="btn btn-pink" href="{% url 'shop' %}">Cancel</a>
-                            <button class="btn btn-green" type="submit">Add Product</button>
+                            <a class="btn btn-pink" href="">Cancel</a>
+                            <button class="btn btn-green" type="submit">Add Variant</button>
                         </div>
                     </form>
                 </div>
