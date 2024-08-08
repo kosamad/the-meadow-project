@@ -130,6 +130,12 @@
         </div>
     </div>
 
+    <div class="row mb-4">
+        <div class="col-12 text-end">
+            <a href="{% url 'add_product' %}">Add Product Admin Only</a>
+        </div>
+    </div>
+
     <!-- Returned Products and Events -->
     <div class="row" id="productContainer">
         {% for item_data in combined_list %}

@@ -96,8 +96,25 @@
         <div class="col-12 col-md-6 col-lg-8 align-items-start my-4">
             <div class="row">
                 <h2>{{ product.friendly_name }}</h2>
-                {% if user.is_authenticated and user.is_superuser %}                
-                    <p><a href="{% url 'add_product_variant' product.id %}" class="btn btn-pink">Add Product Variant</a></p>          
+            </div>
+              <!-- Product/Variant Add and Edit Links for Admin -->
+            {% if user.is_authenticated and user.is_superuser %}
+            <div class="row mt-2">
+                <h4 class="title-font">Admin controls</h4>
+                <div class="row mt-2">
+                    <div class="col">
+                        <p><a href="{% url 'add_product_variant' product.id %}" class=" btn btn-green">Add Product
+                                Variant</a> <a href="{% url 'edit_product' product.id %}" class="btn btn-pink">Edit
+                                Product</a></p>
+                    </div>
+                </div>              
+                <div class="row">
+                    <div class="col">
+                        <p> {% for variant in variants %}<a href="{% url 'edit_product_variant' variant.id %}"
+                                class="btn btn-pink">Edit
+                                Variant: {{ variant.get_size_display }}</a> {% endfor %}</p>
+                    </div>
+                </div>
                 {% endif %}
             </div>
             <div class="row mt-3">
@@ -117,12 +134,12 @@
                     <div class="size-selection mb-4 col-lg-4 col-md-6 col-12">
                         <select id="size-selector" name="variant_id" class="form-select">
                             {% for variant in variants %}
-                            <!-- Checks if what items are in stock/inifinitely stocked (flowers)-->                            
+                            <!-- Checks if what items are in stock/inifinitely stocked (flowers)-->
                             <option value="{{ variant.id }}" data-price="{{ variant.price }}"
                                 data-stock="{{ variant.stock }}" data-size="{{ variant.size }}"
                                 {% if variant.id == default_variant_id %}selected{% endif %}>
                                 {{ variant.get_size_display }}
-                            </option>                          
+                            </option>
                             {% endfor %}
                         </select>
                     </div>
