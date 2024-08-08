@@ -65,18 +65,17 @@ def add_product_variant(request, product_uuid):
     product = get_object_or_404(Product, id=product_uuid)
 
     if request.method == 'POST':
-        variant_form = ProductVariantForm(request.POST, request.FILES)
+        variant_form = ProductVariantForm(request.POST, request.FILES, product=product)
         if variant_form.is_valid():
             variant = variant_form.save(commit=False)
             variant.product = product
             variant.save()
-
             messages.success(request, 'Product variant added successfully!')
-            return redirect(reverse('product_detail', args=[product.id]))
+            return redirect('product_detail', product_uuid=product.id)
         else:
             messages.error(request, 'Failed to add product variant. Please ensure the form is valid.')
     else:
-        variant_form = ProductVariantForm()
+        variant_form = ProductVariantForm(product=product)
     
     template = 'products/add_product_variant.html'
     context = {

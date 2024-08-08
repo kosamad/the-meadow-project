@@ -1,6 +1,7 @@
 from django import forms
 from .models import Product, Event, Category, ProductVariant
 from django.forms.widgets import DateTimeInput
+from django.core.exceptions import ValidationError
 
 
 
@@ -34,12 +35,24 @@ class ProductVariantForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         # Extract the is_edit flag from kwargs if available
         is_edit = kwargs.pop('is_edit', False)
+        self.product = kwargs.pop('product', None)
         
         super().__init__(*args, **kwargs)
         
         # Make the size field read-only if in edit mode
         if is_edit:
             self.fields['size'].disabled = True
+
+    def clean(self):
+        cleaned_data = super().clean()
+        size = cleaned_data.get('size')
+        
+        if self.product and size:
+            # Check if the variant with the same size already exists for the product
+            if ProductVariant.objects.filter(product=self.product, size=size).exists():
+                raise ValidationError(f"A variant with size '{size}' already exists for this product.")
+
+        return cleaned_data
 
 
 
