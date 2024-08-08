@@ -100,21 +100,7 @@
                 {% endif %}
             </p>
         </div>
-
-        <!-- Sort selector to order products by Price or Name-->
-        <!-- CI method with dropdown and code in views.py but this forces the ordering to be all products, rather than just filtered if a category selected.  -->
-        <!-- <div class="col-6 d-flex justify-content-end align-items-center">
-            <button class="btn btn-green dropdown-toggle" type="button" id="sortDropdownMenu" data-bs-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-                Sort By
-            </button>
-            <div class="dropdown-menu" aria-labelledby="sortDropdownMenu">
-                <a href="{% url 'shop' %}?sort=price&direction=asc" class="dropdown-item">By Price (low to high)</a>
-                <a href="{% url 'shop' %}?sort=price&direction=desc" class="dropdown-item">By Price (high to low)</a>
-                <a href="{% url 'shop' %}?sort=name&direction=asc" class="dropdown-item">By Price (A-Z)</a>
-                <a href="{% url 'shop' %}?sort=name&direction=asc" class="dropdown-item">By Price (Z-A)</a>
-            </div>
-        </div> -->
+       
         <div class="col-6 d-flex justify-content-end align-items-center">
             <select class="btn custom-select" id="sortSelector">
                 <option value="reset" {% if sort == 'None' %}selected{% endif %}>Sort</option>
@@ -132,7 +118,8 @@
 
     <div class="row mb-4">
         <div class="col-12 text-end">
-            <a href="{% url 'add_product' %}">Add Product Admin Only</a>
+            <a href="{% url 'add_product' %}" class="btn btn-green">Add Product</a>
+            <a href="{% url 'add_event' %}" class="btn btn-green">Add Event</a>
         </div>
     </div>
 

@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from .models import Product, Event, ProductVariant
-from .forms import ProductForm, ProductVariantForm
+from .forms import ProductForm, ProductVariantForm, EventForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
@@ -55,7 +55,6 @@ def add_product(request):
         'product_form': product_form,
     }
     return render(request, template, context)
-
 
 
 
@@ -113,6 +112,7 @@ def edit_product(request, product_uuid):
     return render(request, template, context)
 
 
+
 def edit_product_variant(request, variant_id):
     """ A view to edit an individual product item """
 
@@ -143,6 +143,27 @@ def edit_product_variant(request, variant_id):
     return render(request, template, context)
 
 
+
+def add_event(request):
+    """ A view to add an individual product item """
+
+    if request.method == 'POST':
+        event_form = EventForm(request.POST, request.FILES)
+        if event_form.is_valid():
+            
+            #create a new event instance
+            event = event_form.save()           
+            return redirect(reverse('event_detail', args=[event.id]))
+        else:
+            messages.error(request, 'Failed to add product. Please ensure the form is valid.')
+    else:
+        event_form = EventForm()
+    
+    template = 'products/add_event.html'
+    context = {
+        'event_form': event_form,
+    }
+    return render(request, template, context)
 
 
 
