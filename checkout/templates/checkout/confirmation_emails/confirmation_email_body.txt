@@ -12,11 +12,8 @@ Order Date: {{ order.date }}
 Items Ordered:
 --------------{% if order.product_lineitems.exists %}{% for item in order.product_lineitems.all %}
 
-{{ item.product.friendly_name }} x {{ item.quantity }} - {{ item.lineitem_total }}{% if item.product_variant %} (Size: {{ item.product_variant.size }}){% endif %}
-{% endfor %}{% endif %}
-{% if order.event_lineitems.exists %}{% for item in order.event_lineitems.all %}
-{{ item.event.friendly_name }} x {{ item.quantity }} - {{ item.lineitem_total }}
-{% endfor %}{% endif %}
+{{ item.product.friendly_name }} x {{ item.quantity }} - {{ item.lineitem_total }}{% if item.product_variant %} (Size: {{ item.product_variant.size }}){% endif %}{% endfor %}{% endif %}{% if order.event_lineitems.exists %}{% for item in order.event_lineitems.all %}
+{{ item.event.friendly_name }} x {{ item.quantity }} - {{ item.lineitem_total }}{% endfor %}{% endif %}
 
 
 Order Summary:
@@ -29,12 +26,9 @@ Grand Total: £{{ order.grand_total }}
 
 Shipping Information:
 ----------------------
-
 {% with delivery_method=order.product_lineitems.first.delivery_method %}{% if delivery_method == 'delivery' %}
-Your order will be shipped to {{ order.product_lineitems.first.delivery_street_address1 }} in {{ order.product_lineitems.first.delivery_postcode }} on {{ order.product_lineitems.first.delivery_date }}.
-{% elif delivery_method == 'pickup' %}
-Your order will be available for pickup from our shop on {{ order.product_lineitems.first.delivery_date }}.
-{% else %}
+Your order will be shipped to {{ order.product_lineitems.first.delivery_street_address1 }} in {{ order.product_lineitems.first.delivery_postcode }} on {{ order.product_lineitems.first.delivery_date }}.{% elif delivery_method == 'pickup' %}
+Your order will be available for pickup from our shop on {{ order.product_lineitems.first.delivery_date }}.{% else %}
 Your ticket will follow in another email.
 {% endif %}{% endwith %}
 
