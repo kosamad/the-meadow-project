@@ -90,6 +90,20 @@ h2,
     background-color: #ade5d3;
 }
 
+.btn-lblue {
+    background-color:#9bebf7;
+    color: black;
+}
+
+.btn-lblue:hover{
+    background-color: #17a2b8;
+    color: white;
+}
+
+.btn-lgreen:hover {
+    background-color: #ffc4ca;
+}
+
 .btn-pink {
     background-color: #DC6874;
     color: white;

@@ -108,15 +108,15 @@
                 <h4 class="title-font">Admin controls</h4>
                 <div class="row mt-2">
                     <div class="col">
-                        <p><a href="{% url 'add_product_variant' product.id %}" class=" btn btn-green">Add Product
-                                Variant</a> <a href="{% url 'edit_product' product.id %}" class="btn btn-pink">Edit
+                        <p><a href="{% url 'add_product_variant' product.id %}" class=" btn btn-green ">Add Product
+                                Variant</a> <a href="{% url 'edit_product' product.id %}" class="btn btn-lblue">Edit
                                 Product</a></p>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col">
                         <p> {% for variant in variants %}<a href="{% url 'edit_product_variant' variant.id %}"
-                                class="btn btn-pink">Edit
+                                class="btn btn-lblue  ">Edit
                                 Variant: {{ variant.get_size_display }}</a> {% endfor %}</p>
                     </div>
                 </div>

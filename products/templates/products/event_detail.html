@@ -38,13 +38,10 @@
         </div>
         {% if user.is_authenticated and user.is_superuser %}
         <div class="col-12 bd-2 text-center">
-            <div class="row mt-2">
-                <h4 class="title-font">Admin controls</h4>
-                <div class="row mt-2">
-                    <div class="col">
-                        <p><a href="{% url 'edit_event' event.id %}" class="btn btn-pink">Edit
-                                Product</a></p>
-                    </div>
+            <div class="row mt-2 justify-content-center ">
+                <div class="col-3 text-center">
+                    <p>Admin Control: <a href="{% url 'edit_event' event.id %}" class="btn btn-lblue">Edit
+                            Event</a></p>
                 </div>
             </div>
         </div>
@@ -71,7 +68,8 @@
             {% if event.image %}
             <img src="{{ event.image.url }}" class="img-fluid rounded event-detail-image" alt="{{ event.alt_text }}">
             {% else %}
-            <img src="{{ MEDIA_URL }}noimage.png" class="img-fluid rounded event-detail-image" alt="{{ event.friendly_name }}">
+            <img src="{{ MEDIA_URL }}noimage.png" class="img-fluid rounded event-detail-image"
+                alt="{{ event.friendly_name }}">
             {% endif %}
         </div>
     </div>
@@ -80,8 +78,9 @@
             <p>{{ event.description }}</p>
             <div class="row justify-content-center">
                 <div class="col-12 text-center">
-                    <p class="my-4">For more information on Location and facilities at the meadow, <a href="{% url 'about' %}#events-container"
-                            class="no-link-style"><strong>click here</strong></a></p>
+                    <p class="my-4">For more information on Location and facilities at the meadow, <a
+                            href="{% url 'about' %}#events-container" class="no-link-style"><strong>click
+                                here</strong></a></p>
                 </div>
             </div>
         </div>
