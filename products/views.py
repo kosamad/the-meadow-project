@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Product, Event, ProductVariant
-
+from .forms import ProductForm
 
 def product_detail(request, product_uuid):
     """ A view to show the product details for an individual item """
@@ -28,5 +28,21 @@ def event_detail(request, event_uuid):
         'event': event,
     }
     return render(request, 'products/event_detail.html', context)
+
+
+
+def add_product(request):
+    """ Add a product to the store """    
+
+
+    form = ProductForm()        
+      
+        
+    template = 'products/add_product.html'
+    context = {
+        'form': form,
+    }
+
+    return render(request, template, context)
 
 
