@@ -83,11 +83,19 @@ interfering with the core requirements.-->
         <div class="container">
             <div class="row mt-5">
                 <div class="col-12 col-lg-4 mt-4">
+                    {% if user.is_authenticated %}
+                    <div class="row">
+                        <p class="text-justify">You'll be the first to hear about new events and discounts, and receive our
+                            monthly blog post with tips and tricks to keep your blooms marvellous!</p>
+                    </div>                    
+                    <div class="row text-center"><a href="" class="no-link-style"><strong>You're already Signed in!</strong></a></div>
+                    {% else %}
                     <div class="row">
                         <p class="text-justify">Be the first to hear about new events and discounts, and receive our
                             monthly blog post with tips and tricks to keep your blooms marvellous!</p>
-                    </div>
-                    <div class="row text-center"><a href="" class="no-link-style strong">Sign Up Here</a></div>
+                    </div>                    
+                    <div class="row text-center"><a href="{% url 'account_signup' %}" class="no-link-style"><strong>Sign Up Here</strong></a></div>
+                    {% endif %}
                 </div>
 
                 <div class="col-12 col-lg-4 order-sm-3 order-lg-2 social-links">
