@@ -12,7 +12,8 @@ class CategoryAdmin(admin.ModelAdmin):
 class ProductAdmin(admin.ModelAdmin):
     list_display = (
         'name',        
-        'image',        
+        'image',
+        'price',
     )
 
 class EventAdmin(admin.ModelAdmin):

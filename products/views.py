@@ -37,6 +37,8 @@ def event_detail(request, event_uuid):
 
 
 def add_product(request):
+    """ A view to add an individual product item """
+
     if request.method == 'POST':
         product_form = ProductForm(request.POST, request.FILES)
         if product_form.is_valid():
@@ -58,6 +60,7 @@ def add_product(request):
 
 
 def add_product_variant(request, product_uuid):
+    """ A view to add a variant to an individual product item """
 
     # get product info
     product = get_object_or_404(Product, id=product_uuid)
@@ -82,6 +85,61 @@ def add_product_variant(request, product_uuid):
         'product': product,
     }
 
+    return render(request, template, context)
+
+
+
+def edit_product(request, product_uuid):
+    """ A view to edit an individual product item """
+
+    product = get_object_or_404(Product, id=product_uuid)
+
+    if request.method == 'POST':
+        product_form = ProductForm(request.POST, request.FILES, instance=product)
+        if product_form.is_valid():
+            product_form.save()
+            messages.success(request, 'Product updated successfully!')
+            return redirect(reverse('product_detail', args=[product.id]))
+        else:
+            messages.error(request, 'Failed to update product. Please ensure the form is valid.')
+    else:
+        product_form = ProductForm(instance=product)
+
+    template = 'products/edit_product.html'
+    context = {
+        'product_form': product_form,
+        'product': product
+    }
+    return render(request, template, context)
+
+
+def edit_product_variant(request, variant_id):
+    """ A view to edit an individual product item """
+
+    variant = get_object_or_404(ProductVariant, id=variant_id)
+    product = variant.product 
+
+    if request.method == 'POST':
+        # is edit means the size select box doesn't work on edit mode
+        variant_form = ProductVariantForm(request.POST, request.FILES, instance=variant, is_edit=True)
+        if variant_form.is_valid():
+            variant_form.save()
+            # Update product price based on the updated variant
+            product.save()
+
+            messages.success(request, 'Product variant updated successfully!')
+            return redirect('product_detail', product_uuid=product.id)
+        else:
+            messages.error(request, 'Failed to update product variant. Please ensure the form is valid.')
+    else:
+        variant_form = ProductVariantForm(instance=variant, is_edit=True)
+
+    template = 'products/edit_product_variant.html'
+    context = {
+        'variant_form': variant_form,
+        'product': product,
+        'variant': variant,
+    }
     return render(request, template, context)
 
 
