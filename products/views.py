@@ -44,7 +44,7 @@ def add_product(request):
         if product_form.is_valid():
             product = product_form.save()
             messages.success(request, 'Product added successfully! Now add variants.')
-            # return redirect(reverse('add_product_variant', args=[product.id]))
+            return redirect('product_detail', product_uuid=product.id)
         else:
             messages.error(request, 'Failed to add product. Please ensure the form is valid.')
     else:
@@ -98,7 +98,7 @@ def edit_product(request, product_uuid):
         if product_form.is_valid():
             product_form.save()
             messages.success(request, 'Product updated successfully!')
-            return redirect(reverse('product_detail', args=[product.id]))
+            return redirect('product_detail', product_uuid=product.id)
         else:
             messages.error(request, 'Failed to update product. Please ensure the form is valid.')
     else:
@@ -145,15 +145,14 @@ def edit_product_variant(request, variant_id):
 
 
 def add_event(request):
-    """ A view to add an individual product item """
+    """ A view to add an individual event """
 
     if request.method == 'POST':
         event_form = EventForm(request.POST, request.FILES)
-        if event_form.is_valid():
-            
+        if event_form.is_valid():            
             #create a new event instance
             event = event_form.save()           
-            return redirect(reverse('event_detail', args=[event.id]))
+            return redirect('event_detail', event_uuid=event.id)
         else:
             messages.error(request, 'Failed to add product. Please ensure the form is valid.')
     else:
@@ -162,6 +161,29 @@ def add_event(request):
     template = 'products/add_event.html'
     context = {
         'event_form': event_form,
+    }
+    return render(request, template, context)
+
+
+def edit_event(request, event_uuid):
+    """ A view to edit an individual event """
+    event = get_object_or_404(Event, id=event_uuid)
+
+    if request.method == 'POST':
+        event_form = EventForm(request.POST, request.FILES, instance=event)
+        if event_form.is_valid():         
+            event_form.save()
+            messages.success(request, 'Event updated successfully!')        
+            return redirect('event_detail', event_uuid=event.id)
+        else:
+            messages.error(request, 'Failed to edit event. Please ensure the form is valid.')
+    else:
+        event_form = EventForm(instance=event)
+    
+    template = 'products/edit_event.html'
+    context = {
+        'event_form': event_form,
+        'event': event,
     }
     return render(request, template, context)
 

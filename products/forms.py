@@ -12,7 +12,8 @@ class ProductForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        categories = Category.objects.all()
+        # All categoried apart from event
+        categories = Category.objects.exclude(name__iexact='event')
         friendly_names = [(c.id, c.get_friendly_name()) for c in categories]
 
         self.fields['category'].choices = friendly_names
@@ -56,8 +57,8 @@ class EventForm(forms.ModelForm):
         }
         
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)           
-
+        super().__init__(*args, **kwargs)
+        
         # Limit category choices to only the "Event" category and preselect
         try:
             event_category = Category.objects.get(name__iexact='event')
