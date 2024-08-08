@@ -1,0 +1,22 @@
+Hello {{ order.full_name }}!
+
+Thank you for purchasing tickets to our event. Below are your ticket details. Please have these on hand when you arrive at the event.
+
+Event Ticket Information
+------------------------
+{% for item in event_line_items %}
+Event Name: {{ item.event.friendly_name }}
+Quantity: {{ item.quantity }}
+Attendee Name: {{ item.attendee_name }}
+Date: {{ item.event.event_datetime }}
+Duration {{ item.event.duration_hours }} hours {% endfor %}
+
+Please note, the events start promptly at the scheduled start time. We recommend arriving a little early to get settled before it begins. Tea and coffee will be available for you to enjoy.
+
+If you have any questions, feel free to contact us at {{ contact_email }}.
+
+We look forward to seeing you at the event!
+
+Sincerely,
+
+The Meadow Project

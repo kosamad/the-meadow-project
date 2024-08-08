@@ -28,9 +28,8 @@ Shipping Information:
 ----------------------
 {% with delivery_method=order.product_lineitems.first.delivery_method %}{% if delivery_method == 'delivery' %}
 Your order will be shipped to {{ order.product_lineitems.first.delivery_street_address1 }} in {{ order.product_lineitems.first.delivery_postcode }} on {{ order.product_lineitems.first.delivery_date }}.{% elif delivery_method == 'pickup' %}
-Your order will be available for pickup from our shop on {{ order.product_lineitems.first.delivery_date }}.{% else %}
-Your ticket will follow in another email.
-{% endif %}{% endwith %}
+Your order will be available for pickup from our shop on {{ order.product_lineitems.first.delivery_date }}.{% endif %}{% endwith %}{% if order.event_lineitems.exists %}
+Your event ticket will follow in another email.{% endif %}
 
 
 Contact Information:

@@ -36,7 +36,25 @@ class StripeWH_Handler:
             body,
             settings.DEFAULT_FROM_EMAIL,
             [cust_email]
-        )        
+        )
+
+
+    def _send_ticket_email(self, order, event_line_items):
+        """Send the user an event ticket email"""
+        cust_email = order.email
+        subject = render_to_string(
+            'checkout/confirmation_emails/ticket_email_subject.txt',
+            {'order': order})
+        body = render_to_string(
+            'checkout/confirmation_emails/ticket_email_body.txt',
+            {'order': order, 'event_line_items': event_line_items})
+        
+        send_mail(
+            subject,
+            body,
+            settings.DEFAULT_FROM_EMAIL,
+            [cust_email]
+        )
 
 
     def handle_event(self, event):
@@ -125,6 +143,11 @@ class StripeWH_Handler:
                 time.sleep(1)
         if order_exists:
             self._send_confirmation_email(order_instance)
+            # Check and send event ticket email if event items exist
+            event_line_items = order_instance.event_lineitems.all()
+            if event_line_items.exists():
+                self._send_ticket_email(order_instance, event_line_items)
+
             return HttpResponse(
                 content=f'Webhook received: {event["type"]} | SUCCESS: Verified order already in database',
                 status=200)
@@ -226,6 +249,9 @@ class StripeWH_Handler:
                     content=f'Webhook received: {event["type"]} | ERROR: {e}',
                     status=500)
         self._send_confirmation_email(order_instance)
+        # Send event ticket email if event items exist
+        if event_line_items.exists():
+            self._send_ticket_email(order_instance, event_line_items)
         return HttpResponse(
             content=f'Webhook received: {event["type"]} | SUCCESS: Created order in webhook',
             status=200)
