@@ -13,17 +13,12 @@ from profiles.models import UserProfile
 def contact(request):
     """ A view to return the index page """
 
-    orders = []
-    # username = ''
-    # email = ''
+    orders = []    
 
     if request.user.is_authenticated:       
         profile = get_object_or_404(UserProfile, user=request.user)
-        orders = profile.orders.all()  # Retrieve user's orders
-        print(orders)
-        # username = user.username
-        # email = user.email
-
+        orders = profile.orders.all()  # Retrieve user's orders for optional selection       
+       
     if request.method == 'POST':
         message_name = request.POST.get('message-name')
         message_email = request.POST.get('message-email')
@@ -34,28 +29,23 @@ def contact(request):
         if not message_name or not message_email or not message:
             messages.error(request, 'Please fill in all fields.')
             context = {
-                'orders': orders,
-                # 'username': username,
-                # 'email': email,
+                'orders': orders,               
             }
             return render(request, 'contact/contact.html', context)
 
         # send email
         send_mail(
-            f'Contact form message from {message_name}',  # subject
-            message,  # message            
-            order_number, # order number (or'')  
-            message_email,  # from email
-            ['themeadowproj@gmail.com'],  # to email
+            subject=f'Contact form message from {message_name}',  # subject
+            message=message,  # message
+            from_email=message_email,  # from email
+            recipient_list=['themeadowproj@gmail.com'],             
         )        
 
         messages.success(request, 'Your email has been sent successfully!')
         return redirect('contact')   
 
     context = {
-        'orders': orders,
-        # 'username': username,
-        # 'email': email,
+        'orders': orders,        
         }     
 
     return render(request, 'contact/contact.html', context)
