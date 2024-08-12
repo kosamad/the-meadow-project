@@ -35,9 +35,13 @@ def event_detail(request, event_uuid):
     return render(request, 'products/event_detail.html', context)
 
 
-
+@login_required
 def add_product(request):
     """ A view to add an individual product item """
+
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry, only store owners can do that.')
+        return redirect(reverse('home'))
 
     if request.method == 'POST':
         product_form = ProductForm(request.POST, request.FILES)
@@ -57,9 +61,13 @@ def add_product(request):
     return render(request, template, context)
 
 
-
+@login_required
 def add_product_variant(request, product_uuid):
     """ A view to add a variant to an individual product item """
+
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry, only store owners can do that.')
+        return redirect(reverse('home'))
 
     # get product info
     product = get_object_or_404(Product, id=product_uuid)
@@ -86,9 +94,13 @@ def add_product_variant(request, product_uuid):
     return render(request, template, context)
 
 
-
+@login_required
 def edit_product(request, product_uuid):
     """ A view to edit an individual product item """
+
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry, only store owners can do that.')
+        return redirect(reverse('home'))
 
     product = get_object_or_404(Product, id=product_uuid)
 
@@ -111,9 +123,13 @@ def edit_product(request, product_uuid):
     return render(request, template, context)
 
 
-
+@login_required
 def edit_product_variant(request, variant_id):
     """ A view to edit an individual product item """
+
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry, only store owners can do that.')
+        return redirect(reverse('home'))
 
     variant = get_object_or_404(ProductVariant, id=variant_id)
     product = variant.product 
@@ -142,9 +158,12 @@ def edit_product_variant(request, variant_id):
     return render(request, template, context)
 
 
-
+@login_required
 def add_event(request):
     """ A view to add an individual event """
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry, only store owners can do that.')
+        return redirect(reverse('home'))
 
     if request.method == 'POST':
         event_form = EventForm(request.POST, request.FILES)
@@ -164,9 +183,14 @@ def add_event(request):
     return render(request, template, context)
 
 
+@login_required
 def edit_event(request, event_uuid):
     """ A view to edit an individual event """
+
     event = get_object_or_404(Event, id=event_uuid)
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry, only store owners can do that.')
+        return redirect(reverse('home'))
 
     if request.method == 'POST':
         event_form = EventForm(request.POST, request.FILES, instance=event)

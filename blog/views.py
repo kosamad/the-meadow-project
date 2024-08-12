@@ -63,8 +63,7 @@ def post_detail(request, post_id):
 
     return render(request, 'blog/post_detail.html', context)
 
-
-    
+#  Authenticated users only can add/edit/delete blog posts. The user must be a superuser. 
 
 # Code to add/eidt/delete a blog post using CreateView/UpdateView/DeleteView ammended from Youtube tutorial by Codemy
 class AddPostView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
@@ -80,7 +79,6 @@ class AddPostView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     def handle_no_permission(self):
         # Redirect to the home page if the user does not have permission
         return redirect(reverse_lazy('home'))
-
 
 
 class UpdatePostView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
@@ -101,7 +99,6 @@ class UpdatePostView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     def get_success_url(self):
         return reverse_lazy('post_detail', kwargs={'post_id': self.object.id})
     
-   
 
 class DeletePostView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Post
