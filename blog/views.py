@@ -5,7 +5,7 @@ from .models import Post
 from django.views.generic import CreateView, UpdateView, DeleteView
 from .forms import PostForm
 from django.urls import reverse_lazy, reverse
-from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 
 
@@ -67,28 +67,52 @@ def post_detail(request, post_id):
     
 
 # Code to add/eidt/delete a blog post using CreateView/UpdateView/DeleteView ammended from Youtube tutorial by Codemy
-class AddPostView(CreateView):
+class AddPostView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     
     model = Post
     form_class = PostForm
     template_name = 'blog/add_post.html'
 
+    def test_func(self):
+        # Check if the user is a superuser
+        return self.request.user.is_superuser
+
+    def handle_no_permission(self):
+        # Redirect to the home page if the user does not have permission
+        return redirect(reverse_lazy('home'))
 
 
-class UpdatePostView(UpdateView):
+
+class UpdatePostView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
     form_class = PostForm
     template_name = 'blog/post_update.html'    
     context_object_name = 'post'
+
+    def test_func(self):
+        # Check if the user is a superuser
+        return self.request.user.is_superuser        
+
+    def handle_no_permission(self):
+        # Redirect to the home page if the user does not have permission
+        return redirect(reverse_lazy('home'))
 
     # Resolve Url when needed
     def get_success_url(self):
         return reverse_lazy('post_detail', kwargs={'post_id': self.object.id})
 
 
-class DeletePostView(DeleteView):
+class DeletePostView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Post
     template_name = 'blog/post_delete.html'
+
+    def test_func(self):
+        # Check if the user is a superuser
+        return self.request.user.is_superuser        
+
+    def handle_no_permission(self):
+        # Redirect to the home page if the user does not have permission
+        return redirect(reverse_lazy('home'))
 
     # Function ensures users 'go back' to the page they came from
     def get_context_data(self, **kwargs):
