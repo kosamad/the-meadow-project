@@ -37,7 +37,20 @@
             <div class="form-group">
             <form action="" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
-                {{ form|crispy }}
+                <div class="form-field">
+                    {{ form.title|as_crispy_field }}                    
+                    {{ form.product|as_crispy_field }}
+                    {{ form.event|as_crispy_field }}
+                    {{ form.body|as_crispy_field }}  
+                    <!-- Render custom image widget separately -->
+                    <div class="form-field">
+                        <label for="{{ form.image.id_for_label }}">Image:</label>
+                        {{ form.image }}
+                    </div>
+                    {{ form.alt_text|as_crispy_field }}
+
+                                      
+                </div>
                 <button class="btn btn-green">Update</button>
             </form>
         </div>

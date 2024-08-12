@@ -2,6 +2,7 @@ from django import forms
 from .models import Post
 from products.models import Product, Event
 from django_summernote.widgets import SummernoteWidget
+from .widgets import CustomClearableFileInput
 
 
 class PostForm(forms.ModelForm):
@@ -15,10 +16,12 @@ class PostForm(forms.ModelForm):
         widgets = {
             'alt_text': forms.TextInput(attrs={'placeholder':'Add descriptive text for your image'}),
             'title': forms.TextInput,
-            'image': forms.ClearableFileInput,        
+            'image': CustomClearableFileInput,        
             'body': SummernoteWidget(),
-        }       
-        product = forms.ModelChoiceField(queryset=Product.objects.all(), widget=forms.Select(attrs={'placeholder': 'Select a product'}))
-        event = forms.ModelChoiceField(queryset=Event.objects.all(), widget=forms.Select(attrs={'placeholder': 'Select an event'}))
+            'product': forms.Select(attrs={'placeholder': 'Select a product'}),
+            'event': forms.Select(attrs={'placeholder': 'Select an event'}),        
+            }
+          
+     
  
 

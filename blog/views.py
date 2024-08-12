@@ -100,7 +100,8 @@ class UpdatePostView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     # Resolve Url when needed
     def get_success_url(self):
         return reverse_lazy('post_detail', kwargs={'post_id': self.object.id})
-
+    
+   
 
 class DeletePostView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Post
