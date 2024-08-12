@@ -1,33 +1,53 @@
 
 from django.test import TestCase
 from django.core.files.uploadedfile import SimpleUploadedFile
-from .models import Product, Category, Event
+from .models import Product, Category, Event, ProductVariant
 from datetime import datetime, timedelta
 from django.utils import timezone
+import uuid
+
+
+"""
+Category model tests
+"""
+class CategoryModelTests(TestCase):
+
+    def setUp(self):
+        self.category = Category.objects.create(
+            name='Test Category',
+            friendly_name='Test Friendly Category'
+        )
+
+    def test_category_str(self):
+        self.assertEqual(str(self.category), 'Test Category')
+
+    def test_get_friendly_name(self):
+        self.assertEqual(self.category.get_friendly_name(), 'Test Friendly Category')
+
 
 
 """
 Products model tests
 """
-
-
 class TestProductModel(TestCase):
     def setUp(self):
         self.category = Category.objects.create(name="Test Category", friendly_name="Test Category")
+        image_path = 'media/full-logo.png'
+        with open(image_path, 'rb') as img_file:
+            self.image_data = img_file.read()
 
     def test_product_created_correctly(self):
         self.product = Product.objects.create(
             category=self.category,
-            name="Test Product",
-            friendly_name="Test Product",
-            price=19.99,
-            description="This is a test product",
-            has_sizes=True,
-            alt_text="Test Product Image",
-            rating=4.5,
+            name='Test Product',
+            friendly_name='Test Friendly Product',
+            price=8.00,
+            description='Test product description',
+            image=SimpleUploadedFile('test_image.jpg', self.image_data, content_type='image/jpeg'),
+            alt_text='Test Product Image',
             is_gift_card=False,
             is_active=True,
-            size='M'
+            is_infinite_stock=False
         )
         
         # Product instance is of type Product
@@ -35,14 +55,14 @@ class TestProductModel(TestCase):
         
         # Other attributes of the product
         self.assertEqual(self.product.__str__(), self.product.name)
-        self.assertEqual(self.product.price, 19.99)
-        self.assertEqual(self.product.description, "This is a test product")
-        self.assertEqual(self.product.has_sizes, True)
-        self.assertEqual(self.product.alt_text, "Test Product Image")
-        self.assertEqual(self.product.rating, 4.5)
+        self.assertEqual(self.product.price, 8.00)
+        self.assertEqual(self.product.description, "Test product description")        
+        self.assertIsNotNone(self.product.image)
+        self.assertEqual(self.product.alt_text, "Test Product Image")        
         self.assertEqual(self.product.is_gift_card, False)
         self.assertEqual(self.product.is_active, True)
-        self.assertEqual(self.product.size, 'M')
+
+
 
     # testing default ordering of products.
     def test_product_ordering(self):
@@ -52,48 +72,93 @@ class TestProductModel(TestCase):
             category=self.category,
             name="Product 1",
             friendly_name="B Product",
-            price=19.99,
+            price=8.00,
             description="This is product 1",
         )
         self.product2 = Product.objects.create(
             category=self.category,
             name="Product 2",
             friendly_name="A Product",
-            price=29.99,
+            price=9.00,
             description="This is product 2",
         )
         self.product3 = Product.objects.create(
             category=self.category,
             name="Product 3",
             friendly_name="C Product",
-            price=39.99,
+            price=5.00,
             description="This is product 3",
         )
         # Retrieve all products and check the ordering
         ordered_products = Product.objects.all()    
         self.assertEqual(list(ordered_products), [self.product2, self.product1, self.product3])
-        
-    # Testing image upload works.
-    def test_image_field(self):
-        image_path = 'media/full-logo.png'
-        with open(image_path, 'rb') as img:
-            image_data = img.read()
 
-        product = Product.objects.create(
-            category=self.category,
-            name="Test Image Product",
-            friendly_name="Test Image Product",
+
+
+"""
+Product Variant model tests
+"""
+
+class TestProductVariantModel(TestCase):
+
+    def setUp(self):
+        # Create a category for the product
+        self.category = Category.objects.create(name="Test Category", friendly_name="Test Category")
+
+        # Create a product to associate with the product variants
+        self.product = Product.objects.create(
+            name='Test Product',
+            friendly_name='Friendly Test Product',
             price=19.99,
-            description="This is a test product with an image",
-            has_sizes=True,
-            alt_text="Test Product Image",
-            image=SimpleUploadedFile('test_image.jpg', image_data, content_type='image/jpeg')
+            description='Description for Test Product',
+            image=SimpleUploadedFile('test_product_image.jpg', b'test image data', content_type='image/jpeg'),
+            alt_text='Test Product Image',
+            is_gift_card=False,
+            is_active=True,
+            is_infinite_stock=False
         )
 
-        saved_product = Product.objects.get(id=product.id)
-        self.assertIsNotNone(saved_product.image)
+    def test_product_variant_creation(self):
+        # Create a product variant
+        variant = ProductVariant.objects.create(
+            product=self.product,
+            size='M',           
+            is_infinite_stock=False,
+            price=5.00,
+            is_active=True
+        )
+        
+        # Test that the variant is created and has the correct attributes
+        self.assertIsInstance(variant, ProductVariant)
+        self.assertEqual(variant.product, self.product)
+        self.assertEqual(variant.size, 'M')       
+        self.assertFalse(variant.is_infinite_stock)
+        self.assertEqual(variant.price, 5.00)
+        self.assertTrue(variant.is_active)
 
-
+    def test_product_variant_unique_constraint(self):
+        # Create a product variant with the same size for the same product
+        ProductVariant.objects.create(
+            product=self.product,
+            size='S',           
+            is_infinite_stock=False,
+            price=6.00,
+            is_active=True
+        )
+        
+        # Try to create a duplicate variant with the same size for the same product
+        with self.assertRaises(Exception) as context:
+            ProductVariant.objects.create(
+                product=self.product,
+                size='S',
+                stock=3,
+                is_infinite_stock=True,
+                price=10.00,
+                is_active=True
+            )
+        
+        self.assertTrue('UNIQUE constraint failed' in str(context.exception))
+   
 
 """
 Events model tests
@@ -101,79 +166,39 @@ Events model tests
 class TestEventModel(TestCase):
 
     def setUp(self):
+        self.category = Category.objects.create(name="Event Category", friendly_name="Event Category")
         self.event_datetime = timezone.now() + timedelta(days=5)
+        image_path = 'media/full-logo.png'
+        with open(image_path, 'rb') as img_file:
+            image_data = img_file.read()
+
         self.event = Event.objects.create(
-            name='Base Event',
-            friendly_name='Friendly Base Event',
-            price=29.99,
+            name='test Event',
+            friendly_name='Friendly Test Event',
+            price=8.00,
             event_datetime=self.event_datetime,
-            description='Description for Base Event',
-            capacity=100,
-            tickets_sold=50,
-            image=None,
-            alt_text='Alt text for Base Event',
+            description='Description for Test Event',
+            duration_hours=3,           
+            image=SimpleUploadedFile('test_image.jpg', image_data, content_type='image/jpeg'),
+            alt_text='Alt text for test Event',
             is_active=True
         )
-    # Test event creation 
+
+     # Testing Event Creation
     def test_event_creation(self):
         self.assertIsInstance(self.event, Event)
-        self.assertEqual(str(self.event), 'Base Event')
-        self.assertEqual(self.event.friendly_name, 'Friendly Base Event')
-        self.assertEqual(self.event.price, 29.99)      
-        self.assertEqual(self.event.description, 'Description for Base Event')
-        self.assertEqual(self.event.capacity, 100)
-        self.assertEqual(self.event.tickets_sold, 50)
-        self.assertEqual(self.event.event_datetime, self.event_datetime)     
+        self.assertEqual(str(self.event), 'test Event')
+        self.assertEqual(self.event.friendly_name, 'Friendly Test Event')
+        self.assertEqual(self.event.price, 8.00)
+        self.assertEqual(self.event.description, 'Description for Test Event')        
+        self.assertEqual(self.event.event_datetime, self.event_datetime)
+        self.assertEqual(self.event.duration_hours, 3)
+        self.assertIsNotNone(self.event.image)
+        self.assertEqual(self.event.alt_text, 'Alt text for test Event')
+        self.assertTrue(self.event.is_active)
+        self.assertTrue(self.event.is_event)     
    
     # Testing Event Order
-    def test_event_ordering(self):
-        self.event1 = Event.objects.create(
-            name='Event 1',
-            price=29.99,
-            capacity=100,
-            tickets_sold=50,
-            event_datetime=timezone.now() - timedelta(days=1)
-        )
-        self.event2 = Event.objects.create(
-            name='Event 2',
-            price=29.99,
-            capacity=100,
-            tickets_sold=50,
-            event_datetime=timezone.now()
-        )
-        self.event3 = Event.objects.create(
-            name='Event 3',
-            price=29.99,
-            capacity=100,
-            tickets_sold=50,
-            event_datetime=timezone.now() + timedelta(days=1)
-        )
-        ordered_events = Event.objects.order_by('event_datetime')
-        self.assertEqual(list(ordered_events), [self.event1, self.event2, self.event3, self.event])
-
-    # Testing image upload works.
-    def test_image_field(self):
-        image_path = 'media/full-logo.png'
-        with open(image_path, 'rb') as img:
-            image_data = img.read()
-
-        event_with_image = Event.objects.create(
-            name='Event 1',
-            friendly_name='Friendly Event 1',
-            price=29.99,
-            event_datetime=self.event_datetime,
-            description='Description for Event 1',
-            capacity=100,
-            tickets_sold=50,
-            image=SimpleUploadedFile('test_image.jpg', image_data, content_type='image/jpeg'),
-            alt_text='Alt text for Event 1',
-            is_active=True
-        )
-
-        saved_event = Event.objects.get(id=event_with_image.id)
-        self.assertIsNotNone(saved_event.image)
-
-    
 
 
 
