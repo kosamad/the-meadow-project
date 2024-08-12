@@ -168,9 +168,11 @@ class TestEventModel(TestCase):
     def setUp(self):
         self.category = Category.objects.create(name="Event Category", friendly_name="Event Category")
         self.event_datetime = timezone.now() + timedelta(days=5)
-        image_path = 'media/full-logo.png'
-        with open(image_path, 'rb') as img_file:
-            image_data = img_file.read()
+        self.image_data = SimpleUploadedFile(
+            name='test_image.jpg',
+            content=b'This is a test image content',
+            content_type='image/jpeg'
+        )
 
         self.event = Event.objects.create(
             name='test Event',
@@ -179,26 +181,29 @@ class TestEventModel(TestCase):
             event_datetime=self.event_datetime,
             description='Description for Test Event',
             duration_hours=3,           
-            image=SimpleUploadedFile('test_image.jpg', image_data, content_type='image/jpeg'),
+            image=self.image_data,
             alt_text='Alt text for test Event',
             is_active=True
         )
 
-     # Testing Event Creation
+    # Testing Event Creation
     def test_event_creation(self):
-        self.assertIsInstance(self.event, Event)
-        self.assertEqual(str(self.event), 'test Event')
-        self.assertEqual(self.event.friendly_name, 'Friendly Test Event')
-        self.assertEqual(self.event.price, 8.00)
-        self.assertEqual(self.event.description, 'Description for Test Event')        
-        self.assertEqual(self.event.event_datetime, self.event_datetime)
-        self.assertEqual(self.event.duration_hours, 3)
-        self.assertIsNotNone(self.event.image)
-        self.assertEqual(self.event.alt_text, 'Alt text for test Event')
-        self.assertTrue(self.event.is_active)
-        self.assertTrue(self.event.is_event)     
-   
-    # Testing Event Order
+        # Retrieve the event from the database
+        saved_event = Event.objects.get(id=self.event.id)
+
+        # Assertions
+        self.assertIsInstance(saved_event, Event)
+        self.assertEqual(str(saved_event), 'test Event')
+        self.assertEqual(saved_event.friendly_name, 'Friendly Test Event')
+        self.assertEqual(saved_event.price, 8.00)
+        self.assertEqual(saved_event.description, 'Description for Test Event')
+        self.assertEqual(saved_event.event_datetime, self.event_datetime)
+        self.assertEqual(saved_event.duration_hours, 3)
+        self.assertIsNotNone(saved_event.image)  # Ensure image is uploaded
+        self.assertTrue(saved_event.image.name.startswith('event_images/test_image'))  # Check if the image is stored with a prefix
+        self.assertEqual(saved_event.alt_text, 'Alt text for test Event')
+        self.assertTrue(saved_event.is_active)
+        self.assertTrue(saved_event.is_event)
 
 
 
