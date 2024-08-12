@@ -59,10 +59,10 @@
             </form>
         </div>
     </div>
-    {% if user.is_superuser %}
+    {% if user.is_authenticated and user.is_superuser %}
     <div class="row mb-4">
         <div class="col-12 text-end">
-            <a href="{{ 'add_post' }}">Add Post Admin Only</a>
+            <a href="{{ 'add_post' }}" class="text-green" >Add Post</a>
         </div>
     </div>
     {% endif %}
@@ -90,13 +90,14 @@
                     </div>
                 </div>
                 <div class="row text-center product-text mt-4 mb-4">
+                    {% if user.is_authenticated and user.is_superuser %}
                     <div class="row">
                         <p class="text-end"><small>
-                                <a class="text-end text-green" href="{% url 'post_update' post.id %}">Admin ONLY!
-                                    Edit</a>
+                                <a class="text-end text-green" href="{% url 'post_update' post.id %}">Edit</a>
                                 <a class="text-danger" href="{% url 'post_delete' post.id %}">Delete</a></small>
                         </p>
                     </div>
+                    {% endif %}
                     <h3 class="title-font">{{ post.title }}</h3>
                     <p>{{ post.date|date:"F j, Y" }}</p>
                     <p class="text-justify">{{ post.body|slice:":200"|safe }} {% if post.body|length > 200 %}... {% endif %}
