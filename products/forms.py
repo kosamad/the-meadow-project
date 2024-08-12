@@ -2,6 +2,7 @@ from django import forms
 from .models import Product, Event, Category, ProductVariant
 from django.forms.widgets import DateTimeInput
 from django.core.exceptions import ValidationError
+from .widgets import CustomClearableFileInput
 
 
 
@@ -9,7 +10,9 @@ class ProductForm(forms.ModelForm):
 
     class Meta:
         model = Product
-        fields = ['category', 'name', 'friendly_name','price', 'description', 'image', 'alt_text', 'is_gift_card', 'is_active'] 
+        fields = ['category', 'name', 'friendly_name','price', 'description', 'image', 'alt_text', 'is_gift_card', 'is_active']
+
+    image = forms.ImageField(label='Image', required=False, widget=CustomClearableFileInput)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -64,10 +67,14 @@ class EventForm(forms.ModelForm):
             'category', 'name', 'friendly_name','event_datetime',
             'duration_hours', 'price', 'description', 'image','alt_text',
             'is_active',
-        ]
+        ]                
+
         widgets = {
             'event_datetime': DateTimeInput(attrs={'type': 'datetime-local'}),
         }
+
+    image = forms.ImageField(label='Image', required=False, widget=CustomClearableFileInput)   
+
         
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

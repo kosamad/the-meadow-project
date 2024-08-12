@@ -463,6 +463,25 @@ h2,
     /* text-info */
 }
 
+/* image widget */
+.btn-file {
+    display: block; /* Ensure button is on its own line */
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+
+.btn-file input[type="file"] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+
 
 /* Media Queries */
 

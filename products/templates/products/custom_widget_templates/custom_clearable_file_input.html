@@ -1,0 +1,14 @@
+<!-- widget code adapted from Boutique Ado tutorial by Code Institute -->
+{% if widget.is_initial %}
+    <p >{{ widget.initial_text }}:</p>
+    <a href="{{ widget.value.url }}">
+        <img width="96" height="96" class="rounded shadow-sm mb-2" src="{{ widget.value.url }}" alt="{{ widget.value.name }}">
+    </a>
+    {{ widget.input_text }}  <!-- Input text for context (e.g., 'Select a new image') -->
+{% endif %}
+<div class="form-group">
+<span class="btn btn-green btn-file">
+    Select A New Image <input id="new-image" type="{{ widget.type }}" name="{{ widget.name }}"{% include "django/forms/widgets/attrs.html" %}>
+</span>
+<strong><p class="text-danger" id="filename"></p></strong>
+</div>
