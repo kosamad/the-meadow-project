@@ -59,12 +59,13 @@
             </form>
         </div>
     </div>
-
+    {% if user.is_superuser %}
     <div class="row mb-4">
         <div class="col-12 text-end">
             <a href="{{ 'add_post' }}">Add Post Admin Only</a>
         </div>
     </div>
+    {% endif %}
 
     <!-- Display no results message if applicable -->
     {% if no_results %}

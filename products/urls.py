@@ -8,8 +8,11 @@ urlpatterns = [
     path('add_event/', views.add_event, name='add_event'),
     path('add_variant/<uuid:product_uuid>/', views.add_product_variant, name='add_product_variant'),
     path('edit_product/<uuid:product_uuid>/', views.edit_product, name='edit_product'),
+    path('delete_product/<uuid:product_uuid>/', views.delete_product, name='delete_product'),
+    path('delete_product_variant/<int:variant_id>/', views.delete_product_variant, name='delete_product_variant'),
     path('edit_product_variant/<int:variant_id>/', views.edit_product_variant, name='edit_product_variant'),
     path('edit_event/<uuid:event_uuid>/', views.edit_event, name='edit_event'),
+    path('delete_event/<uuid:event_uuid>/', views.delete_event, name='delete_event'),
 ]
 
 

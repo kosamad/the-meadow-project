@@ -187,4 +187,53 @@ def edit_event(request, event_uuid):
     return render(request, template, context)
 
 
+@login_required
+def delete_product(request, product_uuid):
+    """ Delete a product from the store """
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry, only store owners can do that.')
+        return redirect(reverse('home'))
+    if request.method == 'POST':
+        product = get_object_or_404(Product, pk=product_uuid)
+        product.delete()
+        messages.success(request, 'Product deleted!')
+        return redirect(reverse('shop'))
+    else:
+        return redirect('home')
+
+
+@login_required
+def delete_product_variant(request, variant_id):
+    """ Delete a product from the store """
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry, only store owners can do that.')
+        return redirect(reverse('home'))
+    
+    # get product info    
+    variant = get_object_or_404(ProductVariant, id=variant_id)
+    product = variant.product
+
+    if request.method == 'POST':
+        # Delete the variant
+        variant.delete()
+        messages.success(request, 'Product variant deleted!')
+        return redirect('product_detail', product_uuid=product.id)
+    else:
+        return redirect('home')
+
+
+@login_required
+def delete_event(request, event_uuid):
+    """ Delete a event from the store """
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry, only store owners can do that.')
+        return redirect(reverse('home'))
+
+    event = get_object_or_404(Event, pk=event_uuid)
+    if request.method == 'POST':    
+        product.delete()
+        messages.success(request, 'Event deleted!')
+        return redirect(reverse('shop'))
+    else:
+        return redirect('home')
 

@@ -100,28 +100,44 @@
         <!-- Product Order Form and details-->
         <div class="col-12 col-md-6 col-lg-8 align-items-start my-4">
             <div class="row">
-                <h2>{{ product.friendly_name }}</h2>
-            </div>
-            <!-- Variant Add and Product Edit Links for Admin -->
-            {% if user.is_authenticated and user.is_superuser %}
-            <div class="row mt-2">
-                <h4 class="title-font">Admin controls</h4>
-                <div class="row mt-2">
-                    <div class="col">
-                        <p><a href="{% url 'add_product_variant' product.id %}" class=" btn btn-green ">Add Product
-                                Variant</a> <a href="{% url 'edit_product' product.id %}" class="btn btn-lblue">Edit
-                                Product</a></p>
-                    </div>
+                <!-- Product Name and admin controls-->
+                <div class="col-lg-8 col-12">
+                    <h2>{{ product.friendly_name }}</h2>
+                    {% if user.is_authenticated and user.is_superuser %}
+                    <hr>
+                    <small>
+                        <p style="display:inline;">
+                            <!-- Form for deleting the product -->
+                            <a href="{% url 'edit_product' product.id %}" class="text-green">Edit
+                            </a> | <form action="{% url 'delete_product' product.id %}" method="POST"
+                                style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="delete-btn"
+                                    onclick="return confirm('Are you sure you want to delete this product?');">
+                                    Delete</button>
+                            </form> | <a href="{% url 'add_product_variant' product.id %}" class="text-green">Add
+                                Variant</a>
+                        </p>
+                        <p class=""><strong>Variants:</strong></p>
+                        {% for variant in variants %}
+                        <p class="mt-0 mb-0" style="display:inline-block;">{{ variant.get_size_display }}:
+                            <!-- Form for deleting the product -->
+                            <a href="{% url 'edit_product_variant' variant.id %}" class="text-green">Edit
+                            </a> | <form action="{% url 'delete_product_variant' variant.id %}" method="POST"
+                                style="display:inline-block;" class="mt-0 mb-0">
+                                {% csrf_token %}
+                                <button type="submit" class="delete-btn"
+                                    onclick="return confirm('Are you sure you want to delete this variant?');">
+                                    Delete</button>
+                            </form>
+                        </p>
+                        {% endfor %}
+                    </small>
+                    <hr>
+                    {% endif %}
                 </div>
-                <div class="row">
-                    <div class="col">
-                        <p> {% for variant in variants %}<a href="{% url 'edit_product_variant' variant.id %}"
-                                class="btn btn-lblue  ">Edit
-                                Variant: {{ variant.get_size_display }}</a> {% endfor %}</p>
-                    </div>
-                </div>
-                {% endif %}
             </div>
+            <!-- Variant price (or default if variants not added. Will show Medium if added. )-->
             <div class="row mt-3">
                 <p id="price">Price: £<span id="variant-price">{{ default_price }}</span></p>
                 {% if variant.is_infinite_stock or variant.stock > 0 %}

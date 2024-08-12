@@ -5,6 +5,7 @@ from .models import Post
 from django.views.generic import CreateView, UpdateView, DeleteView
 from .forms import PostForm
 from django.urls import reverse_lazy, reverse
+from django.contrib.auth.mixins import PermissionRequiredMixin
 
 
 
@@ -67,6 +68,7 @@ def post_detail(request, post_id):
 
 # Code to add/eidt/delete a blog post using CreateView/UpdateView/DeleteView ammended from Youtube tutorial by Codemy
 class AddPostView(CreateView):
+    
     model = Post
     form_class = PostForm
     template_name = 'blog/add_post.html'

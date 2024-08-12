@@ -33,11 +33,28 @@
     <div class="row text-center align-items-center justify-content-center mt-4 mb-4">
         <div class="col-12 col-md-9 col-lg-6">
             <p>
-                Welcome to The Meadow Project's shop! Discover our exquisite collection of flowers and plants, available
-
+                Welcome to your profile! Here you can find all your previous order information and your default details. 
             </p>
         </div>
     </div>
+
+    <!-- Admin only link buttons -->
+    <div class="row text-center align-items-center justify-content-center mt-4 mb-4">
+        <div class="col-12 col-md-9 col-lg-6">
+            <p>
+                <strong>Admin only links</strong>
+            </p>
+            <p>
+                To add a product variant, please go to the specific product in the <a href="{% url 'shop' %}">shop.</a>.
+            </p>
+            <a href="{% url 'add_product' %}" class="btn btn-green">Add Product</a>
+            <a href="{% url 'add_event' %}" class="btn btn-green">Add Event</a>
+            <a href="{% url 'add_post' %}" class="btn btn-green">Add Blog Post</a>
+        </div>
+    </div>
+    <hr>
+
+
     <!-- User Profile Info -->
     <div class="row">
         <h3 class="title-font">Your Details</h3>
