@@ -116,12 +116,14 @@
         </div>
     </div>
 
+    {% if user.is_authenticated and user.is_superuser %}
     <div class="row mb-4">
         <div class="col-12 text-end">
             <a href="{% url 'add_product' %}" class="btn btn-green">Add Product</a>
             <a href="{% url 'add_event' %}" class="btn btn-green">Add Event</a>
         </div>
     </div>
+    {% endif %}
 
     <!-- Returned Products and Events -->
     <div class="row" id="productContainer">
