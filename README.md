@@ -6,11 +6,7 @@
 
 
 
-Summary of the site
-
-Events
-Meadow Project Bristol
-Flowers and Plants delivered
+The Meadow Project is a community-focused initiative dedicated to offering affordable and eco-friendly flowers and plants. Our mission extends beyond just sales—we offer unique floristry events set against the serene backdrop of a beautiful meadow, creating relaxing but informative experiences for all attendees. Our website features a user-friendly platform where visitors can easily explore our offerings, make purchases, and complete transactions with ease. Additionally, our blog provides valuable gardening tips and inspiration, allowing users to recreate elements of our meadow Project at home.
 
 Please note, The Meadow Project is a fictional company created to fulfill Project 4 as part of the Code Institute's course. All content has been created as if it were a real business fulfilling a real-life objective.
 
@@ -343,11 +339,84 @@ This font will be paried with Atkinson Hyperlegible. This was selected after rea
 
 The site's color scheme was inspired by my logo design, incorporating the primary colors #FFBD59 (Hunyadi Yellow), #DC6874 (Bright Pink), #04724D (Dark Spring Green), and #E26016 (Spanish Orange) and variations on them. These colors will be used sparingly as accents to maintain a clean, sleek, and stylish design. The minimal use of color ensures that the product colors are prominently emphasised.
 
+For alerts, warning text, and some links, default Bootstrap styling has been applied. This choice leverages the familiar and recognisable design of these features, enhancing the overall user experience.
+
 ![Colour Scheme](documentation/design/coolers-tmp.PNG)
 
-## Finished Site Features
+## Finished Site
 
-### Imagery
+![All screens]()
+
+### Information Architecture
+
+[PostgreSQL from Code Institute](https://dbs.ci-dbs.net/) has been used to host the back-end database for the Meadow Project. 
+
+The code for this site has been developed using a [Django](https://www.djangoproject.com/) framework and comprises of the following apps:
+
+1. About
+2. Bag
+3. Blog
+4. Checkout
+5. Contact
+6. Home
+7. Products
+8. Profiles
+9. Reviews
+10. Shop
+
+This design structure aims to help scalability and maintainability of the app as it grows.
+
+#### Updates from Design:
+
+Due to time constraints, a couple of the initially planned features have not been implemented at this time. These are:
+
+* Star ratings for products
+* Discount code implementation
+* Sales data/product and event ticket stock control
+* The ability for site owners to amend a banner that advertises calendar events
+
+These will be prioritised in future rollouts, as they would enhance the site and improve it for both site owners and users. Where appropriate these have been left in the modals to ensure seamless integration in the future. 
+
+Furthermore, I chose not to implement the following feature:
+
+* Category addition via the site (due to potential modifications that might be required if a different type of product were added)
+* Separate contact forms for orders and general enquires (I merged these together)
+
+Updated Database Schema:
+
+Throughout development, the site schema was adapted to accommodate the functionality of the site and to enhance the project's future flexibility. For example, to improve the Product model and allow for variations where appropriate, I included a ProductVariant model, which handles changes in size/price for plants and flowers. Furthermore, events were merged and included within the 'products' app to support bag and checkout functionality.
+
+![Uptodate Database Design](documentation/final/final-database.png)
+
+Wireframe Alterations:
+
+* The Shop page has been adapted to improve the user experience and ensure the correct information is rendered from the database. 
+
+* The Product Detail page does not include delivery information. This ensures that delivery details are consolidated during the checkout process (and app) and prevents discrepancies between different items having different delivery information.
+
+* To improve clarity and user experience, my checkout pages 1, 2, and 3 have been altered to hide the previous section from view.
+
+* Blog posts do not contain additional images within the body.
+
+* Log in with Google has not been implemented at this time. 
+
+
+### Features
+
+#### All Pages
+
+All forms across the site utlilise crispy forms to render content, ensuring a consistent and visually appealing user interface. These inputs come with added functionality, including dynamic feedback and validation promts (e.g email address need @) to aid users when they have made a mistake with a form, promoting data accuracy and submission reliability. 
+
+Furthermore, custom programming has been implemented to ensure all form elements are valid and do contain only whitespace (where this is applicable). In instances where input is missing, clear messages prompt users to fill in the required fields or make necessary modifications, facilitating form completion. 
+
+All buttons/links change colour when they are hovered over to imporve the user experience.
+
+### All Users
+
+<details><summary>Base.html</summary>
+
+</details>
+
 
 ## Technologies
 
@@ -377,8 +446,8 @@ HTML, CSS, JavaScript & Python
 * [Balsamiq](https://balsamiq.com) - to create wireframes.
 * [Coolers](https://coolors.com) - to view the colour scheme.
 * [Canva](https://www.canva.com) - to create the logo.
-* [Google Fonts](https://fonts.google.com) - for the fonts used on the website.
-* [Travis](https://www.travis-ci.com) - to automatically run my tests with each deployment.
+* [Google Fonts](https://fonts.google.com) - for the fonts used on the website. 
+* [PostgreSQL from Code Institute](https://dbs.ci-dbs.net/) - to create the database for the site. 
 
 ## Testing
 
