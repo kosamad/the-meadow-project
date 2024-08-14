@@ -6,6 +6,8 @@ body {
     font-family: 'Atkinson Hyperlegible', sans-serif;
 }
 
+
+
 .standard-font {
     font-family: 'Atkinson Hyperlegible', sans-serif;
 }
@@ -193,6 +195,10 @@ h2,
 .icon-pink {
     color: #DC6874;
 }
+
+.nav-link.active {     
+    font-weight: bold;
+ }
 
 /* Footer */
 

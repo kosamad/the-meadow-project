@@ -415,6 +415,29 @@ All buttons/links change colour when they are hovered over to imporve the user e
 
 <details><summary>Base.html</summary>
 
+Base.html serves as the foundation for every page, reducing redundancy in code and enhancing efficiency. By consolidating common HTML elements, it accelerates load times, streamlines webpage appearance, and optimises backend performance. 
+
+The base.html file includes the head section, which contains metadata, stylesheets, and scripts necessary for each page. It sets the default site title, "The Meadow Project," with an additional title block that can be customised on individual pages for specific identification.
+
+The template also loads the site's Navbar (separate html) and Footer, ensuring consistent navigation and branding across all pages. Additionally, it is set up for future roll outs to render any extra header content as needed.
+
+The main page content for each unique page is rendered within the {% block content %} section.
+
+</details>
+
+<details><summary>navbar.html</summary>
+
+The 'sticky' navigation bar significantly enhances the user experience by always staying visible as users scroll, making it easy to identify the current page and navigate the site effortlessly. The logo doubles as a link to return to the home page, providing a quick way to reset navigation. On smaller screens, such as tablets and mobiles, the navbar collapses into a burger menu icon. When clicked, this icon reveals the menu links, ensuring that navigation remains user-friendly across all devices.
+
+The Navbar also has icons to aid navigation to three key areas of the site:
+
+1. User Icon - This icon provides links for logging in or signing up. Once logged in, it changes to offer access to the user's profile and a logout option. For admin users, the profile link is labeled 'TMP Management,' providing quick access to administrative functions.
+
+2. Bag Icon: This icon allows users to view their basket at any time. Initially green, it changes to pink when items are added, drawing attention to the cart's contents. 
+
+3. Magnifying Glass Icon: This icon opens a search bar, enabling users to quickly search the shop and find specific products/events.
+
+
 </details>
 
 
