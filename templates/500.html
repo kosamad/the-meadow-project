@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_title %}
+- 500
+{% endblock %}
+
+{% block page_header %}
+<div class="container header-container">
+    <div class="row">
+        <div class="col"></div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<!-- 403 Error Section -->
+<div class="container">
+    <!-- Page Title - About Page -->
+    <div class="row mt-4 mb-5">
+        <div class="col-12 text-center">
+            <h1>500 - Internal Server Error</h1>
+            <hr>
+        </div>
+
+        <!-- Content -->
+        <div class="row pt-3">
+            <div class="col-12">
+                <p class="text-center">
+                    Sorry, something went wrong on our end. Please try again later.
+                </p>
+                <p class="text-medium text-center">
+                    Use the button below to return to Home
+                </p>
+            </div>
+        </div>
+        <!-- Keep Shopping -->
+        <div class="row">
+            <div class="col-12">
+                <div class="text-center py-2">
+                    <a href="{% url 'home' %}" class="btn btn-green">
+                        Go Home
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+{% block extrapostloadjs %}
+{% endblock %}
