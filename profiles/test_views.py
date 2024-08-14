@@ -15,11 +15,11 @@ Profile tests
 class TestProfileView(TestCase):
 
     def setUp(self):
-        # Create a user and profile
-        self.user = User.objects.create_user(username='newtest', password='newtestpass')
-        self.profile = UserProfile.objects.create(user=self.user)
+        # Create a user and profile (PLEASE CHANGE USERNAME AND PW TO GET TEST TO PASS)
+        #otherwise this will fail the Unique contraint
+        self.user = User.objects.create_user(username='newtest1', password='newtestpass1')        
         self.client = Client()
-        self.client.login(username='newtest', password='newtestpass')
+        self.client.login(username='newtest1', password='newtestpass1')
 
     # Profile loads with correct data
     def test_profile_page_loads(self):
@@ -38,6 +38,7 @@ class TestProfileView(TestCase):
         response = self.client.post(reverse('profile'), data=form_data)
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'Profile updated successfully')
+
         updated_profile = UserProfile.objects.get(user=self.user)
         self.assertEqual(updated_profile.default_phone_number, '1234')
         self.assertEqual(updated_profile.default_town_or_city, 'Test town')
@@ -50,12 +51,11 @@ Profile Order History
 class TestOrderHistoryView(TestCase):
 
     def setUp(self):
-        self.user = User.objects.create_user(username='testuser2', password='testpassword2')
-        self.profile = UserProfile.objects.create(user=self.user)
+        self.user = User.objects.create_user(username='testuser2', password='testpassword2')       
 
         # Create an order for testing
         self.order = Order.objects.create(
-            user_profile=self.profile,
+            user_profile=self.user.userprofile, 
             full_name='Test User2',
             email='testuser2@example.com',
             phone_number='1234',
