@@ -9,7 +9,7 @@ from .models import Order, ProductOrderLineItem, EventOrderLineItem
 class OrderModelTests(TestCase):
 
     def setUp(self):
-         # Create or retrieve a User instance (prevent unique contraint errors)
+        # Create or retrieve a User instance (prevent unique contraint errors)
         user, created = User.objects.get_or_create(username="testuser8")
         if created:
             user.set_password("password8")
@@ -33,7 +33,7 @@ class OrderModelTests(TestCase):
             postcode="12345",
             town_or_city="Test Town",
             street_address1="123 Test Street",
-            street_address2="Apt 4B",
+            street_address2="Bristol",
             county="Test County",
             delivery_cost=Decimal('5.00'),
             order_total=Decimal('100.00'),
@@ -54,7 +54,7 @@ class OrderModelTests(TestCase):
             self.assertEqual(self.order.postcode, "12345")
             self.assertEqual(self.order.town_or_city, "Test Town")
             self.assertEqual(self.order.street_address1, "123 Test Street")
-            self.assertEqual(self.order.street_address2, "Apt 4B")
+            self.assertEqual(self.order.street_address2, "Bristol")
             self.assertEqual(self.order.county, "Test County")
             self.assertEqual(self.order.delivery_cost, Decimal('5.00'))
             self.assertEqual(self.order.order_total, Decimal('100.00'))
