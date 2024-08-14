@@ -114,20 +114,19 @@ class ProductOrderLineItem(models.Model):
         """
         Override the original save method to set the lineitem total
         and update the order total.
-        """
-        print(f"111Saving ProductOrderLineItem for product {self.product} and variant {self.product_variant}")
+        """        
         if self.product:
             if self.product_variant:
                 self.lineitem_total = self.product_variant.price * self.quantity
             else:
                 self.lineitem_total = self.product.price * self.quantity
         else:
-            print("Error: Product is missing, setting lineitem_total to 0") #prevents error from 111Saving ProductOrderLineItem for product None and variant None 
+            print("Error: Product is missing, setting lineitem_total to 0") #prevents error from Saving ProductOrderLineItem for product None and variant None 
             self.lineitem_total = 0
 
         super().save(*args, **kwargs)
         self.order.update_total()
-        print("111ProductOrderLineItem saved and order total updated")
+        print("ProductOrderLineItem saved and order total updated")
 
     def __str__(self):
         return f'Name: {self.product.friendly_name} on Order number: {self.order.order_number}'
