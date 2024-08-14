@@ -31,15 +31,7 @@ class Post(models.Model):
     def get_absolute_url(self):
         # redirect to the id of the post just created.
         return reverse('post_detail', args=[self.id])
+   
 
-    # def get_product_name(self):
-    #     if self.product:
-    #         return self.product.friendly_name
-    #     return None
-
-    # def get_event_name(self):
-    #     if self.event:
-    #         return self.event.friendly_name
-    #     return None
 
 
