@@ -107,7 +107,7 @@
         <div class="row mb-2">
             <p>Please fill in the detials below to get booked onto the {{ event.friendly_name }}.<p>
         </div>
-        <form method="POST" clas="form" action="{% url 'add_event_to_bag' event.id %}">
+        <form method="POST" class="form" action="{% url 'add_event_to_bag' event.id %}" id="eventForm">
             {% csrf_token %}
             <!-- Hidden 'is event' check -->
             <input type="hidden" name="product_type" value="event">
@@ -120,6 +120,8 @@
                 <label for="note-to-seller">Attendee Name</label>
                 <textarea class="form-control" name="attendee_name" id="attendee_name" required></textarea>
                 <div id="attendeeNameHelp" class="form-text">Please add the names of all attendees in this order</div>
+                <div id="attendeeNameError" class="form-text text-danger" style="display:none;">Attendee name cannot be
+                    empty or just whitespace.</div>
             </div>
             <!-- Note to Host -->
             <div class="col-lg-8 col-12 mb-4">
@@ -158,5 +160,6 @@
 {{ block.super }}
 
 {% include 'products/includes/quantity_input_script.html' %}
+{% include 'products/includes/whitespace_validation.html' %}
 
 {% endblock %}

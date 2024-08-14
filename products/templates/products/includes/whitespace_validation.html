@@ -1,0 +1,22 @@
+<script type="text/javascript">
+
+// Validation for event.detail
+document.getElementById('eventForm').addEventListener('submit', function(event) {
+    // Get the value of the textarea and trim whitespace
+    const attendeeName = document.getElementById('attendee_name').value.trim();
+    const errorElement = document.getElementById('attendeeNameError');
+
+    if (attendeeName === '') {
+        // Prevent form submission
+        event.preventDefault();
+        // Show error message
+        errorElement.style.display = 'block';
+    } else {
+        // Hide error message
+        errorElement.style.display = 'none';
+    }
+});
+
+
+// Validation for Add Product form
+</script>
