@@ -411,6 +411,8 @@ Furthermore, custom programming has been implemented to ensure all form elements
 
 All buttons/links change colour when they are hovered over to imporve the user experience.
 
+For adding, editing, and deleting functions accessible to superusers, a consistent and recognisable color scheme is employed for buttons. Green buttons/text are used for adding and editing functionalities, indicating positive actions. Red buttons/text are designated for deleting actions, signaling caution and the potential for irreversible changes. This color-coding enhances usability by providing clear visual cues and reducing the risk of accidental operations.
+
 ### All Users
 
 <details><summary>base.html and navbar.html</summary>
@@ -430,7 +432,7 @@ The main page content for each unique page is rendered within the {% block conte
 
 ![Footer](documentation/final/footer.PNG)
 
-The footer gives easy access to contact information (email address, address and phone number) to a user and links to social media sites. These change colour when they are hovered over.
+The footer gives easy access to contact information (email address, address and phone number) to a user and links to social media sites. These change colour when they are hovered over. The email address part of the footer is a clickable link that redirects a user to the contact page (new tab).
 
 It also promts then to 'sign up to the site' and gives a redirect link to the sign up page. If already logged in, this content changes to positively remind a user that they will be the first to receive the site's news. 
 
@@ -499,7 +501,128 @@ The landing page is designed to immediately convey the purpose of the site and w
 
 </details>
 
+<details><summary>Shop (shop.html)</summary>
 
+The shop page serves as a central hub where users can browse through the products offered by The Meadow Project. The opening paragraph highlights the site's commitment to quality and flexibility, aiming to entice users and encourage purchases. Users can explore the shop in several ways:
+
+1. Browse all products. 
+
+
+
+
+
+
+
+<summary>Products app</summary>
+
+The Products app is responsible for all details associated with the products and events found within the shop.
+
+Selecting a product/event from the shop will render the corresponding product detail/event detail page (product_detail.html, event_detail.html), based on the UUID. This page displays all associated content in a user-friendly and visually appealing format.
+
+![products user](documentation/final/product-detail-user.PNG)
+![event superuser](documentation/final/event-detail-superuser.PNG)
+
+Users can also view the delivery info for products if they wish by clicking the 'Delivery Info' button, which opens a modal. 
+
+![products deliveryinfo](documentation/final/products-deliveryinfo.PNG)
+
+**Adding Products and Events to the Site**
+
+(add_event.html, add_product_variant.htmk, add_product.html,)
+
+Products and Events can be added to the site by Django superusers via the Django admin panel or through the main website. Links to add a product or an event are available in both the user's profile (TMP Management) and on the main Shop page.
+
+**Products**
+
+**Adding Products**
+
+![products add](documentation/final/product-add.PNG)
+
+The Product form rendered allows the superuser to set:
+
+* Category: Specifies the product's category. Note that the "Event" category is     
+  excluded from this list.
+* Name: Represents the product's name in the database. 
+* Friendly Name: Used for display purposes on the site. 
+* Price: The initial price of the product.
+* Description: A detailed description of the product to provide customers with more information.
+* Image: The image associated with the product. 
+* Image Alt Text: Provides descriptive text for the image.
+* Is gift Card Checkbox: This 
+* Is Active Checkbox: This feature allows the admin to temporarily remove a product from the site without deleting it from the database. For instance, if a product is out of stock or needs to be paused for any reason, the admin can uncheck this box to make it inactive. The product remains in the database and can be reactivated easily at a later date, ensuring flexibility and ease of management.
+
+Helper text is inlcuded where the user might need more information on how to set a specific field and required fields are denoted by an * 
+
+After adding a product, the superuser is prompted (via an info toast) to create product variants. This step is crucial as the displayed price on the site is determined by the product variants, not the base price in the database. Initially, the price will read 'None' until variants are created and configured.
+
+![products add vairants](documentation/final/products-nowaddvariants.PNG)
+
+Variants are added by clicking the 'Add Variant' link. Options include Small, Medium, or Large. Each variant can be added only once; attempting to add an existing variant results in an error message, preventing duplicate entries..
+
+![variant error](documentation/final/products-variant-error.PNG)
+
+After a variant is added, it and its corresponding price will be displayed on the product detail page. By default, the price of the Medium variant will be shown. If the Medium variant does not exist, the price of another available variant will be displayed instead. The price field updates automatically based on the user's selection when adding a product to their basket.
+
+
+**Adding a Product to the Basket**
+
+To add a product to their basket, users need to click the 'Add to Basket' button. They can select the desired size using the dropdown selection box, which displays the available product variants. The price of the product updates to reflect their choice.
+
+![product variant dropdown](documentation/final/product-add-dropdown.png)
+
+Users also have the option to include an card message and a note to the seller if they need to communicate specific instructions (e.g., "No yellow flowers in the bouquet"). Additionally, they can adjust the quantity of each item being added by modifying the quantity selection box which has been customised and enlargend to match the site and improve UX.
+
+After successfully adding a product to their basket, users receive a notification confirming the addition (See ???????toast success????). They can return to the shop by clicking the 'Keep Shopping' button or using the pagination links at the top of the page.
+
+**Events** 
+
+**Adding Events** 
+
+The Event form rendered allows the superuser to set:
+
+* Category: Specifies the product's category. Note that only the "Event" category is availiable.
+* Name: Represents the product's name in the database. 
+* Friendly Name: Used for display purposes on the site. 
+* Event Date and Time: Set using a date and time box.
+* Duration: Specifies how long the event lasts (hours) 
+* Price: The initial price of the event.
+* Description: A detailed description of the product to provide customers with more information.
+* Image: The image associated with the product. 
+* Image Alt Text: Provides descriptive text for the image.
+* Is Active Checkbox: As above for products. 
+
+Helper text is inlcuded where the user might need more information on how to set a specific field and required fields are denoted by an * 
+
+
+
+
+**Edit/Delete Products, Events and Product Variants**
+
+(edit_event.html, edit_product_variant.html, edit_product.html)
+
+From the product detail page, superusers have the ability to:
+
+* Edit Product Details: Modify any information related to the product.
+* Edit Product Variants: Change price of individual product variants.
+* Delete Products: Remove the product entirely from the database, which will also remove all associated variants.
+* Delete Product Variants: Remove specific variants from the product without affecting the entire product listing.
+
+From the event detail page, superusers can: 
+
+* Delete Events: As above.
+
+These actions are accessible through dedicated buttons or links on the product/event detail page, ensuring that superusers can efficiently manage product information and variants. Throughout the site these buttons are consitently coloured to aid UX e.g adding and edting is green, deleting is red.
+
+![add edit delete product](documentation/final/products%20add-edit-delete.PNG)
+
+Before a product/event is deleted the user is given a warning message to confirm they wish to delete this product or event. They can continue by clicking ok, or cancel.
+
+![add edit delete product](documentation/final/product-delete-confirm.PNG)
+
+Note, non superusers do not see any of the features to add/delete/edit products or variants
+
+
+</details>
 
 ## Technologies
 
