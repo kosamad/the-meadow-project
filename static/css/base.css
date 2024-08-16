@@ -332,6 +332,14 @@ h2,
     object-position: center;
 }
 
+.gift-card-img{
+    display: block;
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    object-position: center;
+}
+
 .bg-sub-menu {
     background-color: #ffc4ca;
     padding: 1%;
@@ -509,6 +517,8 @@ h2,
     .product-detail-img {
         height: 400px;
     }
+
+    .gift-card-img {height: 200px;}
 }
 
 @media (max-width: 992px) {
@@ -524,6 +534,8 @@ h2,
     .product-detail-img {
         height: 500px;
     }
+
+    .gift-card-img {height: 300px;}
 }
 
 
@@ -539,6 +551,12 @@ h2,
         padding: 1%;
     }
 }
+
+@media (max-width: 390px) {
+    
+    .gift-card-img {height: 200px;}
+}
+
 
 
 /* .nav-logo{     
