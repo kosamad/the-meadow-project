@@ -117,7 +117,7 @@
             <input type="hidden" name="event_price" value="{{ event.price }}">
             <!-- Attendee Name -->
             <div class="col-lg-8 col-12 mb-4">
-                <label for="note-to-seller">Attendee Name</label>
+                <label for="note-to-seller">Attendee Name(s)</label>
                 <textarea class="form-control" name="attendee_name" id="attendee_name" required></textarea>
                 <div id="attendeeNameHelp" class="form-text">Please add the names of all attendees in this order</div>
                 <div id="attendeeNameError" class="form-text text-danger" style="display:none;">Attendee name cannot be
@@ -130,12 +130,29 @@
             </div>
             <!-- Quantity -->
             <div class="row">
-                <div class="col-lg-2 col-4">
+                <div class="col-lg-3 col-4">
                     <label for="quantity">Quantity</label>
                     <div class="input-group">
+                        <div class="input-group-prepend">
+                            <button class="decrement-qty btn btn-green rounded-0" data-item_id="{{event.id }}"
+                                    id="decrement-qty_{{ event.id }}">
+                                    <span class="icon">
+                                        <i class="fas fa-minus"></i>
+                                    </span>
+                                </button>
+                            </div>
                         <input class="form-control qty_input" type="number" name="quantity" value="1" min="1" max="99"
                             data-item_id="{{ event.id }}" id="id_qty_{{ event.id }}">
+                            <div class="input-group-append">
+                                <button class="increment-qty btn btn-green rounded-0" data-item_id="{{ event.id }}"
+                                    id="increment-qty_{{ event.id }}">
+                                    <span class="icon">
+                                        <i class="fas fa-plus"></i>
+                                    </span>
+                                </button>
+                            </div>
                     </div>
+                
                 </div>
             </div>
 
