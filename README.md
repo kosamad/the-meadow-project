@@ -430,7 +430,7 @@ The main page content for each unique page is rendered within the {% block conte
 
 ![Footer](documentation/final/footer.PNG)
 
-The footer gives easy access to contact information to a user and links to social media sites. These change colour when they are hovered over.
+The footer gives easy access to contact information (email address, address and phone number) to a user and links to social media sites. These change colour when they are hovered over.
 
 It also promts then to 'sign up to the site' and gives a redirect link to the sign up page. If already logged in, this content changes to positively remind a user that they will be the first to receive the site's news. 
 
@@ -469,6 +469,33 @@ The Navbar also has icons to aid navigation to three key areas of the site:
 
 ![Login Icon](documentation/final/nav-search-expanded.PNG)
 
+</details>
+
+<details><summary>Landing Page (home app, index.html)</summary>
+
+![index.html](documentation/final/index-html.PNG)
+
+The landing page is designed to immediately convey the purpose of the site and what users can expect to find, all while being visually engaging to encourage browsing and convey the brand’s quality and values. The page consists of 6 sections. These are: 
+
+* **Hero image** - This section showcases a large image of the site's logo and name, with floral imagery that sets the tone for the site. A subheading reads, "Enjoy the beauty of our locally grown, meadow-fresh flowers. Sustainably nurtured, bringing nature's best to you." This message helps users quickly grasp the site's purpose, enticing them to explore further.
+
+* **Gallery** - Six images showcase what this site has to offer, highlighting both the available products and the aesthetic and ethos of the brand. Three images contain links to a different product category - Flowers, Plants, Events - allowing users to explore the prodcuts directly from this page by clicking on the relevant button or surrounding image.
+
+![index gallery](documentation/final/index-gallery.PNG)
+
+* **Who Are We** - A brief summary of The Meadow Project's key aims, ethos, delivery methods, and commitment to sustainability/community practices. The "Learn More" link takes the user to the "About" page.
+
+![index who are we](documentation/final/index-who-are-we.PNG)
+
+* **Shop** - Following a page break images of the meadow, an image of the shop front accommpanies a brief summary of what a user might find there (Flowers and plants for sale). The link redirects the user to the main shop page (shop.html)
+
+![index shop](documentation/final/index-shop.PNG)
+
+* **Events** - A full-page image of participants enjoying an event accompanies text that describes what users can expect to find in the events section of this site. The "Events" button navigates to the shop's events category.
+
+![index events](documentation/final/index-events-reviews.PNG)
+
+* **Reveiws** - Following a purchase or order, users can leave a review on the site (see ??????????????????). These reviews are automatically rendered from the database into a Bootstrap carousel, allowing users to cycle through and view the positive feedback the site has received. This feature encourages potential customers to make a purchase through the website. (See the image above."What out Customers Say") 
 
 </details>
 
