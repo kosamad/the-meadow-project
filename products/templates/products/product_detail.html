@@ -46,10 +46,15 @@
             </div>
             <div class="row mt-2">
                 <p class="mt-4 text-justify">{{ product.description }}</p>
+                {% if product.is_gift_card %}
+                <p class="gift-card-description">Our gift cards are valid on all products and events on the site. To
+                    redeem, please phone the shop and we can process your order.</p>
+                {% else %}
                 <p class="mt-4 text-justify">The image shown is the size of one of our medium bouquets.
                     If you have any specific requirements, please add to note when checking out and we will do our best
                     to fulfill your request.
                 </p>
+                {% endif %}
             </div>
             <!-- Delivery info -->
             <div class="row mt-2 text-center">
@@ -178,7 +183,7 @@
                     </div>
 
                     <!-- Quantity -->
-                    <div class="col-lg-2 col-4">
+                    <div class="col-lg-3 col-4">
                         <label for="quantity">Quantity</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
