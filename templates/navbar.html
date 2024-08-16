@@ -23,7 +23,7 @@
                                 <a href="{% url 'home' %}" class="nav-link main-logo-link {% if request.path == '/' %}active{% endif %}">Home</a>
                             </li>
                             <li class="nav-item">
-                                <a href="{% url 'shop' %}" class="nav-link {% if request.path == '/shop/' or '/products/' in request.path %}active{% endif %}">Shop</a>
+                                <a href="{% url 'shop' %}" class="nav-link {% if request.path == '/shop/' or '/products/' in request.path or '/bag/' in request.path or '/checkout/' in request.path%}active{% endif %}">Shop</a>
                             </li>                                                       
                             <li class="nav-item">
                                 <a href="{% url 'posts' %}" class="nav-link {% if request.path == '/blog/' or '/blog/' in request.path %}active{% endif %}">Blog</a>
