@@ -47,8 +47,9 @@
             <div class="row mt-2">
                 <p class="mt-4 text-justify">{{ product.description }}</p>
                 {% if product.is_gift_card %}
-                <p class="gift-card-description">Our gift cards are valid on all products and events on the site. To
-                    redeem, please phone the shop and we can process your order.</p>
+                <p class="gift-card-description text-justify">Our gift cards can be redeemed on all products and events
+                    across our site. To redeem, simply call our shop, and we'll assist you with your order. If you wish
+                    to purchase a gift card for a custom amount, please contact us directly</p>
                 {% else %}
                 <p class="mt-4 text-justify">The image shown is the size of one of our medium bouquets.
                     If you have any specific requirements, please add to note when checking out and we will do our best
@@ -125,7 +126,16 @@
                         </p>
                         <p class=""><strong>Variants:</strong></p>
                         {% for variant in variants %}
-                        <p class="mt-0 mb-0" style="display:inline-block;">{{ variant.get_size_display }}:
+                        <p class="mt-0 mb-0" style="display:inline-block;">
+                            {% if product.is_gift_card %}
+                            {% if forloop.counter == 1 %}Option 1
+                            {% elif forloop.counter == 2 %}Option 2
+                            {% elif forloop.counter == 3 %}Option 3
+                            {% else %}Option {{ forloop.counter }}
+                            {% endif %}
+                            {% else %}
+                            {{ variant.get_size_display }}
+                            {% endif %}
                             <!-- Form for deleting the product -->
                             <a href="{% url 'edit_product_variant' variant.id %}" class="text-green">Edit
                             </a> | <form action="{% url 'delete_product_variant' variant.id %}" method="POST"
@@ -164,7 +174,15 @@
                             <option value="{{ variant.id }}" data-price="{{ variant.price }}"
                                 data-stock="{{ variant.stock }}" data-size="{{ variant.size }}"
                                 {% if variant.id == default_variant_id %}selected{% endif %}>
+                                {% if product.is_gift_card %}
+                                {% if forloop.counter == 1 %}Option 1
+                                {% elif forloop.counter == 2 %}Option 2
+                                {% elif forloop.counter == 3 %}Option 3
+                                {% else %}Option {{ forloop.counter }}
+                                {% endif %}
+                                {% else %}
                                 {{ variant.get_size_display }}
+                                {% endif %}
                             </option>
                             {% endfor %}
                         </select>

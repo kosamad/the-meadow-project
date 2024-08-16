@@ -47,10 +47,20 @@ def add_product_to_bag(request, item_id):
                 'card_message': card_message,
                 'note_to_seller': note_to_seller,            
             }
-            
-
+        
         request.session['bag'] = bag
-        messages.success(request, f'Added a {variant.size}  {product.friendly_name} to your bag.')       
+        if product.is_gift_card:
+            if variant.size == 'S':
+                size_label = 'Option 1'
+            elif variant.size == 'M':
+                size_label = 'Option 2'
+            elif variant.size == 'L':
+                size_label = 'Option 3'
+            else:
+                size_label = variant.size
+            messages.success(request, f'Added a {size_label} {product.friendly_name} to your bag.')
+        else:
+            messages.success(request, f'Added a {variant.size} {product.friendly_name} to your bag.')                       
         return redirect(redirect_url)
 
 

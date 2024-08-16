@@ -41,10 +41,39 @@ class ProductVariantForm(forms.ModelForm):
         self.product = kwargs.pop('product', None)
         
         super().__init__(*args, **kwargs)
+
+        # Check if the product is a gift card
+        if self.product and self.product.is_gift_card:
+            # Change the size choices to Option 1, Option 2, Option 3
+            self.fields['size'].choices = [
+                ('S', 'Option 1'),
+                ('M', 'Option 2'),
+                ('L', 'Option 3')
+            ]
+        else:
+            # Default size choices (Small, Medium, Large)
+            self.fields['size'].choices = [
+                ('S', 'Small'),
+                ('M', 'Medium'),
+                ('L', 'Large')
+            ]
         
         # Make the size field read-only if in edit mode
         if is_edit:
+            if self.product and self.product.is_gift_card:               
+                self.fields['size'].choices = [
+                    ('S', 'Option 1'),
+                    ('M', 'Option 2'),
+                    ('L', 'Option 3')
+                ]
+            else:                
+                self.fields['size'].choices = [
+                    ('S', 'Small'),
+                    ('M', 'Medium'),
+                    ('L', 'Large')
+                ]            
             self.fields['size'].disabled = True
+            
 
     def clean(self):
         cleaned_data = super().clean()
@@ -52,8 +81,12 @@ class ProductVariantForm(forms.ModelForm):
         
         if self.product and size:
             # Check if the variant with the same size already exists for the product
-            if ProductVariant.objects.filter(product=self.product, size=size).exists():
-                raise ValidationError(f"A variant with size '{size}' already exists for this product.")
+            existing_variant = ProductVariant.objects.filter(product=self.product, size=size).exclude(id=self.instance.id).first()
+            if existing_variant:
+                if self.product.is_gift_card:
+                    raise ValidationError("This variant already exists for this gift card. Please try a different option.")
+                else:
+                    raise ValidationError(f"A variant with size '{size}' already exists for this product. Please choose another size.")
 
         return cleaned_data
 

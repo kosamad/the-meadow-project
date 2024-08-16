@@ -23,9 +23,22 @@
                 </div>
                 <div class="col-9">
                     <p class="my-0"><strong>{{ item.product.friendly_name }}</strong></p>
-                    {% if item.variant.sizes %}
+                    {% if item.variant.size %}
+                    {% if item.product.is_gift_card %}
+                    <p class="my-0 small">
+                        Option: 
+                        {% if item.variant.size == 'S' %}
+                        1
+                        {% elif item.variant.size == 'M' %}
+                        2
+                        {% elif item.variant.size == 'L' %}
+                        3
+                        {% endif %}
+                    </p>
+                {% else %}
                     <p class="my-0 small">Size: {{ item.variant.size }} </p>
-                    {% endif %}
+                {% endif %}
+            {% endif %}
                     <p class="my-0 small text-muted">Qty: {{ item.quantity }}</p>
                 </div>
             </div>

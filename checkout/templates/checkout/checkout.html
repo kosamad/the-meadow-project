@@ -36,7 +36,7 @@
                 <div class="col-lg-9 col-12">
                     <form action="" method="POST" id="payment-form">
                         {% csrf_token %}
-                        <input type="hidden" name="order_type" value="{{ order_type }}">                  
+                        <input type="hidden" name="order_type" value="{{ order_type }}">
 
                         <!-- Section 1 - Customer Details -->
                         <div class="fieldset-container mb-4" id="step-1">
@@ -52,7 +52,8 @@
                         <!-- Section 2 Customer Address -->
                         <div class="fieldset-container mb-4" id="step-2" style="display: none;">
                             <fieldset class="rounded px-3 mb-2">
-                                <legend class="fieldset-label small text-black px-2 w-auto">Customer/Billing Address</legend>
+                                <legend class="fieldset-label small text-black px-2 w-auto">Customer/Billing Address
+                                </legend>
                                 {{ order_form.phone_number | as_crispy_field }}
                                 {{ order_form.street_address1 | as_crispy_field }}
                                 {{ order_form.street_address2 | as_crispy_field }}
@@ -62,8 +63,10 @@
                             </fieldset>
                             <!-- Allows a user to use same information for delivery (as customer/billing) -->
                             <div class="form-check float-right ms-3 mb-3">
-                                <input class="form-check-input" type="checkbox" id="id-use-same-address" name="use_same_address">
-                                <label class="form-check-label" for="id-use-same-address">Use the same information for delivery</label>
+                                <input class="form-check-input" type="checkbox" id="id-use-same-address"
+                                    name="use_same_address">
+                                <label class="form-check-label" for="id-use-same-address">Use the same information for
+                                    delivery</label>
                             </div>
                             <div class="form-check float-right ms-3 mb-3">
                                 <!-- Allows a user to save info to their profile -->
@@ -88,7 +91,7 @@
                         </div>
 
                         <!-- Section 3- if product = deliery info, if event = info about event "delivery" -->
-                        <div class="fieldset-container mb-4" id="step-3" style="display: none;">                            
+                        <div class="fieldset-container mb-4" id="step-3" style="display: none;">
                             {% if order_type == 'product' %}
                             <div id="delivery_method_wrapper">
                                 <fieldset class="rounded px-3 mb-3">
@@ -97,7 +100,8 @@
                                     {{product_form.delivery_date | as_crispy_field }}
                                     {{product_form.delivery_method | as_crispy_field }}
                                 </fieldset>
-                                <span id="date-error" style="color: red; display: none;">Delivery date cannot be in the past.</span>
+                                <span id="date-error" style="color: red; display: none;">Delivery date cannot be in the
+                                    past.</span>
                             </div>
                             <div class="shop-details" style="display: none;">
                                 <p class="ms-3"> Our address is 123 Meadow, Along A Lane, Bristol, BS41 8RM. Open
@@ -110,7 +114,7 @@
                                     {{ product_form.delivery_name | as_crispy_field }}
                                     {{ product_form.delivery_street_address1 | as_crispy_field }}
                                     {{ product_form.delivery_street_address2 | as_crispy_field }}
-                                    {{ product_form.delivery_town_or_city | as_crispy_field }}                                    
+                                    {{ product_form.delivery_town_or_city | as_crispy_field }}
                                     {{ product_form.delivery_county | as_crispy_field }}
                                     {{ product_form.delivery_postcode | as_crispy_field }}
                                 </fieldset>
@@ -130,7 +134,8 @@
                                 <fieldset class="rounded px-3 mb-2">
                                     <legend class="fieldset-label small px-2 w-auto">Delivery Information
                                     </legend>
-                                    <legend class="fieldset-label small px-2 w-auto">Please chose a date and delivery method. 
+                                    <legend class="fieldset-label small px-2 w-auto">Please chose a date and delivery
+                                        method.
                                     </legend>
                                     {{ product_form.delivery_date | as_crispy_field }}
                                     {{ product_form.delivery_method | as_crispy_field }}
@@ -179,7 +184,7 @@
                                 <div id="card-element"></div>
                                 <!-- Used to display form errors (see JS) -->
                                 <div class="mb-3 text-danger" id="card-errors" role="alert"></div>
-                                <!-- Pass the client secret to the view so we can get the payment intent id -->                              
+                                <!-- Pass the client secret to the view so we can get the payment intent id -->
                                 <input type="hidden" value="{{ client_secret }}" name="client_secret">
                             </fieldset>
                             <div class="text-right mt-5 mb-2">
@@ -229,15 +234,15 @@
             </div>
             <div class="row">
                 <div class="col-7 offset-2">
-                    <p class="mb-1 mt-0 small text-muted">Item</p>
+                    <p class="mb-1 mt-0 small"><strong>Item</strong></p>
                 </div>
                 <div class="col-3 text-right">
-                    <p class="mb-1 mt-0 small text-muted">Subtotal</p>
+                    <p class="mb-1 mt-0 small"><strong>Subtotal</strong></p>
                 </div>
             </div>
             {% for item in bag_items %}
             {% if item.product %}
-            <div class="row">
+            <div class="row mt-3">
                 <div class="col-2 mb-1">
                     <a href="{% url 'product_detail' item.product.id %}">
                         {% if item.product.image %}
@@ -249,7 +254,22 @@
                 </div>
                 <div class="col-7">
                     <p class="my-0"><strong>{{ item.product.friendly_name }}</strong></p>
-                    <p class="my-0 small text-muted">Size: {{ item.variant.size }} </p>
+                    {% if item.variant.size %}
+                    {% if item.product.is_gift_card %}
+                    <p class="my-0 small">
+                        Option:
+                        {% if item.variant.size == 'S' %}
+                        1
+                        {% elif item.variant.size == 'M' %}
+                        2
+                        {% elif item.variant.size == 'L' %}
+                        3
+                        {% endif %}
+                    </p>
+                    {% else %}
+                    <p class="my-0 small">Size: {{ item.variant.size }} </p>
+                    {% endif %}
+                    {% endif %}
                     <p class="my-0 small text-muted">Qty: {{ item.quantity }}</p>
                     <p class="my-0 small text-muted">Card Message:
                         {% if item.card_message %}Y{% else %}N{% endif %}

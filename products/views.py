@@ -136,7 +136,7 @@ def edit_product_variant(request, variant_id):
 
     if request.method == 'POST':
         # is edit means the size select box doesn't work on edit mode
-        variant_form = ProductVariantForm(request.POST, request.FILES, instance=variant, is_edit=True)
+        variant_form = ProductVariantForm(request.POST, request.FILES, instance=variant, is_edit=True, product=product)
         if variant_form.is_valid():
             variant_form.save()
             # Update product price based on the updated variant
@@ -147,7 +147,7 @@ def edit_product_variant(request, variant_id):
         else:
             messages.error(request, 'Failed to update product variant. Please ensure the form is valid.')
     else:
-        variant_form = ProductVariantForm(instance=variant, is_edit=True)
+        variant_form = ProductVariantForm(instance=variant, is_edit=True, product=product )
 
     template = 'products/edit_product_variant.html'
     context = {
