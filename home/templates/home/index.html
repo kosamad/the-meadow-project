@@ -114,7 +114,7 @@
             <div class="row justify-content-center">
                 <div class="col-12 text-center">
                     <i class="fa-brands fa-pagelines fa-3x mb-2"></i>
-                    <p class="text-center">The Meadow Project aims to rejuvenate our environment and bring the outdoors
+                    <p class="text-justify">The Meadow Project aims to rejuvenate our environment and bring the outdoors
                         closer to you. We strive to enrich homes with locally grown, seasonal flowers and oxygenating
                         houseplants, fostering the soothing ambiance of nature indoors.</p>
                 </div>
@@ -124,7 +124,7 @@
             <div class="row justify-content-center">
                 <div class="col-12 text-center">
                     <i class="fa-solid fa-leaf fa-3x mb-2"></i>
-                    <p class="text-center">Our company ethos nurtures a harmonious bond with the local community.
+                    <p class="text-justify">Our company ethos nurtures a harmonious bond with the local community.
                         Through events and newsletters, we aim to educate and inspire, sharing insights on our work and
                         guiding you in creating your own meadow-inspired haven at home.</p>
                 </div>
@@ -133,7 +133,7 @@
     </div>
     <div class="row justify-content-center mt-3 mb-3">
         <div class="col-4 text-center">
-            <a href="{% url 'about' %}"><button class="btn btn-green fw-bold">Learn More</button></a>            
+            <a href="{% url 'about' %}"><button class="btn btn-green fw-bold">Learn More</button></a>
         </div>
     </div>
     <div class="row">
@@ -141,7 +141,7 @@
             <div class="row justify-content-center">
                 <div class="col-12 text-center">
                     <i class="fa-solid fa-bicycle fa-3x mb-2"></i>
-                    <p class="text-center">We prioritize eco-friendly deliveries, utilising bikes whenever possible and
+                    <p class="text-justify">We prioritize eco-friendly deliveries, utilising bikes whenever possible and
                         our zero-emissions van, Bertha, when needed. Our commitment ensures that our blooms arrive in
                         pristine condition, whether they're transported to your doorstep or collected from our shop.</p>
                 </div>
@@ -151,7 +151,7 @@
             <div class="row justify-content-center">
                 <div class="col-12 text-center">
                     <i class="fa-solid fa-location-dot fa-3x mb-2"></i>
-                    <p class="text-center">Our commitment to sustainability is second to none. The Meadow Project
+                    <p class="text-justify">Our commitment to sustainability is second to none. The Meadow Project
                         has transformed disused farmland into a vibrant greenbelt that enrich wildlifes and provides
                         flowers to our local community. Visitors are welcome
                         to enjoy our fields, participate in our events.</p>
@@ -181,7 +181,7 @@
         </div>
         <div
             class=" col-lg-4 offset-lg-2 col-md-6 col-12 mt-4 d-flex flex-column justify-content-center align-items-center">
-            <p class="text-center mt-4"> Discover a world of seasonal beauty at our shop, where meadow-grown flowers are
+            <p class="text-justify mt-4"> Discover a world of seasonal beauty at our shop, where meadow-grown flowers are
                 meticulously crafted
                 into stunning bouquets for every occasion. Alternatively, explore our curated collection of plants,
                 designed to bring tranquility and greenery into any space.</p>
@@ -217,10 +217,17 @@
     </div>
 </div>
 
-<!-- Review Carousel adapted from Bootstrap-->
 <div class="container mt-5">
+    <div class="row justify-content-center">
+        <h2 class="text-center">What Our Customers Say</h2>
+    </div>
+</div>
+
+<!-- Review Carousel adapted from Bootstrap-->
+<div class="container">
+    <div class="row justify-content-center align-items-center">
     <div id="carouselReveiw" class="carousel slide">
-        <div class="carousel-inner">
+        <div class="carousel-inner" >
             <div class="row justify-content-center">
                 <div class="col-9">
                     {% for review in reviews %}
@@ -243,6 +250,7 @@
             <span class="visually-hidden">Next</span>
         </button>
     </div>
+</div>
 </div>
 
 
