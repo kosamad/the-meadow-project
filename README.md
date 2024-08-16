@@ -428,17 +428,20 @@ The main page content for each unique page is rendered within the {% block conte
 
 **Footer details**
 
-![Footer signed out](documentation/final/footer.PNG)
+![Footer](documentation/final/footer.PNG)
 
-The footer gives easy access to contact information to a user and links to social media sites.
+The footer gives easy access to contact information to a user and links to social media sites. These change colour when they are hovered over.
 
-It also promts then to 'sign up to the site' and gives a redirect link to the sign up page. If already logged in, this content changes to positivey remind a user that they will be the first to receive the site's news. 
+It also promts then to 'sign up to the site' and gives a redirect link to the sign up page. If already logged in, this content changes to positively remind a user that they will be the first to receive the site's news. 
 
 ![Footer signed out](documentation/final/footer-logged-out.PNG)
 
 ![Footer signed in](documentation/final/footer-signed-in.PNG)
 
 The main logo in the centre of the footer acts as a further navigation link to return the user to the home page. 
+
+** social media hover effect
+Email update in footer. 
 
 **Navbar.html**
 
@@ -469,8 +472,7 @@ The Navbar also has icons to aid navigation to three key areas of the site:
 
 </details>
 
-** social media hover effect
-Email update in footer. 
+
 
 ## Technologies
 
