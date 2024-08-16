@@ -24,6 +24,7 @@ class ProductForm(forms.ModelForm):
 
         # Add helper text
         self.fields['name'].help_text = 'This should be set like this example ada_bouquet for Ada Bouquet friendly name'
+        self.fields['friendly_name'].help_text = 'Name for the Website eg Ada Bouquet'
         self.fields['price'].help_text = 'Set the price of the product. Set this to the price of a medium size.'
         self.fields['alt_text'].help_text = 'Describe the image'
         self.fields['is_active'].help_text = 'Checked if the product is avaliable'
@@ -89,7 +90,8 @@ class EventForm(forms.ModelForm):
             messages.error(None, "Event category not found. Please add an event category to proceed.")         
 
         # Add helper text 
-        self.fields['name'].help_text = 'This should be set like this example ada_bouquet for Ada Bouquet friendly name'        
+        self.fields['name'].help_text = 'This should be set like this example ada_bouquet for Ada Bouquet friendly name'
+        self.fields['friendly_name'].help_text = 'Name for the Website eg Ada Bouquet'     
         self.fields['alt_text'].help_text = 'Describe the image'
         self.fields['image'].help_text = 'For our events, horizontal images work best' 
         self.fields['is_active'].help_text = 'Checked if the event is avaliable/there are tickets' 
