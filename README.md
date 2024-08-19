@@ -407,7 +407,7 @@ Wireframe Alterations:
 
 **-Forms**
 
-All forms across the site utlilise crispy forms to render content, ensuring a consistent and visually appealing user interface. These inputs come with added functionality, including dynamic feedback and validation promts (e.g email address need @) to aid users when they have made a mistake with a form, promoting data accuracy and submission reliability. 
+All forms across the site utlilise crispy forms to render content, ensuring a consistent and visually appealing user interface. These inputs come with added functionality, including dynamic feedback and validation promts (e.g email address need @) to aid users when they have made a mistake with a form, promoting data accuracy and submission reliability. he forms in the checkout app are customised to align with Stripe's styling and to clearly differentiate the checkout section of the site. This customisation ensures that users recognise the checkout process as a distinct and important step where they complete their purchase and are informed of the associated costs.
 
 Furthermore, custom programming has been implemented to ensure all form elements are valid and do contain only whitespace (where this is applicable). In instances where input is missing, clear messages prompt users to fill in the required fields or make necessary modifications, facilitating form completion. 
 
@@ -763,6 +763,51 @@ After the post is successfully deleted, the superuser is notified with an inform
 
 </details>
 
+<details><summary>About Page (About app)</summary>
+
+![about screens](documentation/final/about-screens.PNG)
+
+The About section provides comprehensive information about The Meadow Project. It consists of a single page (about.html) designed to capture the essence and ethos of the project through engaging content and imagery. Throughout the page, helpful icons enhance the imagery of each section and help the user understand which section they are reading about. 
+
+Beneath the opening paragraph, there is a series of navigation buttons that allow users to easily access key sections of the About page. Each button directs users to the corresponding paragraph or, in the case of blog posts, to the blog page for more detailed information.
+
+![about subnav](documentation/final/about-subnav.PNG)
+
+Throughout the page, users can find links directing them to various sections of the site. In the 'Shop' section, there are buttons linking to the Contact page with a "Find Us Here" button and the Shopping page with a "Go Shopping" button. The 'Events' section includes a link to the specific Events section of the Shop site. Additionally, static images and titles related to events and the shop also serve as navigation links to their respective sections.
+
+To showcase and promote the events hosted by The Meadow Project, the 'Events' section features a Boostrap image carousel. This carousel cycles through images of different events, enhancing visibility and engagement with the activities offered.
+
+A 'Back to Top' button appears on the About page as soon as the user scrolls past the initial section. This feature offers a convenient way for users to quickly return to the top of the page, allowing them to easily navigate to other sections of interest.
+
+![about backtop](documentation/final/about-backtotop.PNG)
+</details>
+
+<details><summary>Contact Page (Contact app)</summary>
+
+![contact screens](documentation/final/contact-screens.PNG)
+
+The Contact app contains all details which help the user contact of find the Meadow Project. At present there is one page (contact.html). 
+
+**Contact Form**
+
+Users have access to a contact form that facilitates communication with the site. If the user is logged in, the form is prefilled with their username and email address, and they have the option to include a link to a specific order by selecting from a drop-down menu of their order numbers. If a user is not logged in or does not have any orders, the drop-down menu will be empty. The form also provides a space for the user to write their message. To submit the form the user clicks 'Send'. The user is then given a message to let them know their action was successful.
+
+![contact screens](documentation/final/contact-info.PNG)
+
+if it was not, the user is given an error message. 
+
+After a user submits a contact form, the Meadow Project team receives an email at themeadowproj@gmail.com. The email's subject line reads "Contact Form Message from [username]", where [username] is the name of the user who submitted the form. The body of the email contains the message submitted by the user.
+
+![contact email](documentation/final/contact-email.PNG)
+
+**Map**
+
+At the bottom of the contact page, a responsive Google Map displays a fictional pin marking the location of The Meadow Project. Alongside the map, users can find the project's address, phone number, and email address, each accompanied by relevant icons for ease of navigation. On smaller screens, the layout of the address and contact information adjusts to enhance the site's appearance and usability. 
+
+The code to help render the google map was taken from [W3 schools](https://www.w3schools.com/howto/howto_css_responsive_iframes.asp)
+
+</details>
+
 ## Technologies
 
 ### Languages
@@ -792,7 +837,8 @@ HTML, CSS, JavaScript & Python
 * [Coolers](https://coolors.com) - to view the colour scheme.
 * [Canva](https://www.canva.com) - to create the logo.
 * [Google Fonts](https://fonts.google.com) - for the fonts used on the website. 
-* [PostgreSQL from Code Institute](https://dbs.ci-dbs.net/) - to create the database for the site. 
+* [PostgreSQL from Code Institute](https://dbs.ci-dbs.net/) - to create the database for the site.
+* Bootstrap
 
 ## Testing
 
