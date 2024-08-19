@@ -411,11 +411,15 @@ All forms across the site utlilise crispy forms to render content, ensuring a co
 
 Furthermore, custom programming has been implemented to ensure all form elements are valid and do contain only whitespace (where this is applicable). In instances where input is missing, clear messages prompt users to fill in the required fields or make necessary modifications, facilitating form completion. 
 
-In the Products and Blog apps, product descriptions and blog article bodies are created using Summernote, a powerful rich text editor. Summernote facilitates the inclusion of formatted text to enhance the presentation of content. To maintain consistency and correctness in the site's appearance, the ability to add images or other media through Summernote has been disabled. Additionally, the editor's styling is configured to align with the site's font styles for a seamless visual integration.
+In the Products and Blog apps, product descriptions and blog article bodies are created using Summernote, a powerful rich text editor.
+
+![Summernote](documentation/final/summernote.PNG)
+
+Summernote facilitates the inclusion of formatted text to enhance the presentation of content. This was especially important for blog posts as it was the most flexible way to render multiple headings and paragraphs which would have been different between each blog post. To maintain consistency and correctness in the site's appearance, the ability to add images or other media through Summernote has been disabled. This was implemented with the help of [this article](https://stackoverflow.com/questions/33615669/disable-image-upload-in-summernote#:~:text=There's%20currently%20no%20api%20to,a%20pull%20request%2C%20of%20course.&text=You%20can%20override%20the%20toolbar,own%20set%20of%20buttons%20there). Additionally, the editor's styling is configured to align with the site's font styles for a seamless visual integration. To help integrate Summernote into my project I used this [Youtube video](https://www.youtube.com/watch?v=5JWElyGs8iA).
 
 **-Buttons, links etc**
 
-All buttons/links change colour when they are hovered over to imporve the user experience.
+All buttons/links change colour when they are hovered over to improve the user experience.
 
 For adding, editing, and deleting functions accessible to superusers, a consistent and recognisable color scheme is employed for buttons. Green buttons/text are used for adding and editing functionalities, indicating positive actions. Red buttons/text are designated for deleting actions, signaling caution and the potential for irreversible changes. This color-coding enhances usability by providing clear visual cues and reducing the risk of accidental operations.
 
@@ -441,8 +445,9 @@ The triggering of these toasts is managed within the view logic, ensuring that u
 
     ![info toast blog](documentation/final/toast-info.PNG)
 
-
 * Error: Alerts users to issues or problems that need attention. These messages have a red, warming colour associated to them. 
+
+The code for toasts was adapted from the Cose Institute's Boutique Ado course material.
 
 </details>
 
@@ -640,6 +645,11 @@ From the product detail page, superusers have the ability to:
 
 * Edit Product Details: Modify any information related to the product.
 * Edit Product Variants: Change price of individual product variants.
+
+These forms are rendered containing the pre-existing details for each product/event. The superuser can view and edit these fields, before saving using the button at the bottom of the form. If valid, the item will be updated an info toast message will appear, notifying the user that the post has been updated successfully. To improve UX, the form shows a thumbnail of the current image, making it easy for the superuser to see the existing content. If the superuser chooses to update the image, JavaScript dynamically updates the form to display the new image name. This provides immediate feedback, ensuring the superuser is aware of the changes they are making.
+
+![blog newimage](documentation/final/blog-newimage.PNG)
+
 * Delete Products: Remove the product entirely from the database, which will also remove all associated variants.
 * Delete Product Variants: Remove specific variants from the product without affecting the entire product listing.
 
@@ -655,7 +665,7 @@ Before a product/event is deleted the user is given a warning message to confirm
 
 ![add edit delete product](documentation/final/product-delete-confirm.PNG)
 
-Note, non superusers do not see any of the features to add/delete/edit products or variants
+Note, non superusers do not see any of the features to add/delete/edit products or variants.
 
 **Adding Items to the Basket**
 
@@ -674,6 +684,81 @@ To add an event to their basket, users should click the 'Add to Basket' button l
 **Both**
 
 After successfully adding a product or event to their basket, users receive a notification confirming the addition via a success toast. They can return to the shop by clicking the 'Keep Shopping' button or using the breadcrumb links (customised from Bootstrap) at the top of the page.
+</details>
+
+<details><summary>The Blog and Posts (Blog app)</summary>
+
+![blog screens](documentation/final/blog-screens.PNG)
+
+The code for the blog app was inspired by the Youtube videos series ['Create a blog with pyton and django' by Codemy](https://www.youtube.com/playlist?list=PLCC34OHNcOtr025c1kHSPrnP18YPB-NFi). While the core concepts were borrowed from these tutorials, the content, styles, and processes have been significantly customised. This includes the variation from using ckeditor, which is no longer supported by Django to using Summernote.  
+
+**All Posts**
+
+When users access the 'Blog Posts' page from the navigation bar, they are directed to the 'All Posts' page (posts.html). This page provides an overview of all the blog posts on the site, with each post presented in a Bootstrap card. The card displays the post's image, title, date, and a preview of the first 200 characters of the post body.
+
+To read the full post, users can either click on the image or select the 'Read More' link at the end of each card. If a blog post exceeds 200 characters, an ellipsis ("...") is added to indicate that there is more content available.
+
+To enhance navigation, pagination controls are included at the bottom of the page. This feature allows users to easily browse through multiple pages of blog posts, ensuring a smooth and user-friendly experience. 
+
+![blog pagniation](documentation/final/blog-pagination.PNG)
+
+If a user wants to try and find a specific blog post they can search for it using the search box at the top of the page which contains the helper text 'search blog posts'. This search can be cleared using the 'Clear' button which will once again, show all the posts. 
+
+![blog search](documentation/final/blog-search.PNG)
+
+The 'Add Post' button on the right of the page is only seen by superusers
+
+**Post Detail**
+
+![blog detail](documentation/final/blog-postbody.PNG)
+
+Each blog post has its own detail page (post_detail.html), which presents the post's content in a visually appealing and clear format. This page includes:
+
+* Title: The title of the blog post.
+* Date: The date when the post was added.
+* Image: A featured image for the post.
+* Associated Products/Events: Any linked product or event names associated with the post.
+* Body: The full content of the post.
+
+For superusers, additional options are available to edit or delete the post, making content management straightforward. 
+
+**Adding a Post**
+
+![blog detail](documentation/final/blog-add.PNG)
+
+Superusers can add new posts to the site through the 'Add Post' button. This action directs the user to a form with the following required fields:
+
+* Title: The title of the blog post.
+* Image: An image to represent the post.
+* Image Alt Text: Descriptive text for the image, enhancing accessibility.
+* Optional Links: Links to products or events are provided through dropdown options. These options display all available products/events on the site, allowing for effective cross-promotion. This feature aims to boost visibility and encourage purchases from the shop.
+* Body: The main content of the post. Summernote is used to create and format this content, offering flexibility in presentation and style.
+
+**Edit/Delete a Post**
+
+Superusers have the capability to manage blog posts through editing and deleting options.
+
+- Editing a Post
+
+When a superuser chooses to edit a blog post, they are directed to a form that displays all current inputs for the post. The editing interface displays all existing details, prefilled into the form, including the title, image, and body. Users can modify any of these details as needed and then save their changes by clicking the 'Save' button at the bottom of the form.
+To enhance user experience (UX), the form has been customized to display the existing image as a preview, making it easy to see what is currently in use. If the image is updated, the form will notify users of the new selection.
+
+![blog newimage](documentation/final/blog-newimage.PNG)
+
+- Deleting a Post
+
+![blog delete](documentation/final/blog-delete.PNG)
+
+To delete a post, a superuser is directed to the post_delete.html page, which serves as a confirmation page to ensure that the deletion is intentional. This page provides a clear view of the post that is about to be deleted, including its title and image.
+
+* Confirmation Buttons:
+
+    * No Button: Clicking the "No" button returns the superuser to their previous page. This could be the list of all posts (all posts page) or the detailed view of the specific post. This action allows the user to cancel the deletion and return to their previous task.
+
+    * Yes Button: Clicking the "Yes" button confirms the deletion of the post. Once confirmed, the post is removed from the database.
+
+After the post is successfully deleted, the superuser is notified with an information toast. This toast message confirms that the deletion was successful and provides feedback to the user.
+
 </details>
 
 ## Technologies
