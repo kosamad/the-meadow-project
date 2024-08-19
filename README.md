@@ -403,19 +403,50 @@ Wireframe Alterations:
 
 ### Features
 
-#### All Pages
+<details><summary>All Pages</summary>
+
+**-Forms**
 
 All forms across the site utlilise crispy forms to render content, ensuring a consistent and visually appealing user interface. These inputs come with added functionality, including dynamic feedback and validation promts (e.g email address need @) to aid users when they have made a mistake with a form, promoting data accuracy and submission reliability. 
 
 Furthermore, custom programming has been implemented to ensure all form elements are valid and do contain only whitespace (where this is applicable). In instances where input is missing, clear messages prompt users to fill in the required fields or make necessary modifications, facilitating form completion. 
 
+In the Products and Blog apps, product descriptions and blog article bodies are created using Summernote, a powerful rich text editor. Summernote facilitates the inclusion of formatted text to enhance the presentation of content. To maintain consistency and correctness in the site's appearance, the ability to add images or other media through Summernote has been disabled. Additionally, the editor's styling is configured to align with the site's font styles for a seamless visual integration.
+
+**-Buttons, links etc**
+
 All buttons/links change colour when they are hovered over to imporve the user experience.
 
 For adding, editing, and deleting functions accessible to superusers, a consistent and recognisable color scheme is employed for buttons. Green buttons/text are used for adding and editing functionalities, indicating positive actions. Red buttons/text are designated for deleting actions, signaling caution and the potential for irreversible changes. This color-coding enhances usability by providing clear visual cues and reducing the risk of accidental operations.
 
-### All Users
+**-Toasts**
 
-<details><summary>base.html and navbar.html</summary>
+Toasts are small, unobtrusive messages that appear on the screen to convey feedback or updates. The site utilises Bootstrap toasts to notify users when necessary. The default Bootstrap toast design has been customised to match the app’s visual theme, ensuring a cohesive user experience. Toasts are automatically positioned and timed to ensure they do not disrupt the user’s interaction with the site, and they can be dismissed manually if desired.
+
+The site employs three types of toasts: success, info, and error. Each type corresponds to different actions or notifications:
+
+The triggering of these toasts is managed within the view logic, ensuring that users receive timely and relevant notifications based on their interactions with the site.
+
+* Success Toast - To enhance the user experience, the success toast provides feedback on the successful completion of an action (e.g adding an item to the database, adding a variant, deleting a item, removing an item from the bag). It has a green banner to signify good, success etc. 
+
+    ![success toast nobag](documentation/final/toast-success-removal.PNG)
+
+    It not only confirms the successful action but also includes a visual representation of the basket (if items are present or have just been added). 
+
+    ![success toast bag](documentation/final/toast-success-bagitem.PNG)
+
+    The basket information informs the user on the number of items in their basket and lists the differnt products, then events and their grand total. A scroll bar allows users to review these details easily within the toast. If items are in the basket the success toast also includes quick links, allowing users to navigate directly to the checkout page or to view more details in their basket. This helps users swiftly proceed with their shopping experience if they wish. 
+
+* Info: Provides informational updates or reminders. This appears like a success toast but does not contain any bag information and has a blue, informative colour. 
+
+    ![info toast blog](documentation/final/toast-info.PNG)
+
+
+* Error: Alerts users to issues or problems that need attention. These messages have a red, warming colour associated to them. 
+
+</details>
+
+<details><summary>Base (base.html and navbar.html)</summary>
 
 
 **Base.html**
@@ -501,38 +532,55 @@ The landing page is designed to immediately convey the purpose of the site and w
 
 </details>
 
-<details><summary>Shop (shop.html)</summary>
+<details><summary>Shop (shop app, shop.html)</summary>
 
-The shop page serves as a central hub where users can browse through the products offered by The Meadow Project. The opening paragraph highlights the site's commitment to quality and flexibility, aiming to entice users and encourage purchases. Users can explore the shop in several ways:
-
-1. Browse all products. 
+![shop.html](documentation/final/shop-screens.PNG)
 
 
+The shop page serves as a central hub where users can browse through the products offered by The Meadow Project. The opening paragraph highlights the site's commitment to quality and flexibility, aiming to entice users and encourage purchases.
 
+Initially, both products and events are displayed together, showcasing all items available in the shop. Each item is presented with its image, name (friendly), and price (will be medium for products) in a clean, easy-to-read format.
 
+Users can explore the shop in several ways:
 
+1. Browse All Products. 
 
+2. Select a Specific Category
+Users can select a category from the sub-navigation menu, which includes the options All, Flowers, Plants, Gift Cards, or Events. Selecting a category will display only the items that fall under the chosen category. Additionally, users will see a notification indicating the number of items available in the selected category.
 
-<summary>Products app</summary>
+3. Search for Specific Products or Keywords
+Users can search for products or keywords (e.g., "roses") using the search feature located in the navigation bar. Entering a keyword will return all items that match the search criteria in their description or title. After performing a search, users will be informed of the number of matching products and the keyword used. There will also be an option to clear the search results and start a new search.
+
+![rose search](documentation/final/roses-search.PNG)
+
+Users can then sort their renderec content by Price (low to high, or high to low) and Name (A-Z or Z-A)
+
+![rose search sort](documentation/final/roses-search-sort.png)
+
+Clicking on each shop items image/name will redirect the user to the product/event detail page ( using the UUID). 
+</details>
+
+<details><summary>Products and Events (Products app)</summary>
 
 The Products app is responsible for all details associated with the products and events found within the shop.
+The product/event detail pages display the content associated to a specific product/event (directed from the shop page) in a user-friendly and visually appealing format. This page also displays the order form for the user to add an item to their basket. If users click on the image, it opens a new tab with an enlarged version of the image.
 
-Selecting a product/event from the shop will render the corresponding product detail/event detail page (product_detail.html, event_detail.html), based on the UUID. This page displays all associated content in a user-friendly and visually appealing format.
+* Product detail page for a regular user:
+    ![products user](documentation/final/product-detail-user.PNG)
 
-![products user](documentation/final/product-detail-user.PNG)
-![event superuser](documentation/final/event-detail-superuser.PNG)
+    Users can view the delivery info for products if they wish by clicking the 'Delivery Info' button, which opens a modal. 
 
-Users can also view the delivery info for products if they wish by clicking the 'Delivery Info' button, which opens a modal. 
+    ![products deliveryinfo](documentation/final/products-deliveryinfo.PNG)
 
-![products deliveryinfo](documentation/final/products-deliveryinfo.PNG)
+* Event detail page for a super user:
+    ![event superuser](documentation/final/event-detail-superuser.PNG)
 
-**Adding Products and Events to the Site**
+
+**Adding Products and Events to the Site - Superuser Only**
 
 (add_event.html, add_product_variant.htmk, add_product.html,)
 
 Products and Events can be added to the site by Django superusers via the Django admin panel or through the main website. Links to add a product or an event are available in both the user's profile (TMP Management) and on the main Shop page.
-
-**Products**
 
 **Adding Products**
 
@@ -548,35 +596,26 @@ The Product form rendered allows the superuser to set:
 * Description: A detailed description of the product to provide customers with more information.
 * Image: The image associated with the product. 
 * Image Alt Text: Provides descriptive text for the image.
-* Is gift Card Checkbox: This 
+* Is gift Card Checkbox: This allows the rendering of conditional content/features that are associated with gift cards/other products only (see below).
 * Is Active Checkbox: This feature allows the admin to temporarily remove a product from the site without deleting it from the database. For instance, if a product is out of stock or needs to be paused for any reason, the admin can uncheck this box to make it inactive. The product remains in the database and can be reactivated easily at a later date, ensuring flexibility and ease of management.
 
 Helper text is inlcuded where the user might need more information on how to set a specific field and required fields are denoted by an * 
 
-After adding a product, the superuser is prompted (via an info toast) to create product variants. This step is crucial as the displayed price on the site is determined by the product variants, not the base price in the database. Initially, the price will read 'None' until variants are created and configured.
+After adding a product, the superuser is prompted (via an success toast) to create product variants. This step is crucial as the displayed price on the site is determined by the product variants, not the base price in the database. Initially, the price will read 'None' until variants are created and configured.
 
 ![products add vairants](documentation/final/products-nowaddvariants.PNG)
 
-Variants are added by clicking the 'Add Variant' link. Options include Small, Medium, or Large. Each variant can be added only once; attempting to add an existing variant results in an error message, preventing duplicate entries..
+Variants are added by clicking the 'Add Variant' link. Options include Small, Medium, or Large. For gift cards, the choices are labeled as Option 1, Option 2, and Option 3. Each variant can be added only once; attempting to add an existing variant results in an error message, preventing duplicate entries..
 
 ![variant error](documentation/final/products-variant-error.PNG)
 
-After a variant is added, it and its corresponding price will be displayed on the product detail page. By default, the price of the Medium variant will be shown. If the Medium variant does not exist, the price of another available variant will be displayed instead. The price field updates automatically based on the user's selection when adding a product to their basket.
+After a variant is added, it and its corresponding price will be displayed on the product detail page. By default, the price of the Medium/Option 2 variant will be shown. If the Medium variant does not exist, the price of another available variant will be displayed instead. The price display updates automatically based on the user's selection when adding a product to their basket. 
 
-
-**Adding a Product to the Basket**
-
-To add a product to their basket, users need to click the 'Add to Basket' button. They can select the desired size using the dropdown selection box, which displays the available product variants. The price of the product updates to reflect their choice.
-
-![product variant dropdown](documentation/final/product-add-dropdown.png)
-
-Users also have the option to include an card message and a note to the seller if they need to communicate specific instructions (e.g., "No yellow flowers in the bouquet"). Additionally, they can adjust the quantity of each item being added by modifying the quantity selection box which has been customised and enlargend to match the site and improve UX.
-
-After successfully adding a product to their basket, users receive a notification confirming the addition (See ???????toast success????). They can return to the shop by clicking the 'Keep Shopping' button or using the pagination links at the top of the page.
-
-**Events** 
+In the item's description, a conditional paragraph is displayed based on whether the item is a gift card. This provides users with relevant, generic information tailored to the type of item they are viewing. This setting. The 'is gift card' setting not only adjusts the descriptive content but also ensures that the item image is formatted correctly, accommodating different orientations such as portrait or landscape.
 
 **Adding Events** 
+
+![event add](documentation/final/event-add.PNG)
 
 The Event form rendered allows the superuser to set:
 
@@ -585,16 +624,13 @@ The Event form rendered allows the superuser to set:
 * Friendly Name: Used for display purposes on the site. 
 * Event Date and Time: Set using a date and time box.
 * Duration: Specifies how long the event lasts (hours) 
-* Price: The initial price of the event.
-* Description: A detailed description of the product to provide customers with more information.
+* Price: The price of the event.
+* Description: A detailed description of the event to provide customers with more information.
 * Image: The image associated with the product. 
 * Image Alt Text: Provides descriptive text for the image.
 * Is Active Checkbox: As above for products. 
 
 Helper text is inlcuded where the user might need more information on how to set a specific field and required fields are denoted by an * 
-
-
-
 
 **Edit/Delete Products, Events and Product Variants**
 
@@ -621,6 +657,23 @@ Before a product/event is deleted the user is given a warning message to confirm
 
 Note, non superusers do not see any of the features to add/delete/edit products or variants
 
+**Adding Items to the Basket**
+
+**Products**
+
+To add a product to their basket, users need to click the 'Add to Basket' button at the end of the product order form. They can select the desired size using the dropdown selection box, which displays the available product variants. The price of the product updates to reflect their choice.
+
+![product variant dropdown](documentation/final/product-add-dropdown.png)
+
+Users also have the option to include an card message and a note to the seller if they need to communicate specific instructions (e.g., "No yellow flowers in the bouquet"). Additionally, they can adjust the quantity of each item being added by modifying the quantity selection box which has been customised and enlargend to match the site and improve UX.
+
+**Events**
+
+To add an event to their basket, users should click the 'Add to Basket' button located at the end of the event order form. Users need to enter the names of the attendees and have the option to add a note for the host. Similar to product orders, the quantity can be adjusted by typing directly into the box or by using the customized + and - buttons.
+
+**Both**
+
+After successfully adding a product or event to their basket, users receive a notification confirming the addition (See ???????toast success????). They can return to the shop by clicking the 'Keep Shopping' button or using the breadcrumb links (customised from Bootstrap) at the top of the page.
 
 </details>
 
