@@ -13,18 +13,14 @@ body {
 /* Render Summernote blog/product body content */
 
 .blogbody {
-    font-family: 'Atkinson Hyperlegible', sans-serif !important;
-    font-size: 1rem !important;
+    font-family: 'Atkinson Hyperlegible', sans-serif !important;    
     line-height: 1.5 !important;
-    text-align: justify !important;
     color: #212529 !important;
 }
 
 .blogbody * {
-    font-family: 'Atkinson Hyperlegible', sans-serif !important;
-    font-size: 1rem !important;
+    font-family: 'Atkinson Hyperlegible', sans-serif !important;    
     line-height: 1.5 !important;
-    text-align: justify !important;
     color: #212529 !important;
 }
 
@@ -444,7 +440,9 @@ h2,
     display: none;
 }
 
-
+.card {
+    margin-bottom: 20px;
+}
 
 .blog-img {
     max-height: 600px;
