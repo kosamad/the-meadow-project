@@ -31,11 +31,13 @@
                 {% csrf_token %}
                 <!-- Contact Name -->
                 <div class="col-12 mb-4">
+                    <label for="message-name">Your Name/username</label>
                     <input type="text" name="message-name" class="form-control mb-30" placeholder="Your Name"
                         value="{% if user.is_authenticated %}{{ user.get_username}}{% endif %}">
                 </div>
                  <!-- Contact Email -->
                 <div class="col-12 mb-4">
+                    <label for="message-email">Your Email Address</label>
                     <input type="email" name="message-email" class="form-control mb-30" placeholder="Your Email"
                         value="{% if user.is_authenticated %}{{ user.email }}{% endif %}">
                 </div>
