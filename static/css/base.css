@@ -305,8 +305,7 @@ h2,
 
 .carousel-inner {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: center;    
     min-height: 300px;
 }
 
@@ -398,6 +397,27 @@ h2,
     width: 100%;
     object-fit: cover;
     object-position: center;
+}
+
+#backToTop {
+    position: fixed;
+    bottom: 20px; 
+    right: 20px;  
+    display: none; /* Hidden by default */
+    background-color: #04724d;
+    color: #fff; 
+    border: none;
+    border-radius: 50%;
+    width: 50px; 
+    height: 50px; 
+    font-size: 20px;    
+    cursor: pointer;
+    z-index: 1000; /* Ensure it's above other content */
+    transition: background-color 0.3s ease, opacity 0.3s ease;
+}
+
+#backToTop:hover {
+    background-color: #ade5d3;
 }
 
 
