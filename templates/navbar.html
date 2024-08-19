@@ -26,7 +26,7 @@
                                 <a href="{% url 'shop' %}" class="nav-link {% if request.path == '/shop/' or '/products/' in request.path or '/bag/' in request.path or '/checkout/' in request.path%}active{% endif %}">Shop</a>
                             </li>                                                       
                             <li class="nav-item">
-                                <a href="{% url 'posts' %}" class="nav-link {% if request.path == '/blog/' or '/blog/' in request.path %}active{% endif %}">Blog</a>
+                                <a href="{% url 'posts' %}" class="nav-link {% if request.path == '/blog/' or '/blog/' in request.path %}active{% endif %}">Blog Posts</a>
                             </li>
                             <li class="nav-item">
                                 <a href="{% url 'about' %}" class="nav-link {% if request.path == '/about/' %}active{% endif %}">About</a>
