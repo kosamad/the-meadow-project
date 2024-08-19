@@ -41,7 +41,7 @@ def contact(request):
             recipient_list=['themeadowproj@gmail.com'],             
         )        
 
-        messages.success(request, 'Your email has been sent successfully!')
+        messages.info(request, 'Your email has been sent successfully!')
         return redirect('contact')   
 
     context = {
