@@ -89,7 +89,7 @@
         <div class="col-6">
             <p class="text-muted mt-4 text-left">
                 {% if search_term %}
-                <p><span id="combined_items"></span> {{ search_term }} <span class="small"><a href="{% url 'shop' %}"
+                <p><span id="combined_items"></span> in "{{ search_term }}" <span class="small"><a href="{% url 'shop' %}"
                             class="green-link-style"> Clear Search</a></span></p>
                 {% elif selected_category %}
                 <p><span id="combined_items">{{ item_count }}</span> in
