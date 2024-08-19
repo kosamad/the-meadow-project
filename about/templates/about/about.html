@@ -86,10 +86,11 @@
 <div class="container"  id="shop-container">
     <div class="row justify-content-center mt-2 mb-2">
         <div class="col-lg-4 offset-lg-1 col-md-6 col-12 mt-4 d-flex align-items-center">
-            <img src="/media/will-TWJmj182gu4-unsplash.jpg" class="img-fluid img-side-about" alt="Shop front">
+            <a href="{% url 'shop' %}" ><img src="/media/will-TWJmj182gu4-unsplash.jpg" class="img-fluid img-side-about" alt="Shop front"></a>
         </div>
         <div
             class=" col-lg-4 offset-lg-1 col-md-6 col-12 mt-4 d-flex flex-column justify-content-center align-items-center">
+            <a href="{% url 'shop' %}" class="no-link-style text-center">
             <i class="fa-solid fa-shop fa-3x mt-2 mb-3"></i>
             <h3 class="title-font text-center mb-3">Our Shop</h3>
             <p class="text-justify"><strong>Opening hours:</strong> Tuesday to Friday 10:00-17:00 and
@@ -97,7 +98,8 @@
             <p class="text-justify"><strong>Collection info: </strong>If you're picking up an order from us it will be
                 avaliable from 10:00 unless otherwsie prearranged. If you miss your collection, and haven’t given us
                 notice, we will be unable to make another bouquet for you.</p>
-            <p><strong><a href="{% url 'contact' %}" class="no-link-style">Find Us Here</a></strong> or <strong><a href="{% url 'shop' %}" class="no-link-style">Go Shopping</a></strong> </p>
+            </a>
+            <p><strong><a href="{% url 'contact' %}" class="text-green">Find Us Here</a></strong> or <strong><a href="{% url 'shop' %}" class="text-green">Go Shopping</a></strong> </p>
         </div>
     </div>
 </div>
@@ -180,16 +182,16 @@
             </div>
         </div>
         <div class="col-lg-6 col-12 mb-2 d-flex flex-column justify-content-center align-items-center">
-            <i class="fa-solid fa-ticket fa-3x mb-2"></i>
+            <a href="{% url 'shop' %}?category=events" class="no-link-style text-center"><i class="fa-solid fa-ticket fa-3x mb-2"></i>
             <h3 class="title-font text-center mb-3">Our Events</h3>
             <p class="text-justify">Join us at our beautifully maintained, all-weather venue located right on site (free
                 parking). During the summer months, we also host events out in the field, making the most of the great
                 outdoors.</p>
-
             <p class="text-justify">No matter the occasion, refreshments are always available for you to enjoy, even if you're not attending
                 a lunch-specific event.</p>
             <p class="text-justify"> Check out our <a href="{% url 'shop' %}?category=events" class="text-green"><strong>Events Page</strong>
                 </a>to see what we've got going on</p>
+            </a>
         </div>
     </div>   
 </div>
