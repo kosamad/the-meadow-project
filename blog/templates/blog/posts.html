@@ -17,7 +17,7 @@
 
 <div class="container">
 
-    <!-- Page Title - Shop -->
+    <!-- Page Title - Blog Posts -->
     <div class="row mt-4 mb-4">
         <div class="col-12 text-center">
             <h2>Blog Posts</h2>
@@ -29,7 +29,8 @@
             <p>
                 We’re passionate about all things plants and love sharing our knowledge with you! Check back regularly
                 for new blog posts on everything from gardening tips to plant care guides. To stay updated on our latest
-                content, make sure to <a href="{% url 'account_signup' %}"  class="no-link-style"><strong>sign up</a></strong> for notifications. If you’re searching for
+                content, make sure to <a href="{% url 'account_signup' %}" class="no-link-style"><strong>sign
+                        up</a></strong> for notifications. If you’re searching for
                 something specific and can’t find it, let us know — we might just write a post on it!
             </p>
         </div>
@@ -58,14 +59,14 @@
 
             </form>
         </div>
-    </div>    
+    </div>
     <div class="row mb-4">
         {% if user.is_authenticated and user.is_superuser %}
-        <div class="col-12 text-end">            
-            <a href="{{ 'add_post' }}" class="btn btn-green" >Add Post</a>
+        <div class="col-12 text-end">
+            <a href="{{ 'add_post' }}" class="btn btn-green">Add Post</a>
         </div>
         {% endif %}
-    </div>    
+    </div>
 
     <!-- Display no results message if applicable -->
     {% if no_results %}
@@ -78,37 +79,40 @@
 
     <div class="row justify-content-center">
         {% for post in page_obj %}
-        <div class="col-lg-4 col-md-6 col-12 d-flex align-items-stretch">
+        <div class="col-lg-4 col-md-6 col-12 d-flex align-items-stretch mb-4">
             <div class="card blog-post w-100">
-            <a href="{% url 'post_detail' post.id %}" class="no-link-style">
-                <div class="thumbnail">
-                    <div class="image-container">
-                        {% if post.image %}
-                        <img src="{{ post.image.url }}" class="shop-img" alt="{{ post.alt_text }}">
-                        {% else %}
-                        <img src="{{ MEDIA_URL }}noimage.png" class="shop-img" alt="{{ post.title }}">
+                <a href="{% url 'post_detail' post.id %}" class="no-link-style">
+                    <div class="thumbnail">
+                        <div class="image-container">
+                            {% if post.image %}
+                            <img src="{{ post.image.url }}" class="shop-img" alt="{{ post.alt_text }}">
+                            {% else %}
+                            <img src="{{ MEDIA_URL }}noimage.png" class="shop-img" alt="{{ post.title }}">
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="card-body text-center d-flex flex-column">
+                        {% if user.is_authenticated and user.is_superuser %}
+                        <div class="row mb-2">
+                            <p class="text-end"><small>
+                                    <a class="text-end text-green" href="{% url 'post_update' post.id %}">Edit</a>
+                                    <a class="text-danger" href="{% url 'post_delete' post.id %}">Delete</a></small>
+                            </p>
+                        </div>
                         {% endif %}
+                        <h3 class="title-font">{{ post.title }}</h3>
+                        <p class="card-text">{{ post.date|date:"F j, Y" }}</p>
+                        <div class="blogbody card-text">
+                            <p class="text-justify blogbody">{{ post.body|slice:":200"|safe }}
+                                {% if post.body|length > 200 %}... {% endif %}
+                            </p>
+                        </div>
+                        <a class="no-link-style" href="{% url 'post_detail' post.id %}">
+                            <p class="text-green">Read more</p>
+                        </a>
                     </div>
-                </div>
-                <div class="card-body text-center product-text d-flex flex-column">
-                    {% if user.is_authenticated and user.is_superuser %}
-                    <div class="row">
-                        <p class="text-end"><small>
-                                <a class="text-end text-green" href="{% url 'post_update' post.id %}">Edit</a>
-                                <a class="text-danger" href="{% url 'post_delete' post.id %}">Delete</a></small>
-                        </p>
-                    </div>
-                    {% endif %}
-                    <h3 class="title-font">{{ post.title }}</h3>                    
-                    <p class="card-text">{{ post.date|date:"F j, Y" }}</p>
-                    <div class="blogbody card-text"><p class="text-justify blogbody">{{ post.body|slice:":200"|safe }} {% if post.body|length > 200 %}... {% endif %}
-                    </p></div>                    
-                    <a class="no-link-style" href="{% url 'post_detail' post.id %}">
-                        <p class="text-green">Read more</p>
-                    </a>
-                </div>
-            </a>
-        </div>
+                </a>
+            </div>
         </div>
         {% endfor %}
 
@@ -146,18 +150,8 @@
                 </nav>
             </div>
         </div>
+
     </div>
-
-</div>
-
-
-
-
-
-
-
-
-
 
 </div>
 
