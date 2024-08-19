@@ -23,8 +23,8 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{% url 'shop' %}" class="no-link-style">Shop</a></li>
                 <li class="breadcrumb-item active" aria-current="page"><a
-                        href="{% url 'shop' %}?category={{ product.category.name }}"
-                        class="no-link-style">{{ product.category.name|title }}</a></li>
+                        href="{% url 'shop' %}?category={{ product.category.friendly_name }}"
+                        class="no-link-style">{{ product.category.friendly_name|title }}</a></li>
                 <li class="breadcrumb-item active" aria-current="page">{{ product.friendly_name|title }}</li>
             </ol>
         </nav>
@@ -52,9 +52,9 @@
                 {% endif %}
             </div>
             <div class="row mt-2 blogbody">
-                <p class=" text-justify blogbody">{{ product.description|safe }}</p>
+                <p class="text-justify blogbody mt-2">{{ product.description|safe }}</p>
                 {% if product.is_gift_card %}
-                <p class="text-justify">Our gift cards can be redeemed on all products and events
+                <p class="text-justify mt-4">Our gift cards can be redeemed on all products and events
                     across our site. To redeem, simply call our shop, and we'll assist you with your order. If you wish
                     to purchase a gift card for a custom amount, please contact us directly</p>
                 {% else %}

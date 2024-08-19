@@ -17,6 +17,7 @@ body {
     font-size: 1rem !important;
     line-height: 1.5 !important;
     text-align: justify !important;
+    color: #212529 !important;
 }
 
 .blogbody * {
@@ -24,6 +25,7 @@ body {
     font-size: 1rem !important;
     line-height: 1.5 !important;
     text-align: justify !important;
+    color: #212529 !important;
 }
 
 .note-editable  {
