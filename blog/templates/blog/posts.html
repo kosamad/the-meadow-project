@@ -29,7 +29,7 @@
             <p>
                 We’re passionate about all things plants and love sharing our knowledge with you! Check back regularly
                 for new blog posts on everything from gardening tips to plant care guides. To stay updated on our latest
-                content, make sure to <a href="" class="strong">sign up</a> for notifications. If you’re searching for
+                content, make sure to <a href="{% url 'account_signup' %}"  class="no-link-style"><strong>sign up</a></strong> for notifications. If you’re searching for
                 something specific and can’t find it, let us know — we might just write a post on it!
             </p>
         </div>
@@ -61,8 +61,8 @@
     </div>    
     <div class="row mb-4">
         {% if user.is_authenticated and user.is_superuser %}
-        <div class="col-12 text-end">
-            <a href="{{ 'add_post' }}" class="text-green" >Add Post</a>
+        <div class="col-12 text-end">            
+            <a href="{{ 'add_post' }}" class="btn btn-green" >Add Post</a>
         </div>
         {% endif %}
     </div>    
