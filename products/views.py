@@ -47,7 +47,7 @@ def add_product(request):
         product_form = ProductForm(request.POST, request.FILES)
         if product_form.is_valid():
             product = product_form.save()
-            messages.success(request, 'Product added successfully! Now add variants.')
+            messages.info(request, 'Product added successfully! Now add variants.')
             return redirect('product_detail', product_uuid=product.id)
         else:
             messages.error(request, 'Failed to add product. Please ensure the form is valid.')
@@ -78,7 +78,7 @@ def add_product_variant(request, product_uuid):
             variant = variant_form.save(commit=False)
             variant.product = product
             variant.save()
-            messages.success(request, 'Product variant added successfully!')
+            messages.info(request, 'Product variant added successfully!')
             return redirect('product_detail', product_uuid=product.id)
         else:
             messages.error(request, 'Failed to add product variant. Please ensure the form is valid.')
@@ -108,7 +108,7 @@ def edit_product(request, product_uuid):
         product_form = ProductForm(request.POST, request.FILES, instance=product)
         if product_form.is_valid():
             product_form.save()
-            messages.success(request, 'Product updated successfully!')
+            messages.info(request, 'Product updated successfully!')
             return redirect('product_detail', product_uuid=product.id)
         else:
             messages.error(request, 'Failed to update product. Please ensure the form is valid.')
@@ -141,8 +141,7 @@ def edit_product_variant(request, variant_id):
             variant_form.save()
             # Update product price based on the updated variant
             product.save()
-
-            messages.success(request, 'Product variant updated successfully!')
+            messages.info(request, 'Product variant updated successfully!')
             return redirect('product_detail', product_uuid=product.id)
         else:
             messages.error(request, 'Failed to update product variant. Please ensure the form is valid.')
@@ -169,7 +168,8 @@ def add_event(request):
         event_form = EventForm(request.POST, request.FILES)
         if event_form.is_valid():            
             #create a new event instance
-            event = event_form.save()           
+            event = event_form.save()
+            messages.info(request, 'Event successfully added!')         
             return redirect('event_detail', event_uuid=event.id)
         else:
             messages.error(request, 'Failed to add product. Please ensure the form is valid.')
@@ -196,7 +196,7 @@ def edit_event(request, event_uuid):
         event_form = EventForm(request.POST, request.FILES, instance=event)
         if event_form.is_valid():         
             event_form.save()
-            messages.success(request, 'Event updated successfully!')        
+            messages.info(request, 'Event updated successfully!')        
             return redirect('event_detail', event_uuid=event.id)
         else:
             messages.error(request, 'Failed to edit event. Please ensure the form is valid.')
@@ -220,7 +220,7 @@ def delete_product(request, product_uuid):
     if request.method == 'POST':
         product = get_object_or_404(Product, pk=product_uuid)
         product.delete()
-        messages.success(request, 'Product deleted!')
+        messages.info(request, 'Product deleted!')
         return redirect(reverse('shop'))
     else:
         return redirect('home')
@@ -240,7 +240,7 @@ def delete_product_variant(request, variant_id):
     if request.method == 'POST':
         # Delete the variant
         variant.delete()
-        messages.success(request, 'Product variant deleted!')
+        messages.info(request, 'Product variant deleted!')
         return redirect('product_detail', product_uuid=product.id)
     else:
         return redirect('home')
@@ -256,7 +256,7 @@ def delete_event(request, event_uuid):
     event = get_object_or_404(Event, pk=event_uuid)
     if request.method == 'POST':    
         product.delete()
-        messages.success(request, 'Event deleted!')
+        messages.info(request, 'Event deleted!')
         return redirect(reverse('shop'))
     else:
         return redirect('home')
