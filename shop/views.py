@@ -24,12 +24,7 @@ def shop(request):
     if request.GET:            
     
         # show the specific categories of products or event (note the event category does not have an s in Category)
-        if 'category' in request.GET:
-            # categories = request.GET['category'].split(',')
-            # # __in syntax searches for the name field in Category model
-            # products = products.filter(category__name__in=categories)
-            # events = events.filter(category__name__in=categories)     
-            # categories = Category.objects.filter(name__in=categories)
+        if 'category' in request.GET:           
             selected_category = request.GET['category']
             if selected_category == 'events':
                 products = Product.objects.none()
@@ -42,7 +37,6 @@ def shop(request):
                 events = events.filter(category__name__icontains=selected_category)
         
         
-
         # checking for queries sent from the search box
         if 'q' in request.GET:
             query = request.GET['q']
@@ -65,8 +59,7 @@ def shop(request):
                 Q(category__friendly_name__icontains=query)
             )                   
             events = events.filter(event_queries)
-    
-    
+        
     # group (append) products and events together for sorting.  
     for product in products:
         combined_list.append({

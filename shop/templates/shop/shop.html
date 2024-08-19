@@ -89,8 +89,8 @@
         <div class="col-6">
             <p class="text-muted mt-4 text-left">
                 {% if search_term %}
-                <p><span id="combined_items"></span> in "{{ search_term }}" <span class="small"><a href="{% url 'shop' %}"
-                            class="green-link-style"> Clear Search</a></span></p>
+                <p><span id="combined_items"></span> in "{{ search_term }}" <span class="small"><a
+                            href="{% url 'shop' %}" class="green-link-style"> Clear Search</a></span></p>
                 {% elif selected_category %}
                 <p><span id="combined_items">{{ item_count }}</span> in
                     "{{ selected_category|title }}{% if selected_category == 'Event' and item_count > 1 %}s{% endif %}"
@@ -100,7 +100,7 @@
                 {% endif %}
             </p>
         </div>
-       
+
         <div class="col-6 d-flex justify-content-end align-items-center">
             <select class="btn custom-select" id="sortSelector">
                 <option value="reset" {% if sort == 'None' %}selected{% endif %}>Sort</option>
@@ -142,62 +142,13 @@
                     </div>
                 </div>
                 <div class="row text-center product-text mt-4 mb-4">
-                    <h4 class="title-font">{{ item_data.item.friendly_name }}</h4>                    
+                    <h4 class="title-font">{{ item_data.item.friendly_name }}</h4>
                     <h4 class="title-font">£{{ item_data.item.price }}</h4>
                 </div>
             </a>
         </div>
         {% endfor %}
     </div>
-
-
-
-    <!-- Returned Products
-    <div class="row" id="productContainer">
-        {% for product in products %}
-        <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4 shop-item" data-price="" data-name="">
-            <a href="{% url 'product_detail' product.id %}" class="no-link-style">
-                <div class="thumbnail">
-                    <div class="image-container">
-                        {% if product.image %}
-                        <img src="{{ product.image.url }}" class="shop-img" alt="{{ product.alt_text }}">
-                        {% else %}
-                        <img src="{{ MEDIA_URL }}noimage.png" class="shop-img" alt="No image to display">
-                        {% endif %}
-                    </div>
-                </div>
-                <div class="row text-center product-text mt-4 mb-4">
-                    <h4 class="title-font">{{ product.friendly_name }}</h4>
-                    <h4 class="title-font">£{{ product.price }}</h4>
-                </div>
-            </a>
-        </div>
-        {% endfor %}
-        Returned Events -->
-    <!-- {% for event in events %}
-        <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4 shop-item" data-price=""
-            data-name="{{ event.friendly_name }}">
-            <a href="{% url 'event_detail' event.id %}" class="no-link-style">
-                <div class="thumbnail">
-                    <div class="image-container">
-                        {% if event.image %}
-                        <img src="{{ event.image.url }}" class="shop-img" alt="">
-                        {% else %}
-                        <img src="{{ MEDIA_URL }}noimage.png" class="shop-img" alt="No image to display">
-                        {% endif %}
-                    </div>
-                </div>
-                <div class="row text-center product-text mt-4 mb-4">
-                    <h4 class="title-font">{{ event.friendly_name }}</h4>
-                    <h5 class="title-font">£{{ event.price|floatformat:0 }}pp, {{ event.event_datetime|date:"F j, Y" }}
-                    </h5>
-                </div>
-            </a>
-        </div>
-        {% endfor %} -->
-    <!-- </div> -->
-
-
 </div>
 
 {% endblock %}
@@ -210,7 +161,7 @@
         // Function to Count Returned Products +/ Events
         function countDisplayedItems() {
             var displayedProducts = document.querySelectorAll('.product-item')
-            .length; // Count all products/events   
+                .length; // Count all products/events   
             var displayedEvents = document.querySelectorAll('.event-item').length;
             var combinedItemsElement = document.getElementById('combined_items');
 
