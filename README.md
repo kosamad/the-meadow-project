@@ -759,6 +759,8 @@ To delete a post, a superuser is directed to the post_delete.html page, which se
 
 After the post is successfully deleted, the superuser is notified with an information toast. This toast message confirms that the deletion was successful and provides feedback to the user.
 
+![blog deleted](documentation/final/blog-deleted.PNG)
+
 </details>
 
 ## Technologies
