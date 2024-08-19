@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib import messages
 from django.core.paginator import Paginator
 from django.db.models import Q
 from .models import Post
@@ -80,6 +81,14 @@ class AddPostView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
         # Redirect to the home page if the user does not have permission
         return redirect(reverse_lazy('home'))
 
+    def form_valid(self, form):
+        # save the form
+        response = super().form_valid(form)
+        
+        # success message 
+        messages.info(self.request, 'Blog post added successfully!')
+        return response
+
 
 class UpdatePostView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
@@ -94,6 +103,11 @@ class UpdatePostView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     def handle_no_permission(self):
         # Redirect to the home page if the user does not have permission
         return redirect(reverse_lazy('home'))
+
+    def form_valid(self, form):       
+        response = super().form_valid(form)       
+        messages.info(self.request, 'Blog post updated successfully!')        
+        return response
 
     # Resolve Url when needed
     def get_success_url(self):
@@ -112,12 +126,17 @@ class DeletePostView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         # Redirect to the home page if the user does not have permission
         return redirect(reverse_lazy('home'))
 
+    def form_valid(self, form):       
+        response = super().form_valid(form)       
+        messages.info(self.request, 'Blog post deleted!')        
+        return response
+
     # Function ensures users 'go back' to the page they came from
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['previous_url'] = self.request.META.get('HTTP_REFERER', reverse_lazy('posts'))
-        return context 
-
+        return context   
+    
     # redirect after successful deletion.     
     def get_success_url(self):
         return reverse_lazy('posts')
