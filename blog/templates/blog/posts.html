@@ -98,10 +98,11 @@
                         </p>
                     </div>
                     {% endif %}
-                    <h3 class="title-font">{{ post.title }}</h3>
+                    <h3 class="title-font">{{ post.title }}</h3>                    
                     <p>{{ post.date|date:"F j, Y" }}</p>
-                    <p class="text-justify">{{ post.body|slice:":200"|safe }} {% if post.body|length > 200 %}... {% endif %}
-                    </p>
+                    <div class="blogbody"><p class="text-justify blogbody">{{ post.body|slice:":200"|safe }} {% if post.body|length > 200 %}... {% endif %}
+                    </p></div>
+                    
                     <a class="no-link-style" href="">
                         <p class="text-green">Read more</p>
                     </a>

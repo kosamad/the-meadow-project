@@ -51,14 +51,14 @@
                     alt="{{ product.friendly_name }}">
                 {% endif %}
             </div>
-            <div class="row mt-2">
-                <p class="mt-4 text-justify">{{ product.description }}</p>
+            <div class="row mt-2 blogbody">
+                <p class=" text-justify blogbody">{{ product.description|safe }}</p>
                 {% if product.is_gift_card %}
-                <p class="gift-card-description text-justify">Our gift cards can be redeemed on all products and events
+                <p class="text-justify">Our gift cards can be redeemed on all products and events
                     across our site. To redeem, simply call our shop, and we'll assist you with your order. If you wish
                     to purchase a gift card for a custom amount, please contact us directly</p>
                 {% else %}
-                <p class="mt-4 text-justify">The image shown is the size of one of our medium bouquets.
+                <p class="text-justify pt-0 mt-4">The image shown is the size of one of our medium bouquets/plants.
                     If you have any specific requirements, please add to note when checking out and we will do our best
                     to fulfill your request.
                 </p>
@@ -255,7 +255,11 @@
 {% block postloadjs %}
 {{ block.super }}
 
+
+
 {% include 'products/includes/quantity_input_script.html' %}
 {% include 'products/includes/size_selection_script.html' %}
+
+
 
 {% endblock %}

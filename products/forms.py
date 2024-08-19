@@ -3,6 +3,7 @@ from .models import Product, Event, Category, ProductVariant
 from django.forms.widgets import DateTimeInput
 from django.core.exceptions import ValidationError
 from .widgets import CustomClearableFileInput
+from django_summernote.widgets import SummernoteWidget
 
 
 
@@ -11,6 +12,10 @@ class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
         fields = ['category', 'name', 'friendly_name','price', 'description', 'image', 'alt_text', 'is_gift_card', 'is_active']
+
+        widgets = {
+                'description': SummernoteWidget(), 
+                }
 
     image = forms.ImageField(label='Image', required=False, widget=CustomClearableFileInput)
 
@@ -103,7 +108,8 @@ class EventForm(forms.ModelForm):
         ]                
 
         widgets = {
-            'event_datetime': DateTimeInput(attrs={'type': 'datetime-local'}),
+            'event_datetime': DateTimeInput(attrs={'type': 'datetime-local'}),            
+            'description': SummernoteWidget(),             
         }
 
     image = forms.ImageField(label='Image', required=False, widget=CustomClearableFileInput)   
@@ -124,7 +130,8 @@ class EventForm(forms.ModelForm):
 
         # Add helper text 
         self.fields['name'].help_text = 'This should be set like this example ada_bouquet for Ada Bouquet friendly name'
-        self.fields['friendly_name'].help_text = 'Name for the Website eg Ada Bouquet'     
+        self.fields['friendly_name'].help_text = 'Name for the Website eg Ada Bouquet'
+        self.fields['price'].help_text = 'Events must cost more than £50'      
         self.fields['alt_text'].help_text = 'Describe the image'
         self.fields['image'].help_text = 'For our events, horizontal images work best' 
         self.fields['is_active'].help_text = 'Checked if the event is avaliable/there are tickets' 

@@ -6,11 +6,32 @@ body {
     font-family: 'Atkinson Hyperlegible', sans-serif;
 }
 
-
-
 .standard-font {
     font-family: 'Atkinson Hyperlegible', sans-serif;
 }
+
+/* Render Summernote blog/product body content */
+
+.blogbody {
+    font-family: 'Atkinson Hyperlegible', sans-serif !important;
+    font-size: 1rem !important;
+    line-height: 1.5 !important;
+    text-align: justify !important;
+}
+
+.blogbody * {
+    font-family: 'Atkinson Hyperlegible', sans-serif !important;
+    font-size: 1rem !important;
+    line-height: 1.5 !important;
+    text-align: justify !important;
+}
+
+.note-editable  {
+    font-family: 'Atkinson Hyperlegible', sans-serif !important;
+    font-size: 1rem !important;
+    line-height: 1.5 !important;   
+}
+
 
 .header-container {
     margin-top: 75px;
