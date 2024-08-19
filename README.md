@@ -673,8 +673,7 @@ To add an event to their basket, users should click the 'Add to Basket' button l
 
 **Both**
 
-After successfully adding a product or event to their basket, users receive a notification confirming the addition (See ???????toast success????). They can return to the shop by clicking the 'Keep Shopping' button or using the breadcrumb links (customised from Bootstrap) at the top of the page.
-
+After successfully adding a product or event to their basket, users receive a notification confirming the addition via a success toast. They can return to the shop by clicking the 'Keep Shopping' button or using the breadcrumb links (customised from Bootstrap) at the top of the page.
 </details>
 
 ## Technologies
