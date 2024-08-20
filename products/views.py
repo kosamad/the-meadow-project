@@ -12,12 +12,14 @@ def product_detail(request, product_uuid):
 
     product = get_object_or_404(Product, id=product_uuid) # id=product_id I am using UUID
     variants = ProductVariant.objects.filter(product=product)
+    active_variants = variants.filter(is_active=True)
     default_variant = variants.filter(size='M').first() or variants.first()
     default_price = default_variant.price if default_variant else None
 
     context = {
         'product': product,
         'variants': variants,
+        'has_active_variants': active_variants.exists(),
         'default_price': default_price,
         'default_variant_id': default_variant.id if default_variant else None,
     }

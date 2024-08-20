@@ -14,6 +14,12 @@ def shop(request):
     categories = Category.objects.all()
     products = Product.objects.all()
     events = Event.objects.all()
+
+    # Filter out inactive products for non-superusers
+    if not request.user.is_superuser:        
+        products = products.filter(is_active=True)
+        events = events.filter(is_active=True)
+    
     # parameters so no errors when page is loaded if they don't exist/ arne't being used
     query = None  
     sort = None

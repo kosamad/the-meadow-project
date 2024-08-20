@@ -38,8 +38,7 @@
                 {% if product.image %}
                 {% if product.is_gift_card %}
                 <a href="{{ product.image.url }}" target="_blank">
-                    <img src="{{ product.image.url }}" class="gift-card-img"
-                        alt="{{ product.alt_text }}">
+                    <img src="{{ product.image.url }}" class="gift-card-img" alt="{{ product.alt_text }}">
                 </a>
                 {% else %}
                 <a href="{{ product.image.url }}" target="_blank">
@@ -116,8 +115,13 @@
                 <!-- Product Name and admin controls-->
                 <div class="col-lg-8 col-12">
                     <h2>{{ product.friendly_name }}</h2>
-                    {% if user.is_authenticated and user.is_superuser %}
-                    <hr>
+                    {% if not product.is_active %}
+                    <p class="text-danger"><strong>Inactive Item</strong><p>
+                    {% endif %}
+                    {% if not has_active_variants or not product.is_active %}
+                    <p><strong>We are sorry, this item is out of stock.</strong></p>
+                    {% endif %}                    
+                    {% if user.is_authenticated and user.is_superuser %}                    
                     <small>
                         <p style="display:inline;">
                             <!-- Form for deleting the product -->
@@ -131,6 +135,7 @@
                             </form> | <a href="{% url 'add_product_variant' product.id %}" class="text-green">Add
                                 Variant</a>
                         </p>
+                        <hr>
                         <p class=""><strong>Variants:</strong></p>
                         {% for variant in variants %}
                         <p class="mt-0 mb-0" style="display:inline-block;">
@@ -142,6 +147,10 @@
                             {% endif %}
                             {% else %}
                             {{ variant.get_size_display }}
+                            {% endif %}
+                            <!-- Show inactive status if applicable -->
+                            {% if not variant.is_active %}
+                            <span class="text-danger"> (Inactive)</span>
                             {% endif %}
                             <!-- Form for deleting the product -->
                             <a href="{% url 'edit_product_variant' variant.id %}" class="text-green">Edit
@@ -159,11 +168,14 @@
                     {% endif %}
                 </div>
             </div>
-            <!-- Variant price (or default if variants not added. Will show Medium if added. )-->
+            <!-- Variant price (will default to medium when added )-->
             <div class="row mt-3">
+                <!-- Show price only if there are active variants -->
+                {% if has_active_variants and product.is_active  %}
                 <p id="price">Price: £<span id="variant-price">{{ default_price }}</span></p>
-                {% if variant.is_infinite_stock or variant.stock > 0 %}
-                <p id="stock-status"></p>
+                {% else %}
+                <!-- Message indicating that the product is unavailable -->
+                <p id="price">Price: N/A</p>
                 {% endif %}
             </div>
 
@@ -173,10 +185,18 @@
                     {% csrf_token %}
                     <!-- Hidden 'is event or product' check -->
                     <input type="hidden" name="product_type" value="product">
+                    {% if product.is_active %}
+                    {% if has_active_variants %}
                     <!-- Size selection -->
                     <div class="size-selection mb-4 col-lg-4 col-md-6 col-12">
+                        {% if not product.is_gift_card %}
+                        <label for="size-selector">Avaliable Sizes:</label>
+                        {% else %}
+                        <label for="size-selector">Value Options:</label>
+                        {% endif %}
                         <select id="size-selector" name="variant_id" class="form-select">
                             {% for variant in variants %}
+                            {% if variant.is_active %}
                             <!-- Checks if what items are in stock/inifinitely stocked (flowers)-->
                             <option value="{{ variant.id }}" data-price="{{ variant.price }}"
                                 data-stock="{{ variant.stock }}" data-size="{{ variant.size }}"
@@ -191,9 +211,16 @@
                                 {{ variant.get_size_display }}
                                 {% endif %}
                             </option>
+                            {% endif %}
                             {% endfor %}
                         </select>
                     </div>
+                    {% else %}
+                    <p>Sorry, this item is out of stock.</p>
+                    {% endif %}
+                    {% else %}
+                    <p>Sorry, this product is currently unavailable.</p>
+                    {% endif %}
 
                     <!-- Card message -->
                     <div class="col-lg-8 col-12 mb-4">
@@ -232,15 +259,14 @@
                         </div>
                     </div>
 
-                    <!-- Submit button -->
+                    <!-- Submit button (hidden when product/all variants unavaliable) -->                    
                     <div class="col-md-6 col-12 mb-4">
+                        {% if has_active_variants and product.is_active  %}
                         <input type="submit" class="btn-green btn mt-4 me-4" value="Add to Basket">
+                        {% endif %}
                         <a href="{% url 'shop' %}" class="btn btn-green mt-4">Keep Shopping</a>
-                    </div>
-
-                    <!-- Hidden fields for use in checkout -->
-                    <!-- <input type="hidden" id="id_selected_size_price" name="selected_size_price"
-                        value="{{ selected_size_price }}"> -->
+                    </div>                    
+                    <!-- Hidden fields for use in checkout -->                    
                     <!-- url so can return user to page after iten added to bag -->
                     <input type="hidden" name="redirect_url" value="{{ request.path }}">
                 </form>

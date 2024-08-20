@@ -128,6 +128,7 @@
     <!-- Returned Products and Events -->
     <div class="row" id="productContainer">
         {% for item_data in combined_list %}
+        {% if item_data.item.is_active or request.user.is_superuser %}
         <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4 product-item" data-price="{{ item_data.item.price }}"
             data-name="{{ item_data.item.friendly_name }}">
             <a href="{% if item_data.item_type == 'Product' %}{% url 'product_detail' item_data.item.id %}{% elif item_data.item_type == 'Event' %}{% url 'event_detail' item_data.item.id %}{% endif %}"
@@ -141,15 +142,32 @@
                         {% endif %}
                     </div>
                 </div>
+                {% if not item_data.item.is_active %}
                 <div class="row text-center product-text mt-4 mb-4">
-                    <h4 class="title-font">{{ item_data.item.friendly_name }}</h4>
-                    <h4 class="title-font">£{{ item_data.item.price }}</h4>
+                    <h4 class="title-font text-danger ">{{ item_data.item.friendly_name }}</h4>
+                    <h4 class="title-font text-danger">£{{ item_data.item.price }}</h4>
+                    
+                        <p class="text-danger">This item is inactive.</p>
+                        {% if item_data.item_type == 'Product' %}
+                        <a href="{% url 'edit_product' item_data.item.id %}" class="btn btn-pink col-6 offset-3">Reactivate</a>
+                        {% elif item_data.item_type == 'Event' %}
+                        <a href="{% url 'edit_event' item_data.item.id %}" class="btn btn-pink col-6 offset-3">Reactivate</a>
+                        {% endif %}
+                    
                 </div>
+                {% else %}
+                <div class="row text-center product-text mt-4 mb-4">
+                    <h4 class="title-font ">{{ item_data.item.friendly_name }}</h4>
+                    <h4 class="title-font">£{{ item_data.item.price }}</h4>
+                </div>                
+                {% endif %}
             </a>
         </div>
+        {% endif %}
         {% endfor %}
     </div>
 </div>
+
 
 {% endblock %}
 
