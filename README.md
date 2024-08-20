@@ -621,13 +621,18 @@ Helper text is inlcuded where the user might need more information on how to set
 
 **Adding Product Variants**
 
-After adding a product, the superuser is prompted (via an information toast) to create product variants. This step is crucial as the displayed price on the site is determined by the product variants, not the base price in the database. Initially, the price will read 'unavailiable' until variants are created and configured.
+After adding a product, the superuser is prompted (via an information toast) to create product variants. This step is crucial as the displayed price on the site is determined by the product variants, not the base price in the database. Initially, the price will read 'unavailiable' until variants are created and configured. 
 
-Variants are added by clicking the 'Add Variant' link. Options include Small, Medium, or Large. For gift cards, the choices are labeled as Option 1, Option 2, and Option 3. To add a variant the user must input a price and set the item to 'is_active'. If this checkbox is left blank the variant is deemed unavaliable/out of stock and will not display to regular users. Each variant can be added only once; attempting to add an existing variant results in an error message, preventing duplicate entries. 
+The decision to use variants as a method to offer different types or sizes of a product was inspired by a search for a more sophisticated approach to handling product sizes. During this search, I discovered a helpful video by [Coding Point](https://www.youtube.com/watch?v=UjisbVs6gww&t=432s), which I adapted to fit the needs of my project.
+
+Variants are added by clicking the 'Add Variant' link. Options include Small, Medium, or Large. For gift cards, the choices are labeled as Option 1, Option 2, and Option 3. To add a variant the user must input a price and set the item to 'is_active'. If this checkbox is left blank the variant is deemed unavaliable/out of stock and will not display to regular users. Each variant can be added only once; attempting to add an existing variant results in an error message, preventing duplicate entries. The code to help with this validation was ammended from this [article](https://www.geeksforgeeks.org/validationerror-in-django/
+).
 
 ![variant error](documentation/final/products-variant-error.PNG)
 
 After a variant is added, it and its corresponding price will be displayed on the product detail page. By default, the price of the Medium/Option 2 variant will be shown. If the Medium variant does not exist, the price of another available variant will be displayed instead. The price display updates automatically based on the user's selection when adding a product to their basket. 
+
+To ensure consistency between the variant prices and the product's database price, Django signals are used to update the product price when a variant is added or updated. By default, the product price will be set to the price of the medium-sized variant. If no medium-sized variant exists, the price will default to the lowest price among available variants.
 
 **Product/variant Availability**
 
@@ -930,3 +935,9 @@ Please see the separate [TESTING.md](TESTING.md) file for testing carried out on
 ## Credits
 
 * No image png from the Code Institue tutorial Boutique Ado. 
+* Prduct variants - Code inspired by [Coding Point](https://www.youtube.com/watch?v=UjisbVs6gww&t=432s)
+* Product variant validation - Code adapted from [article](https://www.geeksforgeeks.org/validationerror-in-django/
+)
+* Blof functionality - Code inspired by ['Create a blog with pyton and django' by Codemy](https://www.youtube.com/playlist?list=PLCC34OHNcOtr025c1kHSPrnP18YPB-NFi)
+* Summernote integration - [this article](https://stackoverflow.com/questions/33615669/disable-image-upload-in-summernote#:~:text=There's%20currently%20no%20api%20to,a%20pull%20request%2C%20of%20course.&text=You%20can%20override%20the%20toolbar,own%20set%20of%20buttons%20there) and [Youtube video](https://www.youtube.com/watch?v=5JWElyGs8iA).
+* Responsive iframe - [W3 schools](https://www.w3schools.com/howto/howto_css_responsive_iframes.asp)
