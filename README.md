@@ -431,19 +431,23 @@ The site employs three types of toasts: success, info, and error. Each type corr
 
 The triggering of these toasts is managed within the view logic, ensuring that users receive timely and relevant notifications based on their interactions with the site.
 
-* Success Toast - To enhance the user experience, the success toast provides feedback on the successful completion of an action (e.g adding an item to the database, adding a variant, deleting a item, removing an item from the bag). It has a green banner to signify good, success etc. 
+* Success Toast - To enhance the user experience, the success toast provides feedback on the successful completion of an action. In the Meadow Project, it has been used to update the user when they have successfully added something to their bag. It has a green surroudning banner to signify good, success etc. 
 
     ![success toast nobag](documentation/final/toast-success-removal.PNG)
 
-    It not only confirms the successful action but also includes a visual representation of the basket (if items are present or have just been added). 
+    It not only confirms the successful action but also includes a visual representation of the basket (if items are present or have just been added). This is achieved using a contexts file from the bag app which allows bag information to be visible on all pages. 
 
     ![success toast bag](documentation/final/toast-success-bagitem.PNG)
 
-    The basket information informs the user on the number of items in their basket and lists the differnt products, then events and their grand total. A scroll bar allows users to review these details easily within the toast. If items are in the basket the success toast also includes quick links, allowing users to navigate directly to the checkout page or to view more details in their basket. This helps users swiftly proceed with their shopping experience if they wish. 
+    The basket information informs the user on the number of items in their basket and lists the different products, then events and their grand total. A scroll bar allows users to review these details easily within the toast. If items are in the basket the success toast also includes quick links, allowing users to navigate directly to the checkout page or to view more details in their basket. This helps users swiftly proceed with their shopping experience if they wish. 
 
-* Info: Provides informational updates or reminders. This appears like a success toast but does not contain any bag information and has a blue, informative colour. 
+* Info: Provides informational updates or reminders. This appears like a success toast without the bag information, and has been used to give the user positive feedback following the completion of non bag-related tasks. 
 
-    ![info toast blog](documentation/final/toast-info.PNG)
+    ![info toast blog](documentation/final/toast-info-new.PNG)    
+
+    Please note that the colour of this was altered during the course of this project. Therefore some info images displayed in the readme have the old, blue colour informative outer. 
+
+    ![info toast blog](documentation/final/toast-info.PNG)   
 
 * Error: Alerts users to issues or problems that need attention. These messages have a red, warming colour associated to them. 
 
@@ -451,8 +455,7 @@ The code for toasts was adapted from the Cose Institute's Boutique Ado course ma
 
 </details>
 
-<details><summary>Base (base.html and navbar.html)</summary>
-
+<details><summary>Base Page and Content</summary>
 
 **Base.html**
 
@@ -509,11 +512,11 @@ The Navbar also has icons to aid navigation to three key areas of the site:
 
 </details>
 
-<details><summary>Landing Page (home app, index.html)</summary>
+<details><summary>Landing Page (Home app)</summary>
 
 ![index.html](documentation/final/index-html.PNG)
 
-The landing page is designed to immediately convey the purpose of the site and what users can expect to find, all while being visually engaging to encourage browsing and convey the brand’s quality and values. The page consists of 6 sections. These are: 
+The landing page (index.html) is designed to immediately convey the purpose of the site and what users can expect to find, all while being visually engaging to encourage browsing and convey the brand’s quality and values. The page consists of 6 sections. These are: 
 
 * **Hero image** - This section showcases a large image of the site's logo and name, with floral imagery that sets the tone for the site. A subheading reads, "Enjoy the beauty of our locally grown, meadow-fresh flowers. Sustainably nurtured, bringing nature's best to you." This message helps users quickly grasp the site's purpose, enticing them to explore further.
 
@@ -537,12 +540,11 @@ The landing page is designed to immediately convey the purpose of the site and w
 
 </details>
 
-<details><summary>Shop (shop app, shop.html)</summary>
+<details><summary>Shop (Shop app)</summary>
 
 ![shop.html](documentation/final/shop-screens.PNG)
 
-
-The shop page serves as a central hub where users can browse through the products offered by The Meadow Project. The opening paragraph highlights the site's commitment to quality and flexibility, aiming to entice users and encourage purchases.
+The shop page (shop.html) serves as a central hub where users can browse through the products offered by The Meadow Project. The opening paragraph highlights the site's commitment to quality and flexibility, aiming to entice users and encourage purchases.
 
 Initially, both products and events are displayed together, showcasing all items available in the shop. Each item is presented with its image, name (friendly), and price (will be medium for products) in a clean, easy-to-read format.
 
@@ -686,6 +688,49 @@ To add an event to their basket, users should click the 'Add to Basket' button l
 After successfully adding a product or event to their basket, users receive a notification confirming the addition via a success toast. They can return to the shop by clicking the 'Keep Shopping' button or using the breadcrumb links (customised from Bootstrap) at the top of the page.
 </details>
 
+<details><summary>Basket (Bag app)</summary>
+
+![bag screens](documentation/final/bag-screens.PNG)
+
+Users can navigate to the Basket either through the bag icon in the navigation bar or via the link provided in the success toast after adding an item. 
+
+The Basket page displays the title alongside the total count of items in the basket, including both products and events. If not items are in the basket, the user is notified of this and provided with a link to 'Go Shopping'.
+
+Within the Basket, users can view the products they have added, followed by any events. For each product, an image is displayed alongside the product name, price, and quantity in the basket. If a card message or note has been added, these are also shown. For events, only the note input is visible. At the bottom of each item, the subtotal is calculated.
+
+![bag summary](documentation/final/bag-summary.PNG)
+
+To enhance user convenience and avoid the need to delete and re-add items, several editing options are available. These are coloured green, drawing on preconditioned assumptions with green often being for editing features.
+
+1. Quantity Adjustment: Users can change the quantity of an item by typing the desired number in the box and then clicking the green "Update" button. The code for this was adapted from the Code Institue course material for Boutique Ado. 
+
+2. Editing Messages and Notes: Users can edit and save card messages or notes by clicking the pen icon. This action reveals a text box with the current content, allowing the user to retype their message or note. After making changes, the user can click the "Update" button to save the updated text to the basket.
+
+![bag edit card](documentation/final/bag-editcard.PNG)
+
+Users can also delete a product or event (all instances of it) by clicking the bin icon displayed next to each image. When selected, a confirmation message appears, asking, "Are you sure you want to remove this item(s) from your basket?". Clicking "Cancel" returns the user to their basket, while clicking "Yes" permanently removes the item.
+
+All updates return the user to the main bag page and render an info toast, notifying them of their successful change. Should any errors occur, an error message will display. 
+
+At the bottom of the page, a summary section provides an overview of the following:
+
+* Basket Total: This displays the combined total of all products and events in the basket.
+* Delivery Costs: Delivery is calculated at 10% of the basket total unless the total exceeds £50, in which case delivery is free. Events, priced over £50 and delivered via email, do not incur any delivery charge.
+* Grand Total: This is the sum of the basket total and the delivery costs.
+
+![bag end summary](documentation/final/bag-end.PNG)
+
+If the user hasn't met the free delivery threshold, a red information message appears, indicating how much more they need to spend to qualify for free delivery.
+
+![bag delivery info](documentation/final/bag-red-delivery.PNG)
+
+The final three buttons allow the user to proceed to the Checkout page ('Checkout'), Continue Shopping ('Shop') or veiw the delivery information ('Delivery Info').
+
+Due to the extensive JavaScript utilised on the Basket page, separate include files have been used to manage this content efficiently. This approach helps keep the code organised, maintainable, and easier to debug by separating the JavaScript logic from the HTML structure.
+
+</details>
+
+
 <details><summary>The Blog and Posts (Blog app)</summary>
 
 ![blog screens](documentation/final/blog-screens.PNG)
@@ -802,9 +847,9 @@ After a user submits a contact form, the Meadow Project team receives an email a
 
 **Map**
 
-At the bottom of the contact page, a responsive Google Map displays a fictional pin marking the location of The Meadow Project. Alongside the map, users can find the project's address, phone number, and email address, each accompanied by relevant icons for ease of navigation. On smaller screens, the layout of the address and contact information adjusts to enhance the site's appearance and usability. 
+At the bottom of the contact page, a responsive Google Map displays a fictitious pin marking the location of The Meadow Project. Alongside the map, users can find the project's address, phone number, and email address, each accompanied by relevant icons for ease of navigation. On smaller screens, the layout of the address and contact information adjusts to enhance the site's appearance and usability. 
 
-The code to help render the google map was taken from [W3 schools](https://www.w3schools.com/howto/howto_css_responsive_iframes.asp)
+The code to help render the responsive map was taken from [W3 schools](https://www.w3schools.com/howto/howto_css_responsive_iframes.asp)
 
 </details>
 
