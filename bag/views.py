@@ -126,7 +126,7 @@ def update_card_message(request, item_id):
                 # check if it's a new unique key of if a product is being incremented
                 if unique_key in bag:
                     bag[unique_key]['quantity'] += 1
-            messages.success(request, f'Your card message was updated')
+            messages.info(request, f'Your card message was updated')
         else:
             # in case the item isn't found in the basket.
             messages.error(request, "The item you are trying to update was not found in your bag.")
@@ -159,7 +159,7 @@ def update_note_to_seller(request, item_id):
                 unique_key = new_unique_key
                 if unique_key in bag:
                     bag[unique_key]['quantity'] += 1
-            essages.success(request, f'Your note was updated')
+            messages.info(request, f'Your note was updated')
         else:           
             messages.error(request, "The item you are trying to update was not found in your bag.")
 
@@ -184,7 +184,7 @@ def update_quantity(request, item_id):
        
         if unique_key in bag:           
             bag[unique_key]['quantity'] = quantity            
-            messages.success(request, "Your bag quantity was updated.")
+            messages.info(request, "Your bag quantity was updated.")
         else:           
             messages.error(request, "The item you are trying to update was not found in your bag.")
 
@@ -215,7 +215,7 @@ def update_note_to_host(request, item_id):
                 unique_key = new_unique_key
                 if unique_key in bag:
                     bag[unique_key]['quantity'] += 1                        
-            messages.success(request, "Your note was updated.")            
+            messages.info(request, "Your note was updated.")            
         else:           
             messages.error(request, "The item you are trying to update was not found in your bag.")
 
@@ -237,7 +237,7 @@ def remove_item(request, item_id):
             try:
                 del bag[unique_key]
                 request.session['bag'] = bag
-                messages.success(request, "The item was successfully removed from your bag.")
+                messages.info(request, "The item was successfully removed from your bag.")
             except KeyError:
                 messages.error(request, "There was an error removing the item from your bag")
             except Exception as e:
