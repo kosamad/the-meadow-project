@@ -768,9 +768,102 @@ The checkout app handles all aspects of the checkout process, including customer
 
 At the end of the order summary section, users can see the order total, delivery charges, and the grand total (order total plus delivery). Users can click on images in the order summary to be redirected to the product or event detail page, allowing them to verify their selections. Additionally, there is an "Adjust Bag" option, presented as a link, that redirects users back to their basket if they need to make changes.
 
-The checkout process moves through three stages. This is designed to make checking out clear and simple for the user. 
+![checkout order summary](documentation/final/checkout-order-summary.PNG)
 
-1. 
+The checkout process is streamlined into three stages to enhance clarity and simplicity for users. This is achieved using JavaScript to dynamically show and hide different sections of the checkout form as the user progresses through each stage. By breaking the form into manageable steps, users are only required to complete one part of the form at a time, ensuring that all information is submitted together but in a more organised and user-friendly manner. The user can move between sections of the form using the 'Next' and 'Previous' buttons displayed. These will only allow movement forwards if all parts of the form are filled in. Custom validation has been used to ensure each step is completed before the user can move on. When these buttons are clicked, the user is automatically returned to the top of the page (required if on a small screen)
+
+1. Customer Details
+
+    The user is required to fill out their Name and email address. If a user is logged in their email address is inputed from the database. 
+
+    ![checkout part 1](documentation/final/checkout-part1.PNG)
+
+    ![checkout error](documentation/final/checkout-part1-error.PNG)
+
+
+2. Customer/Billing Address
+
+    Users are required to provide their billing information. This is separate from their delivery details, allowing flexibility in cases where, for example, someone might be purchasing flowers for a friend and wishes to have the bouquet sent to a different address. At the bottom of the billing form, users have the option to copy their billing details to the delivery section by ticking a checkbox. If selected, this information will automatically populate the delivery fields in step 3 of the checkout process.
+
+    ![checkout part 2](documentation/final/checkout-part2.PNG)
+
+    For logged-in users, there is also an option to save these details to their profile by checking a checkbox at the end of the billing section. If this box has been previously checked or if the user’s details are already saved in their profile, the form will automatically fill in their saved information for a quicker checkout experience.
+
+3. Delivery Options
+
+    **Products**
+
+    This section of the form is only displayed if the user has a product in their basket. Users have the flexibility to choose between delivery or store pickup for their items. To ensure a smooth checkout experience, they must select a delivery or pickup date that complies with the shop's policies:
+
+    * Dates cannot be set to a past date.
+    * Delivery is not available on Sundays.
+    * Delivery must be to a valid postcode (accepted postcodes include: BS1, BS2, BS3, BS4, BS5, BS6).
+    * Store pick up is not available on Sunday or Monday (store is closed). 
+
+    An appropriate message will notify users of their mistake e.g "Sorry, our shop is not open on a Sunday."
+
+    This approach ensures that users select appropriate delivery or pickup options that align with the store's operational policies.
+
+    If the user selects "Delivery," the delivery form will be displayed for them to complete. All fields in this form must be filled out and validated to ensure the delivery details are accurate and complete.
+
+    ![checkout part 3 - delivery ](documentation/final/checkout-part3-delivery.PNG)
+
+    If the user opts for "Pickup," instead of a delivery form, they will be provided with information about the shop's opening times. This helps them plan their visit accordingly and ensures they arrive during business hours.
+
+    ![checkout part 3 - pickup](documentation/final/checkout-part3-pickup.PNG)
+
+    **Events**
+
+    If the user is purchasing only event tickets, they will be presented with details about how they will receive their tickets - via email. This information will be rendered underneath the product delivery form if a user has both types of item in their basket.
+
+    ![checkout part 3 - event](documentation/final/checkout-part3-event.PNG)
+
+4. Payment
+
+    The final stage of the checkout process is payment. For this, Stripe has been integrated, utilising code from the Boutique Ado tutorial videos and making adaptations to fit The Meadow Project's specific delivery and billing requirements.
+
+    Payment Process:
+
+    * Card Details Entry: Users are required to input their card details into the designated input box. The system performs validation checks to ensure that the information provided is correct before submission.
+
+    * Webhooks Integration: Stripe webhooks have been integrated to handle various payment events and ensure smooth operation and ensure payments are authenticated. Webhooks are used to:
+
+        * Confirm Payment Success: Ensure that transactions are processed successfully and update order status accordingly. This includes: retrieving and validating payment details, checking if an order already exists or creating a new one, saving or updating user profile information if requested, creating order line items for products and events and sending confirmation and event ticket emails to the customer.
+        
+        * Handle Payment Failures: Manage any issues that arise during payment processing and notify the user of any necessary actions.
+        * Sync Payment Information: Keep order records and payment status in sync across the system.
+
+        This approach ensures a secure and efficient payment process and makes sure payment is only taken when a transaction is successful. This enhances the overall checkout experience for users while accommodating the specific needs of The Meadow Project.
+
+
+Following a successful payment, users are redirected to a "Thank You" page that provides a comprehensive summary of their order and are shown a info toast with a summery of their order details. The page includes:
+
+![checkout order complete](documentation/final/checkout-order-complete.PNG)
+
+* Thank you, confirmation email address, order Number, order date and time.
+* Your Details - Billing Information: Details used during checkout, including the name, email, phone number, and address.
+* You Have Ordered - An itemised receipt of the items in their order
+    * For Products:
+        * Product Details: Name, size, quantity, card message, and note to seller.
+        * Delivery Method: Indicates whether the user selected delivery or pickup, and the chosen delivery date. If the user chose delivery the delivery address is also rendered.    
+    * For Events::
+        * Event Details: Name, attendee name, quantity, and note to seller.
+        * Delivery Information: Note that the email ticket will be sent to the specified email address.
+* Order Summary - Costs for the order (total, delivery, grand total)
+
+Users can then navigate where the wish using the nav bar or using the back to the shop button at the bottom of the page. 
+
+Note, to prevent errors with subsequent transactions, the basket is cleared following a successful payment.
+
+**Automatic Emails**
+
+Emails are automatically sent to users through functions in the webhook. Each submitted order triggers an email with the subject line "The Meadow Project Confirmation for Order Number {{ order.order_number }}." This email includes comprehensive details about the user's order. If the order includes an event, a second email is automatically sent with the subject line "The Meadow Project Email Ticket for {{ order.order_number }}." This email provides all relevant event details such as date, time, and duration, along with additional information applicable to all events. 
+
+This system ensures users receive both their order confirmation and event ticket efficiently and with all necessary details.
+
+![checkout order email](documentation/final/checkout-email-order.PNG)
+
+![checkout event ticket](documentation/final/checkout-event-ticket.PNG)
 
 </details>
 
