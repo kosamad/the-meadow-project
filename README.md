@@ -610,14 +610,14 @@ The Product form rendered allows the superuser to set:
   excluded from this list.
 * Name: Represents the product's name in the database. 
 * Friendly Name: Used for display purposes on the site. 
-* Price: The initial price of the product.
+* Price: The initial price of the product and must be more than £0.30 (set by Stripe)
 * Description: A detailed description of the product to provide customers with more information.
 * Image: The image associated with the product. 
 * Image Alt Text: Provides descriptive text for the image.
 * Is gift Card Checkbox: This allows the rendering of conditional content/features that are associated with gift cards/other products only (see below).
 * Is Active Checkbox: This feature allows the admin to temporarily remove a product from the site without deleting it from the database. For instance, if a product is out of stock or needs to be paused for any reason, the admin can uncheck this box to make it inactive. The product remains in the database and can be reactivated easily at a later date, ensuring flexibility and ease of management.
 
-Helper text is inlcuded where the user might need more information on how to set a specific field and required fields are denoted by an * 
+Helper text is inlcuded where the user might need more information on how to set a specific field and required fields are denoted by an *. If there are any form errors, a combination of error messages, automatic navigation to the problem part of the form and red informative text are rendered.
 
 **Adding Product Variants**
 
@@ -657,7 +657,7 @@ The Event form rendered allows the superuser to set:
 * Friendly Name: Used for display purposes on the site. 
 * Event Date and Time: Set using a date and time box.
 * Duration: Specifies how long the event lasts (hours) 
-* Price: The price of the event.
+* Price: The price of the event (also must be more than £0.30)
 * Description: A detailed description of the event to provide customers with more information.
 * Image: The image associated with the product. 
 * Image Alt Text: Provides descriptive text for the image.
