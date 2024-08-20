@@ -45,8 +45,8 @@
             <form method="POST" action="{% url 'remove_item' item.product.id %}">
                 {% csrf_token %}
                 <input type="hidden" name="unique_key" value="{{ item.unique_key }}">
-                <button type="submit" class="btn btn-danger py-0 delete-item-btn ms-auto">
-                    <i class="fas fa-trash fa-2xs"></i>
+                <button type="submit" class="btn btn-danger py-0 delete-item-btn ms-auto" onclick="return confirm('Are you sure you want to remove this product from your basket?');">
+                    <i class="fas fa-trash fa-2xs"></i></button>
                 </button>
             </form>
         </div>
@@ -131,7 +131,7 @@
             </div>
 
             <div class="row mt-2">
-                <p class="my-0"><span class="fw-bold">Sub Total:</span>£{{ item.subtotal }}</p>
+                <p class="my-0"><span class="fw-bold">Sub Total: </span>£{{ item.subtotal }}</p>
             </div>            
         </div>
         <hr class="my-4 border-top border-2 border-dark">
@@ -157,7 +157,7 @@
             <form method="POST" action="{% url 'remove_item' item.event.id %}">
                 {% csrf_token %}
                 <input type="hidden" name="unique_key" value="{{ item.unique_key }}">
-                <button type="submit" class="btn btn-danger py-0 delete-item-btn ms-auto">
+                <button type="submit" class="btn btn-danger py-0 delete-item-btn ms-auto" onclick="return confirm('Are you sure you want to remove this event from your basket?')">
                     <i class="fas fa-trash fa-2xs"></i>
                 </button>
             </form>
@@ -206,7 +206,7 @@
                             <textarea name="new_note_host" class="form-control">{{ item.note_to_host}}</textarea>
                             <input type="hidden" name="unique_key" value="{{ item.unique_key }}">
                             <input type="hidden" name="attendee_name" value="{{ item.attendee_name }}">
-                            <button type="submit" class="btn btn-primary mt-2">Update</button>
+                            <button type="submit" class="btn btn-green mt-2">Update</button>
                         </form>
                     </div>
                 </div>
@@ -258,6 +258,8 @@
                 aria-expanded="false" aria-controls="deliveryInfo">
                 Delivery Info <i class="fa-solid fa-chevron-down"></i>
             </button>
+        </div>
+        <div class="row">
             <!-- Collapsible delivery info content -->
             <div class="collapse mt-3" id="deliveryInfo">
                 <div class="card card-body">
@@ -269,7 +271,7 @@
                         Sundays). For
                         same-day deliveries, please call us at 0117 123 4567 or contact us online with any
                         inquiries. We
-                        prioritize eco-friendly delivery methods, using bicycles whenever possible and our
+                        prioritise eco-friendly delivery methods, using bicycles whenever possible and our
                         green,
                         zero-emission van as a backup.
                     </p>
@@ -287,6 +289,7 @@
                 </div>
             </div>
         </div>
+        
     </div>
 
 
