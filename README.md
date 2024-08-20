@@ -564,7 +564,16 @@ Users can then sort their renderec content by Price (low to high, or high to low
 
 ![rose search sort](documentation/final/roses-search-sort.png)
 
-Clicking on each shop items image/name will redirect the user to the product/event detail page ( using the UUID). 
+Clicking on each shop items image/name will redirect the user to the product/event detail page ( using the UUID).
+
+**Product Availability and Superuser Controls**
+
+Regular users only see products and events marked as 'active,' meaning these items are currently in stock and available for purchase. Superusers, however, have access to the full catalog, including items marked as 'inactive.' Inactive items are highlighted in red and include a 'reactivate' button.
+
+Clicking this button redirects superusers to the product or event edit pages, where they can toggle the 'is_active' status as needed. This feature helps superusers efficiently manage the inventory by making it easy to see what is listed and update item availability as required.
+
+ ![shop inactive item](documentation/final/shop-inactiveitem.PNG)
+
 </details>
 
 <details><summary>Products and Events (Products app)</summary>
@@ -578,6 +587,8 @@ The product/event detail pages display the content associated to a specific prod
     Users can view the delivery info for products if they wish by clicking the 'Delivery Info' button, which opens a modal. 
 
     ![products deliveryinfo](documentation/final/products-deliveryinfo.PNG)
+
+    In the item's description, a conditional paragraph is displayed based on whether the item is a gift card. This provides users with relevant, generic information tailored to the type of item they are viewing. This setting. The 'is gift card' setting not only adjusts the descriptive content but also ensures that the item image is formatted correctly, accommodating different orientations such as portrait or landscape.
 
 * Event detail page for a super user:
     ![event superuser](documentation/final/event-detail-superuser.PNG)
@@ -608,17 +619,27 @@ The Product form rendered allows the superuser to set:
 
 Helper text is inlcuded where the user might need more information on how to set a specific field and required fields are denoted by an * 
 
-After adding a product, the superuser is prompted (via an success toast) to create product variants. This step is crucial as the displayed price on the site is determined by the product variants, not the base price in the database. Initially, the price will read 'None' until variants are created and configured.
+**Adding Product Variants**
 
-![products add vairants](documentation/final/products-nowaddvariants.PNG)
+After adding a product, the superuser is prompted (via an information toast) to create product variants. This step is crucial as the displayed price on the site is determined by the product variants, not the base price in the database. Initially, the price will read 'unavailiable' until variants are created and configured.
 
-Variants are added by clicking the 'Add Variant' link. Options include Small, Medium, or Large. For gift cards, the choices are labeled as Option 1, Option 2, and Option 3. Each variant can be added only once; attempting to add an existing variant results in an error message, preventing duplicate entries..
+Variants are added by clicking the 'Add Variant' link. Options include Small, Medium, or Large. For gift cards, the choices are labeled as Option 1, Option 2, and Option 3. To add a variant the user must input a price and set the item to 'is_active'. If this checkbox is left blank the variant is deemed unavaliable/out of stock and will not display to regular users. Each variant can be added only once; attempting to add an existing variant results in an error message, preventing duplicate entries. 
 
 ![variant error](documentation/final/products-variant-error.PNG)
 
 After a variant is added, it and its corresponding price will be displayed on the product detail page. By default, the price of the Medium/Option 2 variant will be shown. If the Medium variant does not exist, the price of another available variant will be displayed instead. The price display updates automatically based on the user's selection when adding a product to their basket. 
 
-In the item's description, a conditional paragraph is displayed based on whether the item is a gift card. This provides users with relevant, generic information tailored to the type of item they are viewing. This setting. The 'is gift card' setting not only adjusts the descriptive content but also ensures that the item image is formatted correctly, accommodating different orientations such as portrait or landscape.
+**Product/variant Availability**
+
+For each variant added, superusers will see it listed under the variants section. Each variant includes an 'Edit' button and a 'Delete' button. If a variant is marked as inactive, it will be displayed with red text reading "Inactive." To reactivate a variant, the superuser can update the variant using the edit variant form. Only active variants will be available for selection in the 'Size/Option' dropdown box.
+
+![product one variant](documentation/final/product-variantsm.PNG)
+
+If no variants are active, users will see a notification below the product title stating that the item is out of stock. The price field will display "N/A," and the size selection box will be replaced with a message saying, "Sorry, this product is currently unavailable." Additionally, the Submit button will be hidden to prevent users from adding out-of-stock items to their baskets. This also applies if a product, even with active variants, is set to inactive. These measures ensure that users cannot purchase unavailable items and enhance the user experience, particularly if a superuser has inadvertently left a product with no available variants or active status on the site.
+
+If a product (even with active variants) is set to inactive, the superuser is notfied by red text under the product title.
+
+![product inactive/no variants](documentation/final/product-inactive.PNG)
 
 **Adding Events** 
 
@@ -639,6 +660,10 @@ The Event form rendered allows the superuser to set:
 
 Helper text is inlcuded where the user might need more information on how to set a specific field and required fields are denoted by an * 
 
+**Event Availability**
+
+Just like with products, the is_active boolean ensures that only active events are available for users to purchase. Since there are no variants for events, users should not be able to access the page of unavailable events. This is enforced by the templating logic in the shop, which prevents navigation to pages for items that are not currently available.
+
 **Edit/Delete Products, Events and Product Variants**
 
 (edit_event.html, edit_product_variant.html, edit_product.html)
@@ -646,9 +671,9 @@ Helper text is inlcuded where the user might need more information on how to set
 From the product detail page, superusers have the ability to:
 
 * Edit Product Details: Modify any information related to the product.
-* Edit Product Variants: Change price of individual product variants.
+* Edit Product Variants: Change price and availiability of individual product variants.
 
-These forms are rendered containing the pre-existing details for each product/event. The superuser can view and edit these fields, before saving using the button at the bottom of the form. If valid, the item will be updated an info toast message will appear, notifying the user that the post has been updated successfully. To improve UX, the form shows a thumbnail of the current image, making it easy for the superuser to see the existing content. If the superuser chooses to update the image, JavaScript dynamically updates the form to display the new image name. This provides immediate feedback, ensuring the superuser is aware of the changes they are making.
+These forms are rendered containing the pre-existing details for each product/event. The superuser can view and edit these fields, before saving using the button at the bottom of the form. If valid, the item will be updated an info toast message will appear, notifying the user that the post has been updated successfully. To improve UX, the product form shows a thumbnail of the current image, making it easy for the superuser to see the existing content. If the superuser chooses to update the image, JavaScript dynamically updates the form to display the new image name. This provides immediate feedback, ensuring the superuser is aware of the changes they are making.
 
 ![blog newimage](documentation/final/blog-newimage.PNG)
 
@@ -715,7 +740,7 @@ All updates return the user to the main bag page and render an info toast, notif
 At the bottom of the page, a summary section provides an overview of the following:
 
 * Basket Total: This displays the combined total of all products and events in the basket.
-* Delivery Costs: Delivery is calculated at 10% of the basket total unless the total exceeds £50, in which case delivery is free. Events, priced over £50 and delivered via email, do not incur any delivery charge.
+* Delivery Costs: Delivery is calculated at 10% of the basket total unless the total exceeds £50, in which case delivery is free. Events do not incur any delivery charge as the tickets are sent via email. 
 * Grand Total: This is the sum of the basket total and the delivery costs.
 
 ![bag end summary](documentation/final/bag-end.PNG)
@@ -730,6 +755,19 @@ Due to the extensive JavaScript utilised on the Basket page, separate include fi
 
 </details>
 
+<details><summary>Checkout (Checkout app)</summary>
+
+CHECKOUT OUT IMAGE
+
+The checkout app handles all aspects of the checkout process, including customer details, billing and delivery addresses, and generating an order number while processing order line items. Throughout the checkout process, users can view a summary of their order on every page. This summary displays the total number of items, along with details such as item names, sizes, quantities, and whether a card message/note has been set (Y/N) and the subtotal for each line item. For events, it also shows the attendee name. Events are listed first, followed by products.
+
+At the end of the order summary section, users can see the order total, delivery charges, and the grand total (order total plus delivery). Users can click on images in the order summary to be redirected to the product or event detail page, allowing them to verify their selections. Additionally, there is an "Adjust Bag" option, presented as a link, that redirects users back to their basket if they need to make changes.
+
+The checkout process moves through three stages. This is designed to make checking out clear and simple for the user. 
+
+1. 
+
+</details>
 
 <details><summary>The Blog and Posts (Blog app)</summary>
 
