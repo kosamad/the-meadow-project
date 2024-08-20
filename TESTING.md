@@ -38,4 +38,19 @@ During this build, I utilised [Travis](https://www.travis-ci.com/) CI to automat
 
 # Manual Testing
 
+The desktop version of the site underwent testing across various browsers and devices to ensure compatibility. Testing included Google Chrome, Mozilla Firefox, and Microsoft Edge on desktop computers. Additionally, Chrome was tested on both Lenovo Tablet and Pixel devices, while Safari was used for mobile testing.
+
+The site was responsive on all browsers and devices (down to  320px as recommended by [Free Code Camp](https://www.freecodecamp.org/news/media-query-css-example-max-and-min-screen-width-for-mobile-responsive-design/))
+
+## Testing User Stories
+
+The site was built from the User Stories documented in the [Readme](README.md#user-stories). The site was tested against each of them and the results are documented below.
+
+
+
+
+## Real User Testing
+
+## Mobile and Desktop Test Results
+
 # Validators
