@@ -45,7 +45,6 @@
     // Validate fields for the current step by getting the form elements required.
     // Alert if a field is missing. 
 
-    // let orderType = "{{ order_type }}";
 
     // Function to validate fields and show next step
     function validateAndShowNextStep(currentStep) {
@@ -126,8 +125,8 @@
                 // if they have selected pick up, check date isn't a Sunday (shop shut)
                 if (deliveryMethod.value === 'pickup') {
                     const selectedDay = selectedDate.getDay(); // 0 for Sunday, 1 for Monday, etc.
-                    if (selectedDay === 0) { 
-                        alert('Sorry, our shop is not open on a Sunday.');
+                    if (selectedDay === 0 || selectedDay === 1) {
+                        alert('Sorry, our shop is not open on a Sunday or Monday.');
                         return;
                     }
                 }
@@ -137,12 +136,22 @@
         // If form is valid hide current step and display next step.    
         document.getElementById(`step-${currentStep}`).style.display = 'none';
         document.getElementById(`step-${currentStep + 1}`).style.display = 'block';
+        // Scroll to the top of the page
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth',
+        });
     }
 
     // hide's the next step from view when the user goes back and shows the step they are on. 
     function showPreviousStep(step) {
         document.getElementById(`step-${step + 1}`).style.display = 'none';
         document.getElementById(`step-${step}`).style.display = 'block';
+        // Scroll to the top of the page
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth',
+        });
     }
 
 
