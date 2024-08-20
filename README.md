@@ -732,7 +732,7 @@ Within the Basket, users can view the products they have added, followed by any 
 
 To enhance user convenience and avoid the need to delete and re-add items, several editing options are available. These are coloured green, drawing on preconditioned assumptions with green often being for editing features.
 
-1. Quantity Adjustment: Users can change the quantity of an item by typing the desired number in the box and then clicking the green "Update" button. The code for this was adapted from the Code Institue course material for Boutique Ado. 
+1. Quantity Adjustment: Users can change the quantity of a product by typing the desired number in the box and then clicking the green "Update" button. The code for this was adapted from the Code Institue course material for Boutique Ado. Note, this is not avaliable for events due to the complication of attendee information. 
 
 2. Editing Messages and Notes: Users can edit and save card messages or notes by clicking the pen icon. This action reveals a text box with the current content, allowing the user to retype their message or note. After making changes, the user can click the "Update" button to save the updated text to the basket.
 
@@ -865,6 +865,15 @@ This system ensures users receive both their order confirmation and event ticket
 
 ![checkout event ticket](documentation/final/checkout-event-ticket.PNG)
 
+</details>
+
+<details><summary>order</summary>
+</details>
+
+<details><summary>profile</summary>
+</details>
+
+<details><summary>reviews</summary>
 </details>
 
 <details><summary>The Blog and Posts (Blog app)</summary>
