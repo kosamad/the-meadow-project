@@ -48,7 +48,7 @@
                         </a> | <form action="{% url 'delete_event' event.id %}" method="POST" style="display:inline;">
                             {% csrf_token %}
                             <button type="submit" class="delete-btn"
-                                onclick="return confirm('Are you sure you want to delete this product?');">
+                                onclick="return confirm('Are you sure you want to delete this event?');">
                                 Delete</button>
                         </form>
                     </p>
