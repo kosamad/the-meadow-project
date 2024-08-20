@@ -180,7 +180,7 @@ def update_quantity(request, item_id):
         bag = request.session.get('bag', {})
 
         product = get_object_or_404(Product, id=item_id)
-        variant = get_object_or_404(ProductVariant, id=variant_id)                        
+        variant = get_object_or_404(ProductVariant, id=variant_id)                      
        
         if unique_key in bag:           
             bag[unique_key]['quantity'] = quantity            

@@ -182,15 +182,13 @@
             <div class=" mt-2 d-flex align-items-center">
                 <p class="my-0 me-2"><span class="fw-bold">Qty:</span></p>
                 <!-- Quantity w edit -->
-                <form class="d-flex align-items-center" method="POST" action="{% url 'update_quantity' item.event.id %}">
+                <form class="d-flex align-items-center" method="POST" action="">
                     {% csrf_token %}
                     <div class="me-2">
                         <input class="form-control" type="number" name="new_quantity" value="{{ item.quantity }}"
-                            min="1" max="99">
-                        <input type="hidden" name="unique_key" value="{{ item.unique_key }}">
-                        <input type="hidden" name="variant_id" value="{{ item.variant.id }}">
-                    </div>
-                    <button type="submit" class="btn qty-update-btn text-green">Update</button>
+                            min="1" max="99" readonly>
+                        <input type="hidden" name="unique_key" value="{{ item.unique_key }}">                        
+                    </div>                    
                 </form>
             </div>
             <div class="row mt-2">
