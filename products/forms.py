@@ -4,6 +4,7 @@ from django.forms.widgets import DateTimeInput
 from django.core.exceptions import ValidationError
 from .widgets import CustomClearableFileInput
 from django_summernote.widgets import SummernoteWidget
+from decimal import Decimal
 
 
 
@@ -33,6 +34,12 @@ class ProductForm(forms.ModelForm):
         self.fields['price'].help_text = 'Set the price of the product. Set this to the price of a medium size.'
         self.fields['alt_text'].help_text = 'Describe the image'
         self.fields['is_active'].help_text = 'Checked if the product is avaliable'
+
+    def clean_price(self):
+        price = self.cleaned_data.get('price')
+        if price < Decimal('0.30'):
+            raise ValidationError("The price must be at least £0.30 GBP.")
+        return price
 
 
 class ProductVariantForm(forms.ModelForm):
@@ -78,6 +85,12 @@ class ProductVariantForm(forms.ModelForm):
                     ('L', 'Large')
                 ]            
             self.fields['size'].disabled = True
+
+    def clean_price(self):
+        price = self.cleaned_data.get('price')
+        if price < Decimal('0.30'):
+            raise ValidationError("The price must be at least £0.30 GBP.")
+        return price
             
 
     def clean(self):
@@ -130,8 +143,14 @@ class EventForm(forms.ModelForm):
 
         # Add helper text 
         self.fields['name'].help_text = 'This should be set like this example ada_bouquet for Ada Bouquet friendly name'
-        self.fields['friendly_name'].help_text = 'Name for the Website eg Ada Bouquet'
-        self.fields['price'].help_text = 'Events must cost more than £50'      
+        self.fields['friendly_name'].help_text = 'Name for the Website eg Ada Bouquet'             
         self.fields['alt_text'].help_text = 'Describe the image'
         self.fields['image'].help_text = 'For our events, horizontal images work best' 
         self.fields['is_active'].help_text = 'Checked if the event is avaliable/there are tickets' 
+
+
+    def clean_price(self):
+        price = self.cleaned_data.get('price')
+        if price < Decimal('0.30'):
+            raise ValidationError("The price must be at least £0.30 GBP.")
+        return price
