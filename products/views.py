@@ -4,6 +4,7 @@ from .models import Product, Event, ProductVariant
 from .forms import ProductForm, ProductVariantForm, EventForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from decimal import Decimal
 
 
 
@@ -257,7 +258,7 @@ def delete_event(request, event_uuid):
 
     event = get_object_or_404(Event, pk=event_uuid)
     if request.method == 'POST':    
-        product.delete()
+        event.delete()
         messages.info(request, 'Event deleted!')
         return redirect(reverse('shop'))
     else:
