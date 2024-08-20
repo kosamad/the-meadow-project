@@ -122,10 +122,7 @@ def update_card_message(request, item_id):
             if new_unique_key != unique_key:
                 # get rid of the old unique key and save the assign new_unique_key to it.
                 bag[new_unique_key] = bag.pop(unique_key)
-                unique_key = new_unique_key
-                # check if it's a new unique key of if a product is being incremented
-                if unique_key in bag:
-                    bag[unique_key]['quantity'] += 1
+                unique_key = new_unique_key                
             messages.info(request, f'Your card message was updated')
         else:
             # in case the item isn't found in the basket.
@@ -157,8 +154,8 @@ def update_note_to_seller(request, item_id):
             if new_unique_key != unique_key:
                 bag[new_unique_key] = bag.pop(unique_key)
                 unique_key = new_unique_key
-                if unique_key in bag:
-                    bag[unique_key]['quantity'] += 1
+                # if unique_key in bag:
+                #     bag[unique_key]['quantity'] += 1
             messages.info(request, f'Your note was updated')
         else:           
             messages.error(request, "The item you are trying to update was not found in your bag.")
@@ -212,9 +209,7 @@ def update_note_to_host(request, item_id):
             new_unique_key = f"{event.id}_{attendee_name}_{note_to_host}"            
             if new_unique_key != unique_key:
                 bag[new_unique_key] = bag.pop(unique_key)
-                unique_key = new_unique_key
-                if unique_key in bag:
-                    bag[unique_key]['quantity'] += 1                        
+                unique_key = new_unique_key                                      
             messages.info(request, "Your note was updated.")            
         else:           
             messages.error(request, "The item you are trying to update was not found in your bag.")
