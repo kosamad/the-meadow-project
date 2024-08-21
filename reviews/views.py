@@ -14,15 +14,39 @@ from .models import Review
 
 @login_required
 def reviews(request):
-    '''All reveiws display page for admin'''     
+    '''Displays all reviews for the admin'''
+   
+    # Check if the user is an admin
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry, only admin can access this page')
+        return redirect(reverse('profile'))
 
-    template = 'reviews/review.html'
-    context = {        
-                   
+    # Retrieve all reviews ordered by the created_on field in descending order
+    reviews = Review.objects.all().order_by('-created_on')
+
+    template = 'reviews/reviews.html'
+    context = {
+        'reviews': reviews,
     }
 
-    return render (request, template, context)
+    return render(request, template, context)
 
+
+
+@login_required
+def delete_review(request, review_id):
+    '''Deletes a review and redirects to the review list.'''
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry, only admin can delete reviews.')
+        return redirect('profile')
+
+    review = get_object_or_404(Review, id=review_id)
+    
+    # Delete the review
+    review.delete()
+    
+    messages.info(request, 'Review has been successfully deleted.')
+    return redirect('reviews')  
 
 
 

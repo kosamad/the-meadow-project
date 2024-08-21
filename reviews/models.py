@@ -8,6 +8,7 @@ class Review(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     order = models.ForeignKey(Order, on_delete=models.CASCADE)    
     review_text = models.TextField(null=False, blank=False,)
+    created_on = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f'Review by {self.user.username} for Order {self.order.order_number}'
