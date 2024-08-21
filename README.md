@@ -891,13 +891,41 @@ Admin staff are reminded of their subsequent responsibilities which are:
 This process ensures that orders are accurately prepared and delivered to customers, and helps maintain up-to-date information on the website.
 </details>
 
-<details><summary>order</summary>
+<details><summary>Profile (Profile app)</summary>
 </details>
 
-<details><summary>profile</summary>
-</details>
+<details><summary>Reviews (Review app)</summary>
 
-<details><summary>reviews</summary>
+The Review app manages and stores all customer reviews.
+
+After purchasing an item, registered and logged-in users can submit reviews for their orders. The code ensures that only the rightful owner of an order can leave a review, maintaining the integrity of the feedback system. Users can access the review input form directly from their profile page.
+
+![review form](documentation/final/review-page.PNG)
+
+When submitting a review, the review page clearly informs the user of the specific order they are reviewing and provides a summary of the items in the order along with the total amount paid. The form automatically populates the user's username, which is uneditable, ensuring that users cannot change the name or impersonate someone else. Additionally, there is a text box where users can leave their review, with a helpful character countdown to indicate how much more they can type. This feature ensures that reviews displayed on the homepage do not exceed an acceptable length, maintaining a clean and user-friendly layout. Customised JavaScript Validation ensures that the user cannot type in whitespace only. If they try to they are given a waring message and the form is not submitted. 
+
+![review whitespace](documentation/final/review-whitespace.PNG)
+
+Users submit their reviews using the "Submit Review" button at the bottom of the form. Once the review is submitted, users receive a success message in an info toast, 'Your review has been successfully submitted!, confirming that their feedback has been successfully recorded. The review is then saved in the database and will be displayed in the carousel of reviews on the landing page. This ensures that genuine customer feedback is prominently featured, providing valuable insights to potential buyers. Users are redirected to their profile after successfully submitting a review.
+
+**Admin Features**
+
+Admin and superuser accounts can access and manage all submitted reviews through the Django admin panel or by navigating to the reviews.html page via the "View Reviews" button on their Profile page under "TMP Management."
+
+Reviews are displayed with the most recent reviews listed first. They list:
+
+* Username of the reviewer
+* Order Number associated with the review
+* Date Submitted
+* Review Text
+
+Admins have the ability to delete a review. This is facilitated via a bin icon (button) next to each review entry. Before deletion, a confirmation dialog appears, asking the admin to confirm the deletion action, if confirmed, the review is permanently deleted from the system.
+
+![review delete?](documentation/final/review-delete-confirmation.PNG)
+
+
+
+
 </details>
 
 <details><summary>The Blog and Posts (Blog app)</summary>
