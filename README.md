@@ -657,7 +657,8 @@ The Event form rendered allows the superuser to set:
 * Friendly Name: Used for display purposes on the site. 
 * Event Date and Time: Set using a date and time box.
 * Duration: Specifies how long the event lasts (hours) 
-* Price: The price of the event (also must be more than £0.30)
+* Price: The price of the event (also
+ must be more than £0.30)
 * Description: A detailed description of the event to provide customers with more information.
 * Image: The image associated with the product. 
 * Image Alt Text: Provides descriptive text for the image.
@@ -783,17 +784,19 @@ The checkout process is streamlined into three stages to enhance clarity and sim
 
 2. Customer/Billing Address
 
-    Users are required to provide their billing information. This is separate from their delivery details, allowing flexibility in cases where, for example, someone might be purchasing flowers for a friend and wishes to have the bouquet sent to a different address. At the bottom of the billing form, users have the option to copy their billing details to the delivery section by ticking a checkbox. If selected, this information will automatically populate the delivery fields in step 3 of the checkout process.
+    Users are required to provide their billing information. This is separate from their delivery details, allowing flexibility in cases where, for example, someone might be purchasing flowers for a friend and wishes to have the bouquet sent to a different address. It also means the appropriate information is captured in the OrderForm (used to process Line Items and Orders) even if the user is purchasing an event, which doesn't require any delivery information. 
+    
+    At the bottom of the billing form, users who are purchacing products have the option to copy their billing details to the delivery section by ticking a checkbox. If selected, this information will automatically populate the delivery fields in step 3 of the checkout process.
 
     ![checkout part 2](documentation/final/checkout-part2.PNG)
 
-    For logged-in users, there is also an option to save these details to their profile by checking a checkbox at the end of the billing section. If this box has been previously checked or if the user’s details are already saved in their profile, the form will automatically fill in their saved information for a quicker checkout experience.
+    For logged-in users, there is also an option to save these details to their profile by checking a checkbox at the end of the billing section. If this box has been previously checked or if the user’s details are already saved in their profile, the form will automatically fill in their saved information for a quicker checkout experience. If a user is logged out, they are given the option to 'create and account' or 'login'.
 
 3. Delivery Options
 
     **Products**
 
-    This section of the form is only displayed if the user has a product in their basket. Users have the flexibility to choose between delivery or store pickup for their items. To ensure a smooth checkout experience, they must select a delivery or pickup date that complies with the shop's policies:
+    This section of the form is only displayed if the user has a product in their basket. Users have the flexibility to choose between delivery or store pickup for their items. To ensure a smooth checkout experience, they must select a delivery or pickup date that complies with the shop's policies. This information is stored in the ProductOrderForm
 
     * Dates cannot be set to a past date.
     * Delivery is not available on Sundays.
@@ -836,7 +839,7 @@ The checkout process is streamlined into three stages to enhance clarity and sim
         This approach ensures a secure and efficient payment process and makes sure payment is only taken when a transaction is successful. This enhances the overall checkout experience for users while accommodating the specific needs of The Meadow Project.
 
 
-Following a successful payment, users are redirected to a "Thank You" page that provides a comprehensive summary of their order and are shown a info toast with a summery of their order details. The page includes:
+Following a successful payment, users are redirected to a "Thank You" page (checkout_success) that provides a comprehensive summary of their order (shows all line items) and are shown a info toast with a summery of their order details. The page includes:
 
 ![checkout order complete](documentation/final/checkout-order-complete.PNG)
 
@@ -865,6 +868,27 @@ This system ensures users receive both their order confirmation and event ticket
 
 ![checkout event ticket](documentation/final/checkout-event-ticket.PNG)
 
+
+**Admin interface for purchases**
+
+Successful checkouts result in the creation of Product or Event Order Line Items, which are linked to each order and contain detailed information about the purchased items. The Django admin panel allows visualization of these orders and their associated line items.
+
+The admin team receives an Order Confirmation email that includes comprehensive details about the order. This email specifies:
+
+* The recipient of the order.
+* A summary of the items purchased, including any notes or card messages.
+* Attendee information for events.
+* Customer delivery preferences, indicating whether the order should be delivered or picked up from the shop.
+* Delivery or pickup date.
+
+![checkout event ticket](documentation/final/checkout-email-order-admin.PNG)
+
+Admin staff are reminded of their subsequent responsibilities which are:
+
+* Booking Attendees: Ensuring that attendees are booked for events as per the details in the order.
+* Checking Stock and Tickets: Reviewing remaining stock and tickets to ensure availability and to update the website if required (i.e something is no longer in stock)
+
+This process ensures that orders are accurately prepared and delivered to customers, and helps maintain up-to-date information on the website.
 </details>
 
 <details><summary>order</summary>
@@ -997,6 +1021,12 @@ At the bottom of the contact page, a responsive Google Map displays a fictitious
 The code to help render the responsive map was taken from [W3 schools](https://www.w3schools.com/howto/howto_css_responsive_iframes.asp)
 
 </details>
+
+
+## Future
+
+- Integration of an Order viewing system for admin to be able to see all orders without logging into the Django admin panel, rather than relying on the email automatically sent. 
+
 
 ## Technologies
 
