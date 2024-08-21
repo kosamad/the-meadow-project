@@ -332,6 +332,7 @@ h2,
     justify-content: center;
 }
 
+
 /* Shop pages (inc products and events */
 
 .shop-img {
@@ -591,6 +592,10 @@ h2,
     .delete-event-btn {
         padding: 1%;
     }
+
+    .review-order-text {
+        font-size: 12px;
+        }
 }
 
 @media (max-width: 390px) {
