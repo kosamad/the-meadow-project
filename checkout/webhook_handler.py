@@ -57,6 +57,23 @@ class StripeWH_Handler:
         )
 
 
+    def _send_order_email(self, order):
+        """Send the admin an Order confirmation email"""
+        to_email = settings.EMAIL_HOST_USER
+        subject = render_to_string(
+            'checkout/confirmation_emails/confirmation_order_subject.txt',
+            {'order': order})
+        body = render_to_string(
+            'checkout/confirmation_emails/confirmation_order_body.txt',
+            {'order': order})       
+        send_mail(
+            subject,
+            body,
+            settings.EMAIL_HOST_USER,
+            [to_email]
+        )
+
+
     def handle_event(self, event):
         """
         Handle a generic/unknown/unexpected webhook event
@@ -143,6 +160,7 @@ class StripeWH_Handler:
                 time.sleep(1)
         if order_exists:
             self._send_confirmation_email(order_instance)
+            self._send_order_email(order_instance)
             # Check and send event ticket email if event items exist
             event_line_items = order_instance.event_lineitems.all()
             if event_line_items.exists():
@@ -249,6 +267,7 @@ class StripeWH_Handler:
                     content=f'Webhook received: {event["type"]} | ERROR: {e}',
                     status=500)
         self._send_confirmation_email(order_instance)
+        self._send_order_email(order_instance)
         # Send event ticket email if event items exist
         if event_line_items.exists():
             self._send_ticket_email(order_instance, event_line_items)
