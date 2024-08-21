@@ -61,6 +61,7 @@
                                 {{ order_form.county | as_crispy_field }}
                                 {{ order_form.postcode | as_crispy_field }}
                             </fieldset>
+                            {% if order_type == 'product' or order_type == 'product and event' %}
                             <!-- Allows a user to use same information for delivery (as customer/billing) -->
                             <div class="form-check float-right ms-3 mb-3">
                                 <input class="form-check-input" type="checkbox" id="id-use-same-address"
@@ -68,17 +69,18 @@
                                 <label class="form-check-label" for="id-use-same-address">Use the same information for
                                     delivery</label>
                             </div>
+                            {% endif %}
                             <div class="form-check float-right ms-3 mb-3">
                                 <!-- Allows a user to save info to their profile -->
                                 {% if user.is_authenticated %}
-                                <label class="form-check-label" for="id-save-info">Save this delivery information to my
+                                <label class="form-check-label" for="id-save-info">Save this information to my
                                     profile</label>
                                 <input class="form-check-input ml-2 mr-0" type="checkbox" id="id-save-info"
                                     name="save-info" checked>
                                 {% else %}
                                 <label class="form-check-label" for="id-save-info">
-                                    <a class="text-info" href="">Create an account</a> or
-                                    <a class="text-info" href="">login</a> to save this information
+                                    <a class="text-green" href="{% url 'account_signup' %}">Create an account</a> or
+                                    <a class="text-green" href="{% url 'account_login' %}">login</a> to save this information
                                 </label>
                                 {% endif %}
                             </div>
