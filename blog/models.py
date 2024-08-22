@@ -15,12 +15,7 @@ class Post(models.Model):
     product = models.ForeignKey(Product, null=True, blank=True, on_delete=models.CASCADE)
     event = models.ForeignKey(Event, null=True, blank=True, on_delete=models.CASCADE)
     body = models.TextField(null=False, blank=False)
-
-    def clean(self):
-        super().clean()
-        if not self.body or self.body.strip() == '':
-            raise ValidationError({'body': 'Body text cannot be empty or contain only whitespace.'}) 
-
+    
     def __str__(self):
         """
         Return title
