@@ -405,6 +405,10 @@ Wireframe Alterations:
 
 <details><summary>All Pages</summary>
 
+**-Title**
+
+All pages feature customised titles to help users easily identify their current location within the site. These titles are dynamically included in the {% block extra_title %} section of each page template. For example, when a user is on the shop page, the tab title would display as "The Meadow Project - Shop," providing clear context and improving navigation throughout the site.
+
 **-Forms**
 
 All forms across the site utlilise crispy forms to render content, ensuring a consistent and visually appealing user interface. These inputs come with added functionality, including dynamic feedback and validation promts (e.g email address need @) to aid users when they have made a mistake with a form, promoting data accuracy and submission reliability. he forms in the checkout app are customised to align with Stripe's styling and to clearly differentiate the checkout section of the site. This customisation ensures that users recognise the checkout process as a distinct and important step where they complete their purchase and are informed of the associated costs.
@@ -771,7 +775,7 @@ At the end of the order summary section, users can see the order total, delivery
 
 ![checkout order summary](documentation/final/checkout-order-summary.PNG)
 
-The checkout process is streamlined into three stages to enhance clarity and simplicity for users. This is achieved using JavaScript to dynamically show and hide different sections of the checkout form as the user progresses through each stage. By breaking the form into manageable steps, users are only required to complete one part of the form at a time, ensuring that all information is submitted together but in a more organised and user-friendly manner. The user can move between sections of the form using the 'Next' and 'Previous' buttons displayed. These will only allow movement forwards if all parts of the form are filled in. Custom validation has been used to ensure each step is completed before the user can move on. When these buttons are clicked, the user is automatically returned to the top of the page (required if on a small screen)
+The checkout process is streamlined into three stages to enhance clarity and simplicity for users. This is achieved using JavaScript to dynamically show and hide different sections of the checkout form as the user progresses through each stage. By breaking the form into manageable steps, users are only required to complete one part of the form at a time, ensuring that all information is submitted together but in a more organised and user-friendly manner. The user can move between sections of the form using the 'Next' and 'Previous' buttons displayed. These will only allow movement forwards if all parts of the form are filled in. Custom validation has been used to ensure each step is completed before the user can move on. When these buttons are clicked, the user is automatically returned to the top of the page (required if on a small screen). The inspiration for this code came from reading this [post](https://www.reddit.com/r/djangolearning/comments/jgvsop/best_way_to_do_multi_step_forms_in_django/).
 
 1. Customer Details
 
@@ -1094,10 +1098,35 @@ The code to help render the responsive map was taken from [W3 schools](https://w
 
 </details>
 
+<details><summary>Error pages</summary>
 
-## Future
+f a user encounters a page that does not exist or faces access issues, they will see a custom error page. Each error page includes a 'Go Home' button that redirects them back to the homepage.
+
+![example error page](documentation/final/404-error.PNG)
+
+* 404 Error Page: "Oops, Page Not Found"
+This page appears when the user navigates to a URL that doesn’t exist on our site. It helps them find their way back to the homepage.
+
+* 403 Error Page: "Sorry, you do not have permission to access this page."
+This page is shown when a user tries to access a page or resource they are not authorized to view.
+
+* 500 Error Page: "Sorry, something went wrong on our end. Please try again later."
+This page indicates a server error. It informs the user that something went wrong on our end and encourages them to try again later.
+
+## Future Features
 
 - Integration of an Order viewing system for admin to be able to see all orders without logging into the Django admin panel, rather than relying on the email automatically sent. 
+
+- In this project, one of the initial goals was to implement efficient stock management for admin staff. Due to time constraints, this feature has not yet been fully integrated. Currently, admin staff receive email reminders to check stock levels following each order.
+However, plans for future development include integrating stock management into the backend. This will leverage the existing code in the products app, where the is_infinite_stock field (a BooleanField with a default value of False and a help text of 'Check if stock is infinite for this product.') was left in place to demonstrate the intended functionality. Once implemented, stock levels will be automatically updated in the backend after orders are processed. Initially set by the superuser, the stock levels will adjust based on product sales. When a product is no longer available, it will be displayed as 'Out of stock' on the site. This enhancement will streamline inventory management and ensure that stock levels are accurately reflected in real-time, improving the overall efficiency for admin staff and enhancing the user experience.
+
+- Implementing a rating system for products and events would significantly enhance the user experience and drive engagement on the site as users are more likely to engage with products that have high ratings and positive feedbac. This can lead to increased purchases. It can also aid admins identify problem areas of the site. Again, due to time constraints this hasn't been integrated but the intial code (to show intent) is present "rating = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)"
+
+-  Implement whitespace validation for blog posts, products, and events. Currently, this validation has not been incorporated. Although it is expected that admin staff will carefully add content to these sections, and will correct any mistakes if they submit a form without text in the body or description fields, adding whitespace validation would make the system more robust. Ensuring that these fields are not empty and do not contain only whitespace will enhance data integrity and improve the overall reliability of the site.
+
+- An image hosting site, such as Cloudinary could be integrated to improve the management and performance of images on the site.
+
+- Integration of a banner to advertise selected products or events could enhance visibility and drive user engagement. For instance, when a user is browsing for bouquets, an admin could use the banner to highlight that the Meadow Project also offers events. This feature would allow admin staff to easily promote specific products, services, or special offers. By drawing attention to these additional offerings, the site can effectively inform users of complementary services and encourage cross-selling opportunities.
 
 
 ## Technologies
@@ -1145,3 +1174,4 @@ Please see the separate [TESTING.md](TESTING.md) file for testing carried out on
 * Blof functionality - Code inspired by ['Create a blog with pyton and django' by Codemy](https://www.youtube.com/playlist?list=PLCC34OHNcOtr025c1kHSPrnP18YPB-NFi)
 * Summernote integration - [this article](https://stackoverflow.com/questions/33615669/disable-image-upload-in-summernote#:~:text=There's%20currently%20no%20api%20to,a%20pull%20request%2C%20of%20course.&text=You%20can%20override%20the%20toolbar,own%20set%20of%20buttons%20there) and [Youtube video](https://www.youtube.com/watch?v=5JWElyGs8iA).
 * Responsive iframe - [W3 schools](https://www.w3schools.com/howto/howto_css_responsive_iframes.asp)
+* Inspiration for checkout process - [Reddit post](https://www.reddit.com/r/djangolearning/comments/jgvsop/best_way_to_do_multi_step_forms_in_django/).
