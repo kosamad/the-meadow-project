@@ -24,9 +24,15 @@
     <!-- Page Title - Checkout Page -->
     <div class="row mt-4 mb-4 justify-content-center">
         <div class="col-lg-6 col-12">
-            <div class="row text-center">
+            {% if from_profile %}
+            <div class="row text-center mb-2">
+                <h2>Previous Order Info</h2>
+            </div>
+            {% else %}            
+            <div class="row text-center mb-2">
                 <h2>Thank you!</h2>
             </div>
+            {% endif%}
             <div class="row">
                 <p>Your order information is below and a confirmation email has been sent to
                     <strong>{{ order.email }}</strong> . Please contact us if you have any problems.</p>
@@ -40,7 +46,7 @@
 
             <!-- Customer Details -->
             <div class="row">
-                <div class="row text-center">
+                <div class="row text-center mb-2">
                     <h2>Your Details</h2>
                 </div>
                 <div class="row">
@@ -61,7 +67,7 @@
 
             <!-- Ordered Items Info -->
             <div class="row">
-                <div class="row text-center">
+                <div class="row text-center mb-2">
                     <h2>You Have Ordered</h2>
                 </div>
                 <!-- Product Items -->
@@ -146,7 +152,7 @@
 
             <!-- Order Costs Info -->
             <div class="row">
-                <div class="row text-center">
+                <div class="row text-center mb-2">
                     <h2>Order Summary</h2>
                 </div>
                 <div class="row">
@@ -167,8 +173,7 @@
                     <a href="{% url 'shop' %}" class="btn btn-green">
                         <span class="text-uppercase">Back To The Shop</span>
                     </a>
-                    {% endif %}
-                    
+                    {% endif %} 
 
                 </div>
             </div>
