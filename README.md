@@ -1115,19 +1115,24 @@ This page indicates a server error. It informs the user that something went wron
 
 ## Future Features
 
-- Integration of an Order viewing system for admin to be able to see all orders without logging into the Django admin panel, rather than relying on the email automatically sent. 
+1. Order viewing system - Integration of an Order viewing system for admin to be able to see all orders without logging into the Django admin panel, rather than relying on the email automatically sent. 
 
-- In this project, one of the initial goals was to implement efficient stock management for admin staff. Due to time constraints, this feature has not yet been fully integrated. Currently, admin staff receive email reminders to check stock levels following each order.
+2. Stock/Ticket management- In this project, one of the initial goals was to implement efficient stock management for admin staff. Due to time constraints, this feature has not yet been fully integrated. Currently, admin staff receive email reminders to check stock levels following each order.
 However, plans for future development include integrating stock management into the backend. This will leverage the existing code in the products app, where the is_infinite_stock field (a BooleanField with a default value of False and a help text of 'Check if stock is infinite for this product.') was left in place to demonstrate the intended functionality. Once implemented, stock levels will be automatically updated in the backend after orders are processed. Initially set by the superuser, the stock levels will adjust based on product sales. When a product is no longer available, it will be displayed as 'Out of stock' on the site. This enhancement will streamline inventory management and ensure that stock levels are accurately reflected in real-time, improving the overall efficiency for admin staff and enhancing the user experience.
 
-- Implementing a rating system for products and events would significantly enhance the user experience and drive engagement on the site as users are more likely to engage with products that have high ratings and positive feedbac. This can lead to increased purchases. It can also aid admins identify problem areas of the site. Again, due to time constraints this hasn't been integrated but the intial code (to show intent) is present "rating = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)"
+3. Rating system - Implementing a rating system for products and events would significantly enhance the user experience and drive engagement on the site as users are more likely to engage with products that have high ratings and positive feedbac. This can lead to increased purchases. It can also aid admins identify problem areas of the site. Again, due to time constraints this hasn't been integrated but the intial code (to show intent) is present "rating = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)"
 
--  Implement whitespace validation for blog posts, products, and events. Currently, this validation has not been incorporated. Although it is expected that admin staff will carefully add content to these sections, and will correct any mistakes if they submit a form without text in the body or description fields, adding whitespace validation would make the system more robust. Ensuring that these fields are not empty and do not contain only whitespace will enhance data integrity and improve the overall reliability of the site.
+4. Further whitespace validation-  Implement whitespace validation for blog posts, products, and events. Currently, this validation has not been incorporated. Although it is expected that admin staff will carefully add content to these sections, and will correct any mistakes if they submit a form without text in the body or description fields, adding whitespace validation would make the system more robust. Ensuring that these fields are not empty and do not contain only whitespace will enhance data integrity and improve the overall reliability of the site.
 
-- An image hosting site, such as Cloudinary could be integrated to improve the management and performance of images on the site.
+5. Image hosting system - An image hosting site, such as Cloudinary could be integrated to improve the management and performance of images on the site.
 
-- Integration of a banner to advertise selected products or events could enhance visibility and drive user engagement. For instance, when a user is browsing for bouquets, an admin could use the banner to highlight that the Meadow Project also offers events. This feature would allow admin staff to easily promote specific products, services, or special offers. By drawing attention to these additional offerings, the site can effectively inform users of complementary services and encourage cross-selling opportunities.
+6. Advertisment banner - Integration of a banner to advertise selected products or events could enhance visibility and drive user engagement. For instance, when a user is browsing for bouquets, an admin could use the banner to highlight that the Meadow Project also offers events. This feature would allow admin staff to easily promote specific products, services, or special offers. By drawing attention to these additional offerings, the site can effectively inform users of complementary services and encourage cross-selling opportunities.
 
+7. Social media log in - Integration of social media login options. This would greatly enhance user experience by offering a convenient and quick way for users to access their accounts. This functionality allows users to log in using their existing social media credentials, such as from platforms like Facebook, Google, or Twitter.
+
+8. Discout Codes - Implementing a discount code feature would allow users to apply promotional codes during checkout. This can enhance the user experience and incentivise purchases, while also enabling admin staff to manage promotions effectively.
+
+9. Track sales data - allow admin staff to export and analyse sales data from the site. 
 
 ## Technologies
 
@@ -1135,17 +1140,31 @@ However, plans for future development include integrating stock management into 
 
 HTML, CSS, JavaScript & Python
 
+### Development
+
+* [GitHub](https://github.com/) - to save and store the files for the website.
+* [Git](https://git-scm.com/) - for version control, using the Gittpod terminal to commit to Git and Push to GitHub.
+* [Gitpod](https://gitpod.io/) - to develop the site
+
+## Deployment
+
+*[Heroku](https://dashboard.heroku.com/)
+
 ### Database
 
-### Storage
+### Storage of static files
+
+* [Amazon AWS S3](https://aws.amazon.com/) - used to store static files in an **Amazon Web Services S3 Bucket**.
 
 ### Payment
 
-
+* [Stripe](https://stripe.com/gb) - To integrate a payment system.
 
 ### Frameworks
 
 * [Django](https://www.djangoproject.com) - web development framework.
+* [Bootstrap](https://getbootstrap.com/docs/5.0/getting-started/introduction/) - to assist with responsive design and control site appearance.
+* [jQuery](https://jquery.com/) - to assist with JavaScript coding and DOM manipulation.
 
 ### Libraries, Programs and Tools Used
 
@@ -1156,22 +1175,107 @@ HTML, CSS, JavaScript & Python
 * [drawio](https://www.drawio.com) - to draw the site flow chart.
 * [Balsamiq](https://balsamiq.com) - to create wireframes.
 * [Coolers](https://coolors.com) - to view the colour scheme.
+* [Google Developer Tools](https://developer.chrome.com/docs/devtools/) - to view responsive styling and troubleshoot/solve issues.
+* [Font Awesome](https://fontawesome.com/) - for icons.
+* [Pip](https://pip.pypa.io/en/stable/) - for installing Python packages.
+* [Jinja] - a templating engine for Python, used to generate dynamic web content.
+* [Tiny PNG](https://tinypng.com/) - to compress images.
 * [Canva](https://www.canva.com) - to create the logo.
+* [Favicon](https://favicon.io/) - to generate the favicons for the page.
 * [Google Fonts](https://fonts.google.com) - for the fonts used on the website. 
+* [TableConvert](https://tableconvert.com/csv-to-markdown)- for simplifying the writing of Markdown tables
+* [django-allauth](https://django-allauth.readthedocs.io/en/latest/index.html) - user authentication and account management.
+* [ColorZilla](https://chromewebstore.google.com/detail/colorzilla/bhlhnicpbhignbdhedgjhgdocnmhomnp) - to pick colours from the background image and get hex codes.
+* [django-crispy-forms](https://django-crispy-forms.readthedocs.io/en/latest/) - enables enhanced rendering of Django forms.
+* [Am I Responsive?](http://ami.responsivedesign.is/) - to show the website on different devices/screen sizes.
 * [PostgreSQL from Code Institute](https://dbs.ci-dbs.net/) - to create the database for the site.
-* Bootstrap
+* [pillow](https://pillow.readthedocs.io/en/stable/) - Python imaging library.
+* [Silktide Accessibility Checker ](https://chromewebstore.google.com/detail/mpobacholfblmnpnfbiomjkecoojakah)  - to check the website for accessibility.
+* [psycopg2](https://pypi.org/project/psycopg2/) - PostgreSQL database adapter for Python with Heroku deployment. 
+* Validators!
+
 
 ## Testing
 
 Please see the separate [TESTING.md](TESTING.md) file for testing carried out on The Meadow Project.
 
+## Deployment and Local Development
+
+### Deployment
+
+This site was deployed using [Heroku](https://dashboard.heroku.com/)
+
+
+### Cloning the Github Repository
+
+Cloning the repository makes a copy of all the of repository data and takes it from GitHub to your local machine. The following steps, detailed below, should be taken to clone a repository:
+
+1. Navigate to the GitHub repository (https://github.com/kosamad/the-meadow-project).
+
+2. Click on the green code button and under the "Local" tab and select how you would like to clone (HTTPS, SSH or GitHub CLI.)
+
+3. Copy the link and use it to create a new workspace in your chosen IDE (code editor).
+
+4. Create the env.py file
+
+__NB: An env.py file is required to configure the environment variables. These are not included in the GitHub files for security reasons.__
+
+Files that require configurment are:
+
+os.environ["DEVELOPMENT"] = "your_development_value"
+os.environ["SECRET_KEY"] = "your_secret_key"
+os.environ['STRIPE_PUBLIC_KEY'] = "your_stripe_public_key"
+os.environ['STRIPE_SECRET_KEY'] = "your_stripe_secret_key"
+os.environ['STRIPE_WH_SECRET'] = "your_stripe_wh_secret"
+os.environ['EMAIL_HOST_PASSWORD'] = "your_email_host_password"
+os.environ['EMAIL_HOST_USER'] = "your_email_host_user"
+os.environ['DEFAULT_FROM_EMAIL'] = "your_default_from_email"
+
+4. Install all requirements from the **requirements.txt** file using pip by putting this command into your terminal:     
+`pip3 install -r requirements.txt`
+
+5. Migrate models and create the database using: 
+`python3 manage.py makemigrations`     
+`python3 manage.py migrate`
+
+6. Create a superuser to have an access to the the admin panel by typing: 
+`python3 manage.py createsuperuser` 
+
+7. Run the application using the following command:     
+`python3 manage.py runserver`
+
+8. To access the admin panel, you can add the `/admin` path at the end of the url link and login using the superuser credentials.
+
+
+
 ## Credits
+
+
+### Content
 
 * No image png from the Code Institue tutorial Boutique Ado. 
 * Prduct variants - Code inspired by [Coding Point](https://www.youtube.com/watch?v=UjisbVs6gww&t=432s)
-* Product variant validation - Code adapted from [article](https://www.geeksforgeeks.org/validationerror-in-django/
-)
-* Blof functionality - Code inspired by ['Create a blog with pyton and django' by Codemy](https://www.youtube.com/playlist?list=PLCC34OHNcOtr025c1kHSPrnP18YPB-NFi)
+* Product variant validation - Code adapted from [article](https://www.geeksforgeeks.org/validationerror-in-django/)
+* Blog functionality - Code inspired by ['Create a blog with pyton and django' by Codemy](https://www.youtube.com/playlist?list=PLCC34OHNcOtr025c1kHSPrnP18YPB-NFi)
 * Summernote integration - [this article](https://stackoverflow.com/questions/33615669/disable-image-upload-in-summernote#:~:text=There's%20currently%20no%20api%20to,a%20pull%20request%2C%20of%20course.&text=You%20can%20override%20the%20toolbar,own%20set%20of%20buttons%20there) and [Youtube video](https://www.youtube.com/watch?v=5JWElyGs8iA).
 * Responsive iframe - [W3 schools](https://www.w3schools.com/howto/howto_css_responsive_iframes.asp)
 * Inspiration for checkout process - [Reddit post](https://www.reddit.com/r/djangolearning/comments/jgvsop/best_way_to_do_multi_step_forms_in_django/).
+
+### Media
+
+* Images were sourced from Pexels and Upsplash. Specific credit to: Amina Filki, Anastasia Shuraeva, Cottonbro, Leeloothefirst, Lina , Orlovamaria, Rdne, Shvestsa, Sudharma, Teona Swift, Annie Spratt, Benjamin Combs, Ellicia, Emiel Molenaar, Joydeep Pal, Gary Barm, Hatice Uyar, Hoang Phng, Ian Panel, Mina Marie Michell, Pavel Danilyuk, Will TW, Angelina Jollivet, Christie Kim, Feey, Maarten Deckers, Nicolas Hirajeta, Niklas Ohlrogge, Peter Bucks, Dawn Sterry, Huy Phan, Karolina G and Kpaukshift. 
+
+### Acknowledgments
+
+I would like to thank:
+
+* My mentor, Jubril Akolade, for his helpful feedback and industry insights.
+
+* My family and friends who tested the site and gave me their comments.
+
+* The City Of Bristol 2023 September cohort, for providing support and solidarity on slack.
+
+* The tutors and staff at Code Institute for their support.
+
+## Disclaimer
+This site is made for **educational purposes** only.     
