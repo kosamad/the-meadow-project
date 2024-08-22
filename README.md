@@ -1247,6 +1247,13 @@ os.environ['DEFAULT_FROM_EMAIL'] = "your_default_from_email"
 8. To access the admin panel, you can add the `/admin` path at the end of the url link and login using the superuser credentials.
 
 
+### Forking the Github Repository
+
+* Go to the [Project Code Repository](https://github.com/kosamad/the-meadow-project).
+* In the top-right corner of the page, click *Fork*.  
+
+For further information on *Forking* a repository,  the [GitHub Documentation](https://docs.github.com/en/github/getting-started-with-github/fork-a-repo).
+
 
 ## Credits
 
