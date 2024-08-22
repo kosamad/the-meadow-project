@@ -26,22 +26,22 @@
             <div class="row mt-4">
                 <p class="text-muted">Add A Event</p>
             </div>
-            <hr>
-            <div class="row">
-                <!-- Event Form  -->
-                <div class="col-lg-9 col-12">
-                    <form method="POST" action="{% url 'add_event' %}" class="form mb-2"
-                        enctype="multipart/form-data">
-                        {% csrf_token %}
-                        <div class="col-12">
-                            {{ event_form|crispy }}
-                        </div>                      
-                        <div class="text-end">
-                            <a class="btn btn-pink" href="{% url 'shop' %}">Cancel</a>
-                            <button class="btn btn-green" type="submit">Add Event</button>
-                        </div>
-                    </form>
-                </div>
+        </div>
+
+        <div class="row">
+            <!-- Event Form  -->
+            <div class="col-lg-9 col-12">
+                <hr>
+                <form method="POST" action="{% url 'add_event' %}" class="form mb-2" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="col-12">
+                        {{ event_form|crispy }}
+                    </div>
+                    <div class="text-end">
+                        <a class="btn btn-pink" href="{% url 'shop' %}">Cancel</a>
+                        <button class="btn btn-green" type="submit">Add Event</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

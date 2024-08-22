@@ -133,6 +133,7 @@ SUMMERNOTE_CONFIG = {
             ['undo', ['undo', 'redo']],
         ],
         'dialogsInBody': True,
+        'width': '100%',    
     }
 }
 

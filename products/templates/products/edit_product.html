@@ -28,8 +28,8 @@
             </div>
             <hr>
             <div class="row">
-                <!-- Checkout Form  -->
-                <div class="col-lg-9 col-12">
+                <!-- Edit product Form  -->
+                <div class="col-12">
                     <form method="POST" action="{% url 'edit_product' product.id %}" class="form mb-2"
                         enctype="multipart/form-data">
                         {% csrf_token %}
