@@ -936,7 +936,9 @@ The code for the blog app was inspired by the Youtube videos series ['Create a b
 
 **All Posts**
 
-When users access the 'Blog Posts' page from the navigation bar, they are directed to the 'All Posts' page (posts.html). This page provides an overview of all the blog posts on the site, with each post presented in a Bootstrap card. The card displays the post's image, title, date, and a preview of the first 200 characters of the post body.
+When users access the 'Blog Posts' page from the navigation bar, they are directed to the 'All Posts' page (posts.html). They are greeted by an introductory paragraph that explains the purpose of the page. Logged-out users are encouraged to "Sign Up" to be the first to hear about new posts. Logged-in users are informed that they are already signed up and will receive updates about the latest posts. 
+
+There is then an overview of all the blog posts on the site, with each post presented in a Bootstrap card. The card displays the post's image, title, date, and a preview of the first 200 characters of the post body.
 
 To read the full post, users can either click on the image or select the 'Read More' link at the end of each card. If a blog post exceeds 200 characters, an ellipsis ("...") is added to indicate that there is more content available.
 
@@ -944,11 +946,13 @@ To enhance navigation, pagination controls are included at the bottom of the pag
 
 ![blog pagniation](documentation/final/blog-pagination.PNG)
 
-If a user wants to try and find a specific blog post they can search for it using the search box at the top of the page which contains the helper text 'search blog posts'. This search can be cleared using the 'Clear' button which will once again, show all the posts. 
+If a user wants to try and find a specific blog post they can search for it using the search box at the top of the page which contains the helper text 'search blog posts'. This search can be cleared using the 'Clear' button which will once again, show all the posts. Below shows a search for a bouquet. 
 
 ![blog search](documentation/final/blog-search.PNG)
 
-The 'Add Post' button on the right of the page is only seen by superusers
+The 'Add Post' button on the right of the page is only seen by superusers. Superusers can also 'Edit' or 'Delete' a post directly from this page. 
+
+![blog search](documentation/final/blog-home-editdelete.PNG)
 
 **Post Detail**
 
