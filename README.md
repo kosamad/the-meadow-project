@@ -138,7 +138,6 @@ As a **buying customer** , I would also like to be able to:
 
 * Easily input my delivery and card information.
 * Register on the site so I can make further purchases more easily.
-* Opt out of receiving the newsletter.
 * Remove unwanted items from my basket. 
 * Be able to add more than one person to an event's booking.
 * Recieve an email confirmation of my order once complete.
@@ -162,9 +161,7 @@ As a **business owner** user, I would like to be able to:
 * Amend the reward codes the site is accepting.
 * Edit and delete products and their prices.
 * Delete user reviews (if malicious).
-* Add and edit product categories.
 * Track sales data to see which products are most popular and help with stock control.
-* Add a note to the site, e.g., information about Mother's Day bookings/delivery.
 * Add a blog post to the site.
 * Control stock.
 * Receive emails from users who contact the business via the contact form(s)
@@ -1133,6 +1130,8 @@ However, plans for future development include integrating stock management into 
 8. Discout Codes - Implementing a discount code feature would allow users to apply promotional codes during checkout. This can enhance the user experience and incentivise purchases, while also enabling admin staff to manage promotions effectively.
 
 9. Track sales data - allow admin staff to export and analyse sales data from the site. 
+
+10. Email list - give site owners a way to see who is registerd on the site and therfore what emails to send the newsletter to. 
 
 ## Technologies
 
