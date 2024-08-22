@@ -26,43 +26,58 @@
     <!-- Introduction -->
     <div class="row text-center align-items-center justify-content-center mt-4 mb-4">
         <div class="col-12 col-md-9 col-lg-6">
-            <p>
+            {% if user.is_authenticated %}
+            <p class="text-justify">
+                We’re passionate about all things plants and love sharing our knowledge with you!<strong> You're already
+                    signed
+                    up</strong> to be the first to know about new blog posts on everything from gardening tips to plant
+                care guides.
+                If you’re searching for something specific and can’t find it, let us know — we might just write a post
+                on it!
+            </p>
+            {% else %}
+            <p class="text-justify">
                 We’re passionate about all things plants and love sharing our knowledge with you! Check back regularly
                 for new blog posts on everything from gardening tips to plant care guides. To stay updated on our latest
                 content, make sure to <a href="{% url 'account_signup' %}" class="no-link-style"><strong>sign
                         up</a></strong> for notifications. If you’re searching for
                 something specific and can’t find it, let us know — we might just write a post on it!
             </p>
-        </div>
+            {% endif %}      
+          </div>        
     </div>
 
     <div class="row justify-content-center">
-        <div class="col-lg-4 col-md-6 col-12 text-center">
+        <div class="col-12 col-md-9 col-lg-6 text-center">
+             <!-- Search box -->
             <form method="GET" action="{% url 'posts' %}">
-                <div class="input-group">
-                    <div class="col-6 me-2">
+                <div class="row justify-content-center">
+                <div class="input-group d-flex justify-content-center">
+                    <div class="col-md-4 col-12 mb-2 me-3 ms-3">
                         <input class="form-control form-control-sm border-green rounded-0 p-2" type="text" name="q"
                             placeholder="Search blog posts..." value="{{ search_term }}">
                     </div>
-                    <div class="input-group-append me-2">
-                        <button class="btn btn-green" type="submit">
+                    <div class="col-md-4 col-12 d-flex justify-content-center">
+                        <!-- A for formating filler -->
+                        <a href="">
+                        <button class="btn btn-green me-2" type="submit">
                             Search
-                        </button>
-                    </div>
-                    <div class="input-group-append me-0">
-                        <a href="{% url 'posts' %}" class="no-link-style" aria-label="Clear search">
+                        </button>  
+                    </a>              
+                        <a href="{% url 'posts' %}" class="no-link-style me-0" aria-label="Clear search">
                             <button class="btn-pink btn" type="button"> Clear
                             </button>
                         </a>
                     </div>
                 </div>
+            </div>
 
             </form>
         </div>
     </div>
     <div class="row mb-4">
         {% if user.is_authenticated and user.is_superuser %}
-        <div class="col-12 text-end">
+        <div class="col-12 text-end mt-4">
             <a href="{{ 'add_post' }}" class="btn btn-green">Add Post</a>
         </div>
         {% endif %}

@@ -27,9 +27,9 @@ body {
 .note-editable  {
     font-family: 'Atkinson Hyperlegible', sans-serif !important;
     font-size: 1rem !important;
-    line-height: 1.5 !important;   
+    line-height: 1.5 !important;
+    width: 200px !important;
 }
-
 
 .header-container {
     margin-top: 75px;
@@ -476,6 +476,8 @@ h2,
 .page-link {
     color: black;
 }
+
+
 
 /* Allauth form formatting */
 
