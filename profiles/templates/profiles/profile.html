@@ -38,11 +38,11 @@
             </p>
             <div class="row mb-4">
                 <div class="col-12">
-                    <a href="{% url 'add_product' %}" class="btn btn-green mt-2">Add Product</a>
-                    <a href="{% url 'add_event' %}" class="btn btn-green mt-2">Add Event</a>
-                    <a href="{% url 'add_post' %}" class="btn btn-green mt-2">Add Blog Post</a>
-                    <a href="{% url 'shop' %}" class="btn btn-green mt-2">Reactivate Items</a>
-                    <a href="{% url 'reviews' %}" class="btn btn-green mt-2">View Reviews</a>
+                    <a href="{% url 'add_product' %}" class="btn btn-pink mt-2">Add Product</a>
+                    <a href="{% url 'add_event' %}" class="btn btn-pink mt-2">Add Event</a>
+                    <a href="{% url 'add_post' %}" class="btn btn-pink mt-2">Add Blog Post</a>
+                    <a href="{% url 'shop' %}" class="btn btn-pink mt-2">Reactivate Items</a>
+                    <a href="{% url 'reviews' %}" class="btn btn-pink mt-2">View Reviews</a>
                 </div>
             </div>
         </div>
@@ -69,10 +69,12 @@
 
         <!-- User Profile Info -->
         <!-- User Details -->
-        <div class="row">
+        <div class="row justify-content-center">
             <h3 class="title-font">Your Details</h3>
             <p><strong>Username:</strong> {{ username }}</p>
             <p><strong>Email:</strong> {{ email }}</p>
+            <button class="col-md-4 col-lg-3 col-6 btn btn-green mb-4"><a href="{% url 'account_change_password' %}" class="no-link-style text-white ">Change password</a>
+            </button>         
         </div>
         <hr>
         <!--Address and Orders-->
