@@ -80,15 +80,15 @@
                         {% for item in product_lineitems %}
                         <li>
                             {% if item.product.image %}
-                            <img src="{{ item.product.image.url }}" alt="{{ item.product.alt_text }}" width="100">
+                            <img src="{{ item.product.image.url }}" alt="{{ item.product.alt_text }}" width="100" class="mb-2">
                             {% else %}
-                            <img width="100" src="{{ MEDIA_URL }}noimage.png" alt="{{ item.product.name }}">
+                            <img width="100" src="{{ MEDIA_URL }}noimage.png" alt="{{ item.product.name }}" class="mb-2">
                             {% endif %}
                             <p class="mb-0"><strong>Name:</strong> {{ item.product.friendly_name }}</p>
                             <p class="mb-0"><strong>Size:</strong> {{ item.product_variant.size }}</p>
                             <p class="mb-0"><strong>Quantity:</strong> {{ item.quantity }}</p>
                             <p class="mb-0"><strong>Card Message:</strong> {{ item.card_message|default:"None" }}</p>
-                            <p class="mb-0"><strong>Note to Seller:</strong> {{ item.note_to_seller|default:"None" }}
+                            <p class="mb-4"><strong>Note to Seller:</strong> {{ item.note_to_seller|default:"None" }}
                             </p>
                         </li>
                         {% endfor %}
@@ -125,14 +125,14 @@
                         {% for item in event_lineitems %}
                         <li>
                             {% if item.event.image %}
-                            <img src="{{ item.event.image.url }}" alt="{{ item.event.name }}" width="100">
+                            <img src="{{ item.event.image.url }}" alt="{{ item.event.name }}" width="100" class="mb-2">
                             {% else %}
-                            <img width="100" src="{{ MEDIA_URL }}noimage.png" alt="{{ item.event.name }}">
+                            <img width="100" src="{{ MEDIA_URL }}noimage.png" alt="{{ item.event.name }}" class="mb-2">
                             {% endif %}
                             <p class="mb-0"><strong>Name:</strong> {{ item.event.friendly_name }}</p>
                             <p class="mb-0"><strong>Attendee Name:</strong> {{ item.attendee_name}}</p>
                             <p class="mb-0"><strong>Quantity:</strong> {{ item.quantity }}</p>
-                            <p class="mb-0"><strong>Note to Seller:</strong> {{ item.note_to_host|default:"None" }}
+                            <p class="mb-4"><strong>Note to Seller:</strong> {{ item.note_to_host|default:"None" }}
                             </p>
                         </li>
                         {% endfor %}
