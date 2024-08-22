@@ -25,7 +25,7 @@ def profile(request):
     else:
         form = UserProfileForm(instance=profile)
     
-    orders = profile.orders.all() # get users orders
+    orders = profile.orders.all().order_by('-date')  # get users orders
 
     # get users username and eamil for display
     username = profile.user.username 
@@ -45,6 +45,9 @@ def profile(request):
 @login_required
 def order_history(request, order_number):
     order = get_object_or_404(Order, order_number=order_number)
+    # get products and events
+    product_lineitems = order.product_lineitems.all()
+    event_lineitems = order.event_lineitems.all()
 
     messages.info(request, (
         f'This is a past confirmation for order number {order_number}. '
@@ -54,6 +57,8 @@ def order_history(request, order_number):
     template = 'checkout/checkout_success.html'
     context = {
         'order': order,
+        'product_lineitems': product_lineitems,
+        'event_lineitems': event_lineitems,
         'from_profile': True,
     }
 
