@@ -52,7 +52,7 @@
             </a>
         </div>
         <div class="col-lg-4 col-md-6 col-12 mb-4 order-md-3 order-lg-2">
-            <a href="">
+            <a href="{% url 'about' %}#delivery-container">
                 <div class="thumbnail">
                     <div class="image-container">
                         <img src="/media/jorge-zapata-6FgbPqag3h8-unsplash.jpg" class="grid-img" alt="Image 1">
@@ -141,7 +141,7 @@
             <div class="row justify-content-center">
                 <div class="col-12 text-center">
                     <i class="fa-solid fa-bicycle fa-3x mb-2"></i>
-                    <p class="text-justify">We prioritize eco-friendly deliveries, utilising bikes whenever possible and
+                    <p class="text-justify">We prioritise eco-friendly deliveries, utilising bikes whenever possible and
                         our zero-emissions van, Bertha, when needed. Our commitment ensures that our blooms arrive in
                         pristine condition, whether they're transported to your doorstep or collected from our shop.</p>
                 </div>
@@ -181,7 +181,8 @@
         </div>
         <div
             class=" col-lg-4 offset-lg-2 col-md-6 col-12 mt-4 d-flex flex-column justify-content-center align-items-center">
-            <p class="text-justify mt-4"> Discover a world of seasonal beauty at our shop, where meadow-grown flowers are
+            <p class="text-justify mt-4"> Discover a world of seasonal beauty at our shop, where meadow-grown flowers
+                are
                 meticulously crafted
                 into stunning bouquets for every occasion. Alternatively, explore our curated collection of plants,
                 designed to bring tranquility and greenery into any space.</p>
@@ -226,31 +227,31 @@
 <!-- Review Carousel adapted from Bootstrap-->
 <div class="container">
     <div class="row justify-content-center align-items-center">
-    <div id="carouselReveiw" class="carousel slide">
-        <div class="carousel-inner" >
-            <div class="row justify-content-center">
-                <div class="col-9">
-                    {% for review in reviews %}
-                    <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                        <div class="d-block w-100 p-5 text-center">
-                            <p class="review-text">"{{ review.review_text }}"</p>
-                            <p class="review-author">- {{ review.user.username }}</p>
-                        </div>
+        <div id="carouselReveiw" class="carousel slide">
+            <div class="carousel-inner">
+
+
+                {% for review in reviews %}
+                <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                    <div class="d-block w-100 p-5 text-center">
+                        <p class="review-text">"{{ review.review_text }}"</p>
+                        <p class="review-author">- {{ review.user.username }}</p>
                     </div>
-                    {% endfor %}
                 </div>
+                {% endfor %}
+
+
             </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselReveiw" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselReveiw" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselReveiw" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselReveiw" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
     </div>
-</div>
 </div>
 
 
