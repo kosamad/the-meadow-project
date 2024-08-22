@@ -892,6 +892,50 @@ This process ensures that orders are accurately prepared and delivered to custom
 </details>
 
 <details><summary>Profile (Profile app)</summary>
+
+![Profile page]()
+
+Users who have signed up for the site can access their profile page. On this page, they can view the details they used to sign up, including their username and email address.
+
+The profile page also features a form displaying their default address information. If the user has not previously saved these details (either by filling them in earlier or during the checkout process), placeholder text will appear in the form fields as follows:
+
+* Phone Number
+* Street Address 1
+* Street Address 2
+* Town or City
+* County
+* Postcode
+
+![profile details](documentation/final/profile-address-orders.PNG)
+
+Users can update these details by editing the form and clicking the "Update Information" button to save the changes to their profile.
+
+Next to their address information, users can view their order history. This section displays a chronological list of all previous orders submitted to the Meadow Project, sorted from the most recent to the oldest. Each order summary includes:
+
+* Order Number - This page provides details for a previous order and links to the 'Thanks' page the user was directed to upon initial order submission but now reads as 'Previous Order Information'. The user will be notified that this page shows information for an earlier order and that a confirmation email was sent on the order date.
+* Order Date
+* Order Details including:
+    * Item Name
+    * Quantity
+    * Price
+    * Size (if applicable)
+    * Total Cost: The total amount charged for the order.
+* Button/text to "Review" the order.
+
+**Admin Profile - TMP Managment**
+
+For superusers, the profile page serves as a central hub for all administrative activities. It is titled 'TMP Managment' rather than 'My Profile'. It includes several action buttons that facilitate various administrative tasks. Each button directs the user to a specific page or form, enabling efficient management of site content and functionality. The available actions are:
+
+1. Add product 
+2. Add event
+3. Add blog post
+4. Reactivate Items
+5. View Reviews
+
+![profile details](documentation/final/profile-admin-buttons.PNG)
+
+In the title, the superuser is prompted to add variants via the product in the shop page. This is required to make sure variants are added to the correct (id) product.
+
 </details>
 
 <details><summary>Reviews (Review app)</summary>
@@ -922,10 +966,6 @@ Reviews are displayed with the most recent reviews listed first. They list:
 Admins have the ability to delete a review. This is facilitated via a bin icon (button) next to each review entry. Before deletion, a confirmation dialog appears, asking the admin to confirm the deletion action, if confirmed, the review is permanently deleted from the system.
 
 ![review delete?](documentation/final/review-delete-confirmation.PNG)
-
-
-
-
 </details>
 
 <details><summary>The Blog and Posts (Blog app)</summary>
