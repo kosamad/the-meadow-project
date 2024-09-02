@@ -4,6 +4,8 @@ from products.models import Product, ProductVariant, Event
 from profiles.models import UserProfile
 from django.contrib.auth.models import User
 from .models import Order, ProductOrderLineItem, EventOrderLineItem
+from datetime import timedelta
+from django.utils import timezone
 
 
 class OrderModelTests(TestCase):
@@ -67,12 +69,17 @@ class OrderModelTests(TestCase):
         """
         Test that the order total calculation is correct when events are included.
         """
-        event = Event.objects.create(name="Test Event", price=Decimal('55.00'))
+        event_datetime = timezone.now() + timedelta(days=1)
+        
+        event = Event.objects.create(name="Test Event", 
+        price=Decimal('55.00'), 
+        event_datetime=event_datetime )
+
         EventOrderLineItem.objects.create(
             order=self.order,
             event=event,
             quantity=1,
-            lineitem_total=event.price
+            lineitem_total=event.price,
         )
 
         self.order.update_total()
@@ -100,8 +107,8 @@ class OrderModelTests(TestCase):
         """
         Test that the EventOrderLineItem's lineitem_total is calculated 
         """
-
-        event = Event.objects.create(name="Test Event", price=Decimal('55.00'))
+        event_datetime = timezone.now() + timedelta(days=1)
+        event = Event.objects.create(name="Test Event", price=Decimal('55.00'), event_datetime=event_datetime)
         line_item = EventOrderLineItem.objects.create(
             order=self.order,
             event=event,
