@@ -32,7 +32,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY','')
 # DEBUG = False
 #ALLOWED_HOSTS = ['*']
 
-DEBUG = True
+DEBUG = 'DEVELOPMENT' in os.environ
 ALLOWED_HOSTS = ['8000-kosamad-themeadowprojec-6rk3byj73lq.ws.codeinstitute-ide.net',
 'the-meadow-project-c89db5579746.herokuapp.com',
 ]
@@ -145,11 +145,23 @@ X_FRAME_OPTIONS = 'SAMEORIGIN'  # For Summernote to work in iframe mode
 # email functionality
 if 'DEVELOPMENT' in os.environ:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-    # DEFAULT_FROM_EMAIL = 'boutiqueado@example.com'
+    DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL')
+else:
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_USE_TLS = True
+    EMAIL_PORT = 587
+    EMAIL_HOST = 'smtp.gmail.com'
+    EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+    EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+    DEFAULT_FROM_EMAIL = os.environ.get('EMAIL_HOST_USER')
 
+
+# The account authentication method is what tells allauth that we want to allow
+# authentication using either usernames or emails.
 ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
 ACCOUNT_EMAIL_REQUIRED = True 
-ACCOUNT_EMAIL_VERIFICATION = 'none' #(set to mandatory for development only mode)
+# ACCOUNT_EMAIL_VERIFICATION = 'mandatory' # this for site in test mode
+ACCOUNT_EMAIL_VERIFICATION = 'none' # prevents errors on deployed site
 ACCOUNT_SIGNUP_EMAIL_ENTER_TWICE = True 
 ACCOUNT_USERNAME_MIN_LENGTH = 4
 LOGIN_URL = '/accounts/login/'
