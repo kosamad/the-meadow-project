@@ -28,8 +28,7 @@ def add_product_to_bag(request, item_id):
         bag = request.session.get('bag',{})
         
         # Get product and varient id's
-        product = get_object_or_404(Product, id=item_id)
-        # item_id_str = str(product.id)  # Convert item_id (UUID) to string before using it as a key
+        product = get_object_or_404(Product, id=item_id)        
         variant = get_object_or_404(ProductVariant, id=variant_id)
 
         # Create a unique key for the bag item
