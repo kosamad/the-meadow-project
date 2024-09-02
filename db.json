@@ -1229,7 +1229,7 @@
         "action_time": "2024-07-08T10:40:44.547Z",
         "user": 1,
         "content_type": 13,
-        "object_id": "c93a0de3-3e73-41dc-9ca9-fc65defb8182",
+        "object_id": 13,
         "object_repr": "Ada_bouquet",
         "action_flag": 1,
         "change_message": "[{\"added\": {}}]"
@@ -1253,7 +1253,7 @@
         "action_time": "2024-07-08T10:42:53.054Z",
         "user": 1,
         "content_type": 13,
-        "object_id": "52db2b07-daee-4f1c-873b-13ffdd541729",
+        "object_id": 5,
         "object_repr": "bird_nest",
         "action_flag": 1,
         "change_message": "[{\"added\": {}}]"
@@ -1265,7 +1265,7 @@
         "action_time": "2024-07-08T10:44:32.270Z",
         "user": 1,
         "content_type": 16,
-        "object_id": "a4e0cba5-3568-4135-a07a-754ad16ff3b2",
+        "object_id": 3,
         "object_repr": "flower_arranging_workshop",
         "action_flag": 1,
         "change_message": "[{\"added\": {}}]"
@@ -1277,7 +1277,7 @@
         "action_time": "2024-07-08T10:45:37.915Z",
         "user": 1,
         "content_type": 16,
-        "object_id": "07e433ed-e739-4632-8301-3c58f206a4bf",
+        "object_id": 1,
         "object_repr": "summer_bouquet_workshop",
         "action_flag": 1,
         "change_message": "[{\"added\": {}}]"
@@ -1289,7 +1289,7 @@
         "action_time": "2024-07-08T10:45:57.937Z",
         "user": 1,
         "content_type": 13,
-        "object_id": "c93a0de3-3e73-41dc-9ca9-fc65defb8182",
+        "object_id": 13,
         "object_repr": "ada_bouquet",
         "action_flag": 2,
         "change_message": "[{\"changed\": {\"fields\": [\"Name\"]}}]"
@@ -5018,7 +5018,7 @@
     "model": "products.productvariant",
     "pk": 1,
     "fields": {
-        "product": 14,
+        "product": 13,
         "size": "S",
         "stock": 0,
         "is_infinite_stock": false,
@@ -5029,7 +5029,7 @@
     "model": "products.productvariant",
     "pk": 2,
     "fields": {
-        "product": 14,
+        "product": 13,
         "size": "M",
         "stock": 0,
         "is_infinite_stock": false,
@@ -5040,7 +5040,7 @@
     "model": "products.productvariant",
     "pk": 3,
     "fields": {
-        "product": 14,
+        "product": 13,
         "size": "L",
         "stock": 0,
         "is_infinite_stock": false,
@@ -5051,7 +5051,7 @@
     "model": "products.productvariant",
     "pk": 4,
     "fields": {
-        "product": 13,
+        "product": 5,
         "size": "S",
         "stock": 0,
         "is_infinite_stock": false,
@@ -5062,7 +5062,7 @@
     "model": "products.productvariant",
     "pk": 5,
     "fields": {
-        "product": 13,
+        "product": 5,
         "size": "M",
         "stock": 0,
         "is_infinite_stock": false,
@@ -5073,7 +5073,7 @@
     "model": "products.productvariant",
     "pk": 6,
     "fields": {
-        "product": 13,
+        "product": 5,
         "size": "L",
         "stock": 0,
         "is_infinite_stock": false,
@@ -5084,7 +5084,7 @@
     "model": "products.productvariant",
     "pk": 28,
     "fields": {
-        "product": 12,
+        "product": 14,
         "size": "S",
         "stock": 0,
         "is_infinite_stock": false,
@@ -5095,7 +5095,7 @@
     "model": "products.productvariant",
     "pk": 29,
     "fields": {
-        "product": 12,
+        "product": 14,
         "size": "L",
         "stock": 0,
         "is_infinite_stock": false,
@@ -5106,7 +5106,7 @@
     "model": "products.productvariant",
     "pk": 30,
     "fields": {
-        "product": 12,
+        "product": 14,
         "size": "M",
         "stock": 0,
         "is_infinite_stock": false,
@@ -5117,7 +5117,7 @@
     "model": "products.productvariant",
     "pk": 31,
     "fields": {
-        "product": 11,
+        "product": 12,
         "size": "S",
         "stock": 0,
         "is_infinite_stock": false,
@@ -5128,7 +5128,7 @@
     "model": "products.productvariant",
     "pk": 32,
     "fields": {
-        "product": 11,
+        "product": 12,
         "size": "M",
         "stock": 0,
         "is_infinite_stock": false,
@@ -5139,7 +5139,7 @@
     "model": "products.productvariant",
     "pk": 33,
     "fields": {
-        "product": 11,
+        "product": 12,
         "size": "L",
         "stock": 0,
         "is_infinite_stock": false,
@@ -5150,7 +5150,7 @@
     "model": "products.productvariant",
     "pk": 34,
     "fields": {
-        "product": 10,
+        "product": 2,
         "size": "S",
         "stock": 0,
         "is_infinite_stock": false,
@@ -5161,7 +5161,7 @@
     "model": "products.productvariant",
     "pk": 35,
     "fields": {
-        "product": 10,
+        "product": 2,
         "size": "M",
         "stock": 0,
         "is_infinite_stock": false,
@@ -5172,7 +5172,7 @@
     "model": "products.productvariant",
     "pk": 36,
     "fields": {
-        "product": 10,
+        "product": 2,
         "size": "L",
         "stock": 0,
         "is_infinite_stock": false,
@@ -5183,7 +5183,7 @@
     "model": "products.productvariant",
     "pk": 43,
     "fields": {
-        "product": 9,
+        "product": 3,
         "size": "S",
         "stock": 0,
         "is_infinite_stock": false,
@@ -5194,7 +5194,7 @@
     "model": "products.productvariant",
     "pk": 44,
     "fields": {
-        "product": 9,
+        "product": 3,
         "size": "M",
         "stock": 0,
         "is_infinite_stock": false,
@@ -5205,7 +5205,7 @@
     "model": "products.productvariant",
     "pk": 45,
     "fields": {
-        "product": 9,
+        "product": 3,
         "size": "L",
         "stock": 0,
         "is_infinite_stock": false,
@@ -5249,7 +5249,7 @@
     "model": "products.productvariant",
     "pk": 49,
     "fields": {
-        "product": 7,
+        "product": 1,
         "size": "S",
         "stock": 0,
         "is_infinite_stock": false,
@@ -5260,7 +5260,7 @@
     "model": "products.productvariant",
     "pk": 50,
     "fields": {
-        "product": 7,
+        "product": 1,
         "size": "M",
         "stock": 0,
         "is_infinite_stock": false,
@@ -5271,7 +5271,7 @@
     "model": "products.productvariant",
     "pk": 51,
     "fields": {
-        "product": 7,
+        "product": 1,
         "size": "L",
         "stock": 0,
         "is_infinite_stock": false,
@@ -5282,7 +5282,7 @@
     "model": "products.productvariant",
     "pk": 52,
     "fields": {
-        "product": 6,
+        "product": 7,
         "size": "S",
         "stock": 0,
         "is_infinite_stock": false,
@@ -5293,7 +5293,7 @@
     "model": "products.productvariant",
     "pk": 53,
     "fields": {
-        "product": 6,
+        "product": 7,
         "size": "M",
         "stock": 0,
         "is_infinite_stock": false,
@@ -5304,7 +5304,7 @@
     "model": "products.productvariant",
     "pk": 54,
     "fields": {
-        "product": 6,
+        "product": 7,
         "size": "L",
         "stock": 0,
         "is_infinite_stock": false,
@@ -5315,7 +5315,7 @@
     "model": "products.productvariant",
     "pk": 55,
     "fields": {
-        "product": 5,
+        "product": 11,
         "size": "S",
         "stock": 0,
         "is_infinite_stock": false,
@@ -5326,7 +5326,7 @@
     "model": "products.productvariant",
     "pk": 56,
     "fields": {
-        "product": 5,
+        "product": 11,
         "size": "M",
         "stock": 0,
         "is_infinite_stock": false,
@@ -5337,7 +5337,7 @@
     "model": "products.productvariant",
     "pk": 57,
     "fields": {
-        "product": 5,
+        "product": 11,
         "size": "L",
         "stock": 0,
         "is_infinite_stock": false,
@@ -5348,7 +5348,7 @@
     "model": "products.productvariant",
     "pk": 58,
     "fields": {
-        "product": 6,
+        "product": 4,
         "size": "M",
         "stock": 0,
         "is_infinite_stock": false,
@@ -5359,7 +5359,7 @@
     "model": "products.productvariant",
     "pk": 59,
     "fields": {
-        "product": 6,
+        "product": 4,
         "size": "S",
         "stock": 0,
         "is_infinite_stock": false,
@@ -5370,7 +5370,7 @@
     "model": "products.productvariant",
     "pk": 60,
     "fields": {
-        "product": 6,
+        "product": 4,
         "size": "L",
         "stock": 0,
         "is_infinite_stock": false,
@@ -5381,7 +5381,7 @@
     "model": "products.productvariant",
     "pk": 61,
     "fields": {
-        "product": 4,
+        "product": 9,
         "size": "M",
         "stock": 0,
         "is_infinite_stock": false,
@@ -5392,7 +5392,7 @@
     "model": "products.productvariant",
     "pk": 62,
     "fields": {
-        "product": 4,
+        "product": 9,
         "size": "S",
         "stock": 0,
         "is_infinite_stock": false,
@@ -5403,7 +5403,7 @@
     "model": "products.productvariant",
     "pk": 63,
     "fields": {
-        "product": 4,
+        "product": 9,
         "size": "L",
         "stock": 0,
         "is_infinite_stock": false,
@@ -5414,7 +5414,7 @@
     "model": "products.productvariant",
     "pk": 64,
     "fields": {
-        "product": 3,
+        "product": 15,
         "size": "S",
         "stock": 0,
         "is_infinite_stock": false,
@@ -5425,7 +5425,7 @@
     "model": "products.productvariant",
     "pk": 65,
     "fields": {
-        "product": 3,
+        "product": 15,
         "size": "M",
         "stock": 0,
         "is_infinite_stock": false,
@@ -5436,7 +5436,7 @@
     "model": "products.productvariant",
     "pk": 66,
     "fields": {
-        "product": 3,
+        "product": 15,
         "size": "L",
         "stock": 0,
         "is_infinite_stock": false,
@@ -5447,7 +5447,7 @@
     "model": "products.productvariant",
     "pk": 67,
     "fields": {
-        "product": 2,
+        "product": 6,
         "size": "S",
         "stock": 0,
         "is_infinite_stock": false,
@@ -5458,7 +5458,7 @@
     "model": "products.productvariant",
     "pk": 68,
     "fields": {
-        "product": 2,
+        "product": 6,
         "size": "M",
         "stock": 0,
         "is_infinite_stock": false,
@@ -5469,7 +5469,7 @@
     "model": "products.productvariant",
     "pk": 69,
     "fields": {
-        "product": 2,
+        "product": 6,
         "size": "L",
         "stock": 0,
         "is_infinite_stock": false,
@@ -5480,7 +5480,7 @@
     "model": "products.productvariant",
     "pk": 70,
     "fields": {
-        "product": 1,
+        "product": 10,
         "size": "S",
         "stock": 0,
         "is_infinite_stock": false,
@@ -5491,7 +5491,7 @@
     "model": "products.productvariant",
     "pk": 71,
     "fields": {
-        "product": 1
+        "product": 10,
         "size": "M",
         "stock": 0,
         "is_infinite_stock": false,
@@ -5502,7 +5502,7 @@
     "model": "products.productvariant",
     "pk": 72,
     "fields": {
-        "product": 1,
+        "product": 10,
         "size": "L",
         "stock": 0,
         "is_infinite_stock": false,
@@ -5559,7 +5559,7 @@
     }
 }, {
     "model": "products.event",
-    "pk": 4,
+    "pk": "ed6e72d2-7aea-4d01-9e85-a02a5c20ebd7",
     "fields": {
         "category": 4,
         "name": "plant_cutting_workshop",
@@ -5617,7 +5617,7 @@
         "date": "2024-08-19T13:11:18.679Z",
         "image": "blog_images/niklas-ohlrogge-74QmIJDTD-c-unsplash.jpg",
         "alt_text": "A beautiful bouquet made from summer meadow pants in a spectrum of colours.",
-        "product": 3,
+        "product": 11,
         "event": 1,
         "body": "<p style=\"text-align: justify;\">A bouquet of meadow flowers is a beautiful way to bring a touch of nature's charm into your home. The wild, rustic appeal of these flowers can brighten any space and evoke feelings of serenity and joy. However, keeping these delicate blooms fresh for as long as possible requires some care and attention. In this article, we'll explore the best tips and tricks to ensure your meadow flower bouquet stays vibrant and fresh for days, if not weeks.<br></p><p style=\"text-align: justify;\"><br></p><h4 style=\"text-align: justify;\">1. <strong>Choose the Right Flowers</strong></h4><p style=\"text-align: justify;\">The longevity of your meadow flower bouquet starts with the flowers themselves. When selecting meadow flowers, choose those that are known for their durability. Some meadow flowers that tend to last longer include:</p><ul><li style=\"text-align: justify;\"><strong>Wildflowers</strong>: Black-eyed Susans, daisies, and coneflowers are known for their hardiness.</li><li style=\"text-align: justify;\"><strong>Grasses</strong>: Ornamental grasses like wheatgrass or foxtail add texture and tend to last longer in arrangements.</li><li style=\"text-align: justify;\"><strong>Herbs</strong>: Lavender, rosemary, and sage not only add fragrance but also stay fresh for an extended period.</li></ul><p style=\"text-align: justify;\">Look for flowers that are just beginning to bloom, as these will last longer than those that are already fully open. This is exactly how we select flowers for our Jemima Bouquet.&nbsp;</p><h4 style=\"text-align: justify;\">2. <strong>Prepare the Flowers Properly</strong></h4><p style=\"text-align: justify;\">Once you’ve selected your flowers, it’s crucial to prepare them correctly to maximize their freshness:</p><ul><li><p style=\"text-align: justify;\"><strong>Cut the Stems</strong>: Using a sharp knife or scissors, cut the stems at a 45-degree angle. This increases the surface area for water absorption and prevents the stems from sitting flat at the bottom of the vase, which can block water uptake.</p></li><li><p style=\"text-align: justify;\"><strong>Remove Lower Leaves</strong>: Any leaves that will be submerged in water should be removed. Leaves left in the water can rot, leading to bacteria growth that can shorten the life of your flowers.</p></li><li><p style=\"text-align: justify;\"><strong>Condition the Flowers</strong>: After trimming, place the flowers in lukewarm water for a few hours before arranging them in a vase. This allows them to hydrate fully and perk up after being cut.</p></li></ul><h4 style=\"text-align: justify;\">3. <strong>Use the Right Vase and Water</strong></h4><p style=\"text-align: justify;\">The vase you choose and the water you use can significantly impact the longevity of your meadow flowers:</p><ul><li><p style=\"text-align: justify;\"><strong>Clean Vase</strong>: Make sure your vase is clean and free of any residue from previous arrangements. Bacteria in the vase can quickly contaminate the water and cause your flowers to wilt prematurely.</p></li><li><p style=\"text-align: justify;\"><strong>Water Temperature</strong>: Use room-temperature water to fill your vase. Cold water can shock the flowers, while hot water can cause them to wilt.</p></li><li><p style=\"text-align: justify;\"><strong>Flower Food</strong>: Add a packet of flower food to the water if you have one. Flower food contains a mix of sugar, acid, and bleach, which helps nourish the flowers, balance the pH of the water, and keep bacteria at bay. If you don’t have flower food, you can make your own by adding a teaspoon of sugar, a few drops of bleach, and a teaspoon of lemon juice or vinegar to the water.</p></li></ul><h4 style=\"text-align: justify;\">4. <strong>Position Your Bouquet Wisely</strong></h4><p style=\"text-align: justify;\">Where you place your bouquet can also affect how long it stays fresh:</p><ul><li><p style=\"text-align: justify;\"><strong>Avoid Direct Sunlight</strong>: While flowers need light to grow, direct sunlight can cause cut flowers to wilt quickly. Place your bouquet in a cool, shaded area away from direct sunlight.</p></li><li><p style=\"text-align: justify;\"><strong>Keep Away from Heat Sources</strong>: Avoid placing your bouquet near heat sources like radiators, vents, or appliances. Excessive heat can dry out the flowers and shorten their lifespan.</p></li><li><p style=\"text-align: justify;\"><strong>Avoid Fruit</strong>: Keep your bouquet away from bowls of fruit, especially apples and bananas. These fruits release ethylene gas, which can cause flowers to age and wilt more quickly.</p></li></ul><h4 style=\"text-align: justify;\">5. <strong>Maintain the Bouquet Daily</strong></h4><p style=\"text-align: justify;\">A little daily maintenance can go a long way in keeping your meadow flowers fresh:</p><ul><li><p style=\"text-align: justify;\"><strong>Change the Water</strong>: Change the water in your vase every two days to prevent bacterial growth. When changing the water, rinse the vase and give the stems a fresh cut.</p></li><li><p style=\"text-align: justify;\"><strong>Mist the Flowers</strong>: Lightly misting the flowers with water once or twice a day can help keep them hydrated, especially in dry environments.</p></li><li><p style=\"text-align: justify;\"><strong>Remove Wilted Flowers</strong>: As soon as you notice any flowers starting to wilt or fade, remove them from the bouquet. This prevents the spread of decay to the other flowers and keeps your arrangement looking fresh.</p></li></ul><h4 style=\"text-align: justify;\">6. <strong>Extend the Life of the Bouquet</strong></h4><p style=\"text-align: justify;\">If you want to extend the life of your bouquet even further, consider these additional tips:</p><ul><li><p style=\"text-align: justify;\"><strong>Refrigerate Overnight</strong>: If possible, place your bouquet in the refrigerator overnight. The cool temperature slows down the aging process, helping your flowers stay fresh longer.</p></li><li><p style=\"text-align: justify;\"><strong>Use a Floral Preservative Spray</strong>: Floral preservative sprays can be used to extend the life of your bouquet by keeping the flowers hydrated and protecting them from wilting.</p></li><li><p style=\"text-align: justify;\"><strong>Repurpose the Flowers</strong>: As your flowers begin to fade, consider repurposing them in smaller arrangements, pressing them for art, or drying them for lasting decoration.</p></li></ul><h3 style=\"text-align: justify;\">Conclusion</h3><p style=\"text-align: justify; \">A meadow flower bouquet is a delightful way to bring the outdoors in and add natural beauty to your home. By choosing the right flowers, preparing them properly, and giving them the care they need, you can enjoy your bouquet’s vibrant colors and delicate fragrances for as long as possible. With these tips, your meadow flowers will stay fresh, allowing you to savor their beauty and the joy they bring to your space. If you'd like to learn more abour flower arranging and cutting the best flowers, why not join us on our Summer Bouquet workshop.</p>"
     }
@@ -5630,7 +5630,7 @@
         "image": "blog_images/pexels-lina-3394137.jpg",
         "alt_text": "Cuttings being taken from a hydrangea",
         "product": null,
-        "event": 2,
+        "event": "ed6e72d2-7aea-4d01-9e85-a02a5c20ebd7",
         "body": "<p style=\"text-align: justify; \">Propagating plants from cuttings is a rewarding way to expand your garden without spending money on new plants. Whether you're a seasoned gardener or just starting, taking cuttings allows you to grow more of your favorite plants, share them with friends, or simply experiment with new varieties. Here’s how to do it.</p><h4 style=\"text-align: justify;\">What You'll Need</h4><p style=\"text-align: justify;\">Before you start, gather the following supplies:</p><ul><li style=\"text-align: justify;\"><strong>Sharp, Clean Pruners or Scissors:</strong> To make clean cuts that won't damage the plant.</li><li style=\"text-align: justify;\"><strong>Rooting Hormone (Optional):</strong> Helps to encourage root growth, especially in more challenging plants.</li><li style=\"text-align: justify;\"><strong>Small Pots or Containers:</strong> For planting the cuttings.</li><li style=\"text-align: justify;\"><strong>Potting Mix:</strong> Use a light, well-draining mix to help the cuttings establish roots.</li><li style=\"text-align: justify;\"><strong>Plastic Bag or Dome (Optional):</strong> To create a humid environment for the cuttings.</li></ul><h4 style=\"text-align: justify;\">Step-by-Step Guide to Taking Cuttings</h4><ol><li><p style=\"text-align: justify;\"><strong>Choose a Healthy Parent Plant</strong>\r\nStart by selecting a healthy, vigorous plant from which to take cuttings. Avoid plants that are flowering, as they are often focused on reproduction rather than growth. If you can, choose a plant that is actively growing but not stressed.</p></li><li><p style=\"text-align: justify;\"><strong>Select the Right Stem</strong>\r\nLook for a non-flowering stem with at least 3-5 leaves. The stem should be green and flexible, not woody or too soft. Cuttings taken from newer growth tend to root more easily.</p></li><li><p style=\"text-align: justify;\"><strong>Make the Cut</strong>\r\nUsing your clean, sharp pruners or scissors, make a cut just below a leaf node (the point where a leaf attaches to the stem). Aim for a cutting that is about 4-6 inches long. Remove the leaves from the bottom half of the cutting, leaving a few at the top.</p></li><li><p style=\"text-align: justify;\"><strong>Dip in Rooting Hormone (Optional)</strong>\r\nIf you're using rooting hormone, dip the cut end of the stem into the powder or gel. This step is particularly helpful for plants that are more difficult to root, though many plants will root successfully without it.</p></li><li><p style=\"text-align: justify;\"><strong>Plant the Cutting</strong>\r\nFill your small pot or container with a light, well-draining potting mix. Make a hole in the mix with your finger or a pencil, then insert the cutting, burying the lower leaf nodes. Gently press the soil around the cutting to ensure it stays upright.</p></li><li><p style=\"text-align: justify;\"><strong>Create a Humid Environment</strong>\r\nIf possible, cover the pot with a plastic bag or dome to create a mini-greenhouse. This helps maintain humidity, which is crucial for the cutting while it develops roots. Make sure the plastic doesn't touch the leaves to avoid rot.</p></li><li><p style=\"text-align: justify;\"><strong>Place in Indirect Light</strong>\r\nPut the pot in a warm spot with indirect light. Direct sunlight can be too intense and may dry out the cutting before it has a chance to root.</p></li><li><p style=\"text-align: justify;\"><strong>Water Regularly</strong>\r\nKeep the soil consistently moist but not soggy. Overwatering can lead to rot, while underwatering can dry out the cutting before it roots.</p></li><li><p style=\"text-align: justify;\"><strong>Wait for Roots to Develop</strong>\r\nDepending on the plant, roots can take anywhere from a few weeks to a couple of months to develop. You’ll know your cutting has rooted when you see new growth or when there is some resistance if you gently tug on the stem.</p></li><li><p style=\"text-align: justify; \"><strong>Transplant Your New Plant</strong>\r\nOnce the cutting has a strong root system, it’s ready to be transplanted into a larger pot or directly into your garden. Continue to care for it as you would a mature plant.</p><p style=\"text-align: justify; \"><br></p><h4 style=\"text-align: justify; \" class=\"\"><span style=\"color: inherit; font-family: inherit; font-size: 18px;\"><b>Common Plants to Propagate from Cuttings</b></span></h4><ul><li><strong>Herbs:</strong> Basil, mint, rosemary, and thyme are all easy to grow from cuttings.</li><li><strong>Houseplants:</strong> Pothos, philodendrons, and spider plants are beginner-friendly options.</li><li><strong>Shrubs:</strong> Hydrangeas, roses, and lavender can be propagated this way.</li></ul><h4><b>Final Tips</b></h4><ul><li><strong>Patience is Key:</strong> Not every cutting will take root, and that’s okay. Experiment with different plants and methods to find what works best for you.</li><li><strong>Sterilize Tools:</strong> Always sterilize your tools before taking cuttings to prevent the spread of disease.</li><li><strong>Monitor for Pests:</strong> Keep an eye on your cuttings for any signs of pests or disease, especially when they are still establishing.</li></ul><p>Taking cuttings is a wonderful way to multiply your favorite plants and fill your garden with greenery. With a little practice and patience, you'll be able to propagate a wide range of plants and enjoy watching them grow. If you'd like to learn more about this process why not join our plant cutting workshop. See the link at the top of the page.&nbsp;</p></li></ol>"
     }
 }, {
@@ -5842,7 +5842,7 @@
     "pk": 149,
     "fields": {
         "order": 185,
-        "product": "c93a0de3-3e73-41dc-9ca9-fc65defb8182",
+        "product": 13,
         "product_variant": 2,
         "card_message": "",
         "note_to_seller": "",
@@ -5862,7 +5862,7 @@
     "pk": 240,
     "fields": {
         "order": 290,
-        "product": "c93a0de3-3e73-41dc-9ca9-fc65defb8182",
+        "product": 13,
         "product_variant": 2,
         "card_message": "",
         "note_to_seller": "gfdgfgdgdfg",
@@ -5882,7 +5882,7 @@
     "pk": 241,
     "fields": {
         "order": 291,
-        "product": "5fb10cee-9bf3-4632-88d0-b3b9e5a95af0",
+        "product": 7,
         "product_variant": 53,
         "card_message": "",
         "note_to_seller": "dsdsad",
@@ -5902,7 +5902,7 @@
     "pk": 242,
     "fields": {
         "order": 292,
-        "product": "de00516a-00c2-4c91-ae16-9d88c7561b42",
+        "product": 14,
         "product_variant": 30,
         "card_message": "",
         "note_to_seller": "khgjgghjhg",
@@ -5922,7 +5922,7 @@
     "pk": 243,
     "fields": {
         "order": 293,
-        "product": "de00516a-00c2-4c91-ae16-9d88c7561b42",
+        "product": 14,
         "product_variant": 30,
         "card_message": "",
         "note_to_seller": "hghgf",
@@ -5942,7 +5942,7 @@
     "pk": 244,
     "fields": {
         "order": 294,
-        "product": "c93a0de3-3e73-41dc-9ca9-fc65defb8182",
+        "product": 13,
         "product_variant": 2,
         "card_message": "ddddd",
         "note_to_seller": "",
@@ -5962,7 +5962,7 @@
     "pk": 17,
     "fields": {
         "order": 295,
-        "event": "07e433ed-e739-4632-8301-3c58f206a4bf",
+        "event": 1,
         "note_to_host": "",
         "attendee_name": "fdsfdsfdssdf",
         "quantity": 1,
@@ -5973,7 +5973,7 @@
     "pk": 18,
     "fields": {
         "order": 296,
-        "event": "a4e0cba5-3568-4135-a07a-754ad16ff3b2",
+        "event": 3,
         "note_to_host": "",
         "attendee_name": "heee\r\nhrrr rrrr",
         "quantity": 1,
