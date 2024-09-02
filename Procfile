@@ -1,1 +1,1 @@
- web: python run.py
+ web: gunicorn the_meadow_project.wsgi:application

@@ -33,7 +33,9 @@ SECRET_KEY = os.environ.get('SECRET_KEY','')
 #ALLOWED_HOSTS = ['*']
 
 DEBUG = True
-ALLOWED_HOSTS = ['8000-kosamad-themeadowprojec-6rk3byj73lq.ws.codeinstitute-ide.net']
+ALLOWED_HOSTS = ['8000-kosamad-themeadowprojec-6rk3byj73lq.ws.codeinstitute-ide.net',
+'the-meadow-project-c89db5579746.herokuapp.com',
+]
 
 
 
@@ -147,7 +149,7 @@ if 'DEVELOPMENT' in os.environ:
 
 ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
 ACCOUNT_EMAIL_REQUIRED = True 
-ACCOUNT_EMAIL_VERIFICATION = 'mandatory' 
+ACCOUNT_EMAIL_VERIFICATION = 'none' #(set to mandatory for development only mode)
 ACCOUNT_SIGNUP_EMAIL_ENTER_TWICE = True 
 ACCOUNT_USERNAME_MIN_LENGTH = 4
 LOGIN_URL = '/accounts/login/'
