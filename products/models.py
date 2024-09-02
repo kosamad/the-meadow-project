@@ -28,8 +28,7 @@ class Category(models.Model):
 class Product(models.Model):
     """
     A model for products.
-    """    
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    """       
     category = models.ForeignKey('Category', null=True, blank=True, on_delete=models.SET_NULL)       
     name = models.CharField(max_length=254)
     friendly_name = models.CharField(max_length=254, null=False, blank=False)
@@ -74,8 +73,7 @@ class ProductVariant(models.Model):
 class Event(models.Model): 
     """
     A model for events.
-    """       
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    """
     category = models.ForeignKey('Category', null=True, blank=True, on_delete=models.SET_NULL)    
     name = models.CharField(max_length=254)
     friendly_name = models.CharField(max_length=254, null=False, blank=False)
