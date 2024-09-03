@@ -161,12 +161,12 @@ def update_quantity(request, item_id):
     if request.method == 'POST':
         quantity = int(request.POST.get('new_quantity'))
         unique_key = request.POST.get('unique_key')
-        variant_id = request.POST.get('variant_id')     
+        variant_id = request.POST.get('variant_id')
 
         bag = request.session.get('bag', {})
 
         product = get_object_or_404(Product, id=item_id)
-        variant = get_object_or_404(ProductVariant, id=variant_id)      
+        variant = get_object_or_404(ProductVariant, id=variant_id)
 
         if unique_key in bag:
             bag[unique_key]['quantity'] = quantity
@@ -177,41 +177,36 @@ def update_quantity(request, item_id):
         request.session['bag'] = bag
         return redirect('view_bag')
 
-       
+
 def update_note_to_host(request, item_id):
     """View which allows the user to ammend the event note to host (event)"""
 
     if request.method == 'POST':
         note_to_host = request.POST.get('new_note_host')
         unique_key = request.POST.get('unique_key')
-        attendee_name = request.POST.get('attendee_name') 
-                           
+        attendee_name = request.POST.get('attendee_name')
         bag = request.session.get('bag', {})
+        event = get_object_or_404(Event, id=item_id)
 
-        event = get_object_or_404(Event, id=item_id)        
-       
-        if unique_key in bag:            
-            bag[unique_key]['note_to_host'] = note_to_host            
-            new_unique_key = f"{event.id}_{attendee_name}_{note_to_host}"            
+        if unique_key in bag:
+            bag[unique_key]['note_to_host'] = note_to_host
+            new_unique_key = f"{event.id}_{attendee_name}_{note_to_host}"
             if new_unique_key != unique_key:
                 bag[new_unique_key] = bag.pop(unique_key)
-                unique_key = new_unique_key                                      
-            messages.info(request, "Your note was updated.")            
-        else:           
+                unique_key = new_unique_key
+            messages.info(request, "Your note was updated.")
+        else:
             messages.error(request, "The item you are trying to update was not found in your bag.")
 
-        request.session['bag'] = bag        
+        request.session['bag'] = bag
         return redirect('view_bag')
- 
 
 
 def remove_item(request, item_id):
     """View to remove products/events from the bag"""
 
-    if request.method == 'POST':      
-             
+    if request.method == 'POST':
         unique_key = request.POST.get('unique_key')
-
         bag = request.session.get('bag', {})
         # remove item and defensive programming in place in case something goes wrong.
         if unique_key in bag:
@@ -224,6 +219,6 @@ def remove_item(request, item_id):
             except Exception as e:
                 messages.error(request, f"An error occurred: There was an error removing the item from your bag. {e}")
         else:
-            messages.error(request, "There was an error removing the item from your bag.")         
+            messages.error(request, "There was an error removing the item from your bag.")
 
     return redirect('view_bag')
