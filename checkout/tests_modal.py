@@ -19,12 +19,12 @@ class OrderModelTests(TestCase):
 
         # Create or retrieve a UserProfile instance associated with the User
         self.user_profile, _ = UserProfile.objects.get_or_create(user=user)
-       
+
         # Prodcut Instance
         self.product = Product.objects.create(
             name="Test Product",
             price=Decimal('10.00')
-        ) 
+        )
 
         # Create an Order instance
         self.order = Order.objects.create(
@@ -44,36 +44,36 @@ class OrderModelTests(TestCase):
             stripe_pid="test_stripe_pid"
         )
 
-
     def test_order_creation(self):
-            """
-            Test the creation of an Order instance and its attributes.
-            """
-            self.assertIsInstance(self.order, Order)
-            self.assertEqual(self.order.full_name, "User Test")
-            self.assertEqual(self.order.email, "testuser8@example.com")
-            self.assertEqual(self.order.phone_number, "1234567890")
-            self.assertEqual(self.order.postcode, "12345")
-            self.assertEqual(self.order.town_or_city, "Test Town")
-            self.assertEqual(self.order.street_address1, "123 Test Street")
-            self.assertEqual(self.order.street_address2, "Bristol")
-            self.assertEqual(self.order.county, "Test County")
-            self.assertEqual(self.order.delivery_cost, Decimal('5.00'))
-            self.assertEqual(self.order.order_total, Decimal('100.00'))
-            self.assertEqual(self.order.grand_total, Decimal('105.00'))
-            self.assertEqual(self.order.original_bag, "[]")
-            self.assertEqual(self.order.stripe_pid, "test_stripe_pid")
-
+        """
+        Test the creation of an Order instance and its attributes.
+        """
+        self.assertIsInstance(self.order, Order)
+        self.assertEqual(self.order.full_name, "User Test")
+        self.assertEqual(self.order.email, "testuser8@example.com")
+        self.assertEqual(self.order.phone_number, "1234567890")
+        self.assertEqual(self.order.postcode, "12345")
+        self.assertEqual(self.order.town_or_city, "Test Town")
+        self.assertEqual(self.order.street_address2, "Bristol")
+        self.assertEqual(self.order.street_address1, "123 Test Street")
+        self.assertEqual(self.order.county, "Test County")
+        self.assertEqual(self.order.delivery_cost, Decimal('5.00'))
+        self.assertEqual(self.order.order_total, Decimal('100.00'))
+        self.assertEqual(self.order.grand_total, Decimal('105.00'))
+        self.assertEqual(self.order.original_bag, "[]")
+        self.assertEqual(self.order.stripe_pid, "test_stripe_pid")
 
     def test_order_with_events(self):
         """
         Test that the order total calculation is correct when events are included.
         """
         event_datetime = timezone.now() + timedelta(days=1)
-        
-        event = Event.objects.create(name="Test Event", 
-        price=Decimal('55.00'), 
-        event_datetime=event_datetime )
+
+        event = Event.objects.create(
+            name="Test Event",
+            price=Decimal('55.00'),
+            event_datetime=event_datetime
+            )
 
         EventOrderLineItem.objects.create(
             order=self.order,
@@ -88,7 +88,6 @@ class OrderModelTests(TestCase):
         self.assertEqual(self.order.order_total, event.price)
         self.assertEqual(self.order.grand_total, self.order.order_total + self.order.delivery_cost)
 
-
     def test_product_order_lineitem_total(self):
         """
         Test that the ProductOrderLineItem's lineitem_total is calculated.
@@ -102,10 +101,9 @@ class OrderModelTests(TestCase):
         expected_total = self.product.price * 3
         self.assertEqual(line_item.lineitem_total, expected_total)
 
-
     def test_event_order_lineitem_total(self):
         """
-        Test that the EventOrderLineItem's lineitem_total is calculated 
+        Test that the EventOrderLineItem's lineitem_total is calculated
         """
         event_datetime = timezone.now() + timedelta(days=1)
         event = Event.objects.create(name="Test Event", price=Decimal('55.00'), event_datetime=event_datetime)

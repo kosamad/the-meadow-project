@@ -3,7 +3,8 @@ from django.dispatch import receiver
 
 from .models import Order, ProductOrderLineItem, EventOrderLineItem
 
-# Allow totals to be updated when new line items are added. 
+# Allow totals to be updated when new line items are added.
+
 
 @receiver(post_save, sender=ProductOrderLineItem)
 @receiver(post_save, sender=EventOrderLineItem)
@@ -15,7 +16,6 @@ def update_on_save(sender, instance, created, **kwargs):
     instance.order.update_total()
 
 
-
 @receiver(post_delete, sender=ProductOrderLineItem)
 @receiver(post_delete, sender=EventOrderLineItem)
 def update_on_delete(sender, instance, **kwargs):
@@ -23,5 +23,3 @@ def update_on_delete(sender, instance, **kwargs):
     Update order total on lineitem delete
     """
     instance.order.update_total()
-
-

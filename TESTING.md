@@ -127,7 +127,7 @@ Please note, warnings relate the use of ES6/8 and are acceptable for the paramet
 
 Python pep8 validation was done via [Code Institute's Python Linter](https://pep8ci.herokuapp.com)
 
-All the Python files were tested with changes made to make the code PEP8 compliant where possible.
+All the Python files were tested with changes made to make the code PEP8 compliant where possible. Please note where Erros exist these are E501 as some lines are slightly longer that the complient >79 characters but this is to preserve function and readability.
 
 ### Performance (Lighthouse)
 

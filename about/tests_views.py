@@ -5,6 +5,7 @@ from django.urls import reverse
  About application view tests
 """
 
+
 class TestAboutView(TestCase):
 
     def test_about_page(self):

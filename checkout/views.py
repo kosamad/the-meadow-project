@@ -15,24 +15,24 @@ from bag.contexts import bag_contents
 
 import stripe
 import json
-    
+
 
 def checkout(request):
     stripe_public_key = settings.STRIPE_PUBLIC_KEY
-    stripe_secret_key = settings.STRIPE_SECRET_KEY   
-         
+    stripe_secret_key = settings.STRIPE_SECRET_KEY
+
     if request.method == 'POST':
-        bag = request.session.get('bag', {})        
+        bag = request.session.get('bag', {})
 
         # Store order_type, and delivery method/date for use in webhook
         order_type = request.POST.get('order_type')
         delivery_method = request.POST.get('delivery_method', '')
         delivery_date = request.POST.get('delivery_date', '')
         print('aa', delivery_method)
-        print('add', delivery_date)  
+        print('add', delivery_date)
         print("Order Type from cs:", order_type)
-        request.session['order_type'] = order_type       
-               
+        request.session['order_type'] = order_type
+
         # Initialise general form data and get data
         general_form_data = {
             'full_name': request.POST['full_name'],
@@ -72,33 +72,31 @@ def checkout(request):
                     'delivery_town_or_city': request.POST.get('delivery_town_or_city'),
                     'delivery_postcode': request.POST.get('delivery_postcode'),
                     'delivery_county': request.POST.get('delivery_county'),
-                }         
+                }
 
-        
         order_form = OrderForm(general_form_data)
-        product_form = ProductOrderForm(product_form_data) if 'product' in order_type else None     
+        product_form = ProductOrderForm(product_form_data) if 'product' in order_type else None
 
         if order_form.is_valid():
-            order_instance = order_form.save(commit=False)            
+            order_instance = order_form.save(commit=False)
             pid = request.POST.get('client_secret').split('_secret')[0]
-            order_instance.stripe_pid = pid             
-            order_instance.original_bag = json.dumps(bag)                          
+            order_instance.stripe_pid = pid
+            order_instance.original_bag = json.dumps(bag)
             try:
-                order_instance.save()                
+                order_instance.save()
 
                 if product_form and not product_form.is_valid():
                     messages.error(request, "There was an error with the product form. Please double-check your information.")
-                    order_instance.delete() # Clean up partially saved order.
-                    return redirect(reverse('view_bag'))          
+                    order_instance.delete()  # Clean up partially saved order.
+                    return redirect(reverse('view_bag'))
 
-                for unique_key, item_data in bag.items():                                                           
+                for unique_key, item_data in bag.items():
                     product_type = item_data.get('product_type')
 
-                    # Product only processing    
+                    # Product only processing
                     if product_type == 'product':
                         item_id = unique_key.split('_')[0]
-                        variant_id = item_data.get('variant_id')                        
-
+                        variant_id = item_data.get('variant_id')
                         # Exception handling for Product and ProductVariant to prevent double save error
                         try:
                             product = Product.objects.get(id=item_id)
@@ -114,7 +112,7 @@ def checkout(request):
                             delivery_town_or_city = request.POST.get('delivery_town_or_city')
                             delivery_postcode = request.POST.get('delivery_postcode')
                             delivery_county = request.POST.get('delivery_county')
-                            
+
                             order_line_item = ProductOrderLineItem(
                                 order=order_instance,
                                 product=product,
@@ -131,16 +129,14 @@ def checkout(request):
                                 card_message=card_message,
                                 note_to_seller=note_to_seller
                             )
-                            
+
                             order_line_item.save()
-                            
 
                         except ObjectDoesNotExist as e:
-                            print(f"Product or ProductVariant not found and skipped: {e}")                                                             
-                            
+                            print(f"Product or ProductVariant not found and skipped: {e}")
 
                     elif product_type == 'event':
-                        item_id = unique_key.split('_')[0]                           
+                        item_id = unique_key.split('_')[0]
                         # Exception handling for Event
                         try:
                             event = Event.objects.get(id=item_id)
@@ -155,12 +151,11 @@ def checkout(request):
                                 note_to_host=note_to_host,
                                 attendee_name=attendee_name,
                             )
-                            
+
                             order_line_item.save()
-                            
 
                         except ObjectDoesNotExist as e:
-                            print(f"Event not found: {e}")                                      
+                            print(f"Event not found: {e}")
 
                 # save user profile info if they checked the box
                 request.session['save_info'] = 'save-info' in request.POST
@@ -207,16 +202,16 @@ def checkout(request):
         else:
             messages.error(request, "There's nothing in your bag at the moment")
             return redirect(reverse('shop'))
-          
+
         request.session['order_type'] = order_type
-       
+
         if request.user.is_authenticated:
             try:
                 profile = UserProfile.objects.get(user=request.user)
                 order_form = OrderForm(initial={
                     'full_name': profile.user.get_full_name(),
                     'email': profile.user.email,
-                    'phone_number': profile.default_phone_number,                    
+                    'phone_number': profile.default_phone_number,
                     'postcode': profile.default_postcode,
                     'town_or_city': profile.default_town_or_city,
                     'street_address1': profile.default_street_address1,
@@ -226,10 +221,10 @@ def checkout(request):
             except UserProfile.DoesNotExist:
                 order_form = OrderForm()
         else:
-        # Initialise product and event forms for rendering
+            # Initialise product and event forms for rendering
             order_form = OrderForm()
-        
-        product_form = ProductOrderForm() if has_product else None        
+
+        product_form = ProductOrderForm() if has_product else None
 
         if not stripe_public_key:
             messages.warning(request, 'Stripe public key is missing. Did you forget to set it in your environment?')
@@ -237,7 +232,7 @@ def checkout(request):
         template = 'checkout/checkout.html'
         context = {
             'order_form': order_form,
-            'product_form': product_form,           
+            'product_form': product_form,
             'order_type': order_type,
             'stripe_public_key': stripe_public_key,
             'client_secret': intent.client_secret,
@@ -245,30 +240,29 @@ def checkout(request):
         return render(request, template, context)
 
 
-
 # check if user has requested to save their data
 @require_POST
 def cache_checkout_data(request):
     try:
-        pid = request.POST.get('client_secret').split('_secret')[0] # payment intent id
+        pid = request.POST.get('client_secret').split('_secret')[0]  # payment intent id
         stripe.api_key = settings.STRIPE_SECRET_KEY
 
         order_type = request.POST.get('order_type', '')
-        
+
         # metadata common to both products and events
         metadata = {
             'bag': json.dumps(request.session.get('bag', {})),
             'save_info': request.POST.get('save_info'),
-            'username': str(request.user.username), 
+            'username': str(request.user.username),
             'order_type': order_type,
         }
 
         # Add metadata specific for products
         if order_type == 'product':
             metadata['delivery_date'] = request.POST.get('delivery_date', '')
-            metadata['delivery_method'] = request.POST.get('delivery_method', '')     
-    
-        print('Metadata being set:', metadata) 
+            metadata['delivery_method'] = request.POST.get('delivery_method', '')
+
+        print('Metadata being set:', metadata)
 
         stripe.PaymentIntent.modify(pid, metadata=metadata)
 
@@ -278,26 +272,25 @@ def cache_checkout_data(request):
         return HttpResponse(content=str(e), status=400)
 
 
-
 def checkout_success(request, order_number):
     """
     View to handle successful checkouts
     """
-    order = get_object_or_404(Order, order_number=order_number) # get order number and send to view
-    profile = None # initialise profile in case a user is logged out.
-    
+    order = get_object_or_404(Order, order_number=order_number)  # get order number and send to view
+    profile = None  # initialise profile in case a user is logged out.
+
     # Try to get the user profile if the user is logged in
-    if request.user.is_authenticated:       
+    if request.user.is_authenticated:
         try:
             profile = UserProfile.objects.get(user=request.user)
             order.user_profile = profile
             order.save()
-            
-            save_info = request.session.get('save_info') # for user profile
+
+            save_info = request.session.get('save_info')  # for user profile
 
             if save_info:
                 profile_data = {
-                    'default_phone_number': order.phone_number,            
+                    'default_phone_number': order.phone_number,
                     'default_postcode': order.postcode,
                     'default_town_or_city': order.town_or_city,
                     'default_street_address1': order.street_address1,
@@ -310,8 +303,8 @@ def checkout_success(request, order_number):
                     user_profile_form.save()
 
         # where the UserProfile doesn't exist
-        except UserProfile.DoesNotExist:            
-            pass   
+        except UserProfile.DoesNotExist:
+            pass
 
     # success message for the user
     messages.success(request, f'Order successfully processed! \
@@ -320,10 +313,10 @@ def checkout_success(request, order_number):
 
     # Delete bag and other session data
     if 'bag' in request.session:
-        del request.session['bag']  
-   
+        del request.session['bag']
+
     template = 'checkout/checkout_success.html'
-    
+
     context = {
         'order': order,
         'product_lineitems': order.product_lineitems.all(),
@@ -331,6 +324,7 @@ def checkout_success(request, order_number):
     }
 
     return render(request, template, context)
+
 
 
 

@@ -5,12 +5,9 @@ from products.models import Product, Event, ProductVariant
 import uuid
 
 
-
 def view_bag(request):
     """ A view that renders the bag contents page """
-    
     return render(request, 'bag/bag.html')
-
 
 
 def add_product_to_bag(request, item_id):
@@ -19,34 +16,36 @@ def add_product_to_bag(request, item_id):
         # Get inputed fields from the form on the product.details page
         quantity = int(request.POST.get('quantity'))
         redirect_url = request.POST.get('redirect_url')
-        product_type = request.POST.get('product_type') # i.e is it an event or a product
+        # i.e is it an event or a product
+        product_type = request.POST.get('product_type')
         variant_id = request.POST.get('variant_id')
         card_message = request.POST.get('card_message')
         note_to_seller = request.POST.get('note_to_seller')
-        
+
         # Retrieve or create the bag in the session
-        bag = request.session.get('bag',{})
-        
+        bag = request.session.get('bag', {})
+
         # Get product and varient id's
-        product = get_object_or_404(Product, id=item_id)        
+        product = get_object_or_404(Product, id=item_id)
         variant = get_object_or_404(ProductVariant, id=variant_id)
 
         # Create a unique key for the bag item
         unique_key = f"{product.id}_{variant.id}_{card_message}_{note_to_seller}"
-            
-        if unique_key in bag :
+
+        if unique_key in bag:
             bag[unique_key]['quantity'] += quantity
         else:
             bag[unique_key] = {
                 'quantity': quantity,
                 'product_type': product_type,
                 'variant_id': variant_id,
-                'price': str(variant.price), # decimal fields must be converted to a string before JSON use
+                # decimal fields must be converted to a string before JSON use
+                'price': str(variant.price),
                 'size': variant.size,
                 'card_message': card_message,
-                'note_to_seller': note_to_seller,            
+                'note_to_seller': note_to_seller,
             }
-        
+
         request.session['bag'] = bag
         if product.is_gift_card:
             if variant.size == 'S':
@@ -59,33 +58,33 @@ def add_product_to_bag(request, item_id):
                 size_label = variant.size
             messages.success(request, f'Added a {size_label} {product.friendly_name} to your bag.')
         else:
-            messages.success(request, f'Added a {variant.size} {product.friendly_name} to your bag.')                       
-        return redirect(redirect_url)
-
+            messages.success(request, f'Added a {variant.size} {product.friendly_name} to your bag.')
+            return redirect(redirect_url)
 
 
 def add_event_to_bag(request, item_id):
     """ A view that adds a quantiy of a spcific product/event to the bag"""
 
-     # Get inputed fields from the form on the event.details page
+    # Get inputed fields from the form on the event.details page
     quantity = int(request.POST.get('quantity'))
     redirect_url = request.POST.get('redirect_url')
-    product_type = request.POST.get('product_type') # i.e is it an event or a product
+    # i.e is it an event or a product
+    product_type = request.POST.get('product_type')
     event_price = request.POST.get('event_price')
-    attendee_name = request.POST.get('attendee_name') 
-    note_to_host = request.POST.get('note_to_host') 
+    attendee_name = request.POST.get('attendee_name')
+    note_to_host = request.POST.get('note_to_host')
 
-    bag = request.session.get('bag',{})
+    bag = request.session.get('bag', {})
 
-    event = get_object_or_404(Event, id=item_id)    
+    event = get_object_or_404(Event, id=item_id)
 
     unique_key = f"{event.id}_{attendee_name}_{note_to_host}"
-    
+
     if unique_key in bag:
         bag[unique_key]['quantity'] += quantity
     else:
         bag[unique_key] = {
-            'quantity': quantity, 
+            'quantity': quantity,
             'product_type': product_type,
             'price': event_price,
             'attendee_name': attendee_name,
@@ -93,10 +92,8 @@ def add_event_to_bag(request, item_id):
             }
 
     request.session['bag'] = bag
-    messages.success(request, f'Added  {event.friendly_name} to your bag.')  
+    messages.success(request, f'Added  {event.friendly_name} to your bag.')
     return redirect(redirect_url)
-
-
 
 
 def update_card_message(request, item_id):
@@ -106,13 +103,12 @@ def update_card_message(request, item_id):
         card_message = request.POST.get('new_card_message')
         unique_key = request.POST.get('unique_key')
         variant_id = request.POST.get('variant_id')
-        note_to_seller = request.POST.get('note_to_seller')    
-                           
+        note_to_seller = request.POST.get('note_to_seller')
         bag = request.session.get('bag', {})
 
         product = get_object_or_404(Product, id=item_id)
-        variant = get_object_or_404(ProductVariant, id=variant_id) 
-       
+        variant = get_object_or_404(ProductVariant, id=variant_id)
+
         if unique_key in bag:
             # Update the card message
             bag[unique_key]['card_message'] = card_message
@@ -121,16 +117,14 @@ def update_card_message(request, item_id):
             if new_unique_key != unique_key:
                 # get rid of the old unique key and save the assign new_unique_key to it.
                 bag[new_unique_key] = bag.pop(unique_key)
-                unique_key = new_unique_key                
+                unique_key = new_unique_key
             messages.info(request, f'Your card message was updated')
         else:
             # in case the item isn't found in the basket.
             messages.error(request, "The item you are trying to update was not found in your bag.")
 
         request.session['bag'] = bag
-        return redirect('view_bag')  
-
-
+        return redirect('view_bag')
 
 
 def update_note_to_seller(request, item_id):
@@ -145,50 +139,43 @@ def update_note_to_seller(request, item_id):
         bag = request.session.get('bag', {})
 
         product = get_object_or_404(Product, id=item_id)
-        variant = get_object_or_404(ProductVariant, id=variant_id)                        
-       
-        if unique_key in bag:           
-            bag[unique_key]['note_to_seller'] = note_to_seller            
+        variant = get_object_or_404(ProductVariant, id=variant_id)
+
+        if unique_key in bag:
+            bag[unique_key]['note_to_seller'] = note_to_seller
             new_unique_key = f"{product.id}_{variant.id}_{card_message}_{note_to_seller}"
             if new_unique_key != unique_key:
                 bag[new_unique_key] = bag.pop(unique_key)
                 unique_key = new_unique_key
-                # if unique_key in bag:
-                #     bag[unique_key]['quantity'] += 1
             messages.info(request, f'Your note was updated')
-        else:           
+        else:
             messages.error(request, "The item you are trying to update was not found in your bag.")
 
         request.session['bag'] = bag
-        return redirect('view_bag')  
-
-
+        return redirect('view_bag')
 
 
 def update_quantity(request, item_id):
     """View which allows the user to ammend the event note to seller (product)"""
-   
+
     if request.method == 'POST':
-        quantity = int(request.POST.get('new_quantity'))           
+        quantity = int(request.POST.get('new_quantity'))
         unique_key = request.POST.get('unique_key')
-        variant_id = request.POST.get('variant_id')        
+        variant_id = request.POST.get('variant_id')     
 
         bag = request.session.get('bag', {})
 
         product = get_object_or_404(Product, id=item_id)
-        variant = get_object_or_404(ProductVariant, id=variant_id)                      
-       
-        if unique_key in bag:           
-            bag[unique_key]['quantity'] = quantity            
+        variant = get_object_or_404(ProductVariant, id=variant_id)      
+
+        if unique_key in bag:
+            bag[unique_key]['quantity'] = quantity
             messages.info(request, "Your bag quantity was updated.")
-        else:           
+        else:
             messages.error(request, "The item you are trying to update was not found in your bag.")
 
         request.session['bag'] = bag
-        return redirect('view_bag')  
-
-
-   
+        return redirect('view_bag')
 
        
 def update_note_to_host(request, item_id):

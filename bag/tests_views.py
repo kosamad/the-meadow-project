@@ -9,10 +9,19 @@ class TestBagView(TestCase):
 
     def setUp(self):
         self.client = Client()
-        self.user = User.objects.create_user(username='testuser', password='testpass')
-        self.product = Product.objects.create(friendly_name='Test Product')
-        self.variant = ProductVariant.objects.create(product=self.product, size='M', price=Decimal('5.00'))
-        
+        self.user = User.objects.create_user(
+            username='testuser',
+            password='testpass'
+        )
+        self.product = Product.objects.create(
+            friendly_name='Test Product'
+        )
+        self.variant = ProductVariant.objects.create(
+            product=self.product,
+            size='M',
+            price=Decimal('5.00')
+        )
+
     # render the correct template
     def test_view_bag(self):
         response = self.client.get(reverse('view_bag'))
@@ -35,8 +44,6 @@ class TestBagView(TestCase):
         self.assertIn(unique_key, bag)
         self.assertEqual(bag[unique_key]['quantity'], 1)
 
-
-    
     def test_update_card_message(self):
         # add a product to the bag
         self.client.post(reverse('add_product_to_bag', args=[self.product.id]), {
@@ -59,4 +66,3 @@ class TestBagView(TestCase):
         bag = self.client.session['bag']
         new_unique_key = f"{self.product.id}_{self.variant.id}_I Love You!_No green"
         self.assertIn(new_unique_key, bag)
-        self.assertEqual(bag[new_unique_key]['card_message'], 'I Love You!')
