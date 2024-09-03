@@ -97,10 +97,11 @@
                         <label for="review_text">Your Review</label>
                         <textarea id="review_text" name="review_text" class="form-control" rows="5" required
                             maxlength="500"></textarea>
-                            <!-- character count info -->
-                            <small id="charCount" class="form-text text-muted">500 characters remaining</small>
-                            <!-- whitespace warning -->
-                            <small id="reviewTextError" class="form-text text-danger" style="display:none;">Review cannot be just whitespace.</small>
+                        <!-- character count info -->
+                        <small id="charCount" class="form-text text-muted">500 characters remaining</small>
+                        <!-- whitespace warning -->
+                        <small id="reviewTextError" class="form-text text-danger" style="display:none;">Review cannot be
+                            just whitespace.</small>
                     </div>
                     <!-- Submit button -->
                     <div class="text-center">
@@ -121,14 +122,14 @@
 
 {% block postloadjs %}
 {{ block.super }}
-<script type="text/javascript">
-    document.addEventListener('DOMContentLoaded', function () {        
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
         const reviewText = document.getElementById('review_text');
         const charCount = document.getElementById('charCount');
         const reviewForm = document.getElementById('reviewForm');
         const reviewTextError = document.getElementById('reviewTextError');
 
-        
+
         reviewText.addEventListener('input', function () {
             const textLength = this.value.length;
             const maxLength = parseInt(this.getAttribute('maxlength'));
@@ -148,11 +149,11 @@
             } else {
                 // Hide whitespace error message
                 reviewTextError.style.display = 'none';
+                // Disable the submit button to prevent multiple submissions
+                event.target.querySelector('button[type="submit"]').disabled = true;
             }
         });
     });
-    
-    
 </script>
 
 
