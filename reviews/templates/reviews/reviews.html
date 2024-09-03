@@ -29,12 +29,11 @@
                         {% csrf_token %}
                         <button type="submit" class="btn btn-danger py-0 delete-item-btn ms-auto"
                             onclick="return confirm('Are you sure you want to delete this reveiw?');">
-                            <i class="fas fa-trash fa-2xs"></i></button>
-                        </button>
+                            <i class="fas fa-trash fa-2xs"></i></button>                       
                     </form>
                 </div>
                 <div class="mb-4 col-10">
-                    <p><strong>Username:</strong> {{ review.user.username }}</h3>
+                    <p><strong>Username:</strong> {{ review.user.username }}
                         <p class="review-order-text"><small><strong>Order Number:</strong>
                                 {{ review.order.order_number }}</small></p>
                         <p><small><strong>Date Submitted:</strong> {{ review.created_on|date:"d M Y H:i" }}</small></p>
@@ -48,5 +47,8 @@
             <p class="text-center">No reviews available.</p>
             {% endif %}
         </div>
-        {% endblock %}
+    </div>
+</div>
+
+{% endblock %}
  

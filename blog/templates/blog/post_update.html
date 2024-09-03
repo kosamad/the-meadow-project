@@ -18,7 +18,7 @@
 
 <div class="container">
 
-    <!-- Page Title --->
+    <!-- Page Title -->
     <div class="row mt-4 mb-4">
         <div class="col-12 text-center">
             <h2>Add Blog Post</h2>
@@ -36,7 +36,7 @@
     <div class="row justify-content-center mb-4">
         <div class="col-md-6 col-12">
             <div class="form-group">
-            <form action="" method="POST" enctype="multipart/form-data">
+            <form action="{% url 'post_update' post.id %}" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="form-field">
                     {{ form.title|as_crispy_field }}                    
@@ -46,6 +46,8 @@
                     <!-- Render custom image widget separately -->
                     <div class="form-field">
                         <label for="{{ form.image.id_for_label }}">Image:</label>
+                        <p>ID for label: {{ form.image.id_for_label }}</p>
+
                         {{ form.image }}
                     </div>
                     {{ form.alt_text|as_crispy_field }}                                      
@@ -66,7 +68,7 @@
 
 {% block postloadjs %}
 {{ block.super }}
-<script type="text/javascript">
+<script>
     $('#new-image').change(function () {
         var file = $('#new-image')[0].files[0];
         $('#filename').text(`Image will be set to: ${file.name}`);

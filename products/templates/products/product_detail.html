@@ -20,7 +20,7 @@
 <!-- Product detail page -->
 <!-- Breadcrumbs -->
 <div class="container">
-    <row class="mt-4 mb-4">
+    <div class="row mt-4 mb-4">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{% url 'shop' %}" class="no-link-style">Shop</a></li>
@@ -30,6 +30,7 @@
                 <li class="breadcrumb-item active" aria-current="page">{{ product.friendly_name|title }}</li>
             </ol>
         </nav>
+    </div>
 </div>
 
 <div class="container">
@@ -124,23 +125,22 @@
                     <p><strong>We are sorry, this item is out of stock.</strong></p>
                     {% endif %}                    
                     {% if user.is_authenticated and user.is_superuser %}                    
-                    <small>
-                        <p style="display:inline;">
+                    <small>                        
                             <!-- Form for deleting the product -->
                             <a href="{% url 'edit_product' product.id %}" class="text-green">Edit
-                            </a> | <form action="{% url 'delete_product' product.id %}" method="POST"
+                            </a></small> | <form action="{% url 'delete_product' product.id %}" method="POST"
                                 style="display:inline;">
                                 {% csrf_token %}
-                                <button type="submit" class="delete-btn"
+                                <small>  <button type="submit" class="delete-btn"
                                     onclick="return confirm('Are you sure you want to delete this product?');">
-                                    Delete</button>
-                            </form> | <a href="{% url 'add_product_variant' product.id %}" class="text-green">Add
-                                Variant</a>
+                                    Delete</button></small>
+                            </form> |<small> <a href="{% url 'add_product_variant' product.id %}" class="text-green">Add
+                                Variant</a></small>
                         </p>
-                        <hr>
-                        <p class=""><strong>Variants:</strong></p>
+                        <hr>                        
+                        <p><strong>Variants:</strong></p>
                         {% for variant in variants %}
-                        <p class="mt-0 mb-0" style="display:inline-block;">
+                        <small> 
                             {% if product.is_gift_card %}
                             {% if forloop.counter == 1 %}Option 1
                             {% elif forloop.counter == 2 %}Option 2
@@ -154,14 +154,15 @@
                             {% if not variant.is_active %}
                             <span class="text-danger"> (Inactive)</span>
                             {% endif %}
+                        </small>
                             <!-- Form for deleting the product -->
-                            <a href="{% url 'edit_product_variant' variant.id %}" class="text-green">Edit
-                            </a> | <form action="{% url 'delete_product_variant' variant.id %}" method="POST"
+                            <small> <a href="{% url 'edit_product_variant' variant.id %}" class="text-green">Edit
+                            </a></small>| <form action="{% url 'delete_product_variant' variant.id %}" method="POST"
                                 style="display:inline-block;" class="mt-0 mb-0">
                                 {% csrf_token %}
-                                <button type="submit" class="delete-btn"
+                                <small> <button type="submit" class="delete-btn"
                                     onclick="return confirm('Are you sure you want to delete this variant?');">
-                                    Delete</button>
+                                    Delete</button></small>
                             </form>
                         </p>
                         {% endfor %}

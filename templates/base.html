@@ -1,5 +1,5 @@
 {% load static %}
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -97,7 +97,6 @@ interfering with the core requirements.-->
                     <div class="row text-center"><a href="{% url 'account_signup' %}" class="no-link-style"><strong>Sign Up Here</strong></a></div>
                     {% endif %}
                 </div>
-
                 <div class="col-12 col-lg-4 order-sm-3 order-lg-2 social-links">
                     <div class="row justify-content-center">
                         <a href="{% url 'home' %}" class="text-center">
@@ -121,17 +120,15 @@ interfering with the core requirements.-->
                             </a>
                         </div>
                         <div class="col text-center d-block d-md-none">
-                            <a href="" target="" aria-label="">
+                            <a href="{% url 'contact' %}" aria-label="Link to contact page">
                                 <i class="fa-solid fa-location-dot fa-2x"></i>
                             </a>
                         </div>
                         <div class="col text-center d-block d-md-none">
-                            <a href="" target="" aria-label="">
+                            <a href="{% url 'contact' %}"  aria-label="Link to contact page">
                                 <i class="fa-solid fa-envelope fa-2x"></i>
                             </a>
                         </div>
-
-
                     </div>
                     <div class="row justify-content-center mt-5">
                         <p class="text-center footer-text mb-0"> This website was created for educational purposes only
@@ -139,21 +136,22 @@ interfering with the core requirements.-->
                         <p class="text-center footer-text"><i class="fa-regular fa-copyright"></i> Karen Samad
                             2024<span><a href="https://www.linkedin.com/in/karen-samad-0376a9149/"
                                     target="_blank" aria-label="linkedin - Opens in a new tab" class="no-link-style">
-                                    <i class="fa-brands fa-linkedin"></i></span></a></p>
+                                    <i class="fa-brands fa-linkedin"></i></a></span></p>
                     </div>
                 </div>
 
                 <div class="col-12 col-lg-4 d-none d-md-block order-sm-2 order-lg-3 mt-4">
                     <div class="row mb-2 text-center">
                         <div>
-                            <p><span class="me-3"><i class="fa-solid fa-location-dot fa-lg mr-2"></i></span> 123 Meadow,
-                                Along A Lane, Bristol BS41 8RM</p>
+                            <a href="{% url 'contact' %}" aria-label="Link to contact page" class="no-link-style"><p><span class="me-3"><i class="fa-solid fa-location-dot fa-lg mr-2"></i></span> 123 Meadow,
+                                Along A Lane, Bristol BS41 8RM</p></a>
                         </div>
 
                     </div>
                     <div class="row mb-2 text-center">
                         <div>
-                            <p><span class="me-3"><i class="fa-solid fa-phone fa-lg"></i></span>01245 687 543</p>
+                            <a href="{% url 'contact' %}" aria-label="Link to contact page" class="no-link-style">
+                            <p><span class="me-3"><i class="fa-solid fa-phone fa-lg"></i></span>01245 687 543</p></a>
                         </div>
                     </div>
                     <div class="row mb-2 text-center">

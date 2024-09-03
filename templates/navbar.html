@@ -12,27 +12,32 @@
             <!-- Navbar toggle and Links -->
             <div class="col-sm-6 col-md-8 col-2 my-2">
                 <nav class="navbar navbar-expand-lg">
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
-                        aria-label="Toggle navigation">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
                         <ul class="navbar-nav mx-auto d-flex justify-content-around w-100">
                             <li class="nav-item">
-                                <a href="{% url 'home' %}" class="nav-link main-logo-link {% if request.path == '/' %}active{% endif %}">Home</a>
+                                <a href="{% url 'home' %}"
+                                    class="nav-link main-logo-link {% if request.path == '/' %}active{% endif %}">Home</a>
                             </li>
                             <li class="nav-item">
-                                <a href="{% url 'shop' %}" class="nav-link {% if request.path == '/shop/' or '/products/' in request.path or '/bag/' in request.path or '/checkout/' in request.path%}active{% endif %}">Shop</a>
-                            </li>                                                       
-                            <li class="nav-item">
-                                <a href="{% url 'posts' %}" class="nav-link {% if request.path == '/blog/' or '/blog/' in request.path %}active{% endif %}">Blog Posts</a>
+                                <a href="{% url 'shop' %}"
+                                    class="nav-link {% if request.path == '/shop/' or '/products/' in request.path or '/bag/' in request.path or '/checkout/' in request.path%}active{% endif %}">Shop</a>
                             </li>
                             <li class="nav-item">
-                                <a href="{% url 'about' %}" class="nav-link {% if request.path == '/about/' %}active{% endif %}">About</a>
+                                <a href="{% url 'posts' %}"
+                                    class="nav-link {% if request.path == '/blog/' or '/blog/' in request.path %}active{% endif %}">Blog
+                                    Posts</a>
                             </li>
                             <li class="nav-item">
-                                <a href="{% url 'contact' %}" class="nav-link {% if '/contact/' in request.path %}active{% endif %}">Contact</a>
+                                <a href="{% url 'about' %}"
+                                    class="nav-link {% if request.path == '/about/' %}active{% endif %}">About</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{% url 'contact' %}"
+                                    class="nav-link {% if '/contact/' in request.path %}active{% endif %}">Contact</a>
                             </li>
                         </ul>
                     </div>
@@ -43,13 +48,14 @@
                 <ul class="list-inline list-unstyled mb-0 ml-lg-2">
                     <!-- My Account + dropdown options -->
                     <li class="list-inline-item mr-lg-4 dropdown nav-item">
-                        <a class="nav-link" href="#" id="user-options" data-bs-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link" href="#" id="user-options" data-bs-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">
                             <div><i class="fas fa-user nav-icon"></i></div>
                         </a>
                         <div class="dropdown-menu border-0 bg-green" aria-labelledby="user-options">
-                            {% if request.user.is_authenticated %}                            
-                            <a href="{% url 'profile' %}" class="dropdown-item btn-green"> {% if request.user.is_superuser%} TMP Managment {% else %} My Profile {% endif %}</a>
+                            {% if request.user.is_authenticated %}
+                            <a href="{% url 'profile' %}" class="dropdown-item btn-green">
+                                {% if request.user.is_superuser%} TMP Managment {% else %} My Profile {% endif %}</a>
                             <a href="{% url 'account_logout' %}" class="dropdown-item btn-green">Logout</a>
                             {% else %}
                             <a href="{% url 'account_signup' %}" class="dropdown-item btn-green">Sign Up</a>
@@ -77,8 +83,8 @@
                 <div class="search-overlay bg-white">
                     <form method="GET" action="{% url 'shop' %}" class="form-inline mb-0">
                         <div class="input-group">
-                            <input class="form-control form-control-sm border-green margin-10 rounded-0"
-                                type="text" name="q" aria-label="Search" placeholder="Shop search">
+                            <input class="form-control form-control-sm border-green margin-10 rounded-0" type="text"
+                                name="q" aria-label="Search" placeholder="Shop search">
                             <div class="input-group-append">
                                 <button class="btn btn-green margin-10" type="submit">
                                     Search
@@ -94,4 +100,5 @@
                 </div>
             </div>
         </div>
+    </div>
 </header>

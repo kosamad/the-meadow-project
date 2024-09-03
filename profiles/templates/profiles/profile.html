@@ -73,8 +73,7 @@
             <h3 class="title-font">Your Details</h3>
             <p><strong>Username:</strong> {{ username }}</p>
             <p><strong>Email:</strong> {{ email }}</p>
-            <button class="col-md-4 col-lg-3 col-6 btn btn-green mb-4"><a href="{% url 'account_change_password' %}" class="no-link-style text-white ">Change password</a>
-            </button>         
+            <a href="{% url 'account_change_password' %}" class="no-link-style text-white col-md-4 col-lg-3 col-6 btn btn-green mb-4">Change password</a>                     
         </div>
         <hr>
         <!--Address and Orders-->
@@ -82,6 +81,7 @@
             <!-- Default Address -->
             <div class="col-lg-4 col-12">
                 <div class="row">
+                    <fieldset class="col-12">
                     <legend class="fieldset-label small w-auto"><strong>Default Address Information</strong></legend>
                     <form class="mt-4" action="{% url 'profile' %}" method="POST" id="profile-update-form">
                         {% csrf_token %}
@@ -90,10 +90,12 @@
                             <div class="col text-center"><button class="btn btn-green">Update Information</button></div>
                         </div>
                     </form>
+                </fieldset>
                 </div>
             </div>
             <!-- Order History -->
             <div class="col-lg-8 col-12">
+                <fieldset class="col-12">
                 <legend class="fieldset-label small w-auto"><strong>Order History</strong></legend>
                 <div class="row">
                     <div class="col">
@@ -147,11 +149,10 @@
                                         {% endfor %}
                                 </tbody>
                             </table>
-
                         </div>
                     </div>
                 </div>
-            </div>
+            </fieldset>
         </div>
 
         <!--Unauthenticated user message-->
@@ -162,14 +163,4 @@
     {% endif %}
 
 </div>
-
-
-
-
-
-
-
-
-
-
 {% endblock %}

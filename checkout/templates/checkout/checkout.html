@@ -34,7 +34,7 @@
             <div class="row">
                 <!-- Checkout Form  -->
                 <div class="col-lg-9 col-12">
-                    <form action="" method="POST" id="payment-form">
+                    <form action="{% url 'checkout' %}" method="POST" id="payment-form">
                         {% csrf_token %}
                         <input type="hidden" name="order_type" value="{{ order_type }}">
 
@@ -86,7 +86,7 @@
                             </div>
                             <button type="button" class="btn btn-pink ms-3" onclick="showPreviousStep(1)"><i
                                     class="fas fa-chevron-left"></i>
-                                </span> Previous</button>
+                                Previous</button>
                             <button type="button" class="btn btn-green ms-3" onclick="validateAndShowNextStep(2)">Next
                                 <span><i class="fas fa-chevron-right"></i>
                                 </span></button>
@@ -97,7 +97,8 @@
                             {% if order_type == 'product' %}
                             <div id="delivery_method_wrapper">
                                 <fieldset class="rounded px-3 mb-3">
-                                    <legend class="fieldset-label small text-black px-2 w-auto">Delivery Information:
+                                    <legend class="fieldset-label small text-black px-2 w-auto">Delivery Information: Please chose a date and delivery
+                                        method.
                                     </legend>
                                     {{product_form.delivery_date | as_crispy_field }}
                                     {{product_form.delivery_method | as_crispy_field }}
@@ -110,7 +111,7 @@
                             </div>
                             <div class="delivery-details" style="display: none;">
                                 <fieldset class="rounded px-3 mb-5">
-                                    <legend class="fieldset-label small text-black px-2 w-auto">Delivery Information
+                                    <legend class="fieldset-label small text-black px-2 w-auto">Delivery Address:
                                     </legend>
                                     {{ product_form.delivery_name | as_crispy_field }}
                                     {{ product_form.delivery_street_address1 | as_crispy_field }}
@@ -133,11 +134,9 @@
                             {% if order_type == 'product and event' %}
                             <div id="delivery_method_wrapper">
                                 <fieldset class="rounded px-3 mb-2">
-                                    <legend class="fieldset-label small px-2 w-auto">Delivery Information
-                                    </legend>
-                                    <legend class="fieldset-label small px-2 w-auto">Please chose a date and delivery
+                                    <legend class="fieldset-label small px-2 w-auto">Delivery Information: Please chose a date and delivery
                                         method.
-                                    </legend>
+                                    </legend>                                    
                                     {{ product_form.delivery_date | as_crispy_field }}
                                     {{ product_form.delivery_method | as_crispy_field }}
                                 </fieldset>

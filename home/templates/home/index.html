@@ -47,7 +47,7 @@
                 <div class="thumbnail">
                     <div class="image-container">
                         <img src="/media/peter-bucks-70zWkGkeMrk-unsplash.jpg" class="grid-img" alt="Image 1">
-                        <button type="button" class="btn grid-img-overlay fw-bold">Flowers</button>
+                        <div class="btn grid-img-overlay fw-bold">Flowers</div>
                     </div>
                 </div>
             </a>
@@ -67,7 +67,7 @@
                     <div class="image-container">
                         <img src="/media/pexels-guilherme-lacerda-goncalves-1175042636-21764459.jpg" class="grid-img"
                             alt="Image 1">
-                        <button type="button" class="btn grid-img-overlay fw-bold">Plants</button>
+                            <div class="btn grid-img-overlay fw-bold">Plants</div>
                     </div>
                 </div>
             </a>
@@ -86,7 +86,7 @@
                 <div class="thumbnail">
                     <div class="image-container">
                         <img src="/media/pexels-gabby-k-5063459.jpg" class="grid-img" alt="Image 1">
-                        <button type="button" class="btn grid-img-overlay fw-bold">Events</button>
+                        <div class="btn grid-img-overlay fw-bold">Events</div>
                     </div>
                 </div>
             </a>
@@ -134,7 +134,7 @@
     </div>
     <div class="row justify-content-center mt-3 mb-3">
         <div class="col-4 text-center">
-            <a href="{% url 'about' %}"><button class="btn btn-green fw-bold">Learn More</button></a>
+            <a href="{% url 'about' %}" class="btn btn-green fw-bold">Learn More</a>
         </div>
     </div>
     <div class="row">
@@ -188,8 +188,7 @@
                 into stunning bouquets for every occasion. Alternatively, explore our curated collection of plants,
                 designed to bring tranquility and greenery into any space.</p>
             <div class="mt-4">
-                <a href="{% url 'shop' %}">
-                    <button class="btn btn-green fw-bold">Shop</button>
+                <a href="{% url 'shop' %}" class="btn btn-green fw-bold">Shop
                 </a>
             </div>
         </div>
@@ -208,8 +207,8 @@
                             <p class="">Step into nature at our meadow events. Experience serene surroundings and learn
                                 to
                                 create your own bouquets with freshly picked flowers from the meadow.</p>
-                            <div class="mt-4">
-                                <btn type="button" class="btn btn-green fw-bold">Events</btn>
+                            <div class="mt-4">                               
+                                <div class="btn btn-green fw-bold">Events</div>
                             </div>
                         </div>
                     </div>

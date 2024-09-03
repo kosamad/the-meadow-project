@@ -47,7 +47,7 @@
                 <input type="hidden" name="unique_key" value="{{ item.unique_key }}">
                 <button type="submit" class="btn btn-danger py-0 delete-item-btn ms-auto" onclick="return confirm('Are you sure you want to remove this product from your basket?');">
                     <i class="fas fa-trash fa-2xs"></i></button>
-                </button>
+                
             </form>
         </div>
         <div class="col-md-3 col-3 mt-4">
@@ -241,13 +241,13 @@
     <!-- Bag Filled Buttons -->
     <div class="row mt-2 mb-4">
         <div class="col-sm-4 col-md-3 col-lg-2">
-            <a href="{% url 'checkout' %}">
-                <button class="btn btn-green col-12 fw-bold"> Checkout</button>
+            <a href="{% url 'checkout' %}" class="btn btn-green col-12 fw-bold">
+                 Checkout
             </a>
         </div>
         <div class="col-sm-4 col-md-3 col-lg-2">
-            <a href="{% url 'shop' %}">
-                <button class="btn btn-pink col-12 fw-bold"> Shop </button>
+            <a href="{% url 'shop' %}" class="btn btn-pink col-12 fw-bold">
+                Shop
             </a>
         </div>
         <div class="col-sm-4 col-md-3 col-lg-2">
