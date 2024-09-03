@@ -92,8 +92,8 @@ class StripeWH_Handler:
         intent = event.data.object
         pid = intent.id
         bag = intent.metadata.bag
-        save_info = intent.metadata.save_info
-        order_type = intent.metadata.order_type
+        save_info = intent.metadata.get('save_info', False)
+        order_type = intent.metadata.get('order_type', '')
         delivery_date_str = intent.metadata.get('delivery_date', '')
         delivery_method = intent.metadata.get('delivery_method', '')       
 
@@ -123,22 +123,25 @@ class StripeWH_Handler:
 
         # Update Profile information if save_info was checked
         profile = None
-        username = intent.metadata.username
+        username = intent.metadata.get('username', 'AnonymousUser')        
         if username != 'AnonymousUser':
-            # get profile
-            profile = UserProfile.objects.get(user__username=username)
-            if save_info:                                
-                profile.default_full_name = billing_details.name
-                profile.default_email = billing_details.email
-                profile.phone_number = billing_details.phone                    
-                profile.default_town_or_city = billing_details.address.city
-                profile.default_street_address1 = billing_details.address.line1
-                profile.default_street_address2 = billing_details.address.line2
-                profile.default_county = billing_details.address.state
-                profile.save() 
+            try:
+                # get profile
+                profile = UserProfile.objects.get(user__username=username)
+                if save_info:                                
+                    profile.default_full_name = billing_details.name
+                    profile.default_email = billing_details.email
+                    profile.phone_number = billing_details.phone                    
+                    profile.default_town_or_city = billing_details.address.city
+                    profile.default_street_address1 = billing_details.address.line1
+                    profile.default_street_address2 = billing_details.address.line2
+                    profile.default_county = billing_details.address.state
+                    profile.save()                    
+            except UserProfile.DoesNotExist:                
+                profile = None
              
         # Checking if the order has alread been created in the database
-        order_exists = False
+        order_exists = False       
         attempt = 1
         while attempt <= 5:
             try:
@@ -153,19 +156,19 @@ class StripeWH_Handler:
                     original_bag=bag,
                     stripe_pid=pid,
                 )
-                order_exists = True
+                order_exists = True                
                 break
             except Order.DoesNotExist:
                 attempt += 1
-                time.sleep(1)
+                time.sleep(1)                
+
         if order_exists:
             self._send_confirmation_email(order_instance)
             self._send_order_email(order_instance)
             # Check and send event ticket email if event items exist
             event_line_items = order_instance.event_lineitems.all()
             if event_line_items.exists():
-                self._send_ticket_email(order_instance, event_line_items)
-
+                self._send_ticket_email(order_instance, event_line_items)                
             return HttpResponse(
                 content=f'Webhook received: {event["type"]} | SUCCESS: Verified order already in database',
                 status=200)
@@ -185,7 +188,7 @@ class StripeWH_Handler:
                     county=billing_details.address.state,
                     original_bag=bag,
                     stripe_pid=pid,
-                )
+                )                
                 for unique_key, item_data in bag_items.items():
                     product_type = item_data.get('product_type')
                     # Process product items
@@ -266,14 +269,14 @@ class StripeWH_Handler:
                 return HttpResponse(
                     content=f'Webhook received: {event["type"]} | ERROR: {e}',
                     status=500)
-        self._send_confirmation_email(order_instance)
-        self._send_order_email(order_instance)
-        # Send event ticket email if event items exist
-        if event_line_items.exists():
-            self._send_ticket_email(order_instance, event_line_items)
-        return HttpResponse(
-            content=f'Webhook received: {event["type"]} | SUCCESS: Created order in webhook',
-            status=200)
+            self._send_confirmation_email(order_instance)        
+            self._send_order_email(order_instance)            
+            # Send event ticket email if event items exist
+            if event_line_items.exists():
+                self._send_ticket_email(order_instance, event_line_items)                
+            return HttpResponse(
+                content=f'Webhook received: {event["type"]} | SUCCESS: Created order in webhook',
+                status=200)
 
 
 
