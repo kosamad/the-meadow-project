@@ -15,9 +15,9 @@ from pathlib import Path
 
 # Get secret keys
 if os.path.exists('env.py'):
-    import env
+    import env 
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+# Build paths inside the project like this: BASE_DIR / 'subdir'.k
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
