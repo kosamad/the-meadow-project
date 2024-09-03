@@ -28,8 +28,7 @@ def bag_contents(request):
                     'quantity': details['quantity'],
                     'product': product,
                     'variant': variant,
-                    'subtotal': subtotal,
-                    # if no input, it's set to an empty string so no errors
+                    'subtotal': subtotal,                    
                     'card_message': details.get('card_message', ''),
                     'note_to_seller': details.get('note_to_seller', ''),
                     'unique_key': unique_key,
@@ -88,4 +87,4 @@ def bag_contents(request):
         'total_items': total_items,
     }
 
-    return
+    return context
