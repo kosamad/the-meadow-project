@@ -88,4 +88,4 @@ def bag_contents(request):
         'total_items': total_items,
     }
 
-    return 
+    return
