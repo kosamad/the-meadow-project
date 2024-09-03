@@ -8,9 +8,8 @@ from .forms import PostForm
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
-
-
 # Create your views here.
+
 
 def all_posts(request):
     """ A view to return the blog page with all blog items """
@@ -19,7 +18,7 @@ def all_posts(request):
 
     # Search requests
     query = ''
-    no_results = False 
+    no_results = False
     if 'q' in request.GET:
         query = request.GET['q']
         # if the query is blank = an error message
@@ -29,8 +28,8 @@ def all_posts(request):
 
         # product and event queries for name, descritpion and category
         post_queries = (
-            Q(title__icontains=query) | 
-            Q(body__icontains=query)              
+            Q(title__icontains=query) |
+            Q(body__icontains=query)
         )
         # Check if there are no results
         posts = posts.filter(post_queries)
@@ -40,22 +39,21 @@ def all_posts(request):
     # pagination to limit how many posts per page
     paginator = Paginator(posts, 6)
     page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)  
-               
+    page_obj = paginator.get_page(page_number)
 
     context = {
         'posts': posts,
         'page_number': page_number,
         'page_obj': page_obj,
         'search_term': query,
-        'no_results': no_results, 
+        'no_results': no_results,
         }
 
     return render(request, 'blog/posts.html', context)
 
 
 def post_detail(request, post_id):
-    
+
     post = get_object_or_404(Post, id=post_id)
 
     context = {
@@ -64,11 +62,12 @@ def post_detail(request, post_id):
 
     return render(request, 'blog/post_detail.html', context)
 
-#  Authenticated users only can add/edit/delete blog posts. The user must be a superuser. 
+#  Authenticated users only can add/edit/delete blog posts. The user must be a superuser.
+
 
 # Code to add/eidt/delete a blog post using CreateView/UpdateView/DeleteView ammended from Youtube tutorial by Codemy
 class AddPostView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
-    
+
     model = Post
     form_class = PostForm
     template_name = 'blog/add_post.html'
@@ -84,8 +83,8 @@ class AddPostView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     def form_valid(self, form):
         # save the form
         response = super().form_valid(form)
-        
-        # success message 
+
+        # success message
         messages.info(self.request, 'Blog post added successfully!')
         return response
 
@@ -93,26 +92,26 @@ class AddPostView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
 class UpdatePostView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
     form_class = PostForm
-    template_name = 'blog/post_update.html'    
+    template_name = 'blog/post_update.html'
     context_object_name = 'post'
 
     def test_func(self):
         # Check if the user is a superuser
-        return self.request.user.is_superuser        
+        return self.request.user.is_superuser
 
     def handle_no_permission(self):
         # Redirect to the home page if the user does not have permission
         return redirect(reverse_lazy('home'))
 
-    def form_valid(self, form):       
-        response = super().form_valid(form)       
-        messages.info(self.request, 'Blog post updated successfully!')        
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        messages.info(self.request, 'Blog post updated successfully!')
         return response
 
     # Resolve Url when needed
     def get_success_url(self):
         return reverse_lazy('post_detail', kwargs={'post_id': self.object.id})
-    
+
 
 class DeletePostView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Post
@@ -120,27 +119,23 @@ class DeletePostView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
     def test_func(self):
         # Check if the user is a superuser
-        return self.request.user.is_superuser        
+        return self.request.user.is_superuser
 
     def handle_no_permission(self):
         # Redirect to the home page if the user does not have permission
         return redirect(reverse_lazy('home'))
 
-    def form_valid(self, form):       
-        response = super().form_valid(form)       
-        messages.info(self.request, 'Blog post deleted!')        
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        messages.info(self.request, 'Blog post deleted!')
         return response
 
     # Function ensures users 'go back' to the page they came from
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['previous_url'] = self.request.META.get('HTTP_REFERER', reverse_lazy('posts'))
-        return context   
-    
-    # redirect after successful deletion.     
+        return context
+
+    # redirect after successful deletion.
     def get_success_url(self):
         return reverse_lazy('posts')
-   
-    
-
-

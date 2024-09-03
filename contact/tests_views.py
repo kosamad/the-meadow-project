@@ -14,7 +14,7 @@ class ContactViewTests(TestCase):
         if created:
             self.user.set_password("password9")
             self.user.save()
-        
+
         # Create or retrieve a UserProfile instance associated with the User
         self.user_profile, _ = UserProfile.objects.get_or_create(
             user=self.user,
@@ -27,11 +27,10 @@ class ContactViewTests(TestCase):
                 'default_county': 'Test County',
             }
         )
-        
+
         # Initialize the client and login the user
         self.client = Client()
         self.client.login(username='testuser9', password='password9')
-
 
     def test_contact_get_authenticated(self):
         """Test contact page GET request when user is authenticated"""
@@ -42,7 +41,6 @@ class ContactViewTests(TestCase):
         # Check if user has orders
         self.assertEqual(len(response.context['orders']), 0)  # No orders created in this test
 
-
     def test_contact_get_unauthenticated(self):
         """Test contact page GET request when user is not authenticated"""
         self.client.logout()  # Ensure user is not logged in
@@ -51,4 +49,3 @@ class ContactViewTests(TestCase):
         self.assertTemplateUsed(response, 'contact/contact.html')
         self.assertIn('orders', response.context)
         self.assertEqual(response.context['orders'], [])
-

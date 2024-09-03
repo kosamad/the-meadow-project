@@ -92,13 +92,13 @@ class ProductOrderLineItem(models.Model):
     For Products and/or Events if together in the basket
     """
     order = models.ForeignKey(Order, null=False, blank=False, on_delete=models.CASCADE, related_name='product_lineitems')
-    product = models.ForeignKey(Product, null=True, blank=True, on_delete=models.CASCADE)    
+    product = models.ForeignKey(Product, null=True, blank=True, on_delete=models.CASCADE)
     product_variant = models.ForeignKey(ProductVariant, null=True, blank=True, on_delete=models.SET_NULL)
     card_message = models.TextField(blank=True, default='')
-    note_to_seller = models.TextField(blank=True, default='')    
+    note_to_seller = models.TextField(blank=True, default='')
     quantity = models.IntegerField(null=False, blank=False, default=0)
     lineitem_total = models.DecimalField(max_digits=6, decimal_places=2, null=False, blank=False, editable=False)
-    # delivery details   
+    # delivery details
     delivery_method = models.CharField(max_length=20, choices=DELIVERY_CHOICES, null=True, blank=True)
     delivery_date = models.DateField(null=True, blank=True, validators=[validate_date])
     delivery_name = models.CharField(max_length=20, null=True, blank=True)
@@ -112,14 +112,15 @@ class ProductOrderLineItem(models.Model):
         """
         Override the original save method to set the lineitem total
         and update the order total.
-        """        
+        """
         if self.product:
             if self.product_variant:
                 self.lineitem_total = self.product_variant.price * self.quantity
             else:
                 self.lineitem_total = self.product.price * self.quantity
         else:
-            print("Error: Product is missing, setting lineitem_total to 0") #prevents error from Saving ProductOrderLineItem for product None and variant None 
+            # prevents error from Saving ProductOrderLineItem for product None and variant None
+            print("Error: Product is missing, setting lineitem_total to 0")
             self.lineitem_total = 0
 
         super().save(*args, **kwargs)
@@ -128,7 +129,6 @@ class ProductOrderLineItem(models.Model):
 
     def __str__(self):
         return f'Name: {self.product.friendly_name} on Order number: {self.order.order_number}'
-       
 
 
 class EventOrderLineItem(models.Model):
@@ -147,7 +147,7 @@ class EventOrderLineItem(models.Model):
         Override the original save method to set the lineitem total
         and update the order total.
         """
-        if self.event:     
+        if self.event:
             self.lineitem_total = self.event.price * self.quantity
         else:
             raise ValueError("Event is required to calculate line item total")

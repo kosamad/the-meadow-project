@@ -327,4 +327,3 @@ def checkout_success(request, order_number):
 
 
 
-
