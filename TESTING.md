@@ -42,7 +42,13 @@ To run the tests:
 
 ### HTML Validation
 
-[W3C](https://validator.w3.org/) was used to validate the HTML using the URI for each page. Base.html was checked by extenstion on all pages but was also validated by a direct input check. This displayed errors such as missing head elements, illegal characters, missing lang attributes. However, these are due to the Jinga templating and are not true errors. 
+[W3C](https://validator.w3.org/) was used to validate the HTML using the URI for each page. Base.html was checked by extenstion on all pages but was also validated by a direct input check. There are also displayed errors due to Jinga templating such as: missing head elements, bad values, illegal characters/text not allowed, incorrect error for '==' missing lang attributes, an ID must not contain whitespace and element must be the ID of a non-hidden form control. However, these are and are not true errors. For an ID must not contain whitespace and element must be the ID of a non-hidden form control all were confirmed usingfor exampple <p>ID for label: {{ form.image.id_for_label }}</p>.
+
+Note Jinga templating errors within table and ul cause a 'Fatal Error' therefore the html has been checked in sections where this is the case. 
+
+Specific "errors" in addition to the points above are listed in the table below. These have all been kept for functional purposes as removal of the element would result in the code not running as inteded. 
+
+
 
 ### CSS Validation
 
