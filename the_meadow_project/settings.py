@@ -32,7 +32,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY','')
 # DEBUG = False
 #ALLOWED_HOSTS = ['*']
 
-DEBUG = 'DEVELOPMENT' in os.environ
+DEBUG = 'DEVELOPMENT' in os.environ 
 ALLOWED_HOSTS = ['8000-kosamad-themeadowprojec-6rk3byj73lq.ws.codeinstitute-ide.net',
 'the-meadow-project-800f5f20f1b1.herokuapp.com',
 ]
