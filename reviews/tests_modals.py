@@ -8,7 +8,7 @@ from profiles.models import UserProfile
 class ReviewModelTest(TestCase):
 
     def setUp(self):
-      
+
         # Create or retrieve a User instance (prevent unique contraint errors)
         self.user, created = User.objects.get_or_create(username="testuser8")
         if created:
@@ -17,9 +17,8 @@ class ReviewModelTest(TestCase):
 
         # Create or retrieve a UserProfile instance associated with the User
         self.user_profile, _ = UserProfile.objects.get_or_create(user=self.user)
-       
 
-        # Create an Order instance 
+        # Create an Order instance
         self.order = Order.objects.create(
             user_profile=self.user_profile,
             email='test@example.com',
@@ -41,12 +40,10 @@ class ReviewModelTest(TestCase):
             review_text='This is a test review.'
         )
 
-
     def test_review_creation(self):
-            """
-            Test that a Review instance is created correctly.
-            """
-            self.assertEqual(self.review.user, self.user)
-            self.assertEqual(self.review.order, self.order)
-            self.assertEqual(self.review.review_text, 'This is a test review.')   
-            
+        """
+        Test that a Review instance is created correctly.
+        """
+        self.assertEqual(self.review.user, self.user)
+        self.assertEqual(self.review.order, self.order)
+        self.assertEqual(self.review.review_text, 'This is a test review.')

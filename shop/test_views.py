@@ -10,6 +10,7 @@ from datetime import timedelta
 from django.utils import timezone
 from products.models import Category, Product, Event, ProductVariant
 
+
 class TestShopViews(TestCase):
 
     def setUp(self):
@@ -57,7 +58,7 @@ class TestShopViews(TestCase):
 
         # Define a datetime for the event
         self.event_datetime = timezone.now() + timedelta(days=5)
-        
+
         # Create an event instance
         self.event = Event.objects.create(
             id=uuid.uuid4(),
@@ -72,7 +73,6 @@ class TestShopViews(TestCase):
             alt_text='Test Event Image',
             is_active=True
         )
-        
 
     # Check basic shop view
     def test_shop_view_no_filters(self):
@@ -81,18 +81,17 @@ class TestShopViews(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'shop/shop.html')
 
-        # checking data rendered to the template (Context)       
-        self.assertIn('combined_list', response.context)        
+        # checking data rendered to the template (Context)
+        self.assertIn('combined_list', response.context)
 
         # check all products/events are on the page (should be 2 as one is inactive)
         combined_list = response.context['combined_list']
-        self.assertEqual(len(combined_list), 2)        
-
+        self.assertEqual(len(combined_list), 2)
 
     # Check shop view with a search
     def test_shop_view_with_search_query(self):
-        url = reverse('shop') + '?q=Test'  
-        response = self.client.get(url)        
+        url = reverse('shop') + '?q=Test'
+        response = self.client.get(url)
         combined_list = response.context['combined_list']
         for item in combined_list:
             if item['item_type'] == 'Product':
@@ -100,14 +99,12 @@ class TestShopViews(TestCase):
             elif item['item_type'] == 'Event':
                 self.assertIn('test', item['item'].name.lower())
 
-
     # Check shop view with a category filter selected
+
     def test_shop_view_with_category_filter(self):
         url = reverse('shop') + '?category=Test Category'
-        response = self.client.get(url)       
+        response = self.client.get(url)
         combined_list = response.context['combined_list']
         for item in combined_list:
             if item['item_type'] == 'Product':
                 self.assertEqual(item['item'].category.name, 'Test Category')
-    
-    

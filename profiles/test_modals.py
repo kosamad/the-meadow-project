@@ -2,6 +2,7 @@ from django.test import TestCase
 from django.contrib.auth.models import User
 from .models import UserProfile
 
+
 class UserProfileModelTests(TestCase):
 
     def test_profile_creation_on_user_creation(self):
@@ -11,7 +12,6 @@ class UserProfileModelTests(TestCase):
         user = User.objects.create_user(username='testuser', password='testpass')
         # Verify that the UserProfile was created
         self.assertTrue(UserProfile.objects.filter(user=user).exists())
-
 
     def test_profile_update_on_user_save(self):
         """
@@ -23,7 +23,6 @@ class UserProfileModelTests(TestCase):
         # Fetch the UserProfile and check that it is associated with the updated User
         profile = UserProfile.objects.get(user=user)
         self.assertEqual(profile.user.username, 'updateduser')
-
 
     def test_profile_string_representation(self):
         """

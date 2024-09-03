@@ -12,12 +12,14 @@ from checkout.models import Order
 """
 Profile tests
 """
+
+
 class TestProfileView(TestCase):
 
     def setUp(self):
         # Create a user and profile (PLEASE CHANGE USERNAME AND PW TO GET TEST TO PASS)
-        #otherwise this will fail the Unique contraint
-        self.user = User.objects.create_user(username='newtest1', password='newtestpass1')        
+        # otherwise this will fail the Unique contraint
+        self.user = User.objects.create_user(username='newtest1', password='newtestpass1')
         self.client = Client()
         self.client.login(username='newtest1', password='newtestpass1')
 
@@ -29,7 +31,7 @@ class TestProfileView(TestCase):
         self.assertContains(response, self.user.username)
         self.assertContains(response, self.user.email)
 
-    # Profile updates 
+    # Profile updates
     def test_profile_update_success(self):
         form_data = {
             'default_phone_number': '1234',
@@ -48,14 +50,15 @@ class TestProfileView(TestCase):
 Profile Order History
 """
 
+
 class TestOrderHistoryView(TestCase):
 
     def setUp(self):
-        self.user = User.objects.create_user(username='testuser2', password='testpassword2')       
+        self.user = User.objects.create_user(username='testuser2', password='testpassword2')
 
         # Create an order for testing
         self.order = Order.objects.create(
-            user_profile=self.user.userprofile, 
+            user_profile=self.user.userprofile,
             full_name='Test User2',
             email='testuser2@example.com',
             phone_number='1234',
@@ -75,6 +78,5 @@ class TestOrderHistoryView(TestCase):
     def test_order_association_with_profile(self):
         # Fetch the updated UserProfile
         updated_profile = UserProfile.objects.get(user=self.user)
-            
-        # Verify that the order appears in the user's profile 
+        # Verify that the order appears in the user's profile
         self.assertIn(self.order, updated_profile.orders.all())
