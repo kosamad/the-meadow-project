@@ -8,10 +8,10 @@ from decimal import Decimal
 
 
 
-def product_detail(request, product_uuid):
+def product_detail(request, product_id):
     """ A view to show the product details for an individual item """
 
-    product = get_object_or_404(Product, id=product_uuid) # id=product_id I am using UUID
+    product = get_object_or_404(Product, id=product_id) # id=product_id I am using UUID
     variants = ProductVariant.objects.filter(product=product)
     active_variants = variants.filter(is_active=True)
     default_variant = variants.filter(size='M').first() or variants.first()
@@ -28,10 +28,10 @@ def product_detail(request, product_uuid):
 
 
 
-def event_detail(request, event_uuid):
+def event_detail(request, event_id):
     """ A view to show the event details for an individual item """ 
 
-    event = get_object_or_404(Event, id=event_uuid)
+    event = get_object_or_404(Event, id=event_id)
     context = {
         'event': event,
     }
@@ -51,7 +51,7 @@ def add_product(request):
         if product_form.is_valid():
             product = product_form.save()
             messages.info(request, 'Product added successfully! Now add variants.')
-            return redirect('product_detail', product_uuid=product.id)
+            return redirect('product_detail', product_id=product.id)
         else:
             messages.error(request, 'Failed to add product. Please ensure the form is valid.')
     else:
@@ -65,7 +65,7 @@ def add_product(request):
 
 
 @login_required
-def add_product_variant(request, product_uuid):
+def add_product_variant(request, product_id):
     """ A view to add a variant to an individual product item """
 
     if not request.user.is_superuser:
@@ -73,7 +73,7 @@ def add_product_variant(request, product_uuid):
         return redirect(reverse('home'))
 
     # get product info
-    product = get_object_or_404(Product, id=product_uuid)
+    product = get_object_or_404(Product, id=product_id)
 
     if request.method == 'POST':
         variant_form = ProductVariantForm(request.POST, request.FILES, product=product)
@@ -82,7 +82,7 @@ def add_product_variant(request, product_uuid):
             variant.product = product
             variant.save()
             messages.info(request, 'Product variant added successfully!')
-            return redirect('product_detail', product_uuid=product.id)
+            return redirect('product_detail', product_id=product.id)
         else:
             messages.error(request, 'Failed to add product variant. Please ensure the form is valid.')
     else:
@@ -98,21 +98,21 @@ def add_product_variant(request, product_uuid):
 
 
 @login_required
-def edit_product(request, product_uuid):
+def edit_product(request, product_id):
     """ A view to edit an individual product item """
 
     if not request.user.is_superuser:
         messages.error(request, 'Sorry, only store owners can do that.')
         return redirect(reverse('home'))
 
-    product = get_object_or_404(Product, id=product_uuid)
+    product = get_object_or_404(Product, id=product_id)
 
     if request.method == 'POST':
         product_form = ProductForm(request.POST, request.FILES, instance=product)
         if product_form.is_valid():
             product_form.save()
             messages.info(request, 'Product updated successfully!')
-            return redirect('product_detail', product_uuid=product.id)
+            return redirect('product_detail', product_id=product.id)
         else:
             messages.error(request, 'Failed to update product. Please ensure the form is valid.')
     else:
@@ -145,7 +145,7 @@ def edit_product_variant(request, variant_id):
             # Update product price based on the updated variant
             product.save()
             messages.info(request, 'Product variant updated successfully!')
-            return redirect('product_detail', product_uuid=product.id)
+            return redirect('product_detail', product_id=product.id)
         else:
             messages.error(request, 'Failed to update product variant. Please ensure the form is valid.')
     else:
@@ -173,7 +173,7 @@ def add_event(request):
             #create a new event instance
             event = event_form.save()
             messages.info(request, 'Event successfully added!')         
-            return redirect('event_detail', event_uuid=event.id)
+            return redirect('event_detail', event_id=event.id)
         else:
             messages.error(request, 'Failed to add product. Please ensure the form is valid.')
     else:
@@ -187,10 +187,10 @@ def add_event(request):
 
 
 @login_required
-def edit_event(request, event_uuid):
+def edit_event(request, event_id):
     """ A view to edit an individual event """
 
-    event = get_object_or_404(Event, id=event_uuid)
+    event = get_object_or_404(Event, id=event_id)
     if not request.user.is_superuser:
         messages.error(request, 'Sorry, only store owners can do that.')
         return redirect(reverse('home'))
@@ -200,7 +200,7 @@ def edit_event(request, event_uuid):
         if event_form.is_valid():         
             event_form.save()
             messages.info(request, 'Event updated successfully!')        
-            return redirect('event_detail', event_uuid=event.id)
+            return redirect('event_detail', event_id=event.id)
         else:
             messages.error(request, 'Failed to edit event. Please ensure the form is valid.')
     else:
@@ -215,13 +215,13 @@ def edit_event(request, event_uuid):
 
 
 @login_required
-def delete_product(request, product_uuid):
+def delete_product(request, product_id):
     """ Delete a product from the store """
     if not request.user.is_superuser:
         messages.error(request, 'Sorry, only store owners can do that.')
         return redirect(reverse('home'))
     if request.method == 'POST':
-        product = get_object_or_404(Product, pk=product_uuid)
+        product = get_object_or_404(Product, pk=product_id)
         product.delete()
         messages.info(request, 'Product deleted!')
         return redirect(reverse('shop'))
@@ -244,19 +244,19 @@ def delete_product_variant(request, variant_id):
         # Delete the variant
         variant.delete()
         messages.info(request, 'Product variant deleted!')
-        return redirect('product_detail', product_uuid=product.id)
+        return redirect('product_detail', product_id=product.id)
     else:
         return redirect('home')
 
 
 @login_required
-def delete_event(request, event_uuid):
+def delete_event(request, event_id):
     """ Delete a event from the store """
     if not request.user.is_superuser:
         messages.error(request, 'Sorry, only store owners can do that.')
         return redirect(reverse('home'))
 
-    event = get_object_or_404(Event, pk=event_uuid)
+    event = get_object_or_404(Event, pk=event_id)
     if request.method == 'POST':    
         event.delete()
         messages.info(request, 'Event deleted!')

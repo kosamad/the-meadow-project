@@ -1,4 +1,5 @@
-from django.shortcuts import render, redirect, reverse, get_object_or_404, HttpResponse
+from django.shortcuts import render, redirect, reverse, get_object_or_404
+from django.http import HttpResponse
 from django.views.decorators.http import require_POST
 from django.contrib import messages
 from django.conf import settings
@@ -282,28 +283,37 @@ def checkout_success(request, order_number):
     """
     View to handle successful checkouts
     """
-
-    save_info = request.session.get('save_info') # for user profile
     order = get_object_or_404(Order, order_number=order_number) # get order number and send to view
-    # get user profile info and attach to the order
-    profile = UserProfile.objects.get(user=request.user)
-    order.user_profile=profile
-    order.save()
+    profile = None # initialise profile in case a user is logged out.
+    
+    # Try to get the user profile if the user is logged in
+    if request.user.is_authenticated:       
+        try:
+            profile = UserProfile.objects.get(user=request.user)
+            order.user_profile = profile
+            order.save()
+            
+            save_info = request.session.get('save_info') # for user profile
 
-    if save_info:
-        profile_data = {
-                'default_phone_number': order.phone_number,            
-                'default_postcode': order.postcode,
-                'default_town_or_city': order.town_or_city,
-                'default_street_address1': order.street_address1,
-                'default_street_address2': order.street_address2,
-                'default_county': order.county,
-            }
-        # instance of user profile form
-        user_profile_form = UserProfileForm(profile_data, instance=profile)
-        if user_profile_form.is_valid():
-                user_profile_form.save()
+            if save_info:
+                profile_data = {
+                    'default_phone_number': order.phone_number,            
+                    'default_postcode': order.postcode,
+                    'default_town_or_city': order.town_or_city,
+                    'default_street_address1': order.street_address1,
+                    'default_street_address2': order.street_address2,
+                    'default_county': order.county,
+                }
+                # Instance of user profile form
+                user_profile_form = UserProfileForm(profile_data, instance=profile)
+                if user_profile_form.is_valid():
+                    user_profile_form.save()
 
+        # where the UserProfile doesn't exist
+        except UserProfile.DoesNotExist:            
+            pass   
+
+    # success message for the user
     messages.success(request, f'Order successfully processed! \
         Your order number is {order_number}. A confirmation \
         email will be sent to {order.email}.')
@@ -313,6 +323,7 @@ def checkout_success(request, order_number):
         del request.session['bag']  
    
     template = 'checkout/checkout_success.html'
+    
     context = {
         'order': order,
         'product_lineitems': order.product_lineitems.all(),
