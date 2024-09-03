@@ -1,8 +1,7 @@
 from django.shortcuts import render, get_object_or_404, reverse, redirect
 from django.contrib import messages
 from django.db.models import Q
-from products.models import Category, Product, Event 
-
+from products.models import Category, Product, Event
 
 
 def shop(request):
@@ -16,21 +15,21 @@ def shop(request):
     events = Event.objects.all()
 
     # Filter out inactive products for non-superusers
-    if not request.user.is_superuser:        
+    if not request.user.is_superuser:
         products = products.filter(is_active=True)
         events = events.filter(is_active=True)
-    
+
     # parameters so no errors when page is loaded if they don't exist/ arne't being used
-    query = None  
+    query = None
     sort = None
     direction = None
     combined_list = []
-    selected_category = None 
+    selected_category = None
 
-    if request.GET:            
-    
+    if request.GET:
+
         # show the specific categories of products or event (note the event category does not have an s in Category)
-        if 'category' in request.GET:           
+        if 'category' in request.GET:
             selected_category = request.GET['category']
             if selected_category == 'events':
                 products = Product.objects.none()
@@ -41,8 +40,7 @@ def shop(request):
             else:
                 products = products.filter(category__name__icontains=selected_category)
                 events = events.filter(category__name__icontains=selected_category)
-        
-        
+
         # checking for queries sent from the search box
         if 'q' in request.GET:
             query = request.GET['q']
@@ -53,20 +51,20 @@ def shop(request):
 
             # product and event queries for name, descritpion and category
             product_queries = (
-            Q(name__icontains=query) | 
-            Q(description__icontains=query) | 
-            Q(category__friendly_name__icontains=query)
+                Q(name__icontains=query) |
+                Q(description__icontains=query) |
+                Q(category__friendly_name__icontains=query)
             )
             products = products.filter(product_queries)
 
             event_queries = (
-                Q(name__icontains=query) | 
-                Q(description__icontains=query) | 
+                Q(name__icontains=query) |
+                Q(description__icontains=query) |
                 Q(category__friendly_name__icontains=query)
-            )                   
+            )
             events = events.filter(event_queries)
-        
-    # group (append) products and events together for sorting.  
+
+    # group (append) products and events together for sorting.
     for product in products:
         combined_list.append({
             'item': product,
@@ -78,7 +76,7 @@ def shop(request):
             'item_type': 'Event',
         })
 
-     # Format selected_category for display
+    # Format selected_category for display
     if selected_category:
         display_category = selected_category.replace('_', ' ').title()  # Format category name
     else:
@@ -92,8 +90,7 @@ def shop(request):
         'combined_list': combined_list,
         'item_count': len(combined_list),
         'selected_category': display_category,
-        
+
     }
 
     return render(request, 'shop/shop.html', context)
-

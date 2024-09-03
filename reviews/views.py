@@ -8,14 +8,15 @@ from django.contrib.auth.models import User
 from profiles.models import UserProfile
 from django.contrib.auth.decorators import login_required
 from checkout.models import Order
-from .models import Review 
+from .models import Review
 
 # Create your views here.
+
 
 @login_required
 def reviews(request):
     '''Displays all reviews for the admin'''
-   
+
     # Check if the user is an admin
     if not request.user.is_superuser:
         messages.error(request, 'Sorry, only admin can access this page')
@@ -32,7 +33,6 @@ def reviews(request):
     return render(request, template, context)
 
 
-
 @login_required
 def delete_review(request, review_id):
     '''Deletes a review and redirects to the review list.'''
@@ -41,13 +41,12 @@ def delete_review(request, review_id):
         return redirect('profile')
 
     review = get_object_or_404(Review, id=review_id)
-    
+
     # Delete the review
     review.delete()
-    
-    messages.info(request, 'Review has been successfully deleted.')
-    return redirect('reviews')  
 
+    messages.info(request, 'Review has been successfully deleted.')
+    return redirect('reviews')
 
 
 @login_required
@@ -60,24 +59,24 @@ def review_order(request, order_id):
     # get users username and eamil for display
     username = profile.user.username
 
-   # Check if the order belongs to the current user
+    # Check if the order belongs to the current user
     if order.user_profile.user != request.user:
         messages.error(request, "You do not have permission to review this order.")
-        return redirect('home') 
+        return redirect('home')
 
     if request.method == 'POST':
-        user = request.POST.get('user')        
+        user = request.POST.get('user')
         review_text = request.POST.get('review_text')
 
     # Validate form
         if not review_text:
             messages.error(request, 'Please leave a review in the box')
             context = {
-                'order':order,        
-                'username': username,     
+                'order': order,
+                'username': username,
             }
             return render(request, 'reviews/review_order.html', context)
-    
+
         # Create and save the review
         review = Review(
             user=request.user,
@@ -87,12 +86,11 @@ def review_order(request, order_id):
         review.save()
 
         messages.success(request, 'Your review has been successfully submitted!')
-        return redirect('profile')   
-  
-    template = 'reviews/review_order.html'
-    context = {        
-        'order':order,        
-        'username': username,
-    }   
-    return render (request, template, context)
+        return redirect('profile')
 
+    template = 'reviews/review_order.html'
+    context = {
+        'order': order,
+        'username': username,
+    }
+    return render(request, template, context)

@@ -15,7 +15,7 @@ from pathlib import Path
 
 # Get secret keys
 if os.path.exists('env.py'):
-    import env 
+    import env
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.k
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,19 +25,18 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret! - Never commited to GitHub
-SECRET_KEY = os.environ.get('SECRET_KEY','')
+SECRET_KEY = os.environ.get('SECRET_KEY', '')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # To test error pages have:
 # DEBUG = False
-#ALLOWED_HOSTS = ['*']
+# ALLOWED_HOSTS = ['*']
 
-DEBUG = 'DEVELOPMENT' in os.environ 
-ALLOWED_HOSTS = ['8000-kosamad-themeadowprojec-6rk3byj73lq.ws.codeinstitute-ide.net',
-'the-meadow-project-800f5f20f1b1.herokuapp.com',
+DEBUG = 'DEVELOPMENT' in os.environ
+ALLOWED_HOSTS = [
+    '8000-kosamad-themeadowprojec-6rk3byj73lq.ws.codeinstitute-ide.net',
+    'the-meadow-project-800f5f20f1b1.herokuapp.com',
 ]
-
-
 
 
 # Application definition
@@ -49,12 +48,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.sites', 
+    'django.contrib.sites',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'home',
-    'products',   
+    'products',
     'shop',
     'bag',
     'blog',
@@ -65,7 +64,7 @@ INSTALLED_APPS = [
     'reviews',
     'crispy_forms',
     'crispy_bootstrap5',
-    'django_summernote',  
+    'django_summernote',
 ]
 
 MIDDLEWARE = [
@@ -96,11 +95,11 @@ TEMPLATES = [
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
-                'django.template.context_processors.request', # required by allauth
+                'django.template.context_processors.request',  # required by allauth
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.media',
-                'bag.contexts.bag_contents',                
+                'bag.contexts.bag_contents',
             ],
             'builtins': [
                 'crispy_forms.templatetags.crispy_forms_tags',
@@ -131,12 +130,12 @@ SUMMERNOTE_CONFIG = {
             ['color', ['color']],
             ['para', ['ul', 'ol', 'paragraph']],
             ['height', ['height']],
-            ['table', ['table']],          
+            ['table', ['table']],
             ['view', ['fullscreen', 'codeview', 'help']],
             ['undo', ['undo', 'redo']],
         ],
         'dialogsInBody': True,
-        'width': '100%',    
+        'width': '100%',
     }
 }
 
@@ -159,13 +158,13 @@ else:
 # The account authentication method is what tells allauth that we want to allow
 # authentication using either usernames or emails.
 ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
-ACCOUNT_EMAIL_REQUIRED = True 
+ACCOUNT_EMAIL_REQUIRED = True
 # ACCOUNT_EMAIL_VERIFICATION = 'mandatory' # this for site in test mode
-ACCOUNT_EMAIL_VERIFICATION = 'none' # prevents errors on deployed site
-ACCOUNT_SIGNUP_EMAIL_ENTER_TWICE = True 
+ACCOUNT_EMAIL_VERIFICATION = 'none'  # prevents errors on deployed site
+ACCOUNT_SIGNUP_EMAIL_ENTER_TWICE = True
 ACCOUNT_USERNAME_MIN_LENGTH = 4
 LOGIN_URL = '/accounts/login/'
-LOGIN_REDIRECT_URL = '/' # redirects to home page
+LOGIN_REDIRECT_URL = '/'  # redirects to home page
 
 WSGI_APPLICATION = 'the_meadow_project.wsgi.application'
 
@@ -188,7 +187,7 @@ if 'DATABASE_URL' in os.environ:
     DATABASES = {
         'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))
     }
-else:    
+else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
@@ -234,7 +233,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
-# Where static files are. note no static route as thi interfers with settings on Amazon Web services 
+# Where static files are. note no static route as thi interfers with settings on Amazon Web services
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 
 MEDIA_URL = '/media/'
@@ -264,14 +263,12 @@ else:
 FREE_DELIVERY_THRESHOLD = 50
 STANDARD_DELIVERY_PERCENTAGE = 10
 
-
-
 # Email Settings for contact form
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER','')
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD','')
-DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL','')
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', '')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')
+DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', '')

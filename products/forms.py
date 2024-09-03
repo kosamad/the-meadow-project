@@ -7,15 +7,14 @@ from django_summernote.widgets import SummernoteWidget
 from decimal import Decimal
 
 
-
 class ProductForm(forms.ModelForm):
 
     class Meta:
         model = Product
-        fields = ['category', 'name', 'friendly_name','price', 'description', 'image', 'alt_text', 'is_gift_card', 'is_active']
+        fields = ['category', 'name', 'friendly_name', 'price', 'description', 'image', 'alt_text', 'is_gift_card', 'is_active']
 
         widgets = {
-                'description': SummernoteWidget(), 
+                'description': SummernoteWidget(),
                 }
 
     image = forms.ImageField(label='Image', required=False, widget=CustomClearableFileInput)
@@ -51,7 +50,7 @@ class ProductVariantForm(forms.ModelForm):
         # Extract the is_edit flag from kwargs if available
         is_edit = kwargs.pop('is_edit', False)
         self.product = kwargs.pop('product', None)
-        
+
         super().__init__(*args, **kwargs)
 
         # Check if the product is a gift card
@@ -69,21 +68,21 @@ class ProductVariantForm(forms.ModelForm):
                 ('M', 'Medium'),
                 ('L', 'Large')
             ]
-        
+
         # Make the size field read-only if in edit mode
         if is_edit:
-            if self.product and self.product.is_gift_card:               
+            if self.product and self.product.is_gift_card:
                 self.fields['size'].choices = [
                     ('S', 'Option 1'),
                     ('M', 'Option 2'),
                     ('L', 'Option 3')
                 ]
-            else:                
+            else:
                 self.fields['size'].choices = [
                     ('S', 'Small'),
                     ('M', 'Medium'),
                     ('L', 'Large')
-                ]            
+                ]
             self.fields['size'].disabled = True
 
     def clean_price(self):
@@ -91,12 +90,11 @@ class ProductVariantForm(forms.ModelForm):
         if price < Decimal('0.30'):
             raise ValidationError("The price must be at least £0.30 GBP.")
         return price
-            
 
     def clean(self):
         cleaned_data = super().clean()
         size = cleaned_data.get('size')
-        
+
         if self.product and size:
             # Check if the variant with the same size already exists for the product
             existing_variant = ProductVariant.objects.filter(product=self.product, size=size).exclude(id=self.instance.id).first()
@@ -109,45 +107,41 @@ class ProductVariantForm(forms.ModelForm):
         return cleaned_data
 
 
-
 class EventForm(forms.ModelForm):
 
     class Meta:
         model = Event
         fields = [
-            'category', 'name', 'friendly_name','event_datetime',
-            'duration_hours', 'price', 'description', 'image','alt_text',
+            'category', 'name', 'friendly_name', 'event_datetime',
+            'duration_hours', 'price', 'description', 'image', 'alt_text',
             'is_active',
-        ]                
+        ]
 
         widgets = {
-            'event_datetime': DateTimeInput(attrs={'type': 'datetime-local'}),            
-            'description': SummernoteWidget(),             
+            'event_datetime': DateTimeInput(attrs={'type': 'datetime-local'}),
+            'description': SummernoteWidget(),
         }
 
-    image = forms.ImageField(label='Image', required=False, widget=CustomClearableFileInput)   
+    image = forms.ImageField(label='Image', required=False, widget=CustomClearableFileInput)
 
-        
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        
+
         # Limit category choices to only the "Event" category and preselect
         try:
             event_category = Category.objects.get(name__iexact='event')
             self.fields['category'].queryset = Category.objects.filter(id=event_category.id)
-            self.fields['category'].initial = event_category.id 
+            self.fields['category'].initial = event_category.id
         except Category.DoesNotExist:
             # Handle the case where the event category is not found
             self.fields['category'].queryset = Category.objects.none()  # No options available if event category is missing
-            messages.error(None, "Event category not found. Please add an event category to proceed.")         
-
-        # Add helper text 
+            messages.error(None, "Event category not found. Please add an event category to proceed.")
+        # Add helper text
         self.fields['name'].help_text = 'This should be set like this example ada_bouquet for Ada Bouquet friendly name'
-        self.fields['friendly_name'].help_text = 'Name for the Website eg Ada Bouquet'             
+        self.fields['friendly_name'].help_text = 'Name for the Website eg Ada Bouquet'
         self.fields['alt_text'].help_text = 'Describe the image'
-        self.fields['image'].help_text = 'For our events, horizontal images work best' 
-        self.fields['is_active'].help_text = 'Checked if the event is avaliable/there are tickets' 
-
+        self.fields['image'].help_text = 'For our events, horizontal images work best'
+        self.fields['is_active'].help_text = 'Checked if the event is avaliable/there are tickets'
 
     def clean_price(self):
         price = self.cleaned_data.get('price')

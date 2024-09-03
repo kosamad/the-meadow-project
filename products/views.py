@@ -7,11 +7,10 @@ from django.contrib.auth.decorators import login_required
 from decimal import Decimal
 
 
-
 def product_detail(request, product_id):
     """ A view to show the product details for an individual item """
 
-    product = get_object_or_404(Product, id=product_id) # id=product_id I am using UUID
+    product = get_object_or_404(Product, id=product_id)
     variants = ProductVariant.objects.filter(product=product)
     active_variants = variants.filter(is_active=True)
     default_variant = variants.filter(size='M').first() or variants.first()
@@ -27,9 +26,8 @@ def product_detail(request, product_id):
     return render(request, 'products/product_detail.html', context)
 
 
-
 def event_detail(request, event_id):
-    """ A view to show the event details for an individual item """ 
+    """ A view to show the event details for an individual item """
 
     event = get_object_or_404(Event, id=event_id)
     context = {
@@ -56,7 +54,7 @@ def add_product(request):
             messages.error(request, 'Failed to add product. Please ensure the form is valid.')
     else:
         product_form = ProductForm()
-    
+
     template = 'products/add_product.html'
     context = {
         'product_form': product_form,
@@ -87,7 +85,7 @@ def add_product_variant(request, product_id):
             messages.error(request, 'Failed to add product variant. Please ensure the form is valid.')
     else:
         variant_form = ProductVariantForm(product=product)
-    
+
     template = 'products/add_product_variant.html'
     context = {
         'variant_form': variant_form,
@@ -135,7 +133,7 @@ def edit_product_variant(request, variant_id):
         return redirect(reverse('home'))
 
     variant = get_object_or_404(ProductVariant, id=variant_id)
-    product = variant.product 
+    product = variant.product
 
     if request.method == 'POST':
         # is edit means the size select box doesn't work on edit mode
@@ -149,7 +147,7 @@ def edit_product_variant(request, variant_id):
         else:
             messages.error(request, 'Failed to update product variant. Please ensure the form is valid.')
     else:
-        variant_form = ProductVariantForm(instance=variant, is_edit=True, product=product )
+        variant_form = ProductVariantForm(instance=variant, is_edit=True, product=product)
 
     template = 'products/edit_product_variant.html'
     context = {
@@ -169,16 +167,16 @@ def add_event(request):
 
     if request.method == 'POST':
         event_form = EventForm(request.POST, request.FILES)
-        if event_form.is_valid():            
-            #create a new event instance
+        if event_form.is_valid():
+            # create a new event instance
             event = event_form.save()
-            messages.info(request, 'Event successfully added!')         
+            messages.info(request, 'Event successfully added!')
             return redirect('event_detail', event_id=event.id)
         else:
             messages.error(request, 'Failed to add product. Please ensure the form is valid.')
     else:
         event_form = EventForm()
-    
+
     template = 'products/add_event.html'
     context = {
         'event_form': event_form,
@@ -197,15 +195,15 @@ def edit_event(request, event_id):
 
     if request.method == 'POST':
         event_form = EventForm(request.POST, request.FILES, instance=event)
-        if event_form.is_valid():         
+        if event_form.is_valid():
             event_form.save()
-            messages.info(request, 'Event updated successfully!')        
+            messages.info(request, 'Event updated successfully!')
             return redirect('event_detail', event_id=event.id)
         else:
             messages.error(request, 'Failed to edit event. Please ensure the form is valid.')
     else:
         event_form = EventForm(instance=event)
-    
+
     template = 'products/edit_event.html'
     context = {
         'event_form': event_form,
@@ -235,8 +233,8 @@ def delete_product_variant(request, variant_id):
     if not request.user.is_superuser:
         messages.error(request, 'Sorry, only store owners can do that.')
         return redirect(reverse('home'))
-    
-    # get product info    
+
+    # get product info
     variant = get_object_or_404(ProductVariant, id=variant_id)
     product = variant.product
 
@@ -257,10 +255,9 @@ def delete_event(request, event_id):
         return redirect(reverse('home'))
 
     event = get_object_or_404(Event, pk=event_id)
-    if request.method == 'POST':    
+    if request.method == 'POST':
         event.delete()
         messages.info(request, 'Event deleted!')
         return redirect(reverse('shop'))
     else:
         return redirect('home')
-

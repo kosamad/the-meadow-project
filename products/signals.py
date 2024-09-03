@@ -1,6 +1,6 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from django.db import models 
+from django.db import models
 from .models import ProductVariant, Product
 
 
@@ -17,7 +17,8 @@ def update_product_price(sender, instance, **kwargs):
     if medium_variant:
         new_price = medium_variant.price
     else:
-        new_price = product.price # this should be set to the medium price in the first instance.   
-    
+        # this should be set to the medium price in the first instance.
+        new_price = product.price
+
     product.price = new_price
     product.save()

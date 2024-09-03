@@ -10,6 +10,8 @@ import uuid
 """
 Category model tests
 """
+
+
 class CategoryModelTests(TestCase):
 
     def setUp(self):
@@ -25,10 +27,11 @@ class CategoryModelTests(TestCase):
         self.assertEqual(self.category.get_friendly_name(), 'Test Friendly Category')
 
 
-
 """
 Products model tests
 """
+
+
 class TestProductModel(TestCase):
     def setUp(self):
         self.category = Category.objects.create(name="Test Category", friendly_name="Test Category")
@@ -49,20 +52,18 @@ class TestProductModel(TestCase):
             is_active=True,
             is_infinite_stock=False
         )
-        
+
         # Product instance is of type Product
         self.assertIsInstance(self.product, Product)
-        
+
         # Other attributes of the product
         self.assertEqual(self.product.__str__(), self.product.name)
         self.assertEqual(self.product.price, 8.00)
-        self.assertEqual(self.product.description, "Test product description")        
+        self.assertEqual(self.product.description, "Test product description")
         self.assertIsNotNone(self.product.image)
-        self.assertEqual(self.product.alt_text, "Test Product Image")        
+        self.assertEqual(self.product.alt_text, "Test Product Image")
         self.assertEqual(self.product.is_gift_card, False)
         self.assertEqual(self.product.is_active, True)
-
-
 
     # testing default ordering of products.
     def test_product_ordering(self):
@@ -90,14 +91,14 @@ class TestProductModel(TestCase):
             description="This is product 3",
         )
         # Retrieve all products and check the ordering
-        ordered_products = Product.objects.all()    
+        ordered_products = Product.objects.all()
         self.assertEqual(list(ordered_products), [self.product2, self.product1, self.product3])
-
 
 
 """
 Product Variant model tests
 """
+
 
 class TestProductVariantModel(TestCase):
 
@@ -122,16 +123,16 @@ class TestProductVariantModel(TestCase):
         # Create a product variant
         variant = ProductVariant.objects.create(
             product=self.product,
-            size='M',           
+            size='M',
             is_infinite_stock=False,
             price=5.00,
             is_active=True
         )
-        
+
         # Test that the variant is created and has the correct attributes
         self.assertIsInstance(variant, ProductVariant)
         self.assertEqual(variant.product, self.product)
-        self.assertEqual(variant.size, 'M')       
+        self.assertEqual(variant.size, 'M')
         self.assertFalse(variant.is_infinite_stock)
         self.assertEqual(variant.price, 5.00)
         self.assertTrue(variant.is_active)
@@ -140,12 +141,12 @@ class TestProductVariantModel(TestCase):
         # Create a product variant with the same size for the same product
         ProductVariant.objects.create(
             product=self.product,
-            size='S',           
+            size='S',
             is_infinite_stock=False,
             price=6.00,
             is_active=True
         )
-        
+
         # Try to create a duplicate variant with the same size for the same product
         with self.assertRaises(Exception) as context:
             ProductVariant.objects.create(
@@ -156,13 +157,15 @@ class TestProductVariantModel(TestCase):
                 price=10.00,
                 is_active=True
             )
-        
+
         self.assertTrue('UNIQUE constraint failed' in str(context.exception))
-   
+
 
 """
 Events model tests
 """
+
+
 class TestEventModel(TestCase):
 
     def setUp(self):
@@ -180,7 +183,7 @@ class TestEventModel(TestCase):
             price=8.00,
             event_datetime=self.event_datetime,
             description='Description for Test Event',
-            duration_hours=3,           
+            duration_hours=3,
             image=self.image_data,
             alt_text='Alt text for test Event',
             is_active=True
@@ -204,9 +207,3 @@ class TestEventModel(TestCase):
         self.assertEqual(saved_event.alt_text, 'Alt text for test Event')
         self.assertTrue(saved_event.is_active)
         self.assertTrue(saved_event.is_event)
-
-
-
-
-
-

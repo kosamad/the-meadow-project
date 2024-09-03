@@ -7,14 +7,15 @@ from profiles.models import UserProfile
 from .models import Review
 from django.test import Client
 
+
 class TestReviewViews(TestCase):
     def setUp(self):
-         # Create or retrieve a User instance
+        # Create or retrieve a User instance
         self.user, created = User.objects.get_or_create(username="testuser9")
         if created:
             self.user.set_password("password9")
             self.user.save()
-        
+
         # Create or retrieve a UserProfile instance associated with the User
         self.user_profile, _ = UserProfile.objects.get_or_create(
             user=self.user,
@@ -42,12 +43,10 @@ class TestReviewViews(TestCase):
             stripe_pid='test_pid',
             original_bag='{}'
         )
-        
+
         # Initialize the client and login the user
         self.client = Client()
         self.client.login(username='testuser9', password='password9')
-        
-           
 
     def test_review_order_view(self):
         """
@@ -58,7 +57,6 @@ class TestReviewViews(TestCase):
         self.assertTemplateUsed(response, 'reviews/review_order.html')
         self.assertContains(response, self.user_profile.user.username)
 
-
     def test_successful_review_submission(self):
         """
         Test that a review can be successfully submitted.
@@ -67,5 +65,5 @@ class TestReviewViews(TestCase):
             'review_text': 'This is a valid review text.'
         })
         self.assertEqual(response.status_code, 302)  # Expecting a redirect after successful submission
-        self.assertTrue(Review.objects.filter(user=self.user, order=self.order).exists())        
+        self.assertTrue(Review.objects.filter(user=self.user, order=self.order).exists())
         

@@ -7,13 +7,12 @@ from django.contrib.auth.decorators import login_required
 from checkout.models import Order
 
 
-
 # Create your views here.
 @login_required
 def profile(request):
     '''Display the Users profile'''
 
-    profile = get_object_or_404(UserProfile, user=request.user)    
+    profile = get_object_or_404(UserProfile, user=request.user)
 
     if request.method == 'POST':
         form = UserProfileForm(request.POST, instance=profile)
@@ -24,23 +23,24 @@ def profile(request):
             messages.error(request, 'Update failed. Please ensure the form is valid.')
     else:
         form = UserProfileForm(instance=profile)
-    
+
     orders = profile.orders.all().order_by('-date')  # get users orders
 
     # get users username and eamil for display
-    username = profile.user.username 
+    username = profile.user.username
     email = profile.user.email
 
     template = 'profiles/profile.html'
     context = {
-        'form':form,
-        'orders':orders,
+        'form': form,
+        'orders': orders,
         'on_profile_page': True,
         'username': username,
-        'email': email,        
+        'email': email,
     }
 
-    return render (request, template, context)
+    return render(request, template, context)
+
 
 @login_required
 def order_history(request, order_number):

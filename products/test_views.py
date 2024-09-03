@@ -11,6 +11,8 @@ import uuid
 """
 Products tests
 """
+
+
 class TestProductViews(TestCase):
 
     def setUp(self):
@@ -20,7 +22,7 @@ class TestProductViews(TestCase):
             friendly_name='Test Category'
         )
 
-        # Set up an image 
+        # Set up an image
         image_path = 'media/full-logo.png'
         with open(image_path, 'rb') as img:
             image_data = img.read()
@@ -53,11 +55,11 @@ class TestProductViews(TestCase):
     def test_get_product_detail_page(self):
         url = reverse('product_detail', args=[self.product.id])
         response = self.client.get(url)
-        
+
         # Check the response
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'products/product_detail.html')
-        
+
         # Check that the product details are correct in the response
         self.assertContains(response, self.product.name)
         self.assertContains(response, self.product.description)
@@ -66,6 +68,7 @@ class TestProductViews(TestCase):
         self.assertContains(response, self.variant.price)
         self.assertContains(response, self.product.alt_text)
 
+
 """
 Events tests
 """
@@ -73,7 +76,7 @@ Events tests
 
 class TestEventViews(TestCase):
 
-    def setUp(self):     
+    def setUp(self):
 
         # Set up category "event"
         self.category = Category.objects.create(
@@ -107,13 +110,13 @@ class TestEventViews(TestCase):
     def test_get_event_detail_page(self):
         url = reverse('event_detail', args=[self.event.id])
         response = self.client.get(url)
-        
+
         # Check the response
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'products/event_detail.html')
-        
-        # Check that the event details are correct in the response 
+
+        # Check that the event details are correct in the response
         self.assertContains(response, self.event.name)
         self.assertContains(response, self.event.description)
         self.assertContains(response, self.event.price)
-        self.assertContains(response, self.event.alt_text)       
+        self.assertContains(response, self.event.alt_text)
