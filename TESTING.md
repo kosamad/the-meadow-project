@@ -48,7 +48,7 @@ Note Jinga templating errors within table and ul cause a 'Fatal Error' therefore
 
 Specific "errors" in addition to the points above are listed in the table below. These have all been kept for functional purposes as removal of the element would result in the code not running as inteded. 
 
-<details><summary>HTML Validation</summary>
+<details><summary>HTML Validation Table</summary>
 
 
 | **Page**                  | **Result**                                                                                   | **Any errors remaining**                                                                  | **Explantation**                                                                                                                                                                                               |
@@ -91,7 +91,10 @@ Specific "errors" in addition to the points above are listed in the table below.
 
 CSS was validated using [W3C Jigsaw](https://jigsaw.w3.org/css-validator/).
 
+Css Validation for Static CSS
 ![Css validation](documentation/final/css_validation.PNG)
+
+The same result was acheived for the checkout.css and profile.css
 
 ### Javascript Validation
 
@@ -99,7 +102,32 @@ The JavaScript code was validated using [JSHint](https://jshint.com/).
 
 Please note, warnings relate the use of ES6/8 and are acceptable for the parameters of this project.
 
+<details><summary>Javascript Validation Table</summary>
+
+| **Page**                             | **Result**       | **Explantation**                                                                                                                                                |
+|--------------------------------------|------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| about.html                           | Pass - no errors |                                                                                                                                                                 |
+| edit_items_script.html               | Pass - no errors |                                                                                                                                                                 |
+| quantiy_input_script.html (bag)      | Pass - 1 error   | Due to J shint not recognising that the '$' which comes from JSON would have been loaded in the base.html                                                       |
+| post_update.html                     | Pass - 1 error   | Due to J shint not recognising that the '$' which comes from JSON would have been loaded in the base.html                                                       |
+| checkout_js_script.html              | Pass             |                                                                                                                                                                 |
+| strip_elements_script.html           | Pass - 1 error   | OrderTupe is already defined - this is redefined due to changes from being a product/event that can occur in the script.                                        |
+| quantiy_input_script (products).html | Pass - 1 error   | Due to J shint not recognising that the '$' which comes from JSON would have been loaded in the base.html                                                       |
+| size_selection_script.html           | Pass             |                                                                                                                                                                 |
+| whitespace_validation.html           | Pass             |                                                                                                                                                                 |
+| edit_event.html                      | Pass - 1 error   | Due to J shint not recognising that the '$' which comes from JSON would have been loaded in the base.html                                                       |
+| edit_product.html                    | Pass - 1 error   | Due to J shint not recognising that the '$' which comes from JSON would have been loaded in the base.html                                                       |
+| review_order.html                    | Pass             |                                                                                                                                                                 |
+| shop.html                            | Pass - 1 error   | Due to J shint not recognising that the '$' which comes from JSON would have been loaded in the base.html                                                       |
+| base.html                            | Pass- 2 errors   | 1. Due to J shint not recognising that the '$' which comes from JSON would have been loaded in the base.html 2. Comes from code taken from bootstrap for toasts |
+
+</details>
+
 ### Python Validation
+
+Python pep8 validation was done via [Code Institute's Python Linter](https://pep8ci.herokuapp.com)
+
+All the Python files were tested with changes made to make the code PEP8 compliant where possible.
 
 ### Performance (Lighthouse)
 

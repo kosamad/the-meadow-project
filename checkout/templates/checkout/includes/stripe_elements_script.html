@@ -57,7 +57,7 @@
             $('#submit-button').attr('disabled', true);
 
             var orderType = $('input[name="order_type"]').val();
-            console.log('order tuype is', orderType)
+            console.log('order tuype is', orderType);
 
             var billingDetails = {
                 name: $.trim(form.full_name.value),
@@ -157,7 +157,7 @@
             }).fail(function () {
                 // just reload the page, the error will be in django messages
                 location.reload();
-            })
+            });
         });
     });
 </script>
