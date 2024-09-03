@@ -60,10 +60,11 @@
                 <div class="col-md-6 col-12">
                     <div class="row">
                         <div class="col-6 mb-2">
-                            <a href="#delivery-container" class="btn btn-green no-link-style text-white d-block">Delivery</a>
-                        </div>                        
+                            <a href="#delivery-container"
+                                class="btn btn-green no-link-style text-white d-block">Delivery</a>
+                        </div>
                         <div class="col-6 mb-2">
-                            <a href="#shop-container"class="btn btn-green no-link-style text-white d-block">Shop</a>
+                            <a href="#shop-container" class="btn btn-green no-link-style text-white d-block">Shop</a>
                         </div>
                     </div>
                 </div>
@@ -74,8 +75,9 @@
                                 class="btn btn-green no-link-style text-white d-block">Events</a>
                         </div>
                         <div class="col-6 mb-2">
-                            <a href="{% url 'posts' %}" class="btn btn-green no-link-style text-white d-block">Our Blog</a>
-                        </div>                        
+                            <a href="{% url 'posts' %}" class="btn btn-green no-link-style text-white d-block">Our
+                                Blog</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -84,23 +86,27 @@
 </div>
 
 <!-- About the shop container -->
-<div class="container"  id="shop-container">
+<div class="container" id="shop-container">
     <div class="row justify-content-center mt-2 mb-2">
         <div class="col-lg-4 offset-lg-1 col-md-6 col-12 mt-4 d-flex align-items-center">
-            <a href="{% url 'shop' %}" ><img src="/media/will-TWJmj182gu4-unsplash.jpg" class="img-fluid img-side-about" alt="Shop front"></a>
+            <a href="{% url 'shop' %}"><img src="/media/will-TWJmj182gu4-unsplash.jpg" class="img-fluid img-side-about"
+                    alt="Shop front"></a>
         </div>
         <div
             class=" col-lg-4 offset-lg-1 col-md-6 col-12 mt-4 d-flex flex-column justify-content-center align-items-center">
             <a href="{% url 'shop' %}" class="no-link-style text-center">
-            <i class="fa-solid fa-shop fa-3x mt-2 mb-3"></i>
-            <h3 class="title-font text-center mb-3">Our Shop</h3>
-            <p class="text-justify"><strong>Opening hours:</strong> Tuesday to Friday 10:00-17:00 and
-                Saturday: 9:00-17:00. There is free parking on site and we are easily accessible via bus and bike!</p>
-            <p class="text-justify"><strong>Collection info: </strong>If you're picking up an order from us it will be
-                avaliable from 10:00 unless otherwsie prearranged. If you miss your collection, and haven’t given us
-                notice, we will be unable to make another bouquet for you.</p>
+                <i class="fa-solid fa-shop fa-3x mt-2 mb-3"></i>
+                <h3 class="title-font text-center mb-3">Our Shop</h3>
+                <p class="text-justify"><strong>Opening hours:</strong> Tuesday to Friday 10:00-17:00 and
+                    Saturday: 9:00-17:00. There is free parking on site and we are easily accessible via bus and bike!
+                </p>
+                <p class="text-justify"><strong>Collection info: </strong>If you're picking up an order from us it will
+                    be
+                    avaliable from 10:00 unless otherwsie prearranged. If you miss your collection, and haven’t given us
+                    notice, we will be unable to make another bouquet for you.</p>
             </a>
-            <p><strong><a href="{% url 'contact' %}" class="text-green">Find Us Here</a></strong> or <strong><a href="{% url 'shop' %}" class="text-green">Go Shopping</a></strong> </p>
+            <p><strong><a href="{% url 'contact' %}" class="text-green">Find Us Here</a></strong> or <strong><a
+                        href="{% url 'shop' %}" class="text-green">Go Shopping</a></strong> </p>
         </div>
     </div>
 </div>
@@ -108,26 +114,28 @@
 <!-- About Delivery container  -->
 <div class="container" id="delivery-container">
     <div class="row">
-    <div class="col-lg-4 col-md-6 col-12 mt-4">
-        <img src="/media/pexels-ian-panelo-9693904.jpg" class="img-fluid img-side-delivery" alt="Image 1">
+        <div class="col-lg-4 col-md-6 col-12 mt-4">
+            <img src="/media/pexels-ian-panelo-9693904.jpg" class="img-fluid img-side-delivery" alt="Image 1">
+        </div>
+        <div class="col-lg-4 col-md-6 col-12 mt-4">
+            <img src="/media/pexels-hatice-uyar-460317377-18013277.jpg" class="img-fluid img-side-delivery"
+                alt="Image 1">
+        </div>
+        <div class="col-lg-4 d-none d-md-block mt-4">
+            <img src="/media/jorge-zapata-6FgbPqag3h8-unsplash.jpg" class="img-fluid img-side-delivery" alt="Image 1">
+        </div>
     </div>
-    <div class="col-lg-4 col-md-6 col-12 mt-4">
-        <img src="/media/pexels-hatice-uyar-460317377-18013277.jpg" class="img-fluid img-side-delivery" alt="Image 1">
-    </div>
-    <div class="col-lg-4 d-none d-md-block mt-4">
-        <img src="/media/jorge-zapata-6FgbPqag3h8-unsplash.jpg" class="img-fluid img-side-delivery" alt="Image 1">
-    </div>
-</div>
-<div class="row justify-content-center mt-4">
-    <div class="col-md-9 col-12 d-flex flex-column justify-content-center align-items-center">
-        <i class="fa-solid fa-bicycle fa-3x mb-2 text-center"></i>
+    <div class="row justify-content-center mt-4">
+        <div class="col-md-9 col-12 d-flex flex-column justify-content-center align-items-center">
+            <i class="fa-solid fa-bicycle fa-3x mb-2 text-center"></i>
             <h3 class="title-font text-center mb-2">Delivery</h3>
             <p class="text-justify">Our commitment to sustainability extends to our delivery service. Whenever
                 possible, we use eco-friendly bikes to deliver your orders, minimising our carbon footprint. For larger
                 or less accessible deliveries, we use energy-efficient
                 vans.
             </p>
-            <p class="text-justify"><strong>Enjoy your purchase with the assurance that it arrives in the greenest way possible!</strong>
+            <p class="text-justify"><strong>Enjoy your purchase with the assurance that it arrives in the greenest way
+                    possible!</strong>
             </p>
             <p class="text-justify"><strong>Delivery info: </strong>
                 We deliver bouquets, plants, and gifts to postcodes beginning with BS1 to BS6. For
@@ -139,14 +147,15 @@
                 green,
                 zero-emission van as a backup.
                 <p> Spend £{{ free_delivery_threshold }} to get free delivery else delivery is
-                    calulated at {{ standard_delivery_percentage }}%.</p>
+                    calulated at {{ standard_delivery_percentage }}%.
+                </p>
             </p>
+        </div>
     </div>
-</div>
 </div>
 
 <!-- Bootstrap Carousel -->
-<div class="container"  id="events-container">
+<div class="container" id="events-container">
     <div class="row mt-4 mb-5 justify-content-center">
         <div class="col-lg-6 col-12 mb-2 ">
             <div id="eventCarousel" class="carousel slide " data-bs-ride="carousel">
@@ -154,7 +163,7 @@
                     <!-- First Slide -->
                     <div class="carousel-item active">
                         <img src="/media/pexels-lina-3394137.jpg" class="d-block w-100" alt="Image 1">
-                    </div>                    
+                    </div>
                     <!-- Second Slide -->
                     <div class="carousel-item">
                         <img src="/media/pexels-orlovamaria-4947288.jpg" class="d-block w-100" alt="Image 2">
@@ -183,20 +192,23 @@
             </div>
         </div>
         <div class="col-lg-6 col-12 mb-2 d-flex flex-column justify-content-center align-items-center">
-            <a href="{% url 'shop' %}?category=events" class="no-link-style text-center"><i class="fa-solid fa-ticket fa-3x mb-2"></i>
-            <h3 class="title-font text-center mb-3">Our Events</h3>
-            <p class="text-justify">Join us at our beautifully maintained, all-weather venue located right on site (free
-                parking). During the summer months, we also host events out in the field, making the most of the great
-                outdoors.</p>
-            <p class="text-justify">No matter the occasion, refreshments are always available for you to enjoy, even if you're not attending
-                a lunch-specific event.</p>
-            <p class="text-justify"> Check out our <a href="{% url 'shop' %}?category=events" class="text-green"><strong>Events Page</strong>
-                </a>to see what we've got going on</p>
+            <a href="{% url 'shop' %}?category=events" class="no-link-style text-center"><i
+                    class="fa-solid fa-ticket fa-3x mb-2"></i>
+                <h3 class="title-font text-center mb-3">Our Events</h3>
+                <p class="text-justify">Join us at our beautifully maintained, all-weather venue located right on site
+                    (free
+                    parking). During the summer months, we also host events out in the field, making the most of the
+                    great
+                    outdoors.</p>
+                <p class="text-justify">No matter the occasion, refreshments are always available for you to enjoy, even
+                    if you're not attending
+                    a lunch-specific event.</p>
+                <p class="text-justify"> Check out our <a href="{% url 'shop' %}?category=events"
+                        class="text-green"><strong>Events Page</strong>
+                    </a>to see what we've got going on</p>
             </a>
         </div>
-    </div>   
-</div>
-
+    </div>
 </div>
 
 <!-- Back to Top Button -->
@@ -211,7 +223,7 @@
 
 <script>
     // Show the button when scrolling down
-    window.onscroll = function() {
+    window.onscroll = function () {
         var backToTopButton = document.getElementById('backToTop');
         if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
             backToTopButton.style.display = "block";
@@ -219,12 +231,15 @@
             backToTopButton.style.display = "none";
         }
     };
-    
+
     // Scroll to the top when the button is clicked
-    document.getElementById('backToTop').addEventListener('click', function() {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+    document.getElementById('backToTop').addEventListener('click', function () {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
     });
-    </script>
+</script>
 
 
 {% endblock %}
