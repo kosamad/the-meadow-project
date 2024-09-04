@@ -726,4 +726,7 @@ To address this, I have temporarily removed postcode validation from the order p
 
 **Solution:** despite multiple google search attempts I couldn’t figure out how to fix. 
 
+___ 
+
+Back to [README.md](README.md)
 
