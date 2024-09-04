@@ -65,6 +65,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'crispy_bootstrap5',
     'django_summernote',
+    'storages'
 ]
 
 MIDDLEWARE = [
@@ -235,6 +236,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 # Where static files are. note no static route as thi interfers with settings on Amazon Web services
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
+
+# Connect to SW3 bucket if in heroku (not development)
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

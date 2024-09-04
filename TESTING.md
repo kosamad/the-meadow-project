@@ -162,7 +162,7 @@ Note there are some contrast issues in forms. These are minor and have been kept
 
 ### Performance (Lighthouse)
 
-To minimise the number of deployments after setting up AWS for media files and avoid unnecessary costs, Lighthouse testing was conducted on the development site instead of the deployed, production site for pages that don't require user login. However, I also tested the homepage on the live site for comparison. The results show that they...
+To minimise the number of deployments after setting up AWS for media files and avoid unnecessary costs, [Lighthouse](https://developer.chrome.com/docs/lighthouse/overview) testing was conducted on the development site instead of the deployed, production site for pages that don't require user login. However, I also tested the homepage on the live site for comparison. The results show that they...
 Some minor alterations are to be expected following changes as a reuslt of real user testing but these are not significant. 
 
 <details><summary>Home</summary>

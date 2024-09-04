@@ -2,9 +2,7 @@
 # The Meadow Project #
 [The Meadow Project Live Site]()  
 
-![All screens]()
-
-
+![All screens](documentation/final/)
 
 The Meadow Project is a community-focused initiative dedicated to offering affordable and eco-friendly flowers and plants. Our mission extends beyond just sales—we offer unique floristry events set against the serene backdrop of a beautiful meadow, creating relaxing but informative experiences for all attendees. Our website features a user-friendly platform where visitors can easily explore our offerings, make purchases, and complete transactions with ease. Additionally, our blog provides valuable gardening tips and inspiration, allowing users to recreate elements of our meadow Project at home.
 
@@ -1187,13 +1185,18 @@ HTML, CSS, JavaScript & Python
 
 * [GitHub](https://github.com/) - to save and store the files for the website.
 * [Git](https://git-scm.com/) - for version control, using the Gittpod terminal to commit to Git and Push to GitHub.
+
+Please note that due to the bug with my UUID and database compatibility, Migrations for my models have not been documented in the step by stpe way in which they were created. To integrate the new database without UUID's I had to clear and re-build the database using JSON data. 
+
 * [Gitpod](https://gitpod.io/) - to develop the site
 
 ## Deployment
 
-*[Heroku](https://dashboard.heroku.com/)
+* [Heroku](https://dashboard.heroku.com/)
 
 ### Database
+
+* [PostgreSQL from Code Institute](https://dbs.ci-dbs.net/) - to create the database for the site.
 
 ### Storage of static files
 
@@ -1232,10 +1235,16 @@ HTML, CSS, JavaScript & Python
 * [django-crispy-forms](https://django-crispy-forms.readthedocs.io/en/latest/) - enables enhanced rendering of Django forms.
 * [Am I Responsive?](http://ami.responsivedesign.is/) - to show the website on different devices/screen sizes.
 * [PostgreSQL from Code Institute](https://dbs.ci-dbs.net/) - to create the database for the site.
+* [SQLite](https://www.sqlite.org/) - database used in production.
 * [pillow](https://pillow.readthedocs.io/en/stable/) - Python imaging library.
 * [Silktide Accessibility Checker ](https://chromewebstore.google.com/detail/mpobacholfblmnpnfbiomjkecoojakah)  - to check the website for accessibility.
-* [psycopg2](https://pypi.org/project/psycopg2/) - PostgreSQL database adapter for Python with Heroku deployment. 
-* Validators!
+* [psycopg2](https://pypi.org/project/psycopg2/) - PostgreSQL database adapter for Python with Heroku deployment.
+* [PostgreSQL from the Code Institute](https://dbs.ci-dbs.net/)
+* [Lighthouse](https://developer.chrome.com/docs/lighthouse/overview)
+* [Code Institute's Python Linter](https://pep8ci.herokuapp.com)
+* [JSHint](https://jshint.com/)
+* [W3C Jigsaw](https://jigsaw.w3.org/css-validator/)
+* [W3C](https://validator.w3.org/)
 
 
 ## Testing
@@ -1246,7 +1255,77 @@ Please see the separate [TESTING.md](TESTING.md) file for testing carried out on
 
 ### Deployment
 
-This site was deployed using [Heroku](https://dashboard.heroku.com/)
+The Meadow Project was built upon the base template provided by [The Code Institute](https://github.com/Code-Institute-Org/gitpod-full-template).
+
+This site was deployed using [Heroku](https://dashboard.heroku.com/). 
+
+1. A database was created using the [PostgreSQL from the Code Institute](https://dbs.ci-dbs.net/)
+2. An app was created (the-meadow-project) with the region Europe in Heroku and the DATABASE_URL (from above) added to the config vars.
+3. Connect to the external database using the commands in the terminal:
+    pip3 install dj_database_url==0.5.0 psycopg2
+4. Update requirments using: pip freeze > requirements.txt
+5. import the database in settings.py under import os (import dj_database_url)
+6. Update the DATABASES section of settings.py with:
+
+    if 'DATABASE_URL' in os.environ:
+        DATABASES = {
+            'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))
+        }
+    else:
+        DATABASES = {
+            'default': {
+                'ENGINE': 'django.db.backends.sqlite3',
+                'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+            }
+        }
+
+note, database must be configured in the env file. 
+
+7. Migrate models to new database using:  python3 manage.py migrate
+8. load data in the order that is required to work e.g categories need to be loaded before products.Use the command e.g : python3 manage.py loaddata categories
+9. Create a new superuser: python3 manage.py createsuperuser
+10. Instal gunicorn : pip3 install gunicorn and upate requiremnts file. 
+11. Add a Procfile to the project with this code inside:  web: gunicorn the_meadow_project.wsgi:application
+12. Log into Heroku using heroku login -i, then give credentials (not pw will be the user API key from heroku)
+13. Disable collectstatic: heroku config:set disable collectstatic = 1 --app the-meadow-project and add hostname to allowed hosts (in settings.py). This can be found in heroku.
+14. Run 'git init' then ' heroku git:remote -a the-meadow-project' then ' git push heroku main'
+15. The deployed app can now be found in heroku (without any static files or styling!)
+
+**Set up AWS to host static files**
+
+1. Create an AWS account and a public bucket using s3 that has static website hosting, and the following permissions:
+ * CORS configuration 
+ [
+  {
+      "AllowedHeaders": [
+          "Authorization"
+      ],
+      "AllowedMethods": [
+          "GET"
+      ],
+      "AllowedOrigins": [
+          "*"
+      ],
+      "ExposeHeaders": []
+  }
+]
+
+* A generated policy (s3 bucket policy, * principles and a 'get object' action) which creates a security key for the bucket which is added to the bucket policy editor. Ensure the resource key has /* at the end. 
+
+Ensure that access for Public access is set to allw list objects. 
+
+2. Create AWS User using IAM
+
+* Create a group for the user
+* Create a policy (JSON) and import the policy (s3 full access) from the action tab. Ammend the policy to have our arn in the resource section (x2, 1 with /*)
+* Add policy to the 
+* Add user to the group. First add a user, with programatic access, and attach into the group.
+* get CSV file from the 'security credentials' tab for the user and create access keys (for applications running outise AWS). Download and save the csv.file.
+
+3. Connect Django to the S3 bucket
+
+* in the development terminal: pip3 install boto3, then pip3 install django-storages and freeze the requirements (pip3 freeze > requirements.txt).
+
 
 
 ### Cloning the Github Repository
@@ -1295,11 +1374,9 @@ os.environ['DEFAULT_FROM_EMAIL'] = "your_default_from_email"
 * Go to the [Project Code Repository](https://github.com/kosamad/the-meadow-project).
 * In the top-right corner of the page, click *Fork*.  
 
-For further information on *Forking* a repository,  the [GitHub Documentation](https://docs.github.com/en/github/getting-started-with-github/fork-a-repo).
-
+For further information on *Forking* a repository, the [GitHub Documentation](https://docs.github.com/en/github/getting-started-with-github/fork-a-repo).
 
 ## Credits
-
 
 ### Content
 
@@ -1330,4 +1407,5 @@ I would like to thank:
 * The tutors and staff at Code Institute for their support.
 
 ## Disclaimer
+
 This site is made for **educational purposes** only.     
