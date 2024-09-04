@@ -125,11 +125,28 @@ Please note, warnings relate the use of ES6/8 and are acceptable for the paramet
 
 ### Python Validation
 
-Python pep8 validation was done via [Code Institute's Python Linter](https://pep8ci.herokuapp.com)
+Python pep8 validation was done via [Code Institute's Python Linter](https://pep8ci.herokuapp.com).
 
-All the Python files were tested with changes made to make the code PEP8 compliant where possible. Please note where Erros exist these are E501 as some lines are slightly longer that the complient >79 characters but this is to preserve function and readability.
+All the Python files were tested in each app, and changes were made to ensure PEP8 compliance wherever possible. This includes removing unnecessary whitespace and correcting spacing. Please note that where errors exist, they are E501, indicating that some lines slightly exceed the 79-character limit. Due to time constraints, these lines have not been adjusted, but they are not excessively long, and I have prioritised readability and functionality throughout the code.
+
+
+| **App**            | **Pass/Fail** |
+|--------------------|---------------|
+| about              | Pass          |
+| blog               | Pass          |
+| checkout           | Pass          |
+| contact            | Pass          |
+| home               | Pass          |
+| products           | Pass          |
+| profiles           | Pass          |
+| reviews            | Pass          |
+| shop               | Pass          |
+| the_meadow_project | Pass          |
+
+
 
 ### Performance (Lighthouse)
+
 
 ### Accessibility
 
