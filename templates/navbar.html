@@ -5,7 +5,7 @@
             <!-- Logo -->
             <div class="col-sm-2 col-3 my-0 ps-0 justify-content-start">
                 <a href="{% url 'home' %}" class="nav-link">
-                    <img src="/media/short-logo.png" class="nav-logo" alt="Image 1">
+                    <img src="/media/short-logo.png" class="nav-logo" alt="Short logo for home navigation">
                 </a>
             </div>
 
@@ -13,7 +13,7 @@
             <div class="col-sm-6 col-md-8 col-2 my-2">
                 <nav class="navbar navbar-expand-lg">
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        aria-controls="navbarNav" aria-expanded="false" aria-label=" navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
@@ -48,10 +48,10 @@
                 <ul class="list-inline list-unstyled mb-0 ml-lg-2">
                     <!-- My Account + dropdown options -->
                     <li class="list-inline-item mr-lg-4 dropdown nav-item">
-                        <a class="nav-link" href="#" id="user-options" data-bs-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false">
+                        <button class="nav-link" href="#" id="user-options" data-bs-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false" aria-label="User options">
                             <div><i class="fas fa-user nav-icon"></i></div>
-                        </a>
+                        </button>
                         <div class="dropdown-menu border-0 bg-green" aria-labelledby="user-options">
                             {% if request.user.is_authenticated %}
                             <a href="{% url 'profile' %}" class="dropdown-item btn-green">
@@ -66,18 +66,18 @@
 
                     <!-- Link to Shopping Bag -->
                     <li class="list-inline-item nav-item">
-                        <a class="nav-link" href="{% url 'view_bag' %}">
+                        <a class="nav-link" href="{% url 'view_bag' %}" aria-label="Bag link">
                             <i class="fas fa-shopping-bag nav-icon {% if grand_total %}icon-pink{% endif %}"></i>
                         </a>
                     </li>
 
-
                     <!-- Search Toggle -->
                     <li class="list-inline-item nav-item">
-                        <a class="nav-link search-icon-toggle" href="#">
+                        <button class="nav-link search-icon-toggle" aria-label="Search">
                             <i class="fas fa-search nav-icon"></i>
-                        </a>
+                        </button>
                     </li>
+
                 </ul>
                 <!-- Toggled Search bar -->
                 <div class="search-overlay bg-white">
@@ -86,12 +86,12 @@
                             <input class="form-control form-control-sm border-green margin-10 rounded-0" type="text"
                                 name="q" aria-label="Search" placeholder="Shop search">
                             <div class="input-group-append">
-                                <button class="btn btn-green margin-10" type="submit">
+                                <button class="btn btn-green margin-10" type="submit" aria-label="Search">
                                     Search
                                 </button>
                             </div>
                             <div class="input-group-append mr-3">
-                                <button class="close-search btn-green btn margin-15" type="button">
+                                <button class="close-search btn-green btn margin-15" type="button" aria-label="Close search">
                                     <i class="fas fa-times"></i>
                                 </button>
                             </div>

@@ -56,7 +56,7 @@
                     <div class="input-group d-flex justify-content-center">
                         <div class="col-md-4 col-12 mb-md-0 mb-2 me-3 ms-3">
                             <input class="form-control form-control-sm border-green rounded-0 p-2" type="text" name="q"
-                                placeholder="Search blog posts..." value="{{ search_term }}">
+                                placeholder="Search blog posts..." aria-label="Search blog posts" value="{{ search_term }}">
                         </div>
                         <div class="col-md-4 col-12 d-flex justify-content-start">
                             <button class="btn btn-green me-2" type="submit">
@@ -123,7 +123,7 @@
                         </p>
                     </div>
                     <a class="no-link-style" href="{% url 'post_detail' post.id %}">
-                        <p class="text-green">Read more</p>
+                        <p class="text-green">Read more</p><span class="sr-only">about {{ post.title }}</span></p>
                     </a>
                 </div>
             </div>

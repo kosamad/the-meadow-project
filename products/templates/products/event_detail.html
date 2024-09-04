@@ -89,8 +89,8 @@
             <p>{{ event.description|safe  }}</p>
             <div class="row justify-content-center">
                 <div class="col-12 text-center">
-                    <p class="my-4">For more information on Location and facilities at the meadow, <a
-                            href="{% url 'about' %}#events-container" class="no-link-style"><strong>click
+                    <p class="my-4"><a
+                            href="{% url 'about' %}#events-container" class="no-link-style"><strong>For more information on Location and facilities at the meadow, click
                                 here</strong></a></p>
                 </div>
             </div>
@@ -135,7 +135,7 @@
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <button class="decrement-qty btn btn-green rounded-0" data-item_id="{{event.id }}"
-                                    id="decrement-qty_{{ event.id }}">
+                                    id="decrement-qty_{{ event.id }}" aria-label="Decrease quantity">
                                     <span class="icon">
                                         <i class="fas fa-minus"></i>
                                     </span>
@@ -145,7 +145,7 @@
                             data-item_id="{{ event.id }}" id="id_qty_{{ event.id }}">
                             <div class="input-group-append">
                                 <button class="increment-qty btn btn-green rounded-0" data-item_id="{{ event.id }}"
-                                    id="increment-qty_{{ event.id }}">
+                                    id="increment-qty_{{ event.id }}" aria-label="Increase quantity">
                                     <span class="icon">
                                         <i class="fas fa-plus"></i>
                                     </span>

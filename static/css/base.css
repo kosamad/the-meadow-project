@@ -137,7 +137,7 @@ h2,
 }
 
 .btn-pink {
-    background-color: #DC6874;
+    background-color: #A6173F;
     color: white;
 }
 
@@ -453,8 +453,8 @@ h2,
 
 /* Blog */
 .page-item.active .page-link {
-    background-color: #DC6874;
-    border-color: #DC6874;
+    background-color: #A6173F;
+    border-color: #A6173F;
 }
 
 .note-group-select-from-files {
