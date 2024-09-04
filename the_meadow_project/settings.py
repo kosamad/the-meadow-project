@@ -237,10 +237,34 @@ STATIC_URL = '/static/'
 # Where static files are. note no static route as thi interfers with settings on Amazon Web services
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 
-# Connect to SW3 bucket if in heroku (not development)
-
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# AWS S3 settings for deployment
+# this connects django to the AWS s3 set up (deployment only) and allows us to collect (and save future) static files
+if 'USE_AWS' in os.environ: 
+
+    # Bucket Config
+    # from my bucket name from the S3 buckets
+    AWS_STORAGE_BUCKET_NAME = 'themeadowproj' 
+    AWS_S3_REGION_NAME = 'eu-west-2'
+    AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+    AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+    # Where are static files are coming from in production, f string generates appropriate URL
+    AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+
+    # Static and media files
+
+    # tell django that in production we want to use s3 to store our static files whenever someone runs collectstatic.
+    STATICFILES_STORAGE = 'custom_storages.StaticStorage' # use storage class created in custom_storages    
+    STATICFILES_LOCATION = 'static'       
+    DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
+    MEDIAFILES_LOCATION = 'media'
+
+    # Override static and media URLs in production
+    STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{STATICFILES_LOCATION}/'
+    MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{MEDIAFILES_LOCATION}/'
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
