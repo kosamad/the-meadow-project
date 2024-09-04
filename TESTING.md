@@ -144,20 +144,77 @@ All the Python files were tested in each app, and changes were made to ensure PE
 | the_meadow_project | Pass          |
 
 
-
-
 ### Accessibility
 
 The site underwent an accessibility check using [Silktide's Accessibility Checker.](https://silktide.com/toolbar/)
 
+* 'Learn More' button on the homepage altered to 'About Us' to be able to be seen in isolation and understand the link.
 
+* Logo given alt text to help screen readers understand they are links to the homepage. 
+
+* Blog post "read more" made more informative for screen readers only using "class="sr-only">about {{ post.title }}.
+
+* Contrast of pink buttons increased to #A6173F to pass contrast requirments. 
+
+* Iframe title added on Contact page
+
+Note there are some contrast issues in forms. These are minor and have been kept as a result of matching Stripes styling. The heading elements not being in sequential order result from extending the base.html template
 
 ### Performance (Lighthouse)
 
-To minimise the number of deployments after setting up AWS for media files and avoid unnecessary costs, Lighthouse testing was conducted on the development site instead of the deployed site. However, I also tested the homepage on the live site for comparison. The results show that they...
+To minimise the number of deployments after setting up AWS for media files and avoid unnecessary costs, Lighthouse testing was conducted on the development site instead of the deployed, production site for pages that don't require user login. However, I also tested the homepage on the live site for comparison. The results show that they...
+Some minor alterations are to be expected following changes as a reuslt of real user testing but these are not significant. 
 
+<details><summary>Home</summary>
 
+<img src="documentation/final/lighthouse/lighthouse_home.PNG">
+<img src="documentation/final/lighthouse/lighthouse_home_mobile.PNG">
 
+</details>
+
+<details><summary>Shop</summary>
+
+<img src="documentation/final/lighthouse/lighthouse_shop.PNG">
+<img src="documentation/final/lighthouse/lighthouse_shop_mobile.PNG">
+
+</details>
+
+<details><summary>Products (and events)</summary>
+
+Detail pages:
+
+<img src="documentation/final/lighthouse/lighthouse_product_detail.PNG">
+<img src="documentation/final/lighthouse/lighthouse_product_detail_mobile.PNG">
+<img src="documentation/final/lighthouse/lighthouse_event_detail.PNG">
+<img src="documentation/final/lighthouse/lighthouse_event_detail_mobile.PNG">
+
+</details>
+
+<details><summary>Blog Posts</summary>
+
+<img src="documentation/final/lighthouse/lighthouse_blog.PNG">
+<img src="documentation/final/lighthouse/lighthouse_blog_mobile.PNG">
+
+Detail pages:
+
+<img src="documentation/final/lighthouse/lighthouse_blogpost.PNG">
+<img src="documentation/final/lighthouse/lighthouse_blogpost_mobile.PNG">
+
+</details>
+
+<details><summary>About</summary>
+
+<img src="documentation/final/lighthouse/lighthouse_about.PNG">
+<img src="documentation/final/lighthouse/lighthouse_about_mobile.PNG">
+
+</details>
+
+<details><summary>Contact</summary>
+
+<img src="documentation/final/lighthouse/lighthouse_contact.PNG">
+<img src="documentation/final/lighthouse/lighthouse_contact_mobile.PNG">
+
+</details>
 
 
 # Manual Testing
@@ -304,6 +361,8 @@ As a **business owner** user, I would like to be able to:
 
 
 ## Real User Testing
+
+????????????????????
 
 ## Functional Test Results
 
@@ -599,12 +658,65 @@ As a **business owner** user, I would like to be able to:
 
 </details>
 
+
+
 # Bugs and Fixes
 
 
+**BUG 1**
+
+**Issue:** Adding products and events to my shopping bag caused issues because the form data did not distinguish between product IDs and event IDs.
+
+**Solution:**  For instance, data was passed in the format {1:2}, where 1 could represent either a product or an event. To resolve this, I first attempted to prefix IDs with a character to identify the type, such as P_ for products and E_ for events (e.g., {E_1:2}). This allowed me to split and retrieve the IDs correctly when processing the basket, similar to how it's handled in the final project.
+
+However, old data in the bag, formatted as {1:2}, led to persistent errors because the system couldn’t differentiate between products and events. I didn’t initially realise that this outdated data was the source of the problems.
+
+To address this, I implemented UUIDs to uniquely identify each product and event, ensuring that all items in the shop have distinct IDs. While developing this solution, I added a "Clear Bag" button, which helped me identify that the old data was indeed causing many of the issues. Furthermore, later in development of the project I further identified items as 'products' or 'events' using the product type attribute set in the form when adding an item to the bag. 
 
 
+**BUG 2**
+
+**Issue:** UUID's caused complications during deployment.
+
+**Solution:** The Postgres database, unlike SQLite, does not support UUIDs as foreign keys (FKs). Consequently, I needed to collaborate with the CI tutors to reset my databases and remove the UUIDs. This involved performing the correct migrations in sequence and updating a JSON file to configure products, events, variants, and related data before proceeding with deployment.
+
+After making these adjustments, I thoroughly tested the functionality to ensure that adding products and events to the bag, along with other features, worked as expected. Since I use a hidden product type variable to distinguish between products and events, rather than relying on UUIDs, no code changes were necessary, and everything continued to function properly.
+
+Redundant UUID references have been retained for now to minimise workload, but they should be cleaned up in the future.
 
 
+**BUG 3**
 
+**Issue:** User Profile error ("Unique constraint") when shopping without an account
+
+**Solution:** I modified the setup process to only create a new user if one did not already exist in the test database. If a user already existed, the test would use the existing user, thus avoiding conflicts and ensuring smoother testing.
+
+
+**BUG 4**
+
+**Issue:** Webhook handling - duplicate orders 1.
+
+**Solution:** There was an issue with product orders where line items were being saved twice, with the second entry recorded as “product None” and “variant None.” This caused errors when updating the line item totals and also impacted the orders in the admin panel.
+
+Despite thorough investigation, I was unable to pinpoint the exact cause of the duplication. However, a forum discussion (Django Forum) suggested using Django’s ObjectDoesNotExist exception to identify and handle such errors. I implemented this approach to check for and skip any saves involving “product None,” which prevented the errors from occurring.
+
+Moving forward, addressing the root cause of this issue will be important for a more permanent solution.
+
+
+**BUG 5**
+
+**Issue:** Webhook handling - event checkout error
+
+**Solution:** Events were not checking out correctly, and the issue appeared to be related to delivery details. After extensive troubleshooting and research, I discovered that the JavaScript was attempting to set delivery information on event pages, which was preventing the checkout page from submitting. By conditionally setting these values, I was able to resolve the issue, and the checkout process for events now functions correctly.
+
+Initially, I tried using Crispy Forms to render the product and event order forms. However, I encountered several issues due to the project setup, which involved both product and event items. Although I believe the issues with Crispy Forms could have been resolved, I opted to simplify the setup for efficiency. As a result, I rendered the forms without using Crispy Forms.
+
+
+**BUG 6**
+
+**Issue:** Webhook handling - duplicate orders 2.
+
+**Solution:** After confirming that JavaScript was correctly sending data to the form, I investigated how Stripe handles billing details. I found that Stripe's webhook provides postcode data based on the card input information. Since I was using a US test card, I couldn't input a UK postcode, which led to mismatches when the order was validated against the postcode and other billing information. This discrepancy occurs even if the same postcode is used, likely due to Stripe's validation setup.
+
+To address this, I have temporarily removed postcode validation from the order process (as advised by CI tutors). In most cases, users would not have a situation where all address details are the same except for the postcode.
 
