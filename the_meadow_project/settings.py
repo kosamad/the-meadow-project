@@ -244,6 +244,12 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # this connects django to the AWS s3 set up (deployment only) and allows us to collect (and save future) static files
 if 'USE_AWS' in os.environ: 
 
+    # Cache control (tells the browser it's ok to cache static files for a long time)
+    AWS_S3_OBJECT_PARAMETERS = {
+        'Expires': 'Thu, 31 Dec 2099 20:00:00 GMT',
+        'CacheControl': 'max-age=94608000',
+    }
+
     # Bucket Config
     # from my bucket name from the S3 buckets
     AWS_STORAGE_BUCKET_NAME = 'themeadowproj' 
@@ -276,12 +282,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 STRIPE_CURRENCY = 'gbp'
 
-# production mode settings
+# dev mode settings
 if os.environ.get("DEVELOPMENT") == "True":
     STRIPE_PUBLIC_KEY = os.environ.get('STRIPE_PUBLIC_KEY', '')
     STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY', '')
     STRIPE_WH_SECRET = os.environ.get('STRIPE_WH_SECRET', '')
-# dev mode settings
+# production mode settings
 else:
     STRIPE_PUBLIC_KEY = os.environ.get('STRIPE_PUBLIC_KEY', '')
     STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY', '')

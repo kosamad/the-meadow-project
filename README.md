@@ -1327,8 +1327,9 @@ Ensure that access for Public access is set to allw list objects.
 * In the development terminal: pip3 install boto3, then pip3 install django-storages and freeze the requirements (pip3 freeze > requirements.txt).
 * Add bucket information into settings.py set under "if 'USE_AWS' in os.environ:". Note make sure to add secret keys to heroku from CSV file, and add a config var that sets USe_AWS to True. Remove Diable_collect static from heroku.
 * Add a custom_storages.py file 
-* Add to AWS info in settings.py to set storage loaction of static and media files. 
+* Add to AWS info in settings.py to set storage loaction of static and media files.
 
+Save and push changes, will add static files to SW3 bucket. 
 
 ### Cloning the Github Repository
 
