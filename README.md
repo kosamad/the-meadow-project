@@ -363,6 +363,40 @@ The code for this site has been developed using a [Django](https://www.djangopro
 
 This design structure aims to help scalability and maintainability of the app as it grows.
 
+ **Page**                          | **Not Logged In** | **Logged in regular user** | **Logged in Superuser (admin)** 
+-----------------------------------|-------------------|----------------------------|---------------------------------
+ Home                              | ✔                 | ✔                          | ✔                               
+ Shop (active items only)          | ✔                 | ✔                          | ✔                               
+ Shop (with inactive items)        | ✘                 | ✘                          | ✔                               
+ Product/Event Detail              | ✔                 | ✔                          | ✔                               
+ Add Product/Event                 | ✘                 | ✘                          | ✔                               
+ Add Product Variant               | ✘                 | ✘                          | ✔ 
+ Edit Event/Product/Variant        | ✘                 | ✘                          | ✔                                  
+ Delete Event/Product              | ✘                 | ✘                          | ✔                               
+ Bag                               | ✔                 | ✔                          | ✔                               
+ Checkout                          | ✔                 | ✔                          | ✔                               
+ Checkout with prefilled user info | ✘                 | ✔                          | ✔                               
+ Profile (order and address info)  | ✘                 | ✔                          | ✔                               
+ Change password                   | ✘                 | ✔                          | ✔                               
+ Managment profile extras          | ✘                 | ✘                          | ✔                               
+ Reveiw                            | ✘                 | ✔                          | ✔                               
+ See all reviews and delete        | ✘                 | ✘                          | ✔                               
+ Blog Posts                        | ✔                 | ✔                          | ✔                               
+ Post Detail                       | ✔                 | ✔                          | ✔                               
+ Post Edit                         | ✘                 | ✘                          | ✔                               
+ Post Delete                       | ✘                 | ✘                          | ✔                               
+ About                             | ✔                 | ✔                          | ✔                               
+ Contact                           | ✔                 | ✔                          | ✔                               
+ Contact (with order info)         | ✘                 | ✔                          | ✔                               
+ Sign Up                           | ✔                 | ✔                          | ✔                               
+ Sign in                           | ✔                 | ✔                          | ✔                               
+ Sign Out                          | ✘                 | ✔                          | ✔                               
+
+
+
+
+This table shows a summary of which users have access to which pages
+
 #### Updates from Design:
 
 Due to time constraints, a couple of the initially planned features have not been implemented at this time. These are:
@@ -548,7 +582,7 @@ The landing page (index.html) is designed to immediately convey the purpose of t
 ![shop.html](documentation/final/shop-screens.PNG)
 
 The shop page (shop.html) serves as a central hub where users can browse through the products offered by The Meadow Project. This provides scaliability for the project as it  gives the project room to grow and provides a central page for which to navigate to any further added shopping items.
- 
+
 The opening paragraph highlights the site's commitment to quality and flexibility, aiming to entice users and encourage purchases.
 
 Initially, both products and events are displayed together, showcasing all items available in the shop. Each item is presented with its image, name (friendly), and price (will be medium for products) in a clean, easy-to-read format.
@@ -573,7 +607,7 @@ Clicking on each shop items image/name will redirect the user to the product/eve
 
 **Product Availability and Superuser Controls**
 
-Regular users only see products and events marked as 'active,' meaning these items are currently in stock and available for purchase. Superusers, however, have access to the full catalog, including items marked as 'inactive.' Inactive items are highlighted in red and include a 'reactivate' button.
+Regular users only see products and events marked as 'active,' meaning these items are currently in stock and available for purchase. Superusers, however, have access to the full catalog, including items marked as 'inactive.' Inactive items are highlighted in red and include a 'reactivate' button. This inactive feature gives supersuers control over product visibility. It provides a straightforward way to manage the visibility of products without needing to delete them from the database. This gives flexibility and allows for temporary or permanent deactivation of products without altering their stored data.
 
 Clicking this button redirects superusers to the product or event edit pages, where they can toggle the 'is_active' status as needed. This feature helps superusers efficiently manage the inventory by making it easy to see what is listed and update item availability as required.
 
@@ -1276,6 +1310,8 @@ For further information on *Forking* a repository,  the [GitHub Documentation](h
 * Summernote integration - [this article](https://stackoverflow.com/questions/33615669/disable-image-upload-in-summernote#:~:text=There's%20currently%20no%20api%20to,a%20pull%20request%2C%20of%20course.&text=You%20can%20override%20the%20toolbar,own%20set%20of%20buttons%20there) and [Youtube video](https://www.youtube.com/watch?v=5JWElyGs8iA).
 * Responsive iframe - [W3 schools](https://www.w3schools.com/howto/howto_css_responsive_iframes.asp)
 * Inspiration for checkout process - [Reddit post](https://www.reddit.com/r/djangolearning/comments/jgvsop/best_way_to_do_multi_step_forms_in_django/).
+* Help with Crispy forms issed came from - [Slack overflow forum](https://stackoverflow.com/questions/71641974/implementing-django-bootstrap-crispy-forms-into-default-signup-login-pages) and [Youtube](https://www.youtube.com/watch?v=MZwKoi0wu2Q)
+
 
 ### Media
 
