@@ -145,10 +145,19 @@ All the Python files were tested in each app, and changes were made to ensure PE
 
 
 
-### Performance (Lighthouse)
-
 
 ### Accessibility
+
+The site underwent an accessibility check using [Silktide's Accessibility Checker.](https://silktide.com/toolbar/)
+
+
+
+### Performance (Lighthouse)
+
+To minimise the number of deployments after setting up AWS for media files and avoid unnecessary costs, Lighthouse testing was conducted on the development site instead of the deployed site. However, I also tested the homepage on the live site for comparison. The results show that they...
+
+
+
 
 
 # Manual Testing
