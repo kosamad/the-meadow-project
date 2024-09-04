@@ -720,3 +720,10 @@ Initially, I tried using Crispy Forms to render the product and event order form
 
 To address this, I have temporarily removed postcode validation from the order process (as advised by CI tutors). In most cases, users would not have a situation where all address details are the same except for the postcode.
 
+**BUG 7**
+
+**Issue:** Error on product order form for delivery and quantity fields “incorrect use of <label for=FORM_ELEMENT>
+
+**Solution:** despite multiple google search attempts I couldn’t figure out how to fix. 
+
+
