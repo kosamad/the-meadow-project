@@ -547,7 +547,9 @@ The landing page (index.html) is designed to immediately convey the purpose of t
 
 ![shop.html](documentation/final/shop-screens.PNG)
 
-The shop page (shop.html) serves as a central hub where users can browse through the products offered by The Meadow Project. The opening paragraph highlights the site's commitment to quality and flexibility, aiming to entice users and encourage purchases.
+The shop page (shop.html) serves as a central hub where users can browse through the products offered by The Meadow Project. This provides scaliability for the project as it  gives the project room to grow and provides a central page for which to navigate to any further added shopping items.
+ 
+The opening paragraph highlights the site's commitment to quality and flexibility, aiming to entice users and encourage purchases.
 
 Initially, both products and events are displayed together, showcasing all items available in the shop. Each item is presented with its image, name (friendly), and price (will be medium for products) in a clean, easy-to-read format.
 
@@ -1112,7 +1114,7 @@ This page is shown when a user tries to access a page or resource they are not a
 * 500 Error Page: "Sorry, something went wrong on our end. Please try again later."
 This page indicates a server error. It informs the user that something went wrong on our end and encourages them to try again later.
 
-## Future Features
+## Future Features and ammendments
 
 1. Order viewing system - Integration of an Order viewing system for admin to be able to see all orders without logging into the Django admin panel, rather than relying on the email automatically sent. 
 
@@ -1121,19 +1123,25 @@ However, plans for future development include integrating stock management into 
 
 3. Rating system - Implementing a rating system for products and events would significantly enhance the user experience and drive engagement on the site as users are more likely to engage with products that have high ratings and positive feedbac. This can lead to increased purchases. It can also aid admins identify problem areas of the site. Again, due to time constraints this hasn't been integrated but the intial code (to show intent) is present "rating = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)"
 
-4. Further whitespace validation-  Implement whitespace validation for blog posts, products, and events. Currently, this validation has not been incorporated. Although it is expected that admin staff will carefully add content to these sections, and will correct any mistakes if they submit a form without text in the body or description fields, adding whitespace validation would make the system more robust. Ensuring that these fields are not empty and do not contain only whitespace will enhance data integrity and improve the overall reliability of the site.
+4. Advertisment banner - Integration of a banner to advertise selected products or events could enhance visibility and drive user engagement. For instance, when a user is browsing for bouquets, an admin could use the banner to highlight that the Meadow Project also offers events. This feature would allow admin staff to easily promote specific products, services, or special offers. By drawing attention to these additional offerings, the site can effectively inform users of complementary services and encourage cross-selling opportunities.
 
-5. Image hosting system - An image hosting site, such as Cloudinary could be integrated to improve the management and performance of images on the site.
+5. Social media log in - Integration of social media login options. This would greatly enhance user experience by offering a convenient and quick way for users to access their accounts. This functionality allows users to log in using their existing social media credentials, such as from platforms like Facebook, Google, or Twitter.
 
-6. Advertisment banner - Integration of a banner to advertise selected products or events could enhance visibility and drive user engagement. For instance, when a user is browsing for bouquets, an admin could use the banner to highlight that the Meadow Project also offers events. This feature would allow admin staff to easily promote specific products, services, or special offers. By drawing attention to these additional offerings, the site can effectively inform users of complementary services and encourage cross-selling opportunities.
+6. Discout Codes - Implementing a discount code feature would allow users to apply promotional codes during checkout. This can enhance the user experience and incentivise purchases, while also enabling admin staff to manage promotions effectively.
 
-7. Social media log in - Integration of social media login options. This would greatly enhance user experience by offering a convenient and quick way for users to access their accounts. This functionality allows users to log in using their existing social media credentials, such as from platforms like Facebook, Google, or Twitter.
+7. Track sales data - allow admin staff to export and analyse sales data from the site. 
 
-8. Discout Codes - Implementing a discount code feature would allow users to apply promotional codes during checkout. This can enhance the user experience and incentivise purchases, while also enabling admin staff to manage promotions effectively.
+8. Email list - give site owners a way to see who is registerd on the site and therfore what emails to send the newsletter to.
 
-9. Track sales data - allow admin staff to export and analyse sales data from the site. 
+**Ammendments**
 
-10. Email list - give site owners a way to see who is registerd on the site and therfore what emails to send the newsletter to. 
+9. Further whitespace validation-  Implement whitespace validation for blog posts, products, and events. Currently, this validation has not been incorporated. Although it is expected that admin staff will carefully add content to these sections, and will correct any mistakes if they submit a form without text in the body or description fields, adding whitespace validation would make the system more robust. Ensuring that these fields are not empty and do not contain only whitespace will enhance data integrity and improve the overall reliability of the site.
+
+10. Performance across all the site is sub-optimal (See lighthouse results in [Testing](TESTING.md)) and should be addressed in the future. 
+
+11. Product deletion adheres to Django's recommended best practices, including the use of CSRF tokens. According to Django's documentation, POST requests should be used for actions that modify data, such as deletions, to prevent unintended operations triggered by GET requests. CSRF protection is built into Django forms, ensuring secure handling of such operations, see [Django Documentation](https://www.djangoproject.com/). Currently, this approach is applied only to product deletions, as POST methods were implemented differently in other areas of the site. In the future, I plan to standardize this approach across the entire site for consistency.
+
+12. In the blog app a different, Class-Based View was used. This Utilises Django's UpdateView for a more streamlined and reusable approach. This implementation applies to the creation and management of blog posts, shifting from function-based views to a class-based approach for greater efficiency and organisation. Other views in the site could be ammended to match this in the future. 
 
 ## Technologies
 
