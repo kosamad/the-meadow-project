@@ -1,14 +1,63 @@
 
 # The Meadow Project #
-[The Meadow Project Live Site]()  
+[The Meadow Project Live Site](https://the-meadow-project-800f5f20f1b1.herokuapp.com/)  
 
-![All screens](documentation/final/)
+![All screens](documentation/final/all_screens.PNG)
 
 The Meadow Project is a community-focused initiative dedicated to offering affordable and eco-friendly flowers and plants. Our mission extends beyond just sales—we offer unique floristry events set against the serene backdrop of a beautiful meadow, creating relaxing but informative experiences for all attendees. Our website features a user-friendly platform where visitors can easily explore our offerings, make purchases, and complete transactions with ease. Additionally, our blog provides valuable gardening tips and inspiration, allowing users to recreate elements of our meadow Project at home.
 
 Please note, The Meadow Project is a fictional company created to fulfill Project 4 as part of the Code Institute's course. All content has been created as if it were a real business fulfilling a real-life objective.
 
 ## Contents 
+
+- [The Meadow Project](#the-meadow-project)
+  * [Contents](#contents)
+  * [Background](#background)
+    + [Mission Statement](#mission-statement)
+    + [Target Audience](#target-audience)
+    + [WebApp Business Objectives](#webapp-business-objectives)
+    + [Interviews](#interviews)
+      - [Stakeholders](#stakeholders)
+      - [Users](#users)
+  * [User Experience Design](#user-experience-design)
+    + [Project Strategy](#project-strategy)
+      - [User Demographics](#user-demographics)
+      - [User Stories](#user-stories)
+      - [Constraints](#constraints)
+      - [Opportunity Matrix](#opportunity-matrix)
+    + [Project Sructure](#project-sructure)
+    + [Project Skeleton](#project-skeleton)
+      - [Wireframes](#wireframes)
+    + [Surface Design](#surface-design)
+      - [Logo and Typography](#logo-and-typography)
+    + [Colour Scheme](#colour-scheme)
+  * [Finished Site](#finished-site)
+    + [Information Architecture](#information-architecture)
+      - [Updates from Design:](#updates-from-design-)
+    + [Features](#features)
+  * [Future Features and ammendments](#future-features-and-ammendments)
+  * [Technologies](#technologies)
+    + [Languages](#languages)
+    + [Development](#development)
+  * [Deployment](#deployment)
+    + [Database](#database)
+    + [Storage of static files](#storage-of-static-files)
+    + [Payment](#payment)
+    + [Frameworks](#frameworks)
+    + [Libraries, Programs and Tools Used](#libraries--programs-and-tools-used)
+  * [Testing](#testing)
+  * [Deployment and Local Development](#deployment-and-local-development)
+    + [Deployment](#deployment-1)
+    + [Cloning the Github Repository](#cloning-the-github-repository)
+    + [Forking the Github Repository](#forking-the-github-repository)
+  * [Credits](#credits)
+    + [Content](#content)
+    + [Media](#media)
+    + [Acknowledgments](#acknowledgments)
+  * [Disclaimer](#disclaimer)
+
+<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
+
 
 ## Background 
 
@@ -762,6 +811,8 @@ After successfully adding a product or event to their basket, users receive a no
 
 ![bag screens](documentation/final/bag-screens.PNG)
 
+(Please not this page does not render on am i responsive)
+
 Users can navigate to the Basket either through the bag icon in the navigation bar or via the link provided in the success toast after adding an item. 
 
 The Basket page displays the title alongside the total count of items in the basket, including both products and events. If not items are in the basket, the user is notified of this and provided with a link to 'Go Shopping'.
@@ -802,7 +853,9 @@ Due to the extensive JavaScript utilised on the Basket page, separate include fi
 
 <details><summary>Checkout (Checkout app)</summary>
 
-CHECKOUT OUT IMAGE
+![checkout page](documentation/final/checkout_page.PNG) 
+
+(Please not this page does not render on am i responsive)
 
 The checkout app handles all aspects of the checkout process, including customer details, billing and delivery addresses, and generating an order number while processing order line items. Throughout the checkout process, users can view a summary of their order on every page. This summary displays the total number of items, along with details such as item names, sizes, quantities, and whether a card message/note has been set (Y/N) and the subtotal for each line item. For events, it also shows the attendee name. Events are listed first, followed by products.
 
@@ -932,7 +985,9 @@ This process ensures that orders are accurately prepared and delivered to custom
 
 <details><summary>Profile (Profile app)</summary>
 
-![Profile page]()
+![Profile page](documentation/final/profile_page.PNG)
+
+(please note this page does not load on am i responsive)
 
 Users who have signed up for the site can access their profile page. On this page, they can view the details they used to sign up, including their username and email address.
 
@@ -984,6 +1039,8 @@ The Review app manages and stores all customer reviews.
 After purchasing an item, registered and logged-in users can submit reviews for their orders. The code ensures that only the rightful owner of an order can leave a review, maintaining the integrity of the feedback system. Users can access the review input form directly from their profile page.
 
 ![review form](documentation/final/review-page.PNG)
+
+(please note this page does not load on am i responsive)
 
 When submitting a review, the review page clearly informs the user of the specific order they are reviewing and provides a summary of the items in the order along with the total amount paid. The form automatically populates the user's username, which is uneditable, ensuring that users cannot change the name or impersonate someone else. Additionally, there is a text box where users can leave their review, with a helpful character countdown to indicate how much more they can type. This feature ensures that reviews displayed on the homepage do not exceed an acceptable length, maintaining a clean and user-friendly layout. Customised JavaScript Validation ensures that the user cannot type in whitespace only. If they try to they are given a waring message and the form is not submitted. 
 
@@ -1247,6 +1304,7 @@ Please note that due to the bug with my UUID and database compatibility, Migrati
 * [JSHint](https://jshint.com/)
 * [W3C Jigsaw](https://jigsaw.w3.org/css-validator/)
 * [W3C](https://validator.w3.org/)
+* [Table of contents](http://ecotrust-canada.github.io/markdown-toc/)
 
 
 ## Testing
