@@ -297,7 +297,9 @@ FREE_DELIVERY_THRESHOLD = 50
 STANDARD_DELIVERY_PERCENTAGE = 10
 
 # Email Settings for contact form
+# initial testing used:
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# Advanced testing to send real emails in both development and production. 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
