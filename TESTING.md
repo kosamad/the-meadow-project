@@ -92,6 +92,7 @@ Specific "errors" in addition to the points above are listed in the table below.
 CSS was validated using [W3C Jigsaw](https://jigsaw.w3.org/css-validator/).
 
 Css Validation for Static CSS
+
 ![Css validation](documentation/final/css_validation.PNG)
 
 The same result was acheived for the checkout.css and profile.css
@@ -658,7 +659,13 @@ As a **business owner** user, I would like to be able to:
 
 </details>
 
+<details><summary>Amazon AWS and S3</summary>
 
+* Added product and event images add to the correct folder in the bucket
+
+* Images rendered to site correctly on the deployed site.
+
+</details>
 
 # Bugs and Fixes
 
