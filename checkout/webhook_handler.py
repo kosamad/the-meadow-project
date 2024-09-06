@@ -155,13 +155,7 @@ class StripeWH_Handler:
                 attempt += 1
                 time.sleep(1)
 
-        if order_exists:
-            self._send_confirmation_email(order_instance)
-            self._send_order_email(order_instance)
-            # Check and send event ticket email if event items exist
-            event_line_items = order_instance.event_lineitems.all()
-            if event_line_items.exists():
-                self._send_ticket_email(order_instance, event_line_items)
+        if order_exists:            
             return HttpResponse(
                 content=f'Webhook received: {event["type"]} | SUCCESS: Verified order already in database',
                 status=200)
@@ -262,9 +256,10 @@ class StripeWH_Handler:
                 return HttpResponse(
                     content=f'Webhook received: {event["type"]} | ERROR: {e}',
                     status=500)
+            # Send confirmation emails.
             self._send_confirmation_email(order_instance)
             self._send_order_email(order_instance)
-            # Send event ticket email if event items exist
+            # Send event ticket email if event items exist            
             if event_line_items.exists():
                 self._send_ticket_email(order_instance, event_line_items)
             return HttpResponse(
