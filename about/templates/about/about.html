@@ -78,7 +78,7 @@
                                 class="btn btn-green no-link-style text-white d-block">Events</a>
                         </div>
                         <div class="col-6 mb-2">
-                            <a href="{% url 'posts' %}" class="btn btn-green no-link-style text-white d-block">Our
+                            <a href="#blog-container" class="btn btn-green no-link-style text-white d-block">Our
                                 Blog</a>
                         </div>
                     </div>
@@ -210,6 +210,26 @@
                         class="text-green"><strong>Events Page</strong>
                     </a>to see what we've got going on</p>
             </a>
+        </div>
+    </div>
+</div>
+
+<!-- About Blog container  -->
+<div class="container" id="blog-container">
+    <div class="row justify-content-center mt-4 mb-4">
+        <div class="col-md-9 col-12 d-flex flex-column justify-content-center align-items-center">
+            <i class="fa-solid fa-pen fa-3x mb-2 text-center"></i>
+            <h3 class="title-font text-center mb-3">Our Blog</h3>
+            <p class="text-justify">We want to spread the joy of gardening and inspire fantastic indoor floral displays.
+                Ou blog contains tips, tricks, and insights on everything from plant care and seasonal blooms to
+                creative floral arrangements. Whether you're a seasoned gardener or just starting out, our blog is filled with ideas to
+                bring nature's beauty into your home!
+            </p>            
+            <p class="text-justify"><strong> </strong>
+                Stay updated with our latest blog posts and exclusive discounts by signing up! Be the first to hear about new gardening tips, floral arrangement ideas, and special offers. <a href="{% url 'account_signup' %}"
+                class="text-green"><strong>Sign up here and never miss a thing!</strong>
+            </a>         
+            </p>
         </div>
     </div>
 </div>
