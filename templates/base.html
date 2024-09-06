@@ -14,11 +14,11 @@ interfering with the core requirements.-->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Favicon Files -->
-    <link rel="apple-touch-icon" sizes="180x180" href="/media/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/media/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/media/favicon/favicon-16x16.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="/media/favicon/android-chrome-192x192.png">
-    <link rel="icon" type="image/png" sizes="512x512" href="/media/favicon/android-chrome-512x512.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ MEDIA_URL }}favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ MEDIA_URL }}favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ MEDIA_URL }}favicon/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="{{ MEDIA_URL }}favicon/android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="{{ MEDIA_URL }}favicon/android-chrome-512x512.png">
 
     {% endblock %}
 
@@ -100,7 +100,7 @@ interfering with the core requirements.-->
                 <div class="col-12 col-lg-4 order-sm-3 order-lg-2 social-links">
                     <div class="row justify-content-center">
                         <a href="{% url 'home' %}" class="text-center">
-                            <img src="/media/full-logo.png" id="footer-logo" alt="logo for home navigation"
+                            <img src="{{ MEDIA_URL }}full-logo.png" id="footer-logo" alt="logo for home navigation"
                                 class="img-fluid">
                         </a>
                     </div>
