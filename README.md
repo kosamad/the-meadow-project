@@ -434,6 +434,8 @@ Wireframe Alterations:
 
 Please note that the code for this project has been written in such a way that Javascript is either contained within an individual page (if it is small) or within an includes folder for each app (if a larger amount of code). This is intentional to aid the ease to see relavent pieces of code next to each other. 
 
+Products and Events that have been ammended/added from the production heroku deployed app, will not display images correclty in the development app, due to database configurations. 
+
 <details><summary>All Pages</summary>
 
 **-Title**
