@@ -28,7 +28,7 @@
 
 Testing is essential to ensure the website functions correctly, is free from bugs, and allows users to fully utilise all features before its release to the general market. This guarantees a positive user experience (UX) and encourages repeat visits from customers and registered users.
 
-Throughout the development process, I relied on Chrome developer tools to assess page responsiveness across various screen sizes and address any encountered issues. In troubleshooting, I utilised the console to log and monitor JavaScript code, aiding in resolving aspects of the site that did not perform as intended. Additionally, I employed Python development techniques to address backend issues, ensuring seamless functionality across the site. All the test results detailed below are based on the [deployed site]().
+Throughout the development process, I relied on Chrome developer tools to assess page responsiveness across various screen sizes and address any encountered issues. In troubleshooting, I utilised the console to log and monitor JavaScript code, aiding in resolving aspects of the site that did not perform as intended. Additionally, I employed Python development techniques to address backend issues, ensuring seamless functionality across the site. All the test results detailed below are based on the development site. 
 
 ---
 
@@ -42,10 +42,7 @@ To run the tests:
 
 * Type "python3 manage.py test" into the terminal.
 * To test one app only type "python manage.py test <app name>".
-* To understand how comprehensive the test are, coverage was installed using pip3, and then the following command was run "coverage run --source=the_meadow_project manage.py test"
-
-![Tests perfomred](documentation/final/test_coveage.PNG)
-
+* To understand how comprehensive the test are, coverage was installed using pip3, and then coverage was assessed
 * To view the coverage report type coverage report
 
 
@@ -64,7 +61,7 @@ Specific "errors" in addition to the points above are listed in the table below.
 
 | **Page**                  | **Result**                                                                                   | **Any errors remaining**                                                                  | **Explantation**                                                                                                                                                                                               |
 |---------------------------|----------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| about.html                | Pass- but 2 'errors' remain                                                                  | 1. No p element in scope but a p end tag seen.  2.End tag a violates nesting rules.       | 1. Formatted script and checked that the opening p does exist. 2.required to ensreut the bold 'Events' text directs users to the shop page and that they can still click the entire area to be redirected too. |
+| about.html                | Pass- but 2 'errors' remain                                                                  | 1. No p element in scope but a p end tag seen.  2.End tag a violates nesting rules.       | 1. Formatted script and checked that the opening p does exist. 2.required to ensure the bold 'Events' text directs users to the shop page and that they can still click the entire area to be redirected too. |
 | bag.html                  | Pass- but 1 'error' remains                                                                  |  Bad value for attribute action on element form: Must be non-empty.                       | This is for the quantiy update and the form must be subited to the same URL therfore error ignored.                                                                                                            |
 | posts.html                | Pass- but 1 'error' remains                                                                  | End tag a violates nesting rules. 2.No strong element in scope but a strong end tag seen. | equired to ensreut the bold 'Sing up' text directs users correcty.                                                                                                                                             |
 | add_post.html             | Pass                                                                                         |                                                                                           |                                                                                                                                                                                                                |
@@ -139,21 +136,22 @@ Please note, warnings relate the use of ES6/8 and are acceptable for the paramet
 
 Python pep8 validation was done via [Code Institute's Python Linter](https://pep8ci.herokuapp.com).
 
-All the Python files were tested in each app, and changes were made to ensure PEP8 compliance wherever possible. This includes removing unnecessary whitespace and correcting spacing. Please note that where errors exist, they are E501, indicating that some lines slightly exceed the 79-character limit. Due to time constraints, these lines have not been adjusted, but they are not excessively long, and I have prioritised readability and functionality throughout the code.
-
+All the Python files were tested in each app, and changes were made to ensure PEP8 compliance wherever possible. This includes removing unnecessary whitespace, correcting spacing and length. 
 
 | **App**            | **Pass/Fail** |
 |--------------------|---------------|
 | about              | Pass          |
 | blog               | Pass          |
 | checkout           | Pass          |
-| contact            | Pass          |
+| contact            | Pass*         |
 | home               | Pass          |
 | products           | Pass          |
 | profiles           | Pass          |
 | reviews            | Pass          |
 | shop               | Pass          |
 | the_meadow_project | Pass          |
+
+* Checkout has remaining length errors e.g delivery_street_address1=delivery_street_address1, delivery_street_address2=, 'payment_intent.payment_failed': handler.handle_payment_intent_payment_failed etc.  I could not reduce the length of these without breaking code function. In the future, care would be taken to name things shorter. 
 
 
 ### Accessibility
@@ -231,7 +229,7 @@ Detail pages:
 
 # Manual Testing
 
-The desktop version of the site underwent testing across various browsers and devices to ensure compatibility. Testing included Google Chrome, Mozilla Firefox, and Microsoft Edge on desktop computers. Additionally, Chrome was tested on both Lenovo Tablet and Pixel devices, while Safari was used for mobile testing.
+The desktop version of the site underwent testing across various browsers and devices to ensure compatibility. Testing included Google Chrome, Mozilla Firefox, and Microsoft Edge on desktop computers. Additionally, Chrome was tested on both Lenovo Tablet and Pixel devices, while Safari was tested on on a mobile.
 
 The site was responsive on all browsers and devices (down to  320px as recommended by [Free Code Camp](https://www.freecodecamp.org/news/media-query-css-example-max-and-min-screen-width-for-mobile-responsive-design/))
 
@@ -374,7 +372,29 @@ As a **business owner** user, I would like to be able to:
 
 ## Real User Testing
 
-????????????????????
+The Meadow Project was reviewed by friends and family. They were encouraged to comment on their user experience and feedback on any bugs they found. In each testing environment, users were asked to pay particular attention to the buttons and the overall look of the page.
+
+Comments from User 1 (Iphone 13):
+
+1:
+-   Comment: "it would be good to have the category selection on the shop page render different categories (not just all)
+
+-   Action Taken: This is what was supposed to happen but i had missed testing this part. I have updated the code to correctly render the categories from the database. 
+
+2:
+
+-   Comment: "The checkout success page allows me to scroll sideways"
+
+-   Action Taken: Margin start (ms-4) margin was applied only to medium screens and above rather than all screens. 
+
+
+Comments from User 2 (Pixel 7):
+
+1: 
+
+- Comment: "The prices are a little confusing as it says a price but then you can change it/choses a cheaper option"
+
+-   Action Taken: I based the functioning of The Meadow Project from looking at several other floristy style websites which had the price set up like this. However, to address the users comment I added the following paragraph to the shop page for clarity. "Please note: The prices listed in the shop are for medium-sized products. To view prices for other sizes and check their availability, please click on an individual item."
 
 ## Functional Test Results
 
@@ -473,7 +493,7 @@ As a **business owner** user, I would like to be able to:
 | **Add post page**                              |                 |                                                                                                                 |                                                                         |                                                                                     |               |
 | Post button                                | Superuser       | Send form to backend and saves post in the database, takes user to post detail page with a success (info) toast | Inputed all details into the form and clicked post                      | Taken to the post's detail page and given a success (info) toast                    | Pass          |
 | Edit post drop down (Product and Event)    | Superuser       | Loads all products/events listed on the site (even inactive ones)                                               | Clicked on the drop down box                                            | Shows product/events for selection                                                  | Pass          |
-| Form validation                            | Superuser       | All required fields prevent user submitting post if they are left blank                                         | Left each input blank individually                                      | Form does not submit                                                                | Pass          |
+| Form validation                            | Superuser       | All required fields prevent user submitting post if they are left blank or if body contains whitespace                                         | Left each input blank individually and inputed whitespace only                                      | Form does not submit                                                                | Pass          |
 |                                            |                 |                                                                                                                 |                                                                         |                                                                                     |               |
 | **Delete page**                                |                 |                                                                                                                 |                                                                         |                                                                                     |               |
 | Yes delete button                          | Superuser       | Deletes the blog post and gives success info toast                                                              | Clicked on the button                                                   | Post is deleted and gives success info toast                                        | Pass          |
@@ -585,7 +605,7 @@ As a **business owner** user, I would like to be able to:
 | Products size selection for not 'is_active' items or no product variants | If an item is not marked 'is_active' or if there are no prodcut variants the size selection reads, sorry this product is unavilable                                    | removed all variants and separatly marked an item as inactive                              | Size selection reads, sorry this product is unavailable                                                                   | Pass          |
 | Events click here button                                                 | Takes the user to the About page to learn more about the events                                                                                                        | Clicked click here                                                                         | Taken to the events section of the about page.                                                                            | Pass          |
 | Quantity selection (events)                                              | User can type a number in the box or use +/- to change the quantiy of the item they are adding                                                                         | Typed number into the box and used the +/- to change the number before submitting the form | Correct quantiy submitted                                                                                                 | Pass          |
-| Events attendee name input                                               | Prevents the form from being submitted if it is left blank                                                                                                             | Tried to submit the form without any text in the inptu                                     | Alert given to add attendee info                                                                                          | Pass          |
+| Events attendee name input                                               | Prevents the form from being submitted if it is left blank                                                                                                             | Tried to submit the form without any text in the inptut                                     | Alert given to add attendee info                                                                                          | Pass          |
 | Add to basket buttons                                                    | Adds the product(s) or event(s) to the basket and notifies user                                                                                                        | Clicked the button                                                                         | Returned to a new product form and rendered a success toast                                                               | Pass          |
 | Card messages and Notes are optional                                     | User should be able to submit the form without these parts filled in                                                                                                   | Left the inputs blank                                                                      | Form still submits                                                                                                        | Pass          |
 | Success toast                                                            | When an item is added to the basket the success toast correctly renders the basket information                                                                         | Updated the basket several times                                                           | Success toast renders the correct information                                                                             | Pass          |
@@ -594,7 +614,7 @@ As a **business owner** user, I would like to be able to:
 | **Superusers**                                                               |                                                                                                                                                                        |                                                                                            |                                                                                                                           |               |
 | Add product form and button                                              | Add product form allows the user to add a product to the database. Returns a info toast when added successfully.                                                       | Added  a product with all required input fields                                            | Product added the the database and renders in the shop (once variants are added)                                          | Pass          |
 | Add product from cancel button                                           | Takes the user back to the shop                                                                                                                                        | Clicked the button                                                                         | Taken to the shop page                                                                                                    | Pass          |
-| Add product form verification                                            | If a required field is missing, the user is taken to the missing part of the form or given a error message that the product didn't add and to ensure the form is valid | Tried to submit the form with missing inputs                                               | Form doesn't submit and the user is taken to the part missing/ given an error message                                     | Pass          |
+| Add product/ Add event form validation                                            | If a required field is missing (or contains just whitespace), the user is taken to the missing part of the form or given a error message that the product didn't add and to ensure the form is valid | Tried to submit the form with missing inputs                                               | Form doesn't submit and the user is taken to the part missing/ given an error message                                     | Pass          |
 | Add product variant form and save button                                 | Only allows one of each variant type to be added. If the item is a gift card the 'sizes' read as 'options'                                                             | Added individual variants and tried to repeat add each                                     | Variants are added. An error message notifies uses if they have already added that variant and the form does not submit.  | Pass          |
 | Product variant cancel button                                            | Takes the user back to the product detail page                                                                                                                         | Clicked the button                                                                         | Taken to the product detail page                                                                                          | Pass          |
 | Edit text on the product detail page                                     | Takes the user to the edit product form with details already rendered                                                                                                  | Clicked the edit text                                                                      | Taken to the edit product page                                                                                            | Pass          |
@@ -607,7 +627,7 @@ As a **business owner** user, I would like to be able to:
 | Delete text next to variants                                             | Returns an alert asking the user to confirm they want to delete the varinant. Pressing ok deletes the product variant  and toast updates the user                      | Clicked the text                                                                           | Varaint deleted  and toast updates the user                                                                               | Pass          |
 | Product, product variant and event price                                 | Must be at least £0.30 (min set by Stripe), if not an error message informs the user to check the form and red text notifies them that the price must be more than 0.3 | Tried to submit the form with lower value prices                                           | Form does not submit, error message given and red text renders                                                            | Pass          |
 | Inactive information (products)                                          | If a product is marked as not 'is_active'  red text notifies the user that it has been set this way                                                                    | Changed a product from is_active to not                                                    | If a product is marked as not 'is_active'  red text notifies the user that it has been set this way                       | Pass          |
-| Add event form and  button                                               | Add event form allows the user to add a event to the database. Returns a info toast when added successfully.                                                           | Added  a event with all required input fields                                              | Event added to the database and rendered in the shop                                                                      | Pass          |
+| Add event form and button                                               | Add event form allows the user to add a event to the database. Returns a info toast when added successfully.                                                           | Added  a event with all required input fields                                              | Event added to the database and rendered in the shop                                                                      | Pass          |
 | Add event form cancel button                                             | User is redirected to the shop page                                                                                                                                    | Clicked the button                                                                         | Redirected to the shop page                                                                                               | Pass          |
 | Edit text on event detial page                                           | Takes the user to the edit event page                                                                                                                                  | Clicked the text                                                                           | Redirected to the edit event page                                                                                         | Pass          |
 | Edit event save button                                                   | Saves the edit form and returns the user to the event detail page with a info toast stating 'success'                                                                  | Clicked the button                                                                         | Event is updated and user is returned to the product detail page  with a info toast stating 'success'                     | Pass          |
