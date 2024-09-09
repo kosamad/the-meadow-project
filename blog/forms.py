@@ -7,7 +7,6 @@ from bs4 import BeautifulSoup
 from django.core.exceptions import ValidationError
 
 
-
 class PostForm(forms.ModelForm):
 
     class Meta:
@@ -17,12 +16,14 @@ class PostForm(forms.ModelForm):
                   'body'
                   )
         widgets = {
-            'alt_text': forms.TextInput(attrs={'placeholder':'Add descriptive text for your image'}),
+            'alt_text': forms.TextInput(
+                attrs={'placeholder': 'Add descriptive text for your image'}
+                ),
             'title': forms.TextInput,
-            'image': CustomClearableFileInput,        
+            'image': CustomClearableFileInput,
             'body': SummernoteWidget(),
             'product': forms.Select(attrs={'placeholder': 'Select a product'}),
-            'event': forms.Select(attrs={'placeholder': 'Select an event'}),        
+            'event': forms.Select(attrs={'placeholder': 'Select an event'}),
             }
 
     # Custom validation for the body field
@@ -35,11 +36,7 @@ class PostForm(forms.ModelForm):
 
         # Check if the remaining text is empty or contains only whitespace
         if not plain_text:
-            raise ValidationError("The body cannot be empty or contain only whitespace.")
+            raise ValidationError(
+                "The body cannot be empty or contain only whitespace."
+                )
         return body
-
-    
-          
-     
- 
-

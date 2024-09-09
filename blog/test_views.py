@@ -24,6 +24,7 @@ class BlogViewsTestCase(TestCase):
         )
 
     # test success of view (200) and that all posts are displayed
+
     def test_all_posts_view(self):
         response = self.client.get(reverse('posts'))
         self.assertEqual(response.status_code, 200)
@@ -31,12 +32,14 @@ class BlogViewsTestCase(TestCase):
         self.assertContains(response, "First Post")
         self.assertContains(response, "Second Post")
         self.assertContains(response, "Third Post")
-        self.assertEqual(len(response.context['posts']), 3)    
-   
-  
+        self.assertEqual(len(response.context['posts']), 3)
+
     # test success and that post title and body are displayed
+
     def test_post_detail_view(self):
-        response = self.client.get(reverse('post_detail', args=[self.post1.id]))
+        response = self.client.get(
+            reverse('post_detail', args=[self.post1.id])
+            )
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'blog/post_detail.html')
         self.assertContains(response, self.post1.title)

@@ -48,7 +48,7 @@ def checkout(request):
         # Determine if delivery address should be the same as billing address
         use_same_address = 'use_same_address' in request.POST
 
-        # Initialise Product form data only if it's a product order (prevents Event errors)
+        # Initialise Product form data only if it's a product order
         product_form_data = {}
         if 'product' in request.POST.get('order_type', ''):
             if use_same_address:
@@ -56,8 +56,12 @@ def checkout(request):
                     'delivery_method': request.POST.get('delivery_method'),
                     'delivery_date': request.POST.get('delivery_date'),
                     'delivery_name': general_form_data['full_name'],
-                    'delivery_street_address1': general_form_data['street_address1'],
-                    'delivery_street_address2': general_form_data['street_address2'],
+                    'delivery_street_address1': general_form_data[
+                        'street_address1'
+                        ],
+                    'delivery_street_address2': general_form_data[
+                        'street_address2'
+                        ],
                     'delivery_town_or_city': general_form_data['town_or_city'],
                     'delivery_postcode': general_form_data['postcode'],
                     'delivery_county': general_form_data['county'],
@@ -67,15 +71,26 @@ def checkout(request):
                     'delivery_method': request.POST.get('delivery_method'),
                     'delivery_date': request.POST.get('delivery_date'),
                     'delivery_name': request.POST.get('delivery_name'),
-                    'delivery_street_address1': request.POST.get('delivery_street_address1'),
-                    'delivery_street_address2': request.POST.get('delivery_street_address2'),
-                    'delivery_town_or_city': request.POST.get('delivery_town_or_city'),
-                    'delivery_postcode': request.POST.get('delivery_postcode'),
+                    'delivery_street_address1': request.POST.get(
+                        'delivery_street_address1'
+                        ),
+                    'delivery_street_address2': request.POST.get(
+                        'delivery_street_address2'
+                        ),
+                    'delivery_town_or_city': request.POST.get(
+                        'delivery_town_or_city'),
+                    'delivery_postcode': request.POST.get(
+                        'delivery_postcode'
+                        ),
                     'delivery_county': request.POST.get('delivery_county'),
                 }
 
         order_form = OrderForm(general_form_data)
-        product_form = ProductOrderForm(product_form_data) if 'product' in order_type else None
+        product_form = (
+            ProductOrderForm(product_form_data)
+            if 'product' in order_type
+            else None
+        )
 
         if order_form.is_valid():
             order_instance = order_form.save(commit=False)
@@ -86,7 +101,10 @@ def checkout(request):
                 order_instance.save()
 
                 if product_form and not product_form.is_valid():
-                    messages.error(request, "There was an error with the product form. Please double-check your information.")
+                    messages.error(
+                        request,
+                        "There was an error. Please check your information."
+                        )
                     order_instance.delete()  # Clean up partially saved order.
                     return redirect(reverse('view_bag'))
 
@@ -97,21 +115,39 @@ def checkout(request):
                     if product_type == 'product':
                         item_id = unique_key.split('_')[0]
                         variant_id = item_data.get('variant_id')
-                        # Exception handling for Product and ProductVariant to prevent double save error
+                        # Exception for Product/Variants to prevent double save
                         try:
                             product = Product.objects.get(id=item_id)
                             variant = ProductVariant.objects.get(id=variant_id)
                             quantity = item_data.get('quantity', 0)
                             card_message = item_data.get('card_message', '')
-                            note_to_seller = item_data.get('note_to_seller', '')
-                            delivery_method = request.POST.get('delivery_method')
-                            delivery_date = request.POST.get('delivery_date')
-                            delivery_name = request.POST.get('delivery_name')
-                            delivery_street_address1 = request.POST.get('delivery_street_address1')
-                            delivery_street_address2 = request.POST.get('delivery_street_address2')
-                            delivery_town_or_city = request.POST.get('delivery_town_or_city')
-                            delivery_postcode = request.POST.get('delivery_postcode')
-                            delivery_county = request.POST.get('delivery_county')
+                            note_to_seller = item_data.get(
+                                'note_to_seller', ''
+                                )
+                            delivery_method = request.POST.get(
+                                'delivery_method'
+                                )
+                            delivery_date = request.POST.get(
+                                'delivery_date'
+                                )
+                            delivery_name = request.POST.get(
+                                'delivery_name'
+                                )
+                            delivery_street_address1 = request.POST.get(
+                                'delivery_street_address1'
+                                )
+                            delivery_street_address2 = request.POST.get(
+                                'delivery_street_address2'
+                                )
+                            delivery_town_or_city = request.POST.get(
+                                'delivery_town_or_city'
+                                )
+                            delivery_postcode = request.POST.get(
+                                'delivery_postcode'
+                                )
+                            delivery_county = request.POST.get(
+                                'delivery_county'
+                                )
 
                             order_line_item = ProductOrderLineItem(
                                 order=order_instance,
@@ -133,7 +169,7 @@ def checkout(request):
                             order_line_item.save()
 
                         except ObjectDoesNotExist as e:
-                            print(f"Product or ProductVariant not found and skipped: {e}")
+                            print(f"Product or ProductVariant skipped: {e}")
 
                     elif product_type == 'event':
                         item_id = unique_key.split('_')[0]
@@ -159,24 +195,39 @@ def checkout(request):
 
                 # save user profile info if they checked the box
                 request.session['save_info'] = 'save-info' in request.POST
-                return redirect(reverse('checkout_success', args=[order_instance.order_number]))
+                return redirect(
+                    reverse(
+                        'checkout_success', args=[order_instance.order_number]
+                        )
+                    )
 
             except Exception as e:
                 print(f"Error saving order: {e}")
-                messages.error(request, f"There was an error processing your order. Please try again. Error: {e}")
+                messages.error(
+                    request,
+                    f"There was an error. Please try again. Error: {e}"
+                    )
                 order_instance.delete()
                 return redirect(reverse('view_bag'))
 
         else:
             print("Order form is not valid.")
             print(order_form.errors)
-            messages.error(request, 'There was an error with your form. Please double check your information.')
-            messages.error(request, f'Order form errors: {order_form.errors}')
+            messages.error(
+                request,
+                'There was an error. Please double check your information.'
+                )
+            messages.error(
+                request,
+                f'Order form errors: {order_form.errors}'
+                )
 
     else:
         bag = request.session.get('bag', {})
         if not bag:
-            messages.error(request, "There's nothing in your bag at the moment")
+            messages.error(
+                request,
+                "There's nothing in your bag at the moment")
             return redirect(reverse('shop'))
 
         # Getting the bag information (Amount for stripe)
@@ -190,8 +241,14 @@ def checkout(request):
         )
 
         # Determine order type based on bag contents
-        has_product = any(item['product_type'] == 'product' for item in bag.values())
-        has_event = any(item['product_type'] == 'event' for item in bag.values())
+        has_product = any(
+            item['product_type'] == 'product'
+            for item in bag.values()
+        )
+        has_event = any(
+            item['product_type'] == 'event'
+            for item in bag.values()
+        )
 
         if has_product and has_event:
             order_type = 'product and event'
@@ -200,7 +257,9 @@ def checkout(request):
         elif has_event:
             order_type = 'event'
         else:
-            messages.error(request, "There's nothing in your bag at the moment")
+            messages.error(
+                request,
+                "There's nothing in your bag at the moment")
             return redirect(reverse('shop'))
 
         request.session['order_type'] = order_type
@@ -227,7 +286,9 @@ def checkout(request):
         product_form = ProductOrderForm() if has_product else None
 
         if not stripe_public_key:
-            messages.warning(request, 'Stripe public key is missing. Did you forget to set it in your environment?')
+            messages.warning(
+                request,
+                'Stripe public key is missing. Did you forget to set?')
 
         template = 'checkout/checkout.html'
         context = {
@@ -244,7 +305,8 @@ def checkout(request):
 @require_POST
 def cache_checkout_data(request):
     try:
-        pid = request.POST.get('client_secret').split('_secret')[0]  # payment intent id
+        # payment intent id
+        pid = request.POST.get('client_secret').split('_secret')[0]
         stripe.api_key = settings.STRIPE_SECRET_KEY
 
         order_type = request.POST.get('order_type', '')
@@ -260,7 +322,9 @@ def cache_checkout_data(request):
         # Add metadata specific for products
         if order_type == 'product':
             metadata['delivery_date'] = request.POST.get('delivery_date', '')
-            metadata['delivery_method'] = request.POST.get('delivery_method', '')
+            metadata['delivery_method'] = request.POST.get(
+                'delivery_method', ''
+                )
 
         print('Metadata being set:', metadata)
 
@@ -268,7 +332,9 @@ def cache_checkout_data(request):
 
         return HttpResponse(status=200)
     except Exception as e:
-        messages.error(request, 'Sorry, your payment cannot be processed right now. Please try again later.')
+        messages.error(
+            request,
+            'Sorry, your payment cannot be processed. Please try again later.')
         return HttpResponse(content=str(e), status=400)
 
 
@@ -276,7 +342,9 @@ def checkout_success(request, order_number):
     """
     View to handle successful checkouts
     """
-    order = get_object_or_404(Order, order_number=order_number)  # get order number and send to view
+    order = get_object_or_404(
+        Order,
+        order_number=order_number)  # get order number and send to view
     profile = None  # initialise profile in case a user is logged out.
 
     # Try to get the user profile if the user is logged in
@@ -298,7 +366,10 @@ def checkout_success(request, order_number):
                     'default_county': order.county,
                 }
                 # Instance of user profile form
-                user_profile_form = UserProfileForm(profile_data, instance=profile)
+                user_profile_form = UserProfileForm(
+                    profile_data,
+                    instance=profile
+                    )
                 if user_profile_form.is_valid():
                     user_profile_form.save()
 
@@ -324,6 +395,3 @@ def checkout_success(request, order_number):
     }
 
     return render(request, template, context)
-
-
-

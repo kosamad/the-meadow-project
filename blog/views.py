@@ -62,10 +62,10 @@ def post_detail(request, post_id):
 
     return render(request, 'blog/post_detail.html', context)
 
-#  Authenticated users only can add/edit/delete blog posts. The user must be a superuser.
+#  Authenticated users only can add/edit/delete posts.
 
 
-# Code to add/eidt/delete a blog post using CreateView/UpdateView/DeleteView ammended from Youtube tutorial by Codemy
+# Code to add/eidt/delete a blog post ammended from Youtube tutorial by Codemy
 class AddPostView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
 
     model = Post
@@ -133,7 +133,9 @@ class DeletePostView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     # Function ensures users 'go back' to the page they came from
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['previous_url'] = self.request.META.get('HTTP_REFERER', reverse_lazy('posts'))
+        context['previous_url'] = self.request.META.get(
+            'HTTP_REFERER', reverse_lazy('posts')
+            )
         return context
 
     # redirect after successful deletion.

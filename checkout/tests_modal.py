@@ -65,7 +65,8 @@ class OrderModelTests(TestCase):
 
     def test_order_with_events(self):
         """
-        Test that the order total calculation is correct when events are included.
+        Test that the order total calculation
+        is correct when events are included.
         """
         event_datetime = timezone.now() + timedelta(days=1)
 
@@ -86,7 +87,10 @@ class OrderModelTests(TestCase):
 
         # Check totals
         self.assertEqual(self.order.order_total, event.price)
-        self.assertEqual(self.order.grand_total, self.order.order_total + self.order.delivery_cost)
+        self.assertEqual(
+            self.order.grand_total,
+            self.order.order_total + self.order.delivery_cost
+        )
 
     def test_product_order_lineitem_total(self):
         """
@@ -106,7 +110,11 @@ class OrderModelTests(TestCase):
         Test that the EventOrderLineItem's lineitem_total is calculated
         """
         event_datetime = timezone.now() + timedelta(days=1)
-        event = Event.objects.create(name="Test Event", price=Decimal('55.00'), event_datetime=event_datetime)
+        event = Event.objects.create(
+            name="Test Event",
+            price=Decimal('55.00'),
+            event_datetime=event_datetime
+            )
         line_item = EventOrderLineItem.objects.create(
             order=self.order,
             event=event,
