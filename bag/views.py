@@ -30,8 +30,9 @@ def add_product_to_bag(request, item_id):
         variant = get_object_or_404(ProductVariant, id=variant_id)
 
         # Create a unique key for the bag item
-        unique_key = f"{product.id}_{variant.id}_{card_message}_{note_to_seller}"
-
+        unique_key = (
+            f"{product.id}_{variant.id}_{card_message}_{note_to_seller}"
+        )
         if unique_key in bag:
             bag[unique_key]['quantity'] += quantity
         else:
@@ -56,9 +57,14 @@ def add_product_to_bag(request, item_id):
                 size_label = 'Option 3'
             else:
                 size_label = variant.size
-            messages.success(request, f'Added a {size_label} {product.friendly_name} to your bag.')
+            messages.success(
+                request,
+                f'Added a {size_label} {product.friendly_name} to your bag.'
+            )
         else:
-            messages.success(request, f'Added a {variant.size} {product.friendly_name} to your bag.')
+            messages.success(
+                request,
+                f'Added a {variant.size} {product.friendly_name} to your bag.')
             return redirect(redirect_url)
 
 
@@ -112,23 +118,27 @@ def update_card_message(request, item_id):
         if unique_key in bag:
             # Update the card message
             bag[unique_key]['card_message'] = card_message
-            # make a new unique key with the new card message and remove the old one
-            new_unique_key = f"{product.id}_{variant.id}_{card_message}_{note_to_seller}"
+            # make a new unique key new card message and remove old
+            new_unique_key = (
+                f"{product.id}_{variant.id}_{card_message}_{note_to_seller}"
+            )
             if new_unique_key != unique_key:
-                # get rid of the old unique key and save the assign new_unique_key to it.
+                # get rid of old unique key and save assign new_unique_key
                 bag[new_unique_key] = bag.pop(unique_key)
                 unique_key = new_unique_key
             messages.info(request, f'Your card message was updated')
         else:
             # in case the item isn't found in the basket.
-            messages.error(request, "The item you are trying to update was not found in your bag.")
-
+            messages.error(
+                request,
+                "The item you are trying to update was not found in your bag."
+            )
         request.session['bag'] = bag
         return redirect('view_bag')
 
 
 def update_note_to_seller(request, item_id):
-    """View which allows the user to ammend the event note to seller (product)"""
+    """View so user to ammend the event note to seller (product)"""
 
     if request.method == 'POST':
         note_to_seller = request.POST.get('new_note_to_seller')
@@ -143,20 +153,25 @@ def update_note_to_seller(request, item_id):
 
         if unique_key in bag:
             bag[unique_key]['note_to_seller'] = note_to_seller
-            new_unique_key = f"{product.id}_{variant.id}_{card_message}_{note_to_seller}"
+            new_unique_key = (
+                f"{product.id}_{variant.id}_{card_message}_{note_to_seller}"
+            )
             if new_unique_key != unique_key:
                 bag[new_unique_key] = bag.pop(unique_key)
                 unique_key = new_unique_key
             messages.info(request, f'Your note was updated')
         else:
-            messages.error(request, "The item you are trying to update was not found in your bag.")
+            messages.error(
+                request,
+                "The item you are trying to update was not found in your bag."
+            )
 
         request.session['bag'] = bag
         return redirect('view_bag')
 
 
 def update_quantity(request, item_id):
-    """View which allows the user to ammend the event note to seller (product)"""
+    """View so user to ammend the event note to seller (product)"""
 
     if request.method == 'POST':
         quantity = int(request.POST.get('new_quantity'))
@@ -172,8 +187,9 @@ def update_quantity(request, item_id):
             bag[unique_key]['quantity'] = quantity
             messages.info(request, "Your bag quantity was updated.")
         else:
-            messages.error(request, "The item you are trying to update was not found in your bag.")
-
+            messages.error(
+                request,
+                "The item you are trying to update was not found in your bag.")
         request.session['bag'] = bag
         return redirect('view_bag')
 
@@ -196,7 +212,10 @@ def update_note_to_host(request, item_id):
                 unique_key = new_unique_key
             messages.info(request, "Your note was updated.")
         else:
-            messages.error(request, "The item you are trying to update was not found in your bag.")
+            messages.error(
+                request,
+                "The item you are trying to update was not found in your bag."
+                )
 
         request.session['bag'] = bag
         return redirect('view_bag')
@@ -208,17 +227,29 @@ def remove_item(request, item_id):
     if request.method == 'POST':
         unique_key = request.POST.get('unique_key')
         bag = request.session.get('bag', {})
-        # remove item and defensive programming in place in case something goes wrong.
+        # remove item and defensive programming in place
         if unique_key in bag:
             try:
                 del bag[unique_key]
                 request.session['bag'] = bag
-                messages.info(request, "The item was successfully removed from your bag.")
+                messages.info(
+                    request,
+                    "The item was successfully removed from your bag."
+                    )
             except KeyError:
-                messages.error(request, "There was an error removing the item from your bag")
+                messages.error(
+                    request,
+                    "There was an error removing the item from your bag"
+                    )
             except Exception as e:
-                messages.error(request, f"An error occurred: There was an error removing the item from your bag. {e}")
+                messages.error(
+                    request,
+                    f"There was an error removing the item from your bag. {e}"
+                    )
         else:
-            messages.error(request, "There was an error removing the item from your bag.")
+            messages.error(
+                request,
+                "There was an error removing the item from your bag."
+                )
 
     return redirect('view_bag')
