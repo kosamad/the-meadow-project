@@ -90,6 +90,7 @@ def shop(request):
         'combined_list': combined_list,
         'item_count': len(combined_list),
         'selected_category': display_category,
+        'categories': categories,
 
     }
 
