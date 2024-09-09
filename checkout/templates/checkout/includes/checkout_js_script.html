@@ -55,7 +55,12 @@
             const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
             if (!fullName || !email) {
-                alert('Please fill out all fields required by Customer Details');
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Validation Error',
+                    text: 'Please fill out all fields required by Customer Details',
+                    confirmButtonText: 'OK'
+                })
                 return;
             }
 
@@ -64,7 +69,12 @@
             if (emailPattern.test(email)) {
                 console.log('Valid email address');
             } else {
-                alert('Invalid Email address');
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Validation Error',
+                    text: 'Invalid Email address',
+                    confirmButtonText: 'OK'
+                });
                 return;
             }
 
@@ -76,7 +86,12 @@
             const postcode = document.getElementById('id_postcode').value.trim();
 
             if (!phoneNumber || !streetAddress1 || !townOrCity || !county || !postcode) {
-                alert('Please fill out all fields required by Customer Address');
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Validation Error',
+                    text: 'Please fill out all fields required by Customer Address',
+                    confirmButtonText: 'OK'
+                });
                 return;
             }
         } else if (currentStep === 3) {
@@ -86,7 +101,12 @@
                 const deliveryMethod = document.querySelector('input[name="delivery_method"]:checked');
                 const deliveryDate = document.getElementById('id_delivery_date').value.trim();
                 if (!deliveryMethod || !deliveryDate) {
-                    alert('Please select a delivery method and date.');
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Validation Error',
+                        text: 'Please select a delivery method and date.',
+                        confirmButtonText: 'OK'
+                    });
                     return;
                 }
 
@@ -95,7 +115,12 @@
                 const today = new Date();
                 today.setHours(0, 0, 0, 0); // Reset time to the start of the day
                 if (selectedDate < today) {
-                    alert('Delivery date cannot be in the past.');
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Validation Error',
+                        text: 'Delivery date cannot be in the past.',
+                        confirmButtonText: 'OK'
+                    });
                     return;
                 }
 
@@ -103,7 +128,12 @@
                 if (deliveryMethod.value === 'delivery') {
                     const selectedDay = selectedDate.getDay(); // 0 for Sunday, 1 for Monday, etc.
                     if (selectedDay === 0) { // Check if it's Sunday
-                        alert('Delivery is not available on Sundays.');
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Validation Error',
+                            text: 'Delivery is not available on Sundays.',
+                            confirmButtonText: 'OK'
+                        });
                         return;
                     }
 
@@ -117,7 +147,12 @@
                     // check user has filled out all details
                     if (!deliveryName || !deliveryStreetAddress1 || !deliveryTownOrCity || !deliveryCounty || !
                         deliveryPostcode) {
-                        alert('Please fill out all required Delivery Information.');
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Validation Error',
+                            text: 'Please fill out all required Delivery Information.',
+                            confirmButtonText: 'OK'
+                        });
                         return;
                     }
 
@@ -129,7 +164,12 @@
                     if (!validPostCodes.includes(deliveryPostcodePrefix.substring(0, 3)) || deliveryPostcodePrefix
                         .length >
                         3) {
-                        alert('We only deliver to postcodes beginning with BS1 to BS6.');
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Validation Error',
+                            text: 'We only deliver to postcodes beginning with BS1 to BS6.',
+                            confirmButtonText: 'OK'
+                        });
                         return;
                     }
                 }
@@ -137,7 +177,12 @@
                 if (deliveryMethod.value === 'pickup') {
                     const selectedDay = selectedDate.getDay(); // 0 for Sunday, 1 for Monday, etc.
                     if (selectedDay === 0 || selectedDay === 1) {
-                        alert('Sorry, our shop is not open on a Sunday or Monday.');
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Validation Error',
+                            text: 'Sorry, our shop is not open on a Sunday or Monday.',
+                            confirmButtonText: 'OK'
+                        });
                         return;
                     }
                 }
