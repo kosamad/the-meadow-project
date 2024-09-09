@@ -389,7 +389,7 @@ For alerts, warning text, and some links, default Bootstrap styling has been app
 
 ## Finished Site
 
-![All screens]()
+![All screens](documentation/final/all_screens.PNG)
 
 ### Information Architecture
 
@@ -438,8 +438,6 @@ This design structure aims to help scalability and maintainability of the app as
  Sign Up                           | ✔                 | ✔                          | ✔                               
  Sign in                           | ✔                 | ✔                          | ✔                               
  Sign Out                          | ✘                 | ✔                          | ✔                               
-
-
 
 
 This table shows a summary of which users have access to which pages
@@ -800,7 +798,7 @@ Users also have the option to include an card message and a note to the seller i
 
 **Events**
 
-To add an event to their basket, users should click the 'Add to Basket' button located at the end of the event order form. Users need to enter the names of the attendees and have the option to add a note for the host. Similar to product orders, the quantity can be adjusted by typing directly into the box or by using the customized + and - buttons.
+To add an event to their basket, users should click the 'Add to Basket' button located at the end of the event order form. Users need to enter the names of the attendees and have the option to add a note for the host. Similar to product orders, the quantity can be adjusted by typing directly into the box or by using the customized + and - buttons. If attendee information isn't given, the user is given an alert to promt them to input this information. Note, this cannot be whitespace. 
 
 **Both**
 
@@ -865,9 +863,11 @@ At the end of the order summary section, users can see the order total, delivery
 
 The checkout process is streamlined into three stages to enhance clarity and simplicity for users. This is achieved using JavaScript to dynamically show and hide different sections of the checkout form as the user progresses through each stage. By breaking the form into manageable steps, users are only required to complete one part of the form at a time, ensuring that all information is submitted together but in a more organised and user-friendly manner. The user can move between sections of the form using the 'Next' and 'Previous' buttons displayed. These will only allow movement forwards if all parts of the form are filled in. Custom validation has been used to ensure each step is completed before the user can move on. When these buttons are clicked, the user is automatically returned to the top of the page (required if on a small screen). The inspiration for this code came from reading this [post](https://www.reddit.com/r/djangolearning/comments/jgvsop/best_way_to_do_multi_step_forms_in_django/).
 
+For all sections of this formm Javascript validation has been used to ensure all required parts of the form (dependant upon what is in the order) are inputed. Sweet Alert was used to customise the alerts to the user. An example is given below. 
+
 1. Customer Details
 
-    The user is required to fill out their Name and email address. If a user is logged in their email address is inputed from the database. 
+    The user is required to fill out their Name and email address. If a user is logged in their email address is inputed from the database. Note, their email address must be in email format otherwise a alert is given. 
 
     ![checkout part 1](documentation/final/checkout-part1.PNG)
 
@@ -1205,7 +1205,9 @@ This page is shown when a user tries to access a page or resource they are not a
 * 500 Error Page: "Sorry, something went wrong on our end. Please try again later."
 This page indicates a server error. It informs the user that something went wrong on our end and encourages them to try again later.
 
-## Future Features and ammendments
+</details>
+
+## Future Features and Ammendments
 
 1. Order viewing system - Integration of an Order viewing system for admin to be able to see all orders without logging into the Django admin panel, rather than relying on the email automatically sent. 
 
@@ -1226,13 +1228,11 @@ However, plans for future development include integrating stock management into 
 
 **Ammendments**
 
-9. Further whitespace validation-  Implement whitespace validation for blog posts, products, and events. Currently, this validation has not been incorporated. Although it is expected that admin staff will carefully add content to these sections, and will correct any mistakes if they submit a form without text in the body or description fields, adding whitespace validation would make the system more robust. Ensuring that these fields are not empty and do not contain only whitespace will enhance data integrity and improve the overall reliability of the site.
+11. Performance across all the site is sub-optimal (See lighthouse results in [Testing](TESTING.md)) and should be addressed in the future. 
 
-10. Performance across all the site is sub-optimal (See lighthouse results in [Testing](TESTING.md)) and should be addressed in the future. 
+12. Product deletion adheres to Django's recommended best practices, including the use of CSRF tokens. According to Django's documentation, POST requests should be used for actions that modify data, such as deletions, to prevent unintended operations triggered by GET requests. CSRF protection is built into Django forms, ensuring secure handling of such operations, see [Django Documentation](https://www.djangoproject.com/). Currently, this approach is applied only to product deletions, as POST methods were implemented differently in other areas of the site. In the future, I plan to standardize this approach across the entire site for consistency.
 
-11. Product deletion adheres to Django's recommended best practices, including the use of CSRF tokens. According to Django's documentation, POST requests should be used for actions that modify data, such as deletions, to prevent unintended operations triggered by GET requests. CSRF protection is built into Django forms, ensuring secure handling of such operations, see [Django Documentation](https://www.djangoproject.com/). Currently, this approach is applied only to product deletions, as POST methods were implemented differently in other areas of the site. In the future, I plan to standardize this approach across the entire site for consistency.
-
-12. In the blog app a different, Class-Based View was used. This Utilises Django's UpdateView for a more streamlined and reusable approach. This implementation applies to the creation and management of blog posts, shifting from function-based views to a class-based approach for greater efficiency and organisation. Other views in the site could be ammended to match this in the future. 
+13. In the blog app a different, Class-Based View was used. This Utilises Django's UpdateView for a more streamlined and reusable approach. This implementation applies to the creation and management of blog posts, shifting from function-based views to a class-based approach for greater efficiency and organisation. Other views in the site could be ammended to match this in the future. 
 
 ## Technologies
 
@@ -1298,14 +1298,14 @@ Please note that due to the bug with my UUID and database compatibility, Migrati
 * [pillow](https://pillow.readthedocs.io/en/stable/) - Python imaging library.
 * [Silktide Accessibility Checker ](https://chromewebstore.google.com/detail/mpobacholfblmnpnfbiomjkecoojakah)  - to check the website for accessibility.
 * [psycopg2](https://pypi.org/project/psycopg2/) - PostgreSQL database adapter for Python with Heroku deployment.
-* [PostgreSQL from the Code Institute](https://dbs.ci-dbs.net/)
-* [Lighthouse](https://developer.chrome.com/docs/lighthouse/overview)
-* [Code Institute's Python Linter](https://pep8ci.herokuapp.com)
-* [JSHint](https://jshint.com/)
-* [W3C Jigsaw](https://jigsaw.w3.org/css-validator/)
-* [W3C](https://validator.w3.org/)
+* [PostgreSQL from the Code Institute](https://dbs.ci-dbs.net/) - To create a database
+* [Lighthouse](https://developer.chrome.com/docs/lighthouse/overview) - Page performacnce and accessibility
+* [Code Institute's Python Linter](https://pep8ci.herokuapp.com) - Python validation 
+* [JSHint](https://jshint.com/) - Javascript validation
+* [W3C Jigsaw](https://jigsaw.w3.org/css-validator/) - CSS validation
+* [W3C](https://validator.w3.org/) - HTML validation
+* [SweetAlert2](https://sweetalert2.github.io/) - For customised alerts to the user. 
 * [Table of contents](http://ecotrust-canada.github.io/markdown-toc/)
-
 
 ## Testing
 
