@@ -5,6 +5,8 @@ from django.core.exceptions import ValidationError
 from .widgets import CustomClearableFileInput
 from django_summernote.widgets import SummernoteWidget
 from decimal import Decimal
+from bs4 import BeautifulSoup
+from django.core.exceptions import ValidationError
 
 
 class ProductForm(forms.ModelForm):
@@ -39,6 +41,19 @@ class ProductForm(forms.ModelForm):
         if price < Decimal('0.30'):
             raise ValidationError("The price must be at least £0.30 GBP.")
         return price
+
+    # Custom validation for the body field
+    def clean_description(self):
+        description = self.cleaned_data.get('description', '')
+
+        # Use BeautifulSoup to remove HTML tags
+        soup = BeautifulSoup(description, "html.parser")
+        plain_text = soup.get_text(strip=True)
+
+        # Check if the remaining text is empty or contains only whitespace
+        if not plain_text:
+            raise ValidationError("The description cannot be empty or contain only whitespace.")
+        return description
 
 
 class ProductVariantForm(forms.ModelForm):
@@ -148,3 +163,16 @@ class EventForm(forms.ModelForm):
         if price < Decimal('0.30'):
             raise ValidationError("The price must be at least £0.30 GBP.")
         return price
+
+    # Custom validation for the body field
+    def clean_description(self):
+        description = self.cleaned_data.get('description', '')
+
+        # Use BeautifulSoup to remove HTML tags
+        soup = BeautifulSoup(description, "html.parser")
+        plain_text = soup.get_text(strip=True)
+
+        # Check if the remaining text is empty or contains only whitespace
+        if not plain_text:
+            raise ValidationError("The description cannot be empty or contain only whitespace.")
+        return description
