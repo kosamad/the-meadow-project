@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret! - Never commited to GitHub
+# keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('SECRET_KEY', '')
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -96,7 +96,7 @@ TEMPLATES = [
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
-                'django.template.context_processors.request',  # required by allauth
+                'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.media',
@@ -113,7 +113,7 @@ TEMPLATES = [
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 
 AUTHENTICATION_BACKENDS = (
-    # Needed to login by username in Django admin, regardless of `allauth`, for superusers.
+    # Needed to login by username in Django admin,
     'django.contrib.auth.backends.ModelBackend',
 
     # `allauth` specific authentication methods, such as login by e-mail
@@ -181,7 +181,8 @@ WSGI_APPLICATION = 'the_meadow_project.wsgi.application'
 #     }
 # }
 
-# when the app is running in heroku, connect to postgre otherwise connect to sqlite
+# when the app is running in heroku, connect to postgres
+# otherwise connect to sqlite
 if 'DATABASE_URL' in os.environ:
     # database used CI database maker https://dbs.ci-dbs.net/ (18m life)
     # Get the database URL from environment variable or use the default

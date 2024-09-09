@@ -13,13 +13,25 @@ class ProductForm(forms.ModelForm):
 
     class Meta:
         model = Product
-        fields = ['category', 'name', 'friendly_name', 'price', 'description', 'image', 'alt_text', 'is_gift_card', 'is_active']
-
+        fields = [
+            'category',
+            'name',
+            'friendly_name',
+            'price',
+            'description',
+            'image',
+            'alt_text',
+            'is_gift_card',
+            'is_active'
+        ]
         widgets = {
                 'description': SummernoteWidget(),
                 }
 
-    image = forms.ImageField(label='Image', required=False, widget=CustomClearableFileInput)
+    image = forms.ImageField(
+        label='Image', required=False,
+        widget=CustomClearableFileInput
+        )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -30,11 +42,17 @@ class ProductForm(forms.ModelForm):
         self.fields['category'].choices = friendly_names
 
         # Add helper text
-        self.fields['name'].help_text = 'This should be set like this example ada_bouquet for Ada Bouquet friendly name'
-        self.fields['friendly_name'].help_text = 'Name for the Website eg Ada Bouquet'
-        self.fields['price'].help_text = 'Set the price of the product. Set this to the price of a medium size.'
+        self.fields['name'].help_text = 'This should be set like: ada_bouquet'
+        self.fields['friendly_name'].help_text = (
+            'Name for display eg.Ada Bouquet'
+        )
+        self.fields['price'].help_text = (
+            'Set the price of the  medium size product.'
+        )
         self.fields['alt_text'].help_text = 'Describe the image'
-        self.fields['is_active'].help_text = 'Checked if the product is avaliable'
+        self.fields['is_active'].help_text = (
+            'Check if the product is avaliable'
+        )
 
     def clean_price(self):
         price = self.cleaned_data.get('price')
@@ -52,7 +70,9 @@ class ProductForm(forms.ModelForm):
 
         # Check if the remaining text is empty or contains only whitespace
         if not plain_text:
-            raise ValidationError("The description cannot be empty or contain only whitespace.")
+            raise ValidationError(
+                "The description cannot be empty or contain only whitespace."
+                )
         return description
 
 
@@ -111,13 +131,24 @@ class ProductVariantForm(forms.ModelForm):
         size = cleaned_data.get('size')
 
         if self.product and size:
-            # Check if the variant with the same size already exists for the product
-            existing_variant = ProductVariant.objects.filter(product=self.product, size=size).exclude(id=self.instance.id).first()
+            # Check if the variant with the same size already exists
+            existing_variant = ProductVariant.objects.filter(
+                product=self.product,
+                size=size
+            ).exclude(
+                id=self.instance.id
+            ).first()
             if existing_variant:
                 if self.product.is_gift_card:
-                    raise ValidationError("This variant already exists for this gift card. Please try a different option.")
+                    raise ValidationError(
+                        "This variant already exists for this gift card."
+                        "Please try a different option."
+                        )
                 else:
-                    raise ValidationError(f"A variant with size '{size}' already exists for this product. Please choose another size.")
+                    raise ValidationError(
+                        f"A variant with size '{size}' already exists."
+                        "Please choose another size."
+                        )
 
         return cleaned_data
 
@@ -137,7 +168,11 @@ class EventForm(forms.ModelForm):
             'description': SummernoteWidget(),
         }
 
-    image = forms.ImageField(label='Image', required=False, widget=CustomClearableFileInput)
+    image = forms.ImageField(
+        label='Image',
+        required=False,
+        widget=CustomClearableFileInput
+        )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -145,18 +180,40 @@ class EventForm(forms.ModelForm):
         # Limit category choices to only the "Event" category and preselect
         try:
             event_category = Category.objects.get(name__iexact='event')
-            self.fields['category'].queryset = Category.objects.filter(id=event_category.id)
+            self.fields['category'].queryset = Category.objects.filter(
+                id=event_category.id
+            )
             self.fields['category'].initial = event_category.id
         except Category.DoesNotExist:
             # Handle the case where the event category is not found
-            self.fields['category'].queryset = Category.objects.none()  # No options available if event category is missing
-            messages.error(None, "Event category not found. Please add an event category to proceed.")
+            # No options available if event category is missing
+            self.fields['category'].queryset = Category.objects.none()
+            messages.error(
+                None,
+                "Event category not found."
+                "Please add an event category to proceed."
+                )
         # Add helper text
-        self.fields['name'].help_text = 'This should be set like this example ada_bouquet for Ada Bouquet friendly name'
-        self.fields['friendly_name'].help_text = 'Name for the Website eg Ada Bouquet'
-        self.fields['alt_text'].help_text = 'Describe the image'
-        self.fields['image'].help_text = 'For our events, horizontal images work best'
-        self.fields['is_active'].help_text = 'Checked if the event is avaliable/there are tickets'
+        self.fields['name'].help_text = (
+            'This should be set like this example ada_bouquet for Ada Bouquet '
+            'friendly name'
+        )
+
+        self.fields['friendly_name'].help_text = (
+            'Name for the Website e.g. Ada Bouquet'
+        )
+
+        self.fields['alt_text'].help_text = (
+            'Describe the image'
+        )
+
+        self.fields['image'].help_text = (
+            'For our events, horizontal images work best'
+        )
+
+        self.fields['is_active'].help_text = (
+            'Checked if the event is available/there are tickets'
+        )
 
     def clean_price(self):
         price = self.cleaned_data.get('price')
@@ -174,5 +231,7 @@ class EventForm(forms.ModelForm):
 
         # Check if the remaining text is empty or contains only whitespace
         if not plain_text:
-            raise ValidationError("The description cannot be empty or contain only whitespace.")
+            raise ValidationError(
+                "The description cannot be empty or contain only whitespace."
+                )
         return description

@@ -27,17 +27,37 @@ class Product(models.Model):
     """
     A model for products.
     """
-    category = models.ForeignKey('Category', null=True, blank=True, on_delete=models.SET_NULL)
+    category = models.ForeignKey(
+        'Category',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL
+        )
     name = models.CharField(max_length=254)
-    friendly_name = models.CharField(max_length=254, null=False, blank=False)
-    price = models.DecimalField(max_digits=6, decimal_places=2, default=0.00)
+    friendly_name = models.CharField(
+        max_length=254,
+        null=False,
+        blank=False)
+    price = models.DecimalField(
+        max_digits=6,
+        decimal_places=2,
+        default=0.00)
     description = models.TextField()
-    image = models.ImageField(null=True, blank=True, upload_to='product_images/')
+    image = models.ImageField(
+        null=True,
+        blank=True,
+        upload_to='product_images/')
     alt_text = models.TextField(default="")
-    rating = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
+    rating = models.DecimalField(
+        max_digits=6,
+        decimal_places=2,
+        null=True,
+        blank=True)
     is_gift_card = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
-    is_infinite_stock = models.BooleanField(default=False, help_text='Check if stock is a bouquet')
+    is_infinite_stock = models.BooleanField(
+        default=False,
+        help_text='Check if stock is a bouquet')
 
     SIZE_CHOICES = (
         ('S', 'Small'),
@@ -54,15 +74,28 @@ class Product(models.Model):
 
 
 class ProductVariant(models.Model):
-    product = models.ForeignKey(Product, related_name='variants', on_delete=models.CASCADE)
-    size = models.CharField(max_length=1, choices=Product.SIZE_CHOICES)
-    stock = models.PositiveIntegerField(default=0, help_text='Number of items available in stock for this size')
-    is_infinite_stock = models.BooleanField(default=False, help_text='Check if stock is a bouquet')
+    product = models.ForeignKey(
+        Product,
+        related_name='variants',
+        on_delete=models.CASCADE)
+    size = models.CharField(
+        max_length=1,
+        choices=Product.SIZE_CHOICES
+        )
+    stock = models.PositiveIntegerField(
+        default=0,
+        help_text='Number of items available in stock for this size'
+        )
+    is_infinite_stock = models.BooleanField(
+        default=False,
+        help_text='Check if stock is a bouquet'
+        )
     price = models.DecimalField(max_digits=6, decimal_places=2)
     is_active = models.BooleanField(default=True)
 
+    # Ensures each size variant is unique for a product
     class Meta:
-        unique_together = ('product', 'size')  # Ensures each size variant is unique for a product
+        unique_together = ('product', 'size')
 
     def __str__(self):
         return f"{self.product.name} - {self.get_size_display()}"
@@ -72,12 +105,30 @@ class Event(models.Model):
     """
     A model for events.
     """
-    category = models.ForeignKey('Category', null=True, blank=True, on_delete=models.SET_NULL)
+    category = models.ForeignKey(
+        'Category',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL
+        )
     name = models.CharField(max_length=254)
     friendly_name = models.CharField(max_length=254, null=False, blank=False)
-    price = models.DecimalField(max_digits=6, decimal_places=2, null=False, blank=False)
-    event_datetime = models.DateTimeField(null=False, blank=False, verbose_name='Event Date and Time')
-    duration_hours = models.IntegerField(null=False, blank=False, default=1, verbose_name='Duration (hours)')
+    price = models.DecimalField(
+        max_digits=6,
+        decimal_places=2,
+        null=False,
+        blank=False)
+    event_datetime = models.DateTimeField(
+        null=False,
+        blank=False,
+        verbose_name='Event Date and Time'
+        )
+    duration_hours = models.IntegerField(
+        null=False,
+        blank=False,
+        default=1,
+        verbose_name='Duration (hours)'
+        )
     description = models.TextField(null=False, blank=False)
     image = models.ImageField(null=True, blank=True, upload_to='event_images/')
     alt_text = models.TextField(null=False, blank=False)

@@ -24,7 +24,10 @@ class CategoryModelTests(TestCase):
         self.assertEqual(str(self.category), 'Test Category')
 
     def test_get_friendly_name(self):
-        self.assertEqual(self.category.get_friendly_name(), 'Test Friendly Category')
+        self.assertEqual(
+            self.category.get_friendly_name(),
+            'Test Friendly Category'
+            )
 
 
 """
@@ -34,7 +37,10 @@ Products model tests
 
 class TestProductModel(TestCase):
     def setUp(self):
-        self.category = Category.objects.create(name="Test Category", friendly_name="Test Category")
+        self.category = Category.objects.create(
+            name="Test Category",
+            friendly_name="Test Category"
+            )
         image_path = 'media/full-logo.png'
         with open(image_path, 'rb') as img_file:
             self.image_data = img_file.read()
@@ -46,7 +52,11 @@ class TestProductModel(TestCase):
             friendly_name='Test Friendly Product',
             price=8.00,
             description='Test product description',
-            image=SimpleUploadedFile('test_image.jpg', self.image_data, content_type='image/jpeg'),
+            image=SimpleUploadedFile(
+                'test_image.jpg',
+                self.image_data,
+                content_type='image/jpeg'
+                ),
             alt_text='Test Product Image',
             is_gift_card=False,
             is_active=True,
@@ -67,8 +77,13 @@ class TestProductModel(TestCase):
 
     # testing default ordering of products.
     def test_product_ordering(self):
-        self.category = Category.objects.create(name="Test Category", friendly_name="Test Category")
-        # Products created (req fields only), when passes also confirms image, rating and  size can be left blank or null as intended.
+        self.category = Category.objects.create(
+            name="Test Category",
+            friendly_name="Test Category"
+            )
+        # Products created (req fields only)
+        # when passes also confirms image, rating and size
+        # can be left blank or null as intended.
         self.product1 = Product.objects.create(
             category=self.category,
             name="Product 1",
@@ -92,7 +107,10 @@ class TestProductModel(TestCase):
         )
         # Retrieve all products and check the ordering
         ordered_products = Product.objects.all()
-        self.assertEqual(list(ordered_products), [self.product2, self.product1, self.product3])
+        self.assertEqual(
+            list(ordered_products),
+            [self.product2, self.product1, self.product3]
+        )
 
 
 """
@@ -104,7 +122,10 @@ class TestProductVariantModel(TestCase):
 
     def setUp(self):
         # Create a category for the product
-        self.category = Category.objects.create(name="Test Category", friendly_name="Test Category")
+        self.category = Category.objects.create(
+            name="Test Category",
+            friendly_name="Test Category"
+            )
 
         # Create a product to associate with the product variants
         self.product = Product.objects.create(
@@ -112,7 +133,11 @@ class TestProductVariantModel(TestCase):
             friendly_name='Friendly Test Product',
             price=19.99,
             description='Description for Test Product',
-            image=SimpleUploadedFile('test_product_image.jpg', b'test image data', content_type='image/jpeg'),
+            image=SimpleUploadedFile(
+                'test_product_image.jpg',
+                b'test image data',
+                content_type='image/jpeg'
+                ),
             alt_text='Test Product Image',
             is_gift_card=False,
             is_active=True,
@@ -147,7 +172,7 @@ class TestProductVariantModel(TestCase):
             is_active=True
         )
 
-        # Try to create a duplicate variant with the same size for the same product
+        # Try to create a duplicate variant
         with self.assertRaises(Exception) as context:
             ProductVariant.objects.create(
                 product=self.product,
@@ -169,7 +194,10 @@ Events model tests
 class TestEventModel(TestCase):
 
     def setUp(self):
-        self.category = Category.objects.create(name="Event Category", friendly_name="Event Category")
+        self.category = Category.objects.create(
+            name="Event Category",
+            friendly_name="Event Category"
+            )
         self.event_datetime = timezone.now() + timedelta(days=5)
         self.image_data = SimpleUploadedFile(
             name='test_image.jpg',
@@ -203,7 +231,9 @@ class TestEventModel(TestCase):
         self.assertEqual(saved_event.event_datetime, self.event_datetime)
         self.assertEqual(saved_event.duration_hours, 3)
         self.assertIsNotNone(saved_event.image)  # Ensure image is uploaded
-        self.assertTrue(saved_event.image.name.startswith('event_images/test_image'))  # Check if the image is stored with a prefix
+        self.assertTrue(
+            saved_event.image.name.startswith('event_images/test_image')
+            )  # Check if the image is stored with a prefix
         self.assertEqual(saved_event.alt_text, 'Alt text for test Event')
         self.assertTrue(saved_event.is_active)
         self.assertTrue(saved_event.is_event)

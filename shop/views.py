@@ -6,8 +6,9 @@ from products.models import Category, Product, Event
 
 def shop(request):
 
-    """ View function to render the shop page showing ALL categories of products
-     plus ALL individual individual products/events """
+    """ View function to render the shop page showing
+    ALL categories of products
+    plus ALL individual individual products/events """
 
     # Gather data
     categories = Category.objects.all()
@@ -19,7 +20,7 @@ def shop(request):
         products = products.filter(is_active=True)
         events = events.filter(is_active=True)
 
-    # parameters so no errors when page is loaded if they don't exist/ arne't being used
+    # parameters so no errors when page is loaded if they don't exist
     query = None
     sort = None
     direction = None
@@ -28,7 +29,7 @@ def shop(request):
 
     if request.GET:
 
-        # show the specific categories of products or event (note the event category does not have an s in Category)
+        # show the specific categories of products or event
         if 'category' in request.GET:
             selected_category = request.GET['category']
             if selected_category == 'events':
@@ -38,8 +39,12 @@ def shop(request):
                 products = Product.objects.all()
                 events = Event.objects.none()
             else:
-                products = products.filter(category__name__icontains=selected_category)
-                events = events.filter(category__name__icontains=selected_category)
+                products = products.filter(
+                    category__name__icontains=selected_category
+                    )
+                events = events.filter(
+                    category__name__icontains=selected_category
+                    )
 
         # checking for queries sent from the search box
         if 'q' in request.GET:
@@ -78,7 +83,8 @@ def shop(request):
 
     # Format selected_category for display
     if selected_category:
-        display_category = selected_category.replace('_', ' ').title()  # Format category name
+        # Format category name
+        display_category = selected_category.replace('_', ' ').title()
     else:
         display_category = 'All'
 
@@ -86,7 +92,11 @@ def shop(request):
         'products': products,
         'events': events,
         'search_term': query,
-        'current_categories': Category.objects.filter(name=selected_category) if selected_category else categories,
+        'current_categories': (
+            Category.objects.filter(name=selected_category)
+            if selected_category
+            else categories
+        ),
         'combined_list': combined_list,
         'item_count': len(combined_list),
         'selected_category': display_category,

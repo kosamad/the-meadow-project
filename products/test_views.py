@@ -35,7 +35,11 @@ class TestProductViews(TestCase):
             friendly_name='Test Product',
             price=19.99,
             description='This is a test product description.',
-            image=SimpleUploadedFile('test_image.jpg', image_data, content_type='image/jpeg'),
+            image=SimpleUploadedFile(
+                'test_image.jpg',
+                image_data,
+                content_type='image/jpeg'
+                ),
             alt_text='Test Product Image',
             is_gift_card=False,
             is_active=True,
@@ -102,7 +106,11 @@ class TestEventViews(TestCase):
             event_datetime=self.event_datetime,
             duration_hours=2,
             description='This is a test event description.',
-            image=SimpleUploadedFile('test_image.jpg', image_data, content_type='image/jpeg'),
+            image=SimpleUploadedFile(
+                'test_image.jpg',
+                image_data,
+                content_type='image/jpeg'
+                ),
             alt_text='Test Event Image',
             is_active=True
         )

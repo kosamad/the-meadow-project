@@ -48,10 +48,16 @@ def add_product(request):
         product_form = ProductForm(request.POST, request.FILES)
         if product_form.is_valid():
             product = product_form.save()
-            messages.info(request, 'Product added successfully! Now add variants.')
+            messages.info(
+                request,
+                'Product added successfully! Now add variants.'
+                )
             return redirect('product_detail', product_id=product.id)
         else:
-            messages.error(request, 'Failed to add product. Please ensure the form is valid.')
+            messages.error(
+                request,
+                'Failed to add product. Please ensure the form is valid.'
+                )
     else:
         product_form = ProductForm()
 
@@ -67,14 +73,21 @@ def add_product_variant(request, product_id):
     """ A view to add a variant to an individual product item """
 
     if not request.user.is_superuser:
-        messages.error(request, 'Sorry, only store owners can do that.')
+        messages.error(
+            request,
+            'Sorry, only store owners can do that.'
+            )
         return redirect(reverse('home'))
 
     # get product info
     product = get_object_or_404(Product, id=product_id)
 
     if request.method == 'POST':
-        variant_form = ProductVariantForm(request.POST, request.FILES, product=product)
+        variant_form = ProductVariantForm(
+            request.POST,
+            request.FILES,
+            product=product
+            )
         if variant_form.is_valid():
             variant = variant_form.save(commit=False)
             variant.product = product
@@ -82,7 +95,10 @@ def add_product_variant(request, product_id):
             messages.info(request, 'Product variant added successfully!')
             return redirect('product_detail', product_id=product.id)
         else:
-            messages.error(request, 'Failed to add product variant. Please ensure the form is valid.')
+            messages.error(
+                request,
+                'Failed to add variant. Please ensure the form is valid.'
+            )
     else:
         variant_form = ProductVariantForm(product=product)
 
@@ -106,13 +122,20 @@ def edit_product(request, product_id):
     product = get_object_or_404(Product, id=product_id)
 
     if request.method == 'POST':
-        product_form = ProductForm(request.POST, request.FILES, instance=product)
+        product_form = ProductForm(
+            request.POST,
+            request.FILES,
+            instance=product
+            )
         if product_form.is_valid():
             product_form.save()
             messages.info(request, 'Product updated successfully!')
             return redirect('product_detail', product_id=product.id)
         else:
-            messages.error(request, 'Failed to update product. Please ensure the form is valid.')
+            messages.error(
+                request,
+                'Failed to update product. Please ensure the form is valid.'
+                )
     else:
         product_form = ProductForm(instance=product)
 
@@ -137,7 +160,12 @@ def edit_product_variant(request, variant_id):
 
     if request.method == 'POST':
         # is edit means the size select box doesn't work on edit mode
-        variant_form = ProductVariantForm(request.POST, request.FILES, instance=variant, is_edit=True, product=product)
+        variant_form = ProductVariantForm(
+            request.POST,
+            request.FILES,
+            instance=variant,
+            is_edit=True,
+            product=product)
         if variant_form.is_valid():
             variant_form.save()
             # Update product price based on the updated variant
@@ -145,9 +173,15 @@ def edit_product_variant(request, variant_id):
             messages.info(request, 'Product variant updated successfully!')
             return redirect('product_detail', product_id=product.id)
         else:
-            messages.error(request, 'Failed to update product variant. Please ensure the form is valid.')
+            messages.error(
+                request,
+                'Failed to update variant. Please ensure the form is valid.'
+                )
     else:
-        variant_form = ProductVariantForm(instance=variant, is_edit=True, product=product)
+        variant_form = ProductVariantForm(
+            instance=variant,
+            is_edit=True,
+            product=product)
 
     template = 'products/edit_product_variant.html'
     context = {
@@ -173,7 +207,10 @@ def add_event(request):
             messages.info(request, 'Event successfully added!')
             return redirect('event_detail', event_id=event.id)
         else:
-            messages.error(request, 'Failed to add product. Please ensure the form is valid.')
+            messages.error(
+                request,
+                'Failed to add product. Please ensure the form is valid.'
+                )
     else:
         event_form = EventForm()
 
@@ -200,7 +237,10 @@ def edit_event(request, event_id):
             messages.info(request, 'Event updated successfully!')
             return redirect('event_detail', event_id=event.id)
         else:
-            messages.error(request, 'Failed to edit event. Please ensure the form is valid.')
+            messages.error(
+                request,
+                'Failed to edit event. Please ensure the form is valid.'
+                )
     else:
         event_form = EventForm(instance=event)
 

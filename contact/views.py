@@ -9,7 +9,7 @@ from profiles.models import UserProfile
 # Create your views here.
 
 
-# Contact form code inspired by (but adapted from) Codemy.com YouTube video series https://www.youtube.com/watch?v=xNqnHmXIuzU
+# Contact form code inspired by Codemy.com YouTube video series
 def contact(request):
     """ A view to return the index page """
 
@@ -17,13 +17,15 @@ def contact(request):
 
     if request.user.is_authenticated:
         profile = get_object_or_404(UserProfile, user=request.user)
-        orders = profile.orders.all()  # Retrieve user's orders for optional selection
+        # Retrieve user's orders for optional selection
+        orders = profile.orders.all()
 
     if request.method == 'POST':
         message_name = request.POST.get('message-name')
         message_email = request.POST.get('message-email')
         message = request.POST.get('message')
-        order_number = request.POST.get('order-number', '')  # Default to empty if not provided as this is optional
+        # Default to empty if not provided as this is optional
+        order_number = request.POST.get('order-number', '')
 
         #  Validating form and ensures all parts are presnt
         if not message_name or not message_email or not message:

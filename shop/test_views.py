@@ -25,7 +25,11 @@ class TestShopViews(TestCase):
             friendly_name='Test Product',
             price=19.99,
             description='This is a test product description.',
-            image=SimpleUploadedFile('test_image.jpg', self.image_data, content_type='image/jpeg'),
+            image=SimpleUploadedFile(
+                'test_image.jpg',
+                self.image_data,
+                content_type='image/jpeg'
+                ),
             alt_text='Test Product Image',
             is_gift_card=False,
             is_active=True,
@@ -49,7 +53,11 @@ class TestShopViews(TestCase):
             friendly_name='Inactive Product',
             price=19.99,
             description='This is a Inactive Product description.',
-            image=SimpleUploadedFile('test_image.jpg', self.image_data, content_type='image/jpeg'),
+            image=SimpleUploadedFile(
+                'test_image.jpg',
+                self.image_data,
+                content_type='image/jpeg'
+                ),
             alt_text='Inactive Product Image',
             is_gift_card=False,
             is_active=False,
@@ -69,7 +77,11 @@ class TestShopViews(TestCase):
             event_datetime=self.event_datetime,
             duration_hours=2,
             description='This is a test event description.',
-            image=SimpleUploadedFile('test_image.jpg', self.image_data, content_type='image/jpeg'),
+            image=SimpleUploadedFile(
+                'test_image.jpg',
+                self.image_data,
+                content_type='image/jpeg'
+                ),
             alt_text='Test Event Image',
             is_active=True
         )
@@ -84,7 +96,7 @@ class TestShopViews(TestCase):
         # checking data rendered to the template (Context)
         self.assertIn('combined_list', response.context)
 
-        # check all products/events are on the page (should be 2 as one is inactive)
+        # check all products/events are on the page (should be 2)
         combined_list = response.context['combined_list']
         self.assertEqual(len(combined_list), 2)
 

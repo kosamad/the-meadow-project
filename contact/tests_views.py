@@ -39,7 +39,9 @@ class ContactViewTests(TestCase):
         self.assertTemplateUsed(response, 'contact/contact.html')
         self.assertIn('orders', response.context)
         # Check if user has orders
-        self.assertEqual(len(response.context['orders']), 0)  # No orders created in this test
+        self.assertEqual(
+            len(response.context['orders']), 0
+            )  # No orders created in this test
 
     def test_contact_get_unauthenticated(self):
         """Test contact page GET request when user is not authenticated"""

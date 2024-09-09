@@ -61,7 +61,10 @@ def review_order(request, order_id):
 
     # Check if the order belongs to the current user
     if order.user_profile.user != request.user:
-        messages.error(request, "You do not have permission to review this order.")
+        messages.error(
+            request,
+            "You do not have permission to review this order."
+            )
         return redirect('home')
 
     if request.method == 'POST':
@@ -70,7 +73,10 @@ def review_order(request, order_id):
 
     # Validate form
         if not review_text:
-            messages.error(request, 'Please leave a review in the box')
+            messages.error(
+                request,
+                'Please leave a review in the box'
+                )
             context = {
                 'order': order,
                 'username': username,
@@ -85,7 +91,10 @@ def review_order(request, order_id):
         )
         review.save()
 
-        messages.success(request, 'Your review has been successfully submitted!')
+        messages.success(
+            request,
+            'Your review has been successfully submitted!'
+            )
         return redirect('profile')
 
     template = 'reviews/review_order.html'

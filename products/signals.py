@@ -12,7 +12,8 @@ def update_product_price(sender, instance, **kwargs):
     # Get all variants for the product
     variants = ProductVariant.objects.filter(product=product)
 
-    # Find the price of the Medium size variant, or the lowest price if Medium is not available
+    # Find the price of the Medium size variant
+    # or the lowest price if Medium is not available
     medium_variant = variants.filter(size='M').first()
     if medium_variant:
         new_price = medium_variant.price

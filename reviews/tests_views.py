@@ -52,7 +52,9 @@ class TestReviewViews(TestCase):
         """
         Test that the review order page can be accessed and reviewed correctly.
         """
-        response = self.client.get(reverse('review_order', args=[self.order.id]))
+        response = self.client.get(
+            reverse('review_order', args=[self.order.id])
+            )
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'reviews/review_order.html')
         self.assertContains(response, self.user_profile.user.username)
@@ -61,9 +63,17 @@ class TestReviewViews(TestCase):
         """
         Test that a review can be successfully submitted.
         """
-        response = self.client.post(reverse('review_order', args=[self.order.id]), {
-            'review_text': 'This is a valid review text.'
-        })
-        self.assertEqual(response.status_code, 302)  # Expecting a redirect after successful submission
-        self.assertTrue(Review.objects.filter(user=self.user, order=self.order).exists())
-        
+        response = self.client.post(
+            reverse('review_order', args=[self.order.id]),
+            {
+                'review_text': 'This is a valid review text.'
+            }
+        )
+        # Expecting a redirect after successful submission
+        self.assertEqual(response.status_code, 302)
+        self.assertTrue(
+            Review.objects.filter(
+                user=self.user,
+                order=self.order
+            ).exists()
+        )

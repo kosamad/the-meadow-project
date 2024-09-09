@@ -17,9 +17,12 @@ Profile tests
 class TestProfileView(TestCase):
 
     def setUp(self):
-        # Create a user and profile (PLEASE CHANGE USERNAME AND PW TO GET TEST TO PASS)
+        # Create user and profile (CHANGE USERNAME AND PW TO GET TEST TO PASS)
         # otherwise this will fail the Unique contraint
-        self.user = User.objects.create_user(username='newtest1', password='newtestpass1')
+        self.user = User.objects.create_user(
+            username='newtest1',
+            password='newtestpass1'
+            )
         self.client = Client()
         self.client.login(username='newtest1', password='newtestpass1')
 
@@ -54,7 +57,10 @@ Profile Order History
 class TestOrderHistoryView(TestCase):
 
     def setUp(self):
-        self.user = User.objects.create_user(username='testuser2', password='testpassword2')
+        self.user = User.objects.create_user(
+            username='testuser2',
+            password='testpassword2'
+            )
 
         # Create an order for testing
         self.order = Order.objects.create(

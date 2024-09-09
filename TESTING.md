@@ -145,13 +145,13 @@ All the Python files were tested in each app, and changes were made to ensure PE
 | checkout           | Pass          |
 | contact            | Pass*         |
 | home               | Pass          |
-| products           | Pass          |
+| products           | Pass*         |
 | profiles           | Pass          |
 | reviews            | Pass          |
 | shop               | Pass          |
 | the_meadow_project | Pass          |
 
-* Checkout has remaining length errors e.g delivery_street_address1=delivery_street_address1, delivery_street_address2=, 'payment_intent.payment_failed': handler.handle_payment_intent_payment_failed etc.  I could not reduce the length of these without breaking code function. In the future, care would be taken to name things shorter. 
+* Checkout has remaining length errors e.g delivery_street_address1=delivery_street_address1, delivery_street_address2=, 'payment_intent.payment_failed': handler.handle_payment_intent_payment_failed etc. For products the error remains in the widgets.py for "template_name = 'products/custom_widget_templates/custom_clearable_file_input.html'". I could not reduce the length of these without breaking code function. In the future, care would be taken to name things shorter. 
 
 
 ### Accessibility

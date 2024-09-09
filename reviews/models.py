@@ -12,4 +12,7 @@ class Review(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f'Review by {self.user.username} for Order {self.order.order_number}'
+        return (
+            f'Review by {self.user.username} '
+            f'for Order {self.order.order_number}'
+        )
