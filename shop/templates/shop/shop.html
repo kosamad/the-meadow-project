@@ -29,13 +29,12 @@
             <p class="text-justify">
                 Welcome to The Meadow Project's shop! Discover our exquisite collection of flowers and plants, available
                 both online and at our shop nestled in our scenic field. If
-                you have a specific vision in mind or need something customised, reach out to us via the link below. We
+                you have a specific vision in mind or need something customised, reach out to us on our contact page. We
                 specialise in creating bespoke bouquets and catering to corporate events and weddings.
             </p>
+            <p class="text-justify"> Please note: The prices listed in the shop are for medium-sized products. To view prices for other sizes and check their availability, please click on an individual item. </p>
         </div>
     </div>
-
-
 
     <!-- Sub Nav menu for user product filtering -->
     <div class="row justify-content-center mb-4 mt-4 align-items-center">
@@ -46,17 +45,12 @@
                     <li class="nav-item list-inline-item">
                         <a href="{% url 'shop' %}" class="nav-link">All</a>
                     </li>
+                    {% for category in categories %}
                     <li class="nav-item list-inline-item">
-                        <a href="{% url 'shop' %}?category=flowers" class="nav-link">Flowers</a>
-                    </li>
-                    <li class="nav-item list-inline-item">
-                        <a href="{% url 'shop' %}?category=plants" class="nav-link">Plants</a>
-                    </li>
-                    <li class="nav-item list-inline-item">
-                        <a href="{% url 'shop' %}?category=gift_cards" class="nav-link">Gift Cards</a>
-                    </li>
-                    <li class="nav-item list-inline-item">
-                        <a href="{% url 'shop' %}?category=event" class="nav-link">Events</a>
+                        <a class="no-link-style" href="{% url 'shop' %}?category={{ category.name|urlencode }}">
+                            {{ category.friendly_name }}
+                        </a>
+                        {% endfor %}
                     </li>
                 </ul>
                 <!-- Dropdown category selection for small screens -->
@@ -70,11 +64,14 @@
                                     Category
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="categoryDropdownMenu">
+                                    <!-- Loop through categories to generate links -->
+                                    <a class="dropdown-item" href="{% url 'shop' %}">All</a>
                                     {% for category in categories %}
                                     <a class="dropdown-item"
-                                        href="{% url 'shop' %}?category={{ category.name|urlencode }}">{{ category.friendly_name }}</a>
+                                        href="{% url 'shop' %}?category={{ category.name|urlencode }}">
+                                        {{ category.friendly_name }}
+                                    </a>
                                     {% endfor %}
-                                    <a class="dropdown-item" href="{% url 'shop' %}">All</a>
                                 </div>
                             </div>
                         </div>
@@ -143,26 +140,26 @@
                     </div>
                 </div>
             </a>
-                {% if not item_data.item.is_active %}
-                <div class="row text-center product-text mt-4 mb-4">
-                    <h4 class="title-font text-danger ">{{ item_data.item.friendly_name }}</h4>
-                    <h4 class="title-font text-danger">£{{ item_data.item.price }}</h4>
-                    
-                        <p class="text-danger">This item is inactive.</p>
-                        {% if item_data.item_type == 'Product' %}
-                        <a href="{% url 'edit_product' item_data.item.id %}" class="btn btn-pink col-6 offset-3">Reactivate</a>
-                        {% elif item_data.item_type == 'Event' %}
-                        <a href="{% url 'edit_event' item_data.item.id %}" class="btn btn-pink col-6 offset-3">Reactivate</a>
-                        {% endif %}
-                    
-                </div>
-                {% else %}
-                <div class="row text-center product-text mt-4 mb-4">
-                    <h4 class="title-font ">{{ item_data.item.friendly_name }}</h4>
-                    <h4 class="title-font">£{{ item_data.item.price }}</h4>
-                </div>                
+            {% if not item_data.item.is_active %}
+            <div class="row text-center product-text mt-4 mb-4">
+                <h4 class="title-font text-danger ">{{ item_data.item.friendly_name }}</h4>
+                <h4 class="title-font text-danger">£{{ item_data.item.price }}</h4>
+
+                <p class="text-danger">This item is inactive.</p>
+                {% if item_data.item_type == 'Product' %}
+                <a href="{% url 'edit_product' item_data.item.id %}" class="btn btn-pink col-6 offset-3">Reactivate</a>
+                {% elif item_data.item_type == 'Event' %}
+                <a href="{% url 'edit_event' item_data.item.id %}" class="btn btn-pink col-6 offset-3">Reactivate</a>
                 {% endif %}
-           
+
+            </div>
+            {% else %}
+            <div class="row text-center product-text mt-4 mb-4">
+                <h4 class="title-font ">{{ item_data.item.friendly_name }}</h4>
+                <h4 class="title-font">£{{ item_data.item.price }}</h4>
+            </div>
+            {% endif %}
+
         </div>
         {% endif %}
         {% endfor %}
