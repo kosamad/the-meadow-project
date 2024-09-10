@@ -158,12 +158,12 @@
 
                     // Check delviery postcode is within delviery range
                     const validPostCodes = ['BS1', 'BS2', 'BS3', 'BS4', 'BS5', 'BS6'];
-                    const postcodeParts = deliveryPostcode.split(' ');
-                    const deliveryPostcodePrefix = postcodeParts[0].toUpperCase();
+                    // Trim whitespace and make uppercase
+                    const cleanedPostcode = deliveryPostcode.trim().toUpperCase();
+                    // extract the part before a space
+                    const outwardPostcode = cleanedPostcode.split(' ')[0];                   
                     // checks are within valid range and that there are only 3 characters in the first part.
-                    if (!validPostCodes.includes(deliveryPostcodePrefix.substring(0, 3)) || deliveryPostcodePrefix
-                        .length >
-                        3) {
+                    if (!validPostCodes.includes(outwardPostcode)) {
                         Swal.fire({
                             icon: 'error',
                             title: 'Validation Error',
